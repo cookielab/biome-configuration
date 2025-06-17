@@ -29,6 +29,8 @@ prebuild:
   stage: prebuild
 
   script:
+    # Just making sure the git command is available
+    - apk update && apk add git
     - pnpm generate
     - |
       if ! git diff --exit-code; then
