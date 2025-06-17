@@ -5,6 +5,7 @@ stages:
   - types
   - build
   - lint
+  - publish
 
 variables:
   PNPM_STORE_PATH: .pnpm-store
@@ -80,3 +81,16 @@ lint:
 
   script:
     - pnpm lint
+
+publish:
+  stage: publish
+
+  needs:
+    - lint
+
+  rules:
+    - if: $CI_COMMIT_TAG
+
+  script:
+    - pnpm config set -- '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
+    - pnpm publish --verbose --access public --no-git-checks
