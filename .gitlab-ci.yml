@@ -1,0 +1,71 @@
+image: node:24.2.0-alpine3.22
+
+stages:
+  - prebuild
+  - types
+  - build
+  - lint
+
+variables:
+  PNPM_STORE_PATH: .pnpm-store
+
+default:
+  before_script:
+    - npm install -g corepack@latest
+    - corepack enable
+    - corepack prepare pnpm@10.12.1 --activate
+    - pnpm config set store-dir $PNPM_STORE_PATH
+    - pnpm install
+
+  cache:
+    key:
+      files:
+        - pnpm-lock.yaml
+
+    paths:
+      - $PNPM_STORE_PATH
+
+prebuild:
+  stage: prebuild
+
+  script:
+    - pnpm generate
+    - |
+      if ! git diff --exit-code; then
+        echo "The generated Zod types are not up-to-date. Please run \"pnpm generate\" locally and then commit the changes."
+        exit 1
+      fi
+
+    - pnpm doc
+    - |
+      if ! git diff --exit-code; then
+        echo "The documentation files are not up-to-date. Please run \"pnpm doc\" locally and then commit the changes."
+        exit 1
+      fi
+
+types:
+  stage: types
+
+  needs:
+    - prebuild
+
+  script:
+    - pnpm types
+
+build:
+  stage: build
+
+  needs:
+    - types
+
+  script:
+    - pnpm build
+
+lint:
+  stage: lint
+
+  needs:
+    - build
+
+  script:
+    - pnpm lint
