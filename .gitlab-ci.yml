@@ -65,7 +65,7 @@ build:
     - pnpm build
 
   artifacts:
-    untracked: true
+    untracked: false
     when: on_success
     access: all
     expire_in: "30 days"
