@@ -11,34 +11,19 @@ export const schemaSchema = z.string();
 
 export const ruleAssistPlainConfigurationSchema = z.union([z.literal("off"), z.literal("on")]);
 
-export const negatablePredefinedSourceMatcherSchema = z.union([
-	z.literal(":ALIAS:"),
-	z.literal(":BUN:"),
-	z.literal(":NODE:"),
-	z.literal(":PACKAGE:"),
-	z.literal(":PACKAGE_WITH_PROTOCOL:"),
-	z.literal(":PATH:"),
-	z.literal(":URL:"),
-	z.literal("!:ALIAS:"),
-	z.literal("!:BUN:"),
-	z.literal("!:NODE:"),
-	z.literal("!:PACKAGE:"),
-	z.literal("!:PACKAGE_WITH_PROTOCOL:"),
-	z.literal("!:PATH:"),
-	z.literal("!:URL:"),
-]);
+export const negatablePredefinedSourceMatcherSchema = z.union([z.literal(":ALIAS:"), z.literal(":BUN:"), z.literal(":NODE:"), z.literal(":PACKAGE:"), z.literal(":PACKAGE_WITH_PROTOCOL:"), z.literal(":PATH:"), z.literal(":URL:"), z.literal("!:ALIAS:"), z.literal("!:BUN:"), z.literal("!:NODE:"), z.literal("!:PACKAGE:"), z.literal("!:PACKAGE_WITH_PROTOCOL:"), z.literal("!:PATH:"), z.literal("!:URL:")]);
 
 export const globSchema = z.string();
 
 export const ruleAssistWithOptionsForNullSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: ruleAssistPlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: z.null(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: ruleAssistPlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: z.null()
 });
 
 export const boolSchema = z.boolean();
@@ -130,21 +115,9 @@ export const trailingCommas2Schema = z.union([z.literal("none"), z.literal("all"
 
 export const ruleDomainValueSchema = z.union([z.literal("all"), z.literal("none"), z.literal("recommended")]);
 
-export const groupPlainConfigurationSchema = z.union([
-	z.literal("off"),
-	z.literal("on"),
-	z.literal("info"),
-	z.literal("warn"),
-	z.literal("error"),
-]);
+export const groupPlainConfigurationSchema = z.union([z.literal("off"), z.literal("on"), z.literal("info"), z.literal("warn"), z.literal("error")]);
 
-export const rulePlainConfigurationSchema = z.union([
-	z.literal("off"),
-	z.literal("on"),
-	z.literal("info"),
-	z.literal("warn"),
-	z.literal("error"),
-]);
+export const rulePlainConfigurationSchema = z.union([z.literal("off"), z.literal("on"), z.literal("info"), z.literal("warn"), z.literal("error")]);
 
 /**
  * Used to identify the kind of code action emitted by a rule
@@ -152,10 +125,10 @@ export const rulePlainConfigurationSchema = z.union([
 export const fixKindSchema = z.union([z.literal("none"), z.literal("safe"), z.literal("unsafe")]);
 
 export const ruleWithNoOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema
 });
 
 export const visibilitySchema = z.union([z.literal("public"), z.literal("package"), z.literal("private")]);
@@ -167,23 +140,23 @@ export const stableHookResultSchema = z.union([z.boolean(), z.tuple([z.number()]
 export const objectPropertySyntaxSchema = z.union([z.literal("explicit"), z.literal("shorthand")]);
 
 export const customRestrictedImportOptionsSchema = z.object({
-	/**
-	 * Names of the exported members that allowed to be not be used.
-	 */
-	allowImportNames: z.array(z.string()).optional(),
-	/**
-	 * Names of the exported members that should not be used.
-	 */
-	importNames: z.array(z.string()).optional(),
-	/**
-	 * The message to display when this module is imported.
-	 */
-	message: z.string().optional(),
+    /**
+     * Names of the exported members that allowed to be not be used.
+     */
+    allowImportNames: z.array(z.string()).optional(),
+    /**
+     * Names of the exported members that should not be used.
+     */
+    importNames: z.array(z.string()).optional(),
+    /**
+     * The message to display when this module is imported.
+     */
+    message: z.string().optional()
 });
 
 export const customRestrictedTypeOptionsSchema = z.object({
-	message: z.string().optional(),
-	use: z.string().optional().nullable(),
+    message: z.string().optional(),
+    use: z.string().optional().nullable()
 });
 
 export const consistentArrayTypeSchema = z.union([z.literal("shorthand"), z.literal("generic")]);
@@ -193,13 +166,7 @@ export const accessibilitySchema = z.union([z.literal("noPublic"), z.literal("ex
 /**
  * Supported cases for file names.
  */
-export const filenameCaseSchema = z.union([
-	z.literal("camelCase"),
-	z.literal("export"),
-	z.literal("kebab-case"),
-	z.literal("PascalCase"),
-	z.literal("snake_case"),
-]);
+export const filenameCaseSchema = z.union([z.literal("camelCase"), z.literal("export"), z.literal("kebab-case"), z.literal("PascalCase"), z.literal("snake_case")]);
 
 export const filenameCasesSchema = z.array(filenameCaseSchema);
 
@@ -213,65 +180,13 @@ export const style2Schema = z.union([z.literal("auto"), z.literal("inlineType"),
 /**
  * Supported cases.
  */
-export const formatSchema = z.union([
-	z.literal("camelCase"),
-	z.literal("CONSTANT_CASE"),
-	z.literal("PascalCase"),
-	z.literal("snake_case"),
-]);
+export const formatSchema = z.union([z.literal("camelCase"), z.literal("CONSTANT_CASE"), z.literal("PascalCase"), z.literal("snake_case")]);
 
 export const formatsSchema = z.array(formatSchema);
 
-export const kindSchema = z.union([
-	z.union([
-		z.literal("class"),
-		z.literal("enum"),
-		z.literal("interface"),
-		z.literal("enumMember"),
-		z.literal("importNamespace"),
-		z.literal("exportNamespace"),
-		z.literal("variable"),
-		z.literal("const"),
-		z.literal("let"),
-		z.literal("using"),
-		z.literal("var"),
-		z.literal("catchParameter"),
-		z.literal("indexParameter"),
-		z.literal("exportAlias"),
-		z.literal("importAlias"),
-		z.literal("classGetter"),
-		z.literal("classSetter"),
-		z.literal("classMethod"),
-		z.literal("objectLiteralProperty"),
-		z.literal("objectLiteralGetter"),
-		z.literal("objectLiteralSetter"),
-		z.literal("objectLiteralMethod"),
-		z.literal("typeAlias"),
-	]),
-	z.literal("any"),
-	z.literal("typeLike"),
-	z.literal("function"),
-	z.literal("namespaceLike"),
-	z.literal("namespace"),
-	z.literal("functionParameter"),
-	z.literal("typeParameter"),
-	z.literal("classMember"),
-	z.literal("classProperty"),
-	z.literal("objectLiteralMember"),
-	z.literal("typeMember"),
-	z.literal("typeGetter"),
-	z.literal("typeProperty"),
-	z.literal("typeSetter"),
-	z.literal("typeMethod"),
-]);
+export const kindSchema = z.union([z.union([z.literal("class"), z.literal("enum"), z.literal("interface"), z.literal("enumMember"), z.literal("importNamespace"), z.literal("exportNamespace"), z.literal("variable"), z.literal("const"), z.literal("let"), z.literal("using"), z.literal("var"), z.literal("catchParameter"), z.literal("indexParameter"), z.literal("exportAlias"), z.literal("importAlias"), z.literal("classGetter"), z.literal("classSetter"), z.literal("classMethod"), z.literal("objectLiteralProperty"), z.literal("objectLiteralGetter"), z.literal("objectLiteralSetter"), z.literal("objectLiteralMethod"), z.literal("typeAlias")]), z.literal("any"), z.literal("typeLike"), z.literal("function"), z.literal("namespaceLike"), z.literal("namespace"), z.literal("functionParameter"), z.literal("typeParameter"), z.literal("classMember"), z.literal("classProperty"), z.literal("objectLiteralMember"), z.literal("typeMember"), z.literal("typeGetter"), z.literal("typeProperty"), z.literal("typeSetter"), z.literal("typeMethod")]);
 
-export const restrictedModifierSchema = z.union([
-	z.literal("abstract"),
-	z.literal("private"),
-	z.literal("protected"),
-	z.literal("readonly"),
-	z.literal("static"),
-]);
+export const restrictedModifierSchema = z.union([z.literal("abstract"), z.literal("private"), z.literal("protected"), z.literal("readonly"), z.literal("static")]);
 
 export const modifiersSchema = z.array(restrictedModifierSchema);
 
@@ -289,502 +204,499 @@ export const vcsClientKindSchema = z.literal("git");
  * The configuration of the filesystem
  */
 export const filesConfigurationSchema = z.object({
-	/**
-	 * Set of file and folder names that should be unconditionally ignored by Biome's scanner.
-	 *
-	 * Biome maintains an internal list of default ignore entries, which is based on user feedback and which may change in any release. This setting allows overriding this internal list completely.
-	 *
-	 * This is considered an advanced feature that users _should_ not need to tweak themselves, but they can as a last resort. This setting can only be configured in root configurations, and is ignored in nested configs.
-	 *
-	 * Entries must be file or folder *names*. Specific paths and globs are not supported.
-	 *
-	 * Examples where this may be useful:
-	 *
-	 * ```jsonc { "files": { "experimentalScannerIgnores": [ // You almost certainly don't want to scan your `.git` // folder, which is why it's already ignored by default: ".git",
-	 *
-	 * // But the scanner does scan `node_modules` by default. If // you *really* don't want this, you can ignore it like // this: "node_modules",
-	 *
-	 * // But it's probably better to ignore a specific dependency. // For instance, one that happens to be particularly slow to // scan: "RedisCommander.d.ts", ], } } ```
-	 *
-	 * Please be aware that rules relying on the module graph or type inference information may be negatively affected if dependencies of your project aren't (fully) scanned.
-	 */
-	experimentalScannerIgnores: z.array(z.string()).optional().nullable(),
-	/**
-	 * Tells Biome to not emit diagnostics when handling files that doesn't know
-	 */
-	ignoreUnknown: boolSchema.optional().nullable(),
-	/**
-	 * A list of glob patterns. Biome will handle only those files/folders that will match these patterns.
-	 */
-	includes: z.array(normalizedGlobSchema).optional().nullable(),
-	/**
-	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
-	 */
-	maxSize: maxSizeSchema.optional().nullable(),
+    /**
+     * Set of file and folder names that should be unconditionally ignored by Biome's scanner.
+     *
+     * Biome maintains an internal list of default ignore entries, which is based on user feedback and which may change in any release. This setting allows overriding this internal list completely.
+     *
+     * This is considered an advanced feature that users _should_ not need to tweak themselves, but they can as a last resort. This setting can only be configured in root configurations, and is ignored in nested configs.
+     *
+     * Entries must be file or folder *names*. Specific paths and globs are not supported.
+     *
+     * Examples where this may be useful:
+     *
+     * ```jsonc { "files": { "experimentalScannerIgnores": [ // You almost certainly don't want to scan your `.git` // folder, which is why it's already ignored by default: ".git",
+     *
+     * // But the scanner does scan `node_modules` by default. If // you *really* don't want this, you can ignore it like // this: "node_modules",
+     *
+     * // But it's probably better to ignore a specific dependency. // For instance, one that happens to be particularly slow to // scan: "RedisCommander.d.ts", ], } } ```
+     *
+     * Please be aware that rules relying on the module graph or type inference information may be negatively affected if dependencies of your project aren't (fully) scanned.
+     */
+    experimentalScannerIgnores: z.array(z.string()).optional().nullable(),
+    /**
+     * Tells Biome to not emit diagnostics when handling files that doesn't know
+     */
+    ignoreUnknown: boolSchema.optional().nullable(),
+    /**
+     * A list of glob patterns. Biome will handle only those files/folders that will match these patterns.
+     */
+    includes: z.array(normalizedGlobSchema).optional().nullable(),
+    /**
+     * The maximum allowed size for source code files in bytes. Files above this limit will be ignored for performance reasons. Defaults to 1 MiB
+     */
+    maxSize: maxSizeSchema.optional().nullable()
 });
 
 /**
  * Generic options applied to all files
  */
 export const formatterConfigurationSchema = z.object({
-	/**
-	 * The attribute position style in HTML-ish languages. Defaults to auto.
-	 */
-	attributePosition: attributePositionSchema.optional().nullable(),
-	/**
-	 * Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements).
-	 */
-	bracketSameLine: bracketSameLineSchema.optional().nullable(),
-	/**
-	 * Whether to insert spaces around brackets in object literals. Defaults to true.
-	 */
-	bracketSpacing: bracketSpacingSchema.optional().nullable(),
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
-	 */
-	expand: expandSchema.optional().nullable(),
-	/**
-	 * Stores whether formatting should be allowed to proceed if a given file has syntax errors
-	 */
-	formatWithErrors: boolSchema.optional().nullable(),
-	/**
-	 * A list of glob patterns. The formatter will include files/folders that will match these patterns.
-	 */
-	includes: z.array(normalizedGlobSchema).optional().nullable(),
-	/**
-	 * The indent style.
-	 */
-	indentStyle: indentStyleSchema.optional().nullable(),
-	/**
-	 * The size of the indentation, 2 by default
-	 */
-	indentWidth: indentWidthSchema.optional().nullable(),
-	/**
-	 * The type of line ending.
-	 */
-	lineEnding: lineEndingSchema.optional().nullable(),
-	/**
-	 * What's the max width of a line. Defaults to 80.
-	 */
-	lineWidth: lineWidthSchema.optional().nullable(),
-	/**
-	 * Use any `.editorconfig` files to configure the formatter. Configuration in `biome.json` will override `.editorconfig` configuration.
-	 *
-	 * Default: `true`.
-	 */
-	useEditorconfig: boolSchema.optional().nullable(),
+    /**
+     * The attribute position style in HTML-ish languages. Defaults to auto.
+     */
+    attributePosition: attributePositionSchema.optional().nullable(),
+    /**
+     * Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements).
+     */
+    bracketSameLine: bracketSameLineSchema.optional().nullable(),
+    /**
+     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     */
+    bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+     */
+    expand: expandSchema.optional().nullable(),
+    /**
+     * Stores whether formatting should be allowed to proceed if a given file has syntax errors
+     */
+    formatWithErrors: boolSchema.optional().nullable(),
+    /**
+     * A list of glob patterns. The formatter will include files/folders that will match these patterns.
+     */
+    includes: z.array(normalizedGlobSchema).optional().nullable(),
+    /**
+     * The indent style.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * The size of the indentation, 2 by default
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of line ending.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * Use any `.editorconfig` files to configure the formatter. Configuration in `biome.json` will override `.editorconfig` configuration.
+     *
+     * Default: `true`.
+     */
+    useEditorconfig: boolSchema.optional().nullable()
 });
 
 /**
  * Set of properties to integrate Biome with a VCS software.
  */
 export const vcsConfigurationSchema = z.object({
-	/**
-	 * The kind of client.
-	 */
-	clientKind: vcsClientKindSchema.optional().nullable(),
-	/**
-	 * The main branch of the project
-	 */
-	defaultBranch: z.string().optional().nullable(),
-	/**
-	 * Whether Biome should integrate itself with the VCS client
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * The folder where Biome should check for VCS files. By default, Biome will use the same folder where `biome.json` was found.
-	 *
-	 * If Biome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Biome won't use the VCS integration, and a diagnostic will be emitted
-	 */
-	root: z.string().optional().nullable(),
-	/**
-	 * Whether Biome should use the VCS ignore file. When [true], Biome will ignore the files specified in the ignore file.
-	 */
-	useIgnoreFile: boolSchema.optional().nullable(),
+    /**
+     * The kind of client.
+     */
+    clientKind: vcsClientKindSchema.optional().nullable(),
+    /**
+     * The main branch of the project
+     */
+    defaultBranch: z.string().optional().nullable(),
+    /**
+     * Whether Biome should integrate itself with the VCS client
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * The folder where Biome should check for VCS files. By default, Biome will use the same folder where `biome.json` was found.
+     *
+     * If Biome can't find the configuration, it will attempt to use the current working directory. If no current working directory can't be found, Biome won't use the VCS integration, and a diagnostic will be emitted
+     */
+    root: z.string().optional().nullable(),
+    /**
+     * Whether Biome should use the VCS ignore file. When [true], Biome will ignore the files specified in the ignore file.
+     */
+    useIgnoreFile: boolSchema.optional().nullable()
 });
 
-export const ruleAssistConfigurationForNullSchema = z.union([
-	ruleAssistPlainConfigurationSchema,
-	ruleAssistWithOptionsForNullSchema,
-]);
+export const ruleAssistConfigurationForNullSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithOptionsForNullSchema]);
 
 /**
  * Options that changes how the CSS assist behaves
  */
 export const cssAssistConfigurationSchema = z.object({
-	/**
-	 * Control the assist for CSS files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the assist for CSS files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 /**
  * Options that changes how the CSS formatter behaves
  */
 export const cssFormatterConfigurationSchema = z.object({
-	/**
-	 * Control the formatter for CSS (and its super languages) files.
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * The indent style applied to CSS (and its super languages) files.
-	 */
-	indentStyle: indentStyleSchema.optional().nullable(),
-	/**
-	 * The size of the indentation applied to CSS (and its super languages) files. Default to 2.
-	 */
-	indentWidth: indentWidthSchema.optional().nullable(),
-	/**
-	 * The type of line ending applied to CSS (and its super languages) files.
-	 */
-	lineEnding: lineEndingSchema.optional().nullable(),
-	/**
-	 * What's the max width of a line applied to CSS (and its super languages) files. Defaults to 80.
-	 */
-	lineWidth: lineWidthSchema.optional().nullable(),
-	/**
-	 * The type of quotes used in CSS code. Defaults to double.
-	 */
-	quoteStyle: quoteStyleSchema.optional().nullable(),
+    /**
+     * Control the formatter for CSS (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * The indent style applied to CSS (and its super languages) files.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * The size of the indentation applied to CSS (and its super languages) files. Default to 2.
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of line ending applied to CSS (and its super languages) files.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line applied to CSS (and its super languages) files. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * The type of quotes used in CSS code. Defaults to double.
+     */
+    quoteStyle: quoteStyleSchema.optional().nullable()
 });
 
 /**
  * Options that changes how the CSS linter behaves
  */
 export const cssLinterConfigurationSchema = z.object({
-	/**
-	 * Control the linter for CSS files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the linter for CSS files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 /**
  * Options that changes how the CSS parser behaves
  */
 export const cssParserConfigurationSchema = z.object({
-	/**
-	 * Allow comments to appear on incorrect lines in `.css` files
-	 */
-	allowWrongLineComments: boolSchema.optional().nullable(),
-	/**
-	 * Enables parsing of CSS Modules specific features.
-	 */
-	cssModules: boolSchema.optional().nullable(),
+    /**
+     * Allow comments to appear on incorrect lines in `.css` files
+     */
+    allowWrongLineComments: boolSchema.optional().nullable(),
+    /**
+     * Enables parsing of CSS Modules specific features.
+     */
+    cssModules: boolSchema.optional().nullable()
 });
 
 /**
  * Options that changes how the GraphQL linter behaves
  */
 export const graphqlAssistConfigurationSchema = z.object({
-	/**
-	 * Control the formatter for GraphQL files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the formatter for GraphQL files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 /**
  * Options that changes how the GraphQL formatter behaves
  */
 export const graphqlFormatterConfigurationSchema = z.object({
-	/**
-	 * Whether to insert spaces around brackets in object literals. Defaults to true.
-	 */
-	bracketSpacing: bracketSpacingSchema.optional().nullable(),
-	/**
-	 * Control the formatter for GraphQL files.
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * The indent style applied to GraphQL files.
-	 */
-	indentStyle: indentStyleSchema.optional().nullable(),
-	/**
-	 * The size of the indentation applied to GraphQL files. Default to 2.
-	 */
-	indentWidth: indentWidthSchema.optional().nullable(),
-	/**
-	 * The type of line ending applied to GraphQL files.
-	 */
-	lineEnding: lineEndingSchema.optional().nullable(),
-	/**
-	 * What's the max width of a line applied to GraphQL files. Defaults to 80.
-	 */
-	lineWidth: lineWidthSchema.optional().nullable(),
-	/**
-	 * The type of quotes used in GraphQL code. Defaults to double.
-	 */
-	quoteStyle: quoteStyleSchema.optional().nullable(),
+    /**
+     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     */
+    bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Control the formatter for GraphQL files.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * The indent style applied to GraphQL files.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * The size of the indentation applied to GraphQL files. Default to 2.
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of line ending applied to GraphQL files.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line applied to GraphQL files. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * The type of quotes used in GraphQL code. Defaults to double.
+     */
+    quoteStyle: quoteStyleSchema.optional().nullable()
 });
 
 /**
  * Options that change how the GraphQL linter behaves.
  */
 export const graphqlLinterConfigurationSchema = z.object({
-	/**
-	 * Control the formatter for GraphQL files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the formatter for GraphQL files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 export const gritAssistConfigurationSchema = z.object({
-	/**
-	 * Control the assist functionality for Grit files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the assist functionality for Grit files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 export const gritFormatterConfigurationSchema = z.object({
-	/**
-	 * Control the formatter for Grit files.
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * The indent style applied to Grit files.
-	 */
-	indentStyle: indentStyleSchema.optional().nullable(),
-	/**
-	 * The size of the indentation applied to Grit files. Default to 2.
-	 */
-	indentWidth: indentWidthSchema.optional().nullable(),
-	/**
-	 * The type of line ending applied to Grit files.
-	 */
-	lineEnding: lineEndingSchema.optional().nullable(),
-	/**
-	 * What's the max width of a line applied to Grit files. Defaults to 80.
-	 */
-	lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * Control the formatter for Grit files.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * The indent style applied to Grit files.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * The size of the indentation applied to Grit files. Default to 2.
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of line ending applied to Grit files.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line applied to Grit files. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable()
 });
 
 export const gritLinterConfigurationSchema = z.object({
-	/**
-	 * Control the linter for Grit files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the linter for Grit files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 /**
  * Options that changes how the HTML formatter behaves
  */
 export const htmlFormatterConfigurationSchema = z.object({
-	/**
-	 * The attribute position style in HTML elements. Defaults to auto.
-	 */
-	attributePosition: attributePositionSchema.optional().nullable(),
-	/**
-	 * Whether to hug the closing bracket of multiline HTML tags to the end of the last line, rather than being alone on the following line. Defaults to false.
-	 */
-	bracketSameLine: bracketSameLineSchema.optional().nullable(),
-	/**
-	 * Control the formatter for HTML (and its super languages) files.
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * Whether to indent the `<script>` and `<style>` tags for HTML (and its super languages). Defaults to false.
-	 */
-	indentScriptAndStyle: indentScriptAndStyleSchema.optional().nullable(),
-	/**
-	 * The indent style applied to HTML (and its super languages) files.
-	 */
-	indentStyle: indentStyleSchema.optional().nullable(),
-	/**
-	 * The size of the indentation applied to HTML (and its super languages) files. Default to 2.
-	 */
-	indentWidth: indentWidthSchema.optional().nullable(),
-	/**
-	 * The type of line ending applied to HTML (and its super languages) files.
-	 */
-	lineEnding: lineEndingSchema.optional().nullable(),
-	/**
-	 * What's the max width of a line applied to HTML (and its super languages) files. Defaults to 80.
-	 */
-	lineWidth: lineWidthSchema.optional().nullable(),
-	/**
-	 * Whether void elements should be self-closed. Defaults to never.
-	 */
-	selfCloseVoidElements: selfCloseVoidElementsSchema.optional().nullable(),
-	/**
-	 * Whether to account for whitespace sensitivity when formatting HTML (and its super languages). Defaults to "css".
-	 */
-	whitespaceSensitivity: whitespaceSensitivitySchema.optional().nullable(),
+    /**
+     * The attribute position style in HTML elements. Defaults to auto.
+     */
+    attributePosition: attributePositionSchema.optional().nullable(),
+    /**
+     * Whether to hug the closing bracket of multiline HTML tags to the end of the last line, rather than being alone on the following line. Defaults to false.
+     */
+    bracketSameLine: bracketSameLineSchema.optional().nullable(),
+    /**
+     * Control the formatter for HTML (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * Whether to indent the `<script>` and `<style>` tags for HTML (and its super languages). Defaults to false.
+     */
+    indentScriptAndStyle: indentScriptAndStyleSchema.optional().nullable(),
+    /**
+     * The indent style applied to HTML (and its super languages) files.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * The size of the indentation applied to HTML (and its super languages) files. Default to 2.
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of line ending applied to HTML (and its super languages) files.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line applied to HTML (and its super languages) files. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * Whether void elements should be self-closed. Defaults to never.
+     */
+    selfCloseVoidElements: selfCloseVoidElementsSchema.optional().nullable(),
+    /**
+     * Whether to account for whitespace sensitivity when formatting HTML (and its super languages). Defaults to "css".
+     */
+    whitespaceSensitivity: whitespaceSensitivitySchema.optional().nullable()
 });
 
 /**
  * Assist options specific to the JavaScript assist
  */
 export const jsAssistConfigurationSchema = z.object({
-	/**
-	 * Control the assist for JavaScript (and its super languages) files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the assist for JavaScript (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 /**
  * Formatting options specific to the JavaScript files
  */
 export const jsFormatterConfigurationSchema = z.object({
-	/**
-	 * Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
-	 */
-	arrowParentheses: arrowParenthesesSchema.optional().nullable(),
-	/**
-	 * The attribute position style in JSX elements. Defaults to auto.
-	 */
-	attributePosition: attributePositionSchema.optional().nullable(),
-	/**
-	 * Whether to hug the closing bracket of multiline HTML/JSX tags to the end of the last line, rather than being alone on the following line. Defaults to false.
-	 */
-	bracketSameLine: bracketSameLineSchema.optional().nullable(),
-	/**
-	 * Whether to insert spaces around brackets in object literals. Defaults to true.
-	 */
-	bracketSpacing: bracketSpacingSchema.optional().nullable(),
-	/**
-	 * Control the formatter for JavaScript (and its super languages) files.
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
-	 */
-	expand: expandSchema.optional().nullable(),
-	/**
-	 * The indent style applied to JavaScript (and its super languages) files.
-	 */
-	indentStyle: indentStyleSchema.optional().nullable(),
-	/**
-	 * The size of the indentation applied to JavaScript (and its super languages) files. Default to 2.
-	 */
-	indentWidth: indentWidthSchema.optional().nullable(),
-	/**
-	 * The type of quotes used in JSX. Defaults to double.
-	 */
-	jsxQuoteStyle: quoteStyleSchema.optional().nullable(),
-	/**
-	 * The type of line ending applied to JavaScript (and its super languages) files.
-	 */
-	lineEnding: lineEndingSchema.optional().nullable(),
-	/**
-	 * What's the max width of a line applied to JavaScript (and its super languages) files. Defaults to 80.
-	 */
-	lineWidth: lineWidthSchema.optional().nullable(),
-	/**
-	 * When properties in objects are quoted. Defaults to asNeeded.
-	 */
-	quoteProperties: quotePropertiesSchema.optional().nullable(),
-	/**
-	 * The type of quotes used in JavaScript code. Defaults to double.
-	 */
-	quoteStyle: quoteStyleSchema.optional().nullable(),
-	/**
-	 * Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
-	 */
-	semicolons: semicolonsSchema.optional().nullable(),
-	/**
-	 * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
-	 */
-	trailingCommas: trailingCommasSchema.optional().nullable(),
+    /**
+     * Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+     */
+    arrowParentheses: arrowParenthesesSchema.optional().nullable(),
+    /**
+     * The attribute position style in JSX elements. Defaults to auto.
+     */
+    attributePosition: attributePositionSchema.optional().nullable(),
+    /**
+     * Whether to hug the closing bracket of multiline HTML/JSX tags to the end of the last line, rather than being alone on the following line. Defaults to false.
+     */
+    bracketSameLine: bracketSameLineSchema.optional().nullable(),
+    /**
+     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     */
+    bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Control the formatter for JavaScript (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+     */
+    expand: expandSchema.optional().nullable(),
+    /**
+     * The indent style applied to JavaScript (and its super languages) files.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * The size of the indentation applied to JavaScript (and its super languages) files. Default to 2.
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of quotes used in JSX. Defaults to double.
+     */
+    jsxQuoteStyle: quoteStyleSchema.optional().nullable(),
+    /**
+     * The type of line ending applied to JavaScript (and its super languages) files.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line applied to JavaScript (and its super languages) files. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * When properties in objects are quoted. Defaults to asNeeded.
+     */
+    quoteProperties: quotePropertiesSchema.optional().nullable(),
+    /**
+     * The type of quotes used in JavaScript code. Defaults to double.
+     */
+    quoteStyle: quoteStyleSchema.optional().nullable(),
+    /**
+     * Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
+     */
+    semicolons: semicolonsSchema.optional().nullable(),
+    /**
+     * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
+     */
+    trailingCommas: trailingCommasSchema.optional().nullable()
 });
 
 /**
  * Linter options specific to the JavaScript linter
  */
 export const jsLinterConfigurationSchema = z.object({
-	/**
-	 * Control the linter for JavaScript (and its super languages) files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the linter for JavaScript (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 /**
  * Options that changes how the JavaScript parser behaves
  */
 export const jsParserConfigurationSchema = z.object({
-	/**
-	 * Enables parsing of Grit metavariables. Defaults to `false`.
-	 */
-	gritMetavariables: boolSchema.optional().nullable(),
-	/**
-	 * When enabled, files like `.js`/`.mjs`/`.cjs` may contain JSX syntax.
-	 *
-	 * Defaults to `true`.
-	 */
-	jsxEverywhere: boolSchema.optional().nullable(),
-	/**
-	 * It enables the experimental and unsafe parsing of parameter decorators
-	 *
-	 * These decorators belong to an old proposal, and they are subject to change.
-	 */
-	unsafeParameterDecoratorsEnabled: boolSchema.optional().nullable(),
+    /**
+     * Enables parsing of Grit metavariables. Defaults to `false`.
+     */
+    gritMetavariables: boolSchema.optional().nullable(),
+    /**
+     * When enabled, files like `.js`/`.mjs`/`.cjs` may contain JSX syntax.
+     *
+     * Defaults to `true`.
+     */
+    jsxEverywhere: boolSchema.optional().nullable(),
+    /**
+     * It enables the experimental and unsafe parsing of parameter decorators
+     *
+     * These decorators belong to an old proposal, and they are subject to change.
+     */
+    unsafeParameterDecoratorsEnabled: boolSchema.optional().nullable()
 });
 
 /**
  * Linter options specific to the JSON linter
  */
 export const jsonAssistConfigurationSchema = z.object({
-	/**
-	 * Control the assist for JSON (and its super languages) files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the assist for JSON (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 export const jsonFormatterConfigurationSchema = z.object({
-	/**
-	 * Whether to insert spaces around brackets in object literals. Defaults to true.
-	 */
-	bracketSpacing: bracketSpacingSchema.optional().nullable(),
-	/**
-	 * Control the formatter for JSON (and its super languages) files.
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
-	 */
-	expand: expandSchema.optional().nullable(),
-	/**
-	 * The indent style applied to JSON (and its super languages) files.
-	 */
-	indentStyle: indentStyleSchema.optional().nullable(),
-	/**
-	 * The size of the indentation applied to JSON (and its super languages) files. Default to 2.
-	 */
-	indentWidth: indentWidthSchema.optional().nullable(),
-	/**
-	 * The type of line ending applied to JSON (and its super languages) files.
-	 */
-	lineEnding: lineEndingSchema.optional().nullable(),
-	/**
-	 * What's the max width of a line applied to JSON (and its super languages) files. Defaults to 80.
-	 */
-	lineWidth: lineWidthSchema.optional().nullable(),
-	/**
-	 * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "none".
-	 */
-	trailingCommas: trailingCommas2Schema.optional().nullable(),
+    /**
+     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     */
+    bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Control the formatter for JSON (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+     */
+    expand: expandSchema.optional().nullable(),
+    /**
+     * The indent style applied to JSON (and its super languages) files.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * The size of the indentation applied to JSON (and its super languages) files. Default to 2.
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of line ending applied to JSON (and its super languages) files.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line applied to JSON (and its super languages) files. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "none".
+     */
+    trailingCommas: trailingCommas2Schema.optional().nullable()
 });
 
 /**
  * Linter options specific to the JSON linter
  */
 export const jsonLinterConfigurationSchema = z.object({
-	/**
-	 * Control the linter for JSON (and its super languages) files.
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * Control the linter for JSON (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 /**
  * Options that changes how the JSON parser behaves
  */
 export const jsonParserConfigurationSchema = z.object({
-	/**
-	 * Allow parsing comments in `.json` files
-	 */
-	allowComments: boolSchema.optional().nullable(),
-	/**
-	 * Allow parsing trailing commas in `.json` files
-	 */
-	allowTrailingCommas: boolSchema.optional().nullable(),
+    /**
+     * Allow parsing comments in `.json` files
+     */
+    allowComments: boolSchema.optional().nullable(),
+    /**
+     * Allow parsing trailing commas in `.json` files
+     */
+    allowTrailingCommas: boolSchema.optional().nullable()
 });
 
 export const ruleDomainsSchema = z.record(z.string(), ruleDomainValueSchema);
@@ -792,41 +704,41 @@ export const ruleDomainsSchema = z.record(z.string(), ruleDomainValueSchema);
 export const ruleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoOptionsSchema]);
 
 export const ruleWithFixNoOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema
 });
 
 export const noLabelWithoutControlOptionsSchema = z.object({
-	/**
-	 * Array of component names that should be considered the same as an `input` element.
-	 */
-	inputComponents: z.array(z.string()).optional(),
-	/**
-	 * Array of attributes that should be treated as the `label` accessible text content.
-	 */
-	labelAttributes: z.array(z.string()).optional(),
-	/**
-	 * Array of component names that should be considered the same as a `label` element.
-	 */
-	labelComponents: z.array(z.string()).optional(),
+    /**
+     * Array of component names that should be considered the same as an `input` element.
+     */
+    inputComponents: z.array(z.string()).optional(),
+    /**
+     * Array of attributes that should be treated as the `label` accessible text content.
+     */
+    labelAttributes: z.array(z.string()).optional(),
+    /**
+     * Array of component names that should be considered the same as a `label` element.
+     */
+    labelComponents: z.array(z.string()).optional()
 });
 
 export const validAriaRoleOptionsSchema = z.object({
-	allowInvalidRoles: z.array(z.string()).optional(),
-	ignoreNonDom: z.boolean().optional(),
+    allowInvalidRoles: z.array(z.string()).optional(),
+    ignoreNonDom: z.boolean().optional()
 });
 
 export const useValidAutocompleteOptionsSchema = z.object({
-	/**
-	 * `input` like custom components that should be checked.
-	 */
-	inputComponents: z.array(z.string()).optional(),
+    /**
+     * `input` like custom components that should be checked.
+     */
+    inputComponents: z.array(z.string()).optional()
 });
 
 export const ruleFixConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithFixNoOptionsSchema]);
@@ -835,90 +747,88 @@ export const ruleFixConfigurationSchema = z.union([rulePlainConfigurationSchema,
  * Options for the rule `noExcessiveCognitiveComplexity`.
  */
 export const complexityOptionsSchema = z.object({
-	/**
-	 * The maximum complexity score that we allow. Anything higher is considered excessive.
-	 */
-	maxAllowedComplexity: z.number().optional(),
+    /**
+     * The maximum complexity score that we allow. Anything higher is considered excessive.
+     */
+    maxAllowedComplexity: z.number().optional()
 });
 
 export const noForEachOptionsSchema = z.object({
-	/**
-	 * A list of variable names allowed for `forEach` calls.
-	 */
-	allowedIdentifiers: z.array(z.string()).optional(),
+    /**
+     * A list of variable names allowed for `forEach` calls.
+     */
+    allowedIdentifiers: z.array(z.string()).optional()
 });
 
 /**
  * Options for the rule `noPrivateImports`.
  */
 export const noPrivateImportsOptionsSchema = z.object({
-	/**
-	 * The default visibility to assume for symbols without visibility tag.
-	 *
-	 * Default: **public**.
-	 */
-	defaultVisibility: visibilitySchema.and(z.string()).optional(),
+    /**
+     * The default visibility to assume for symbols without visibility tag.
+     *
+     * Default: **public**.
+     */
+    defaultVisibility: visibilitySchema.and(z.string()).optional()
 });
 
 /**
  * Rule's options
  */
 export const noUndeclaredDependenciesOptionsSchema = z.object({
-	/**
-	 * If set to `false`, then the rule will show an error when `devDependencies` are imported. Defaults to `true`.
-	 */
-	devDependencies: dependencyAvailabilitySchema.and(z.boolean()).optional(),
-	/**
-	 * If set to `false`, then the rule will show an error when `optionalDependencies` are imported. Defaults to `true`.
-	 */
-	optionalDependencies: dependencyAvailabilitySchema.and(z.boolean()).optional(),
-	/**
-	 * If set to `false`, then the rule will show an error when `peerDependencies` are imported. Defaults to `true`.
-	 */
-	peerDependencies: dependencyAvailabilitySchema.and(z.boolean()).optional(),
+    /**
+     * If set to `false`, then the rule will show an error when `devDependencies` are imported. Defaults to `true`.
+     */
+    devDependencies: dependencyAvailabilitySchema.and(z.boolean()).optional(),
+    /**
+     * If set to `false`, then the rule will show an error when `optionalDependencies` are imported. Defaults to `true`.
+     */
+    optionalDependencies: dependencyAvailabilitySchema.and(z.boolean()).optional(),
+    /**
+     * If set to `false`, then the rule will show an error when `peerDependencies` are imported. Defaults to `true`.
+     */
+    peerDependencies: dependencyAvailabilitySchema.and(z.boolean()).optional()
 });
 
-export const undeclaredVariablesOptionsSchema = z.record(z.string(), z.unknown()).and(
-	z.object({
-		/**
-		 * Check undeclared types.
-		 */
-		checkTypes: z.boolean().optional(),
-	}),
-);
+export const undeclaredVariablesOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+    /**
+     * Check undeclared types.
+     */
+    checkTypes: z.boolean().optional()
+}));
 
 export const noUnusedVariablesOptionsSchema = z.object({
-	/**
-	 * Whether to ignore unused variables from an object destructuring with a spread (i.e.: whether `a` and `b` in `const { a, b, ...rest } = obj` should be ignored by this rule).
-	 */
-	ignoreRestSiblings: z.boolean().optional(),
+    /**
+     * Whether to ignore unused variables from an object destructuring with a spread (i.e.: whether `a` and `b` in `const { a, b, ...rest } = obj` should be ignored by this rule).
+     */
+    ignoreRestSiblings: z.boolean().optional()
 });
 
 export const hookSchema = z.object({
-	/**
-	 * The "position" of the closure function, starting from zero.
-	 *
-	 * For example, for React's `useEffect()` hook, the closure index is 0.
-	 */
-	closureIndex: z.number().optional().nullable(),
-	/**
-	 * The "position" of the array of dependencies, starting from zero.
-	 *
-	 * For example, for React's `useEffect()` hook, the dependencies index is 1.
-	 */
-	dependenciesIndex: z.number().optional().nullable(),
-	/**
-	 * The name of the hook.
-	 */
-	name: z.string().optional(),
-	/**
-	 * Whether the result of the hook is stable.
-	 *
-	 * Set to `true` to mark the identity of the hook's return value as stable, or use a number/an array of numbers to mark the "positions" in the return array as stable.
-	 *
-	 * For example, for React's `useRef()` hook the value would be `true`, while for `useState()` it would be `[1]`.
-	 */
-	stableResult: stableHookResultSchema.optional().nullable(),
+    /**
+     * The "position" of the closure function, starting from zero.
+     *
+     * For example, for React's `useEffect()` hook, the closure index is 0.
+     */
+    closureIndex: z.number().optional().nullable(),
+    /**
+     * The "position" of the array of dependencies, starting from zero.
+     *
+     * For example, for React's `useEffect()` hook, the dependencies index is 1.
+     */
+    dependenciesIndex: z.number().optional().nullable(),
+    /**
+     * The name of the hook.
+     */
+    name: z.string().optional(),
+    /**
+     * Whether the result of the hook is stable.
+     *
+     * Set to `true` to mark the identity of the hook's return value as stable, or use a number/an array of numbers to mark the "positions" in the return array as stable.
+     *
+     * For example, for React's `useRef()` hook the value would be `true`, while for `useState()` it would be `[1]`.
+     */
+    stableResult: stableHookResultSchema.optional().nullable()
 });
 
 /**
@@ -927,117 +837,117 @@ export const hookSchema = z.object({
 export const deprecatedHooksOptionsSchema = z.object({});
 
 export const useImportExtensionsOptionsSchema = z.object({
-	/**
-	 * If `true`, the suggested extension is always `.js` regardless of what extension the source file has in your project.
-	 */
-	forceJsExtensions: z.boolean().optional(),
+    /**
+     * If `true`, the suggested extension is always `.js` regardless of what extension the source file has in your project.
+     */
+    forceJsExtensions: z.boolean().optional()
 });
 
 export const useJsxKeyInIterableOptionsSchema = z.object({
-	/**
-	 * Set to `true` to check shorthand fragments (`<></>`)
-	 */
-	checkShorthandFragments: z.boolean().optional(),
+    /**
+     * Set to `true` to check shorthand fragments (`<></>`)
+     */
+    checkShorthandFragments: z.boolean().optional()
 });
 
 /**
  * Rule's options
  */
 export const noBitwiseOperatorsOptionsSchema = z.object({
-	/**
-	 * Allows a list of bitwise operators to be used as exceptions.
-	 */
-	allow: z.array(z.string()).optional(),
+    /**
+     * Allows a list of bitwise operators to be used as exceptions.
+     */
+    allow: z.array(z.string()).optional()
 });
 
 export const customRestrictedElementsSchema = z.record(z.string(), z.string());
 
 export const noSecretsOptionsSchema = z.object({
-	/**
-	 * Set entropy threshold (default is 41).
-	 */
-	entropyThreshold: z.number().optional().nullable(),
+    /**
+     * Set entropy threshold (default is 41).
+     */
+    entropyThreshold: z.number().optional().nullable()
 });
 
 export const useConsistentObjectDefinitionOptionsSchema = z.object({
-	/**
-	 * The preferred syntax to enforce.
-	 */
-	syntax: objectPropertySyntaxSchema.and(z.string()).optional(),
+    /**
+     * The preferred syntax to enforce.
+     */
+    syntax: objectPropertySyntaxSchema.and(z.string()).optional()
 });
 
 export const utilityClassSortingOptionsSchema = z.object({
-	/**
-	 * Additional attributes that will be sorted.
-	 */
-	attributes: z.array(z.string()).optional().nullable(),
-	/**
-	 * Names of the functions or tagged templates that will be sorted.
-	 */
-	functions: z.array(z.string()).optional().nullable(),
+    /**
+     * Additional attributes that will be sorted.
+     */
+    attributes: z.array(z.string()).optional().nullable(),
+    /**
+     * Names of the functions or tagged templates that will be sorted.
+     */
+    functions: z.array(z.string()).optional().nullable()
 });
 
 /**
  * A list of rules that belong to this group
  */
 export const performanceSchema = z.object({
-	/**
-	 * Disallow the use of spread (...) syntax on accumulators.
-	 */
-	noAccumulatingSpread: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of barrel file.
-	 */
-	noBarrelFile: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of the delete operator.
-	 */
-	noDelete: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow accessing namespace imports dynamically.
-	 */
-	noDynamicNamespaceImportAccess: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent usage of \<img> element in a Next.js project.
-	 */
-	noImgElement: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of namespace imports.
-	 */
-	noNamespaceImport: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Avoid re-export all.
-	 */
-	noReExportAll: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
-	/**
-	 * Require regex literals to be declared at the top level.
-	 */
-	useTopLevelRegex: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of spread (...) syntax on accumulators.
+     */
+    noAccumulatingSpread: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of barrel file.
+     */
+    noBarrelFile: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of the delete operator.
+     */
+    noDelete: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow accessing namespace imports dynamically.
+     */
+    noDynamicNamespaceImportAccess: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent usage of \<img> element in a Next.js project.
+     */
+    noImgElement: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of namespace imports.
+     */
+    noNamespaceImport: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Avoid re-export all.
+     */
+    noReExportAll: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Require regex literals to be declared at the top level.
+     */
+    useTopLevelRegex: ruleConfigurationSchema.optional().nullable()
 });
 
 export const noBlankTargetOptionsSchema = z.object({
-	/**
-	 * List of domains where `target="_blank"` is allowed without `rel="noopener"`.
-	 */
-	allowDomains: z.array(z.string()).optional(),
-	/**
-	 * Whether `noreferrer` is allowed in addition to `noopener`.
-	 */
-	allowNoReferrer: z.boolean().optional(),
+    /**
+     * List of domains where `target="_blank"` is allowed without `rel="noopener"`.
+     */
+    allowDomains: z.array(z.string()).optional(),
+    /**
+     * Whether `noreferrer` is allowed in addition to `noopener`.
+     */
+    allowNoReferrer: z.boolean().optional()
 });
 
 /**
  * Options for the rule `noRestrictedGlobals`.
  */
 export const restrictedGlobalsOptionsSchema = z.object({
-	/**
-	 * A list of names that should trigger the rule
-	 */
-	deniedGlobals: z.record(z.string(), z.string()).optional(),
+    /**
+     * A list of names that should trigger the rule
+     */
+    deniedGlobals: z.record(z.string(), z.string()).optional()
 });
 
 export const customRestrictedImportSchema = z.union([z.string(), customRestrictedImportOptionsSchema]);
@@ -1045,280 +955,280 @@ export const customRestrictedImportSchema = z.union([z.string(), customRestricte
 export const customRestrictedTypeSchema = z.union([z.string(), customRestrictedTypeOptionsSchema]);
 
 export const useComponentExportOnlyModulesOptionsSchema = z.object({
-	/**
-	 * Allows the export of constants. This option is for environments that support it, such as [Vite](https://vitejs.dev/)
-	 */
-	allowConstantExport: z.boolean().optional(),
-	/**
-	 * A list of names that can be additionally exported from the module This option is for exports that do not hinder [React Fast Refresh](https://github.com/facebook/react/tree/main/packages/react-refresh), such as [`meta` in Remix](https://remix.run/docs/en/main/route/meta)
-	 */
-	allowExportNames: z.array(z.string()).optional(),
+    /**
+     * Allows the export of constants. This option is for environments that support it, such as [Vite](https://vitejs.dev/)
+     */
+    allowConstantExport: z.boolean().optional(),
+    /**
+     * A list of names that can be additionally exported from the module This option is for exports that do not hinder [React Fast Refresh](https://github.com/facebook/react/tree/main/packages/react-refresh), such as [`meta` in Remix](https://remix.run/docs/en/main/route/meta)
+     */
+    allowExportNames: z.array(z.string()).optional()
 });
 
 export const consistentArrayTypeOptionsSchema = z.object({
-	syntax: consistentArrayTypeSchema.and(z.string()).optional(),
+    syntax: consistentArrayTypeSchema.and(z.string()).optional()
 });
 
 export const consistentMemberAccessibilityOptionsSchema = z.object({
-	accessibility: accessibilitySchema.and(z.string()).optional(),
+    accessibility: accessibilitySchema.and(z.string()).optional()
 });
 
 /**
  * Rule's options.
  */
 export const filenamingConventionOptionsSchema = z.object({
-	/**
-	 * Allowed cases for file names.
-	 */
-	filenameCases: filenameCasesSchema.optional(),
-	/**
-	 * Regular expression to enforce
-	 */
-	match: regexSchema.optional().nullable(),
-	/**
-	 * If `false`, then non-ASCII characters are allowed.
-	 */
-	requireAscii: z.boolean().optional(),
-	/**
-	 * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
-	 */
-	strictCase: z.boolean().optional(),
+    /**
+     * Allowed cases for file names.
+     */
+    filenameCases: filenameCasesSchema.optional(),
+    /**
+     * Regular expression to enforce
+     */
+    match: regexSchema.optional().nullable(),
+    /**
+     * If `false`, then non-ASCII characters are allowed.
+     */
+    requireAscii: z.boolean().optional(),
+    /**
+     * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
+     */
+    strictCase: z.boolean().optional()
 });
 
 /**
  * Rule's options.
  */
 export const importTypeOptionsSchema = z.object({
-	style: style2Schema,
+    style: style2Schema
 });
 
 export const selectorSchema = z.object({
-	/**
-	 * Declaration kind
-	 */
-	kind: kindSchema.optional(),
-	/**
-	 * Modifiers used on the declaration
-	 */
-	modifiers: modifiersSchema.optional(),
-	/**
-	 * Scope of the declaration
-	 */
-	scope: scopeSchema.optional(),
+    /**
+     * Declaration kind
+     */
+    kind: kindSchema.optional(),
+    /**
+     * Modifiers used on the declaration
+     */
+    modifiers: modifiersSchema.optional(),
+    /**
+     * Scope of the declaration
+     */
+    scope: scopeSchema.optional()
 });
 
 /**
  * Options for the `useSelfClosingElements` rule.
  */
 export const useSelfClosingElementsOptionsSchema = z.object({
-	ignoreHtmlElements: z.boolean().optional(),
+    ignoreHtmlElements: z.boolean().optional()
 });
 
 /**
  * Options for the rule `noConfusingLabels`
  */
 export const noConfusingLabelsOptionsSchema = z.object({
-	/**
-	 * A list of (non-confusing) labels that should be allowed
-	 */
-	allowedLabels: z.array(z.string()).optional(),
+    /**
+     * A list of (non-confusing) labels that should be allowed
+     */
+    allowedLabels: z.array(z.string()).optional()
 });
 
 export const noConsoleOptionsSchema = z.object({
-	/**
-	 * Allowed calls on the console object.
-	 */
-	allow: z.array(z.string()),
+    /**
+     * Allowed calls on the console object.
+     */
+    allow: z.array(z.string())
 });
 
 /**
  * Rule's options
  */
 export const noDoubleEqualsOptionsSchema = z.object({
-	/**
-	 * If `true`, an exception is made when comparing with `null`, as it's often relied on to check both for `null` or `undefined`.
-	 *
-	 * If `false`, no such exception will be made.
-	 */
-	ignoreNull: z.boolean().optional(),
+    /**
+     * If `true`, an exception is made when comparing with `null`, as it's often relied on to check both for `null` or `undefined`.
+     *
+     * If `false`, no such exception will be made.
+     */
+    ignoreNull: z.boolean().optional()
 });
 
 /**
  * Options applied to CSS files
  */
 export const cssConfigurationSchema = z.object({
-	/**
-	 * CSS assist options
-	 */
-	assist: cssAssistConfigurationSchema.optional().nullable(),
-	/**
-	 * CSS formatter options
-	 */
-	formatter: cssFormatterConfigurationSchema.optional().nullable(),
-	/**
-	 * CSS globals
-	 */
-	globals: z.array(z.string()).optional().nullable(),
-	/**
-	 * CSS linter options
-	 */
-	linter: cssLinterConfigurationSchema.optional().nullable(),
-	/**
-	 * CSS parsing options
-	 */
-	parser: cssParserConfigurationSchema.optional().nullable(),
+    /**
+     * CSS assist options
+     */
+    assist: cssAssistConfigurationSchema.optional().nullable(),
+    /**
+     * CSS formatter options
+     */
+    formatter: cssFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * CSS globals
+     */
+    globals: z.array(z.string()).optional().nullable(),
+    /**
+     * CSS linter options
+     */
+    linter: cssLinterConfigurationSchema.optional().nullable(),
+    /**
+     * CSS parsing options
+     */
+    parser: cssParserConfigurationSchema.optional().nullable()
 });
 
 export const overrideFilesConfigurationSchema = z.object({
-	/**
-	 * File size limit in bytes
-	 */
-	maxSize: maxSizeSchema.optional().nullable(),
+    /**
+     * File size limit in bytes
+     */
+    maxSize: maxSizeSchema.optional().nullable()
 });
 
 export const overrideFormatterConfigurationSchema = z.object({
-	/**
-	 * The attribute position style.
-	 */
-	attributePosition: attributePositionSchema.optional().nullable(),
-	/**
-	 * Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements).
-	 */
-	bracketSameLine: bracketSameLineSchema.optional().nullable(),
-	/**
-	 * Whether to insert spaces around brackets in object literals. Defaults to true.
-	 */
-	bracketSpacing: bracketSpacingSchema.optional().nullable(),
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
-	 */
-	expand: expandSchema.optional().nullable(),
-	/**
-	 * Stores whether formatting should be allowed to proceed if a given file has syntax errors
-	 */
-	formatWithErrors: boolSchema.optional().nullable(),
-	/**
-	 * The size of the indentation, 2 by default (deprecated, use `indent-width`)
-	 */
-	indentSize: indentWidthSchema.optional().nullable(),
-	/**
-	 * The indent style.
-	 */
-	indentStyle: indentStyleSchema.optional().nullable(),
-	/**
-	 * The size of the indentation, 2 by default
-	 */
-	indentWidth: indentWidthSchema.optional().nullable(),
-	/**
-	 * The type of line ending.
-	 */
-	lineEnding: lineEndingSchema.optional().nullable(),
-	/**
-	 * What's the max width of a line. Defaults to 80.
-	 */
-	lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * The attribute position style.
+     */
+    attributePosition: attributePositionSchema.optional().nullable(),
+    /**
+     * Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements).
+     */
+    bracketSameLine: bracketSameLineSchema.optional().nullable(),
+    /**
+     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     */
+    bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * Whether to expand arrays and objects on multiple lines. When set to `auto`, object literals are formatted on multiple lines if the first property has a newline, and array literals are formatted on a single line if it fits in the line. When set to `always`, these literals are formatted on multiple lines, regardless of length of the list. When set to `never`, these literals are formatted on a single line if it fits in the line. When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+     */
+    expand: expandSchema.optional().nullable(),
+    /**
+     * Stores whether formatting should be allowed to proceed if a given file has syntax errors
+     */
+    formatWithErrors: boolSchema.optional().nullable(),
+    /**
+     * The size of the indentation, 2 by default (deprecated, use `indent-width`)
+     */
+    indentSize: indentWidthSchema.optional().nullable(),
+    /**
+     * The indent style.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * The size of the indentation, 2 by default
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of line ending.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable()
 });
 
 /**
  * Options applied to GraphQL files
  */
 export const graphqlConfigurationSchema = z.object({
-	/**
-	 * Assist options
-	 */
-	assist: graphqlAssistConfigurationSchema.optional().nullable(),
-	/**
-	 * GraphQL formatter options
-	 */
-	formatter: graphqlFormatterConfigurationSchema.optional().nullable(),
-	linter: graphqlLinterConfigurationSchema.optional().nullable(),
+    /**
+     * Assist options
+     */
+    assist: graphqlAssistConfigurationSchema.optional().nullable(),
+    /**
+     * GraphQL formatter options
+     */
+    formatter: graphqlFormatterConfigurationSchema.optional().nullable(),
+    linter: graphqlLinterConfigurationSchema.optional().nullable()
 });
 
 /**
  * Options applied to GritQL files
  */
 export const gritConfigurationSchema = z.object({
-	/**
-	 * Assist options
-	 */
-	assist: gritAssistConfigurationSchema.optional().nullable(),
-	/**
-	 * Formatting options
-	 */
-	formatter: gritFormatterConfigurationSchema.optional().nullable(),
-	/**
-	 * Formatting options
-	 */
-	linter: gritLinterConfigurationSchema.optional().nullable(),
+    /**
+     * Assist options
+     */
+    assist: gritAssistConfigurationSchema.optional().nullable(),
+    /**
+     * Formatting options
+     */
+    formatter: gritFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * Formatting options
+     */
+    linter: gritLinterConfigurationSchema.optional().nullable()
 });
 
 /**
  * Options applied to HTML files
  */
 export const htmlConfigurationSchema = z.object({
-	/**
-	 * HTML formatter options
-	 */
-	formatter: htmlFormatterConfigurationSchema.optional().nullable(),
-	/**
-	 * HTML parsing options
-	 */
-	parser: htmlParserConfigurationSchema.optional(),
+    /**
+     * HTML formatter options
+     */
+    formatter: htmlFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * HTML parsing options
+     */
+    parser: htmlParserConfigurationSchema.optional()
 });
 
 /**
  * A set of options applied to the JavaScript files
  */
 export const jsConfigurationSchema = z.object({
-	/**
-	 * Assist options
-	 */
-	assist: jsAssistConfigurationSchema.optional().nullable(),
-	/**
-	 * Formatting options
-	 */
-	formatter: jsFormatterConfigurationSchema.optional().nullable(),
-	/**
-	 * A list of global bindings that should be ignored by the analyzers
-	 *
-	 * If defined here, they should not emit diagnostics.
-	 */
-	globals: z.array(z.string()).optional().nullable(),
-	/**
-	 * Indicates the type of runtime or transformation used for interpreting JSX.
-	 */
-	jsxRuntime: jsxRuntimeSchema.optional().nullable(),
-	/**
-	 * Linter options
-	 */
-	linter: jsLinterConfigurationSchema.optional().nullable(),
-	/**
-	 * Parsing options
-	 */
-	parser: jsParserConfigurationSchema.optional().nullable(),
+    /**
+     * Assist options
+     */
+    assist: jsAssistConfigurationSchema.optional().nullable(),
+    /**
+     * Formatting options
+     */
+    formatter: jsFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * A list of global bindings that should be ignored by the analyzers
+     *
+     * If defined here, they should not emit diagnostics.
+     */
+    globals: z.array(z.string()).optional().nullable(),
+    /**
+     * Indicates the type of runtime or transformation used for interpreting JSX.
+     */
+    jsxRuntime: jsxRuntimeSchema.optional().nullable(),
+    /**
+     * Linter options
+     */
+    linter: jsLinterConfigurationSchema.optional().nullable(),
+    /**
+     * Parsing options
+     */
+    parser: jsParserConfigurationSchema.optional().nullable()
 });
 
 /**
  * Options applied to JSON files
  */
 export const jsonConfigurationSchema = z.object({
-	/**
-	 * Assist options
-	 */
-	assist: jsonAssistConfigurationSchema.optional().nullable(),
-	/**
-	 * Formatting options
-	 */
-	formatter: jsonFormatterConfigurationSchema.optional().nullable(),
-	/**
-	 * Linting options
-	 */
-	linter: jsonLinterConfigurationSchema.optional().nullable(),
-	/**
-	 * Parsing options
-	 */
-	parser: jsonParserConfigurationSchema.optional().nullable(),
+    /**
+     * Assist options
+     */
+    assist: jsonAssistConfigurationSchema.optional().nullable(),
+    /**
+     * Formatting options
+     */
+    formatter: jsonFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * Linting options
+     */
+    linter: jsonLinterConfigurationSchema.optional().nullable(),
+    /**
+     * Parsing options
+     */
+    parser: jsonParserConfigurationSchema.optional().nullable()
 });
 
 /**
@@ -1327,521 +1237,455 @@ export const jsonConfigurationSchema = z.object({
 export const importSourceGlobSchema = globSchema;
 
 export const ruleWithNoLabelWithoutControlOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noLabelWithoutControlOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noLabelWithoutControlOptionsSchema.optional()
 });
 
 export const ruleWithValidAriaRoleOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: validAriaRoleOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: validAriaRoleOptionsSchema.optional()
 });
 
 export const ruleWithUseValidAutocompleteOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: useValidAutocompleteOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useValidAutocompleteOptionsSchema.optional()
 });
 
 export const ruleWithComplexityOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: complexityOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: complexityOptionsSchema.optional()
 });
 
 export const ruleWithNoForEachOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noForEachOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noForEachOptionsSchema.optional()
 });
 
 export const ruleWithNoPrivateImportsOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noPrivateImportsOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noPrivateImportsOptionsSchema.optional()
 });
 
 export const ruleWithNoUndeclaredDependenciesOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noUndeclaredDependenciesOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noUndeclaredDependenciesOptionsSchema.optional()
 });
 
 export const ruleWithUndeclaredVariablesOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: undeclaredVariablesOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: undeclaredVariablesOptionsSchema.optional()
 });
 
 export const ruleWithNoUnusedVariablesOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noUnusedVariablesOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noUnusedVariablesOptionsSchema.optional()
 });
 
 export const ruleWithDeprecatedHooksOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: deprecatedHooksOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: deprecatedHooksOptionsSchema.optional()
 });
 
 export const ruleWithUseImportExtensionsOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: useImportExtensionsOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useImportExtensionsOptionsSchema.optional()
 });
 
 export const ruleWithUseJsxKeyInIterableOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: useJsxKeyInIterableOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useJsxKeyInIterableOptionsSchema.optional()
 });
 
 export const ruleWithNoBitwiseOperatorsOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noBitwiseOperatorsOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noBitwiseOperatorsOptionsSchema.optional()
 });
 
 export const ruleWithNoSecretsOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noSecretsOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noSecretsOptionsSchema.optional()
 });
 
 export const ruleWithUseConsistentObjectDefinitionOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: useConsistentObjectDefinitionOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useConsistentObjectDefinitionOptionsSchema.optional()
 });
 
 export const ruleWithUtilityClassSortingOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: utilityClassSortingOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: utilityClassSortingOptionsSchema.optional()
 });
 
 export const severityOrGroupForPerformanceSchema = z.union([groupPlainConfigurationSchema, performanceSchema]);
 
 export const ruleWithNoBlankTargetOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noBlankTargetOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noBlankTargetOptionsSchema.optional()
 });
 
 export const ruleWithRestrictedGlobalsOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: restrictedGlobalsOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: restrictedGlobalsOptionsSchema.optional()
 });
 
 export const ruleWithUseComponentExportOnlyModulesOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: useComponentExportOnlyModulesOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useComponentExportOnlyModulesOptionsSchema.optional()
 });
 
 export const ruleWithConsistentArrayTypeOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: consistentArrayTypeOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: consistentArrayTypeOptionsSchema.optional()
 });
 
 export const ruleWithConsistentMemberAccessibilityOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: consistentMemberAccessibilityOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: consistentMemberAccessibilityOptionsSchema.optional()
 });
 
 export const ruleWithFilenamingConventionOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: filenamingConventionOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: filenamingConventionOptionsSchema.optional()
 });
 
 export const ruleWithImportTypeOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: importTypeOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: importTypeOptionsSchema.optional()
 });
 
 export const ruleWithUseSelfClosingElementsOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: useSelfClosingElementsOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useSelfClosingElementsOptionsSchema.optional()
 });
 
 export const ruleWithNoConfusingLabelsOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noConfusingLabelsOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noConfusingLabelsOptionsSchema.optional()
 });
 
 export const ruleWithNoConsoleOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noConsoleOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noConsoleOptionsSchema.optional()
 });
 
 export const ruleWithNoDoubleEqualsOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noDoubleEqualsOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noDoubleEqualsOptionsSchema.optional()
 });
 
-export const noLabelWithoutControlConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoLabelWithoutControlOptionsSchema,
-]);
+export const noLabelWithoutControlConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLabelWithoutControlOptionsSchema]);
 
-export const validAriaRoleConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithValidAriaRoleOptionsSchema,
-]);
+export const validAriaRoleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithValidAriaRoleOptionsSchema]);
 
-export const useValidAutocompleteConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUseValidAutocompleteOptionsSchema,
-]);
+export const useValidAutocompleteConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseValidAutocompleteOptionsSchema]);
 
 export const complexityConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithComplexityOptionsSchema]);
 
 export const noForEachConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoForEachOptionsSchema]);
 
-export const noPrivateImportsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoPrivateImportsOptionsSchema,
-]);
+export const noPrivateImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPrivateImportsOptionsSchema]);
 
-export const noUndeclaredDependenciesConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoUndeclaredDependenciesOptionsSchema,
-]);
+export const noUndeclaredDependenciesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUndeclaredDependenciesOptionsSchema]);
 
-export const undeclaredVariablesConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUndeclaredVariablesOptionsSchema,
-]);
+export const undeclaredVariablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUndeclaredVariablesOptionsSchema]);
 
-export const noUnusedVariablesConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoUnusedVariablesOptionsSchema,
-]);
+export const noUnusedVariablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedVariablesOptionsSchema]);
 
-export const deprecatedHooksConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithDeprecatedHooksOptionsSchema,
-]);
+export const deprecatedHooksConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithDeprecatedHooksOptionsSchema]);
 
-export const useImportExtensionsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUseImportExtensionsOptionsSchema,
-]);
+export const useImportExtensionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImportExtensionsOptionsSchema]);
 
-export const useJsxKeyInIterableConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUseJsxKeyInIterableOptionsSchema,
-]);
+export const useJsxKeyInIterableConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseJsxKeyInIterableOptionsSchema]);
 
 /**
  * Options for the rule `useExhaustiveDependencies`
  */
 export const useExhaustiveDependenciesOptionsSchema = z.object({
-	/**
-	 * List of hooks of which the dependencies should be validated.
-	 */
-	hooks: z.array(hookSchema).optional(),
-	/**
-	 * Whether to report an error when a hook has no dependencies array.
-	 */
-	reportMissingDependenciesArray: z.boolean().optional(),
-	/**
-	 * Whether to report an error when a dependency is listed in the dependencies array but isn't used. Defaults to true.
-	 */
-	reportUnnecessaryDependencies: z.boolean().optional(),
+    /**
+     * List of hooks of which the dependencies should be validated.
+     */
+    hooks: z.array(hookSchema).optional(),
+    /**
+     * Whether to report an error when a hook has no dependencies array.
+     */
+    reportMissingDependenciesArray: z.boolean().optional(),
+    /**
+     * Whether to report an error when a dependency is listed in the dependencies array but isn't used. Defaults to true.
+     */
+    reportUnnecessaryDependencies: z.boolean().optional()
 });
 
-export const noBitwiseOperatorsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoBitwiseOperatorsOptionsSchema,
-]);
+export const noBitwiseOperatorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBitwiseOperatorsOptionsSchema]);
 
 export const noSecretsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSecretsOptionsSchema]);
 
-export const useConsistentObjectDefinitionConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUseConsistentObjectDefinitionOptionsSchema,
-]);
+export const useConsistentObjectDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentObjectDefinitionOptionsSchema]);
 
-export const utilityClassSortingConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUtilityClassSortingOptionsSchema,
-]);
+export const utilityClassSortingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUtilityClassSortingOptionsSchema]);
 
 export const noRestrictedElementsOptionsSchema = z.object({
-	/**
-	 * Elements to restrict. Each key is the element name, and the value is the message to show when the element is used.
-	 */
-	elements: customRestrictedElementsSchema.optional(),
+    /**
+     * Elements to restrict. Each key is the element name, and the value is the message to show when the element is used.
+     */
+    elements: customRestrictedElementsSchema.optional()
 });
 
-export const noBlankTargetConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoBlankTargetOptionsSchema,
-]);
+export const noBlankTargetConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBlankTargetOptionsSchema]);
 
-export const restrictedGlobalsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithRestrictedGlobalsOptionsSchema,
-]);
+export const restrictedGlobalsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithRestrictedGlobalsOptionsSchema]);
 
-export const useComponentExportOnlyModulesConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUseComponentExportOnlyModulesOptionsSchema,
-]);
+export const useComponentExportOnlyModulesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseComponentExportOnlyModulesOptionsSchema]);
 
-export const consistentArrayTypeConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithConsistentArrayTypeOptionsSchema,
-]);
+export const consistentArrayTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithConsistentArrayTypeOptionsSchema]);
 
-export const consistentMemberAccessibilityConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithConsistentMemberAccessibilityOptionsSchema,
-]);
+export const consistentMemberAccessibilityConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithConsistentMemberAccessibilityOptionsSchema]);
 
-export const filenamingConventionConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithFilenamingConventionOptionsSchema,
-]);
+export const filenamingConventionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithFilenamingConventionOptionsSchema]);
 
 export const importTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithImportTypeOptionsSchema]);
 
-export const useSelfClosingElementsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUseSelfClosingElementsOptionsSchema,
-]);
+export const useSelfClosingElementsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSelfClosingElementsOptionsSchema]);
 
 /**
  * Options for the rule `noRestrictedImports`.
  */
 export const restrictedImportsOptionsSchema = z.object({
-	/**
-	 * A list of import paths that should trigger the rule.
-	 */
-	paths: z.record(z.string(), customRestrictedImportSchema).optional(),
+    /**
+     * A list of import paths that should trigger the rule.
+     */
+    paths: z.record(z.string(), customRestrictedImportSchema).optional()
 });
 
 export const noRestrictedTypesOptionsSchema = z.object({
-	types: z.record(z.string(), customRestrictedTypeSchema).optional(),
+    types: z.record(z.string(), customRestrictedTypeSchema).optional()
 });
 
 export const conventionSchema = z.object({
-	/**
-	 * String cases to enforce
-	 */
-	formats: formatsSchema.optional(),
-	/**
-	 * Regular expression to enforce
-	 */
-	match: regexSchema.optional().nullable(),
-	/**
-	 * Declarations concerned by this convention
-	 */
-	selector: selectorSchema.optional(),
+    /**
+     * String cases to enforce
+     */
+    formats: formatsSchema.optional(),
+    /**
+     * Regular expression to enforce
+     */
+    match: regexSchema.optional().nullable(),
+    /**
+     * Declarations concerned by this convention
+     */
+    selector: selectorSchema.optional()
 });
 
-export const noConfusingLabelsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoConfusingLabelsOptionsSchema,
-]);
+export const noConfusingLabelsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConfusingLabelsOptionsSchema]);
 
 export const noConsoleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConsoleOptionsSchema]);
 
-export const noDoubleEqualsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoDoubleEqualsOptionsSchema,
-]);
+export const noDoubleEqualsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDoubleEqualsOptionsSchema]);
 
 export const sourceMatcherSchema = z.union([negatablePredefinedSourceMatcherSchema, importSourceGlobSchema]);
 
@@ -1851,740 +1695,738 @@ export const sourcesMatcherSchema = z.union([sourceMatcherSchema, z.array(source
  * A list of rules that belong to this group
  */
 export const a11ySchema = z.object({
-	/**
-	 * Enforce that the accessKey attribute is not used on any HTML element.
-	 */
-	noAccessKey: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that aria-hidden="true" is not set on focusable elements.
-	 */
-	noAriaHiddenOnFocusable: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
-	 */
-	noAriaUnsupportedElements: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that autoFocus prop is not used on elements.
-	 */
-	noAutofocus: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforces that no distracting elements are used.
-	 */
-	noDistractingElements: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * The scope prop should be used only on \<th> elements.
-	 */
-	noHeaderScope: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that non-interactive ARIA roles are not assigned to interactive HTML elements.
-	 */
-	noInteractiveElementToNoninteractiveRole: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that a label element or component has a text label and an associated input.
-	 */
-	noLabelWithoutControl: noLabelWithoutControlConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
-	 */
-	noNoninteractiveElementToInteractiveRole: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that tabIndex is not assigned to non-interactive HTML elements.
-	 */
-	noNoninteractiveTabindex: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent the usage of positive integers on tabIndex property
-	 */
-	noPositiveTabindex: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce img alt prop does not contain the word "image", "picture", or "photo".
-	 */
-	noRedundantAlt: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce explicit role property is not the same as implicit/default role property on an element.
-	 */
-	noRedundantRoles: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that static, visible elements (such as \<div>) that have click handlers use the valid role attribute.
-	 */
-	noStaticElementInteractions: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforces the usage of the title element for the svg element.
-	 */
-	noSvgWithoutTitle: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
-	/**
-	 * Enforce that all elements that require alternative text have meaningful information to relay back to the end user.
-	 */
-	useAltText: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that anchors have content and that the content is accessible to screen readers.
-	 */
-	useAnchorContent: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that tabIndex is assigned to non-interactive HTML elements with aria-activedescendant.
-	 */
-	useAriaActivedescendantWithTabindex: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
-	 */
-	useAriaPropsForRole: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that ARIA properties are valid for the roles that are supported by the element.
-	 */
-	useAriaPropsSupportedByRole: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforces the usage of the attribute type for the element button
-	 */
-	useButtonType: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Elements with an interactive role and interaction handlers must be focusable.
-	 */
-	useFocusableInteractive: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow a missing generic family keyword within font families.
-	 */
-	useGenericFontNames: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.
-	 */
-	useHeadingContent: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that html element has lang attribute.
-	 */
-	useHtmlLang: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforces the usage of the attribute title for the element iframe.
-	 */
-	useIframeTitle: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress.
-	 */
-	useKeyWithClickEvents: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur.
-	 */
-	useKeyWithMouseEvents: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforces that audio and video elements must have a track for captions.
-	 */
-	useMediaCaption: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * It detects the use of role attributes in JSX elements and suggests using semantic elements instead.
-	 */
-	useSemanticElements: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that all anchors are valid, and they are navigable elements.
-	 */
-	useValidAnchor: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Ensures that ARIA properties aria-* are all valid.
-	 */
-	useValidAriaProps: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Elements with ARIA roles must use a valid, non-abstract ARIA role.
-	 */
-	useValidAriaRole: validAriaRoleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that ARIA state and property values are valid.
-	 */
-	useValidAriaValues: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Use valid values for the autocomplete attribute on input elements.
-	 */
-	useValidAutocomplete: useValidAutocompleteConfigurationSchema.optional().nullable(),
-	/**
-	 * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
-	 */
-	useValidLang: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that the accessKey attribute is not used on any HTML element.
+     */
+    noAccessKey: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that aria-hidden="true" is not set on focusable elements.
+     */
+    noAriaHiddenOnFocusable: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
+     */
+    noAriaUnsupportedElements: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that autoFocus prop is not used on elements.
+     */
+    noAutofocus: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces that no distracting elements are used.
+     */
+    noDistractingElements: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * The scope prop should be used only on \<th> elements.
+     */
+    noHeaderScope: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that non-interactive ARIA roles are not assigned to interactive HTML elements.
+     */
+    noInteractiveElementToNoninteractiveRole: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that a label element or component has a text label and an associated input.
+     */
+    noLabelWithoutControl: noLabelWithoutControlConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
+     */
+    noNoninteractiveElementToInteractiveRole: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that tabIndex is not assigned to non-interactive HTML elements.
+     */
+    noNoninteractiveTabindex: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent the usage of positive integers on tabIndex property
+     */
+    noPositiveTabindex: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce img alt prop does not contain the word "image", "picture", or "photo".
+     */
+    noRedundantAlt: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce explicit role property is not the same as implicit/default role property on an element.
+     */
+    noRedundantRoles: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that static, visible elements (such as \<div>) that have click handlers use the valid role attribute.
+     */
+    noStaticElementInteractions: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces the usage of the title element for the svg element.
+     */
+    noSvgWithoutTitle: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Enforce that all elements that require alternative text have meaningful information to relay back to the end user.
+     */
+    useAltText: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that anchors have content and that the content is accessible to screen readers.
+     */
+    useAnchorContent: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that tabIndex is assigned to non-interactive HTML elements with aria-activedescendant.
+     */
+    useAriaActivedescendantWithTabindex: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
+     */
+    useAriaPropsForRole: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that ARIA properties are valid for the roles that are supported by the element.
+     */
+    useAriaPropsSupportedByRole: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces the usage of the attribute type for the element button
+     */
+    useButtonType: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Elements with an interactive role and interaction handlers must be focusable.
+     */
+    useFocusableInteractive: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow a missing generic family keyword within font families.
+     */
+    useGenericFontNames: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.
+     */
+    useHeadingContent: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that html element has lang attribute.
+     */
+    useHtmlLang: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces the usage of the attribute title for the element iframe.
+     */
+    useIframeTitle: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress.
+     */
+    useKeyWithClickEvents: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur.
+     */
+    useKeyWithMouseEvents: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces that audio and video elements must have a track for captions.
+     */
+    useMediaCaption: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * It detects the use of role attributes in JSX elements and suggests using semantic elements instead.
+     */
+    useSemanticElements: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that all anchors are valid, and they are navigable elements.
+     */
+    useValidAnchor: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Ensures that ARIA properties aria-* are all valid.
+     */
+    useValidAriaProps: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Elements with ARIA roles must use a valid, non-abstract ARIA role.
+     */
+    useValidAriaRole: validAriaRoleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that ARIA state and property values are valid.
+     */
+    useValidAriaValues: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Use valid values for the autocomplete attribute on input elements.
+     */
+    useValidAutocomplete: useValidAutocompleteConfigurationSchema.optional().nullable(),
+    /**
+     * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
+     */
+    useValidLang: ruleConfigurationSchema.optional().nullable()
 });
 
 /**
  * A list of rules that belong to this group
  */
 export const complexitySchema = z.object({
-	/**
-	 * Disallow unclear usage of consecutive space characters in regular expression literals
-	 */
-	noAdjacentSpacesInRegex: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of arguments.
-	 */
-	noArguments: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow primitive type aliases and misleading types.
-	 */
-	noBannedTypes: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow comma operator.
-	 */
-	noCommaOperator: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow empty type parameters in type aliases and interfaces.
-	 */
-	noEmptyTypeParameters: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow functions that exceed a given Cognitive Complexity score.
-	 */
-	noExcessiveCognitiveComplexity: complexityConfigurationSchema.optional().nullable(),
-	/**
-	 * This rule enforces a maximum depth to nested describe() in test files.
-	 */
-	noExcessiveNestedTestSuites: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary boolean casts
-	 */
-	noExtraBooleanCast: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow to use unnecessary callback on flatMap.
-	 */
-	noFlatMapIdentity: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prefer for...of statement instead of Array.forEach.
-	 */
-	noForEach: noForEachConfigurationSchema.optional().nullable(),
-	/**
-	 * This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
-	 */
-	noStaticOnlyClass: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow this and super in static contexts.
-	 */
-	noThisInStatic: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary catch clauses.
-	 */
-	noUselessCatch: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary constructors.
-	 */
-	noUselessConstructor: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Avoid using unnecessary continue.
-	 */
-	noUselessContinue: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow empty exports that don't change anything in a module file.
-	 */
-	noUselessEmptyExport: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary escape sequence in regular expression literals.
-	 */
-	noUselessEscapeInRegex: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary fragments
-	 */
-	noUselessFragments: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary labels.
-	 */
-	noUselessLabel: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary nested block statements.
-	 */
-	noUselessLoneBlockStatements: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow renaming import, export, and destructured assignments to the same name.
-	 */
-	noUselessRename: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary concatenation of string or template literals.
-	 */
-	noUselessStringConcat: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary String.raw function in template string literals without any escape sequence.
-	 */
-	noUselessStringRaw: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow useless case in switch statements.
-	 */
-	noUselessSwitchCase: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow ternary operators when simpler alternatives exist.
-	 */
-	noUselessTernary: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow useless this aliasing.
-	 */
-	noUselessThisAlias: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow using any or unknown as type constraint.
-	 */
-	noUselessTypeConstraint: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow initializing variables to undefined.
-	 */
-	noUselessUndefinedInitialization: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of void operators, which is not a familiar operator.
-	 */
-	noVoid: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
-	/**
-	 * Use arrow functions over function expressions.
-	 */
-	useArrowFunction: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Use Date.now() to get the number of milliseconds since the Unix Epoch.
-	 */
-	useDateNow: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Promotes the use of .flatMap() when map().flat() are used together.
-	 */
-	useFlatMap: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the usage of a literal access to properties over computed property access.
-	 */
-	useLiteralKeys: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
-	 */
-	useNumericLiterals: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce using concise optional chain instead of chained logical expressions.
-	 */
-	useOptionalChain: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the use of the regular expression literals instead of the RegExp constructor if possible.
-	 */
-	useRegexLiterals: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow number literal object member names which are not base 10 or use underscore as separator.
-	 */
-	useSimpleNumberKeys: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Discard redundant terms from logical expressions.
-	 */
-	useSimplifiedLogicExpression: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed.
-	 */
-	useWhile: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unclear usage of consecutive space characters in regular expression literals
+     */
+    noAdjacentSpacesInRegex: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of arguments.
+     */
+    noArguments: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow primitive type aliases and misleading types.
+     */
+    noBannedTypes: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow comma operator.
+     */
+    noCommaOperator: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow empty type parameters in type aliases and interfaces.
+     */
+    noEmptyTypeParameters: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow functions that exceed a given Cognitive Complexity score.
+     */
+    noExcessiveCognitiveComplexity: complexityConfigurationSchema.optional().nullable(),
+    /**
+     * This rule enforces a maximum depth to nested describe() in test files.
+     */
+    noExcessiveNestedTestSuites: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary boolean casts
+     */
+    noExtraBooleanCast: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow to use unnecessary callback on flatMap.
+     */
+    noFlatMapIdentity: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer for...of statement instead of Array.forEach.
+     */
+    noForEach: noForEachConfigurationSchema.optional().nullable(),
+    /**
+     * This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
+     */
+    noStaticOnlyClass: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow this and super in static contexts.
+     */
+    noThisInStatic: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary catch clauses.
+     */
+    noUselessCatch: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary constructors.
+     */
+    noUselessConstructor: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Avoid using unnecessary continue.
+     */
+    noUselessContinue: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow empty exports that don't change anything in a module file.
+     */
+    noUselessEmptyExport: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary escape sequence in regular expression literals.
+     */
+    noUselessEscapeInRegex: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary fragments
+     */
+    noUselessFragments: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary labels.
+     */
+    noUselessLabel: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary nested block statements.
+     */
+    noUselessLoneBlockStatements: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow renaming import, export, and destructured assignments to the same name.
+     */
+    noUselessRename: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary concatenation of string or template literals.
+     */
+    noUselessStringConcat: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary String.raw function in template string literals without any escape sequence.
+     */
+    noUselessStringRaw: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow useless case in switch statements.
+     */
+    noUselessSwitchCase: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow ternary operators when simpler alternatives exist.
+     */
+    noUselessTernary: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow useless this aliasing.
+     */
+    noUselessThisAlias: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using any or unknown as type constraint.
+     */
+    noUselessTypeConstraint: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow initializing variables to undefined.
+     */
+    noUselessUndefinedInitialization: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of void operators, which is not a familiar operator.
+     */
+    noVoid: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Use arrow functions over function expressions.
+     */
+    useArrowFunction: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Use Date.now() to get the number of milliseconds since the Unix Epoch.
+     */
+    useDateNow: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Promotes the use of .flatMap() when map().flat() are used together.
+     */
+    useFlatMap: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the usage of a literal access to properties over computed property access.
+     */
+    useLiteralKeys: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals
+     */
+    useNumericLiterals: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using concise optional chain instead of chained logical expressions.
+     */
+    useOptionalChain: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of the regular expression literals instead of the RegExp constructor if possible.
+     */
+    useRegexLiterals: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow number literal object member names which are not base 10 or use underscore as separator.
+     */
+    useSimpleNumberKeys: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Discard redundant terms from logical expressions.
+     */
+    useSimplifiedLogicExpression: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed.
+     */
+    useWhile: ruleFixConfigurationSchema.optional().nullable()
 });
 
 export const ruleWithUseExhaustiveDependenciesOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: useExhaustiveDependenciesOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useExhaustiveDependenciesOptionsSchema.optional()
 });
 
 export const ruleWithNoRestrictedElementsOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noRestrictedElementsOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noRestrictedElementsOptionsSchema.optional()
 });
 
 /**
  * A list of rules that belong to this group
  */
 export const securitySchema = z.object({
-	/**
-	 * Disallow target="_blank" attribute without rel="noopener".
-	 */
-	noBlankTarget: noBlankTargetConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent the usage of dangerous JSX props
-	 */
-	noDangerouslySetInnerHtml: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop.
-	 */
-	noDangerouslySetInnerHtmlWithChildren: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of global eval().
-	 */
-	noGlobalEval: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
+    /**
+     * Disallow target="_blank" attribute without rel="noopener".
+     */
+    noBlankTarget: noBlankTargetConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent the usage of dangerous JSX props
+     */
+    noDangerouslySetInnerHtml: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop.
+     */
+    noDangerouslySetInnerHtmlWithChildren: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of global eval().
+     */
+    noGlobalEval: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable()
 });
 
 export const ruleWithRestrictedImportsOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: restrictedImportsOptionsSchema.optional(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: restrictedImportsOptionsSchema.optional()
 });
 
 export const ruleWithNoRestrictedTypesOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: noRestrictedTypesOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noRestrictedTypesOptionsSchema.optional()
 });
 
 /**
  * A list of rules that belong to this group
  */
 export const suspiciousSchema = z.object({
-	/**
-	 * Use standard constants instead of approximated literals.
-	 */
-	noApproximativeNumericConstant: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Discourage the usage of Array index in keys.
-	 */
-	noArrayIndexKey: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow assignments in expressions.
-	 */
-	noAssignInExpressions: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallows using an async function as a Promise executor.
-	 */
-	noAsyncPromiseExecutor: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow reassigning exceptions in catch clauses.
-	 */
-	noCatchAssign: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow reassigning class members.
-	 */
-	noClassAssign: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent comments from being inserted as text nodes
-	 */
-	noCommentText: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow comparing against -0
-	 */
-	noCompareNegZero: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow labeled statements that are not loops.
-	 */
-	noConfusingLabels: noConfusingLabelsConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow void type outside of generic or return types.
-	 */
-	noConfusingVoidType: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of console.
-	 */
-	noConsole: noConsoleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow TypeScript const enum
-	 */
-	noConstEnum: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents from having control characters and some escape sequences that match control characters in regular expression literals.
-	 */
-	noControlCharactersInRegex: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of debugger
-	 */
-	noDebugger: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow direct assignments to document.cookie.
-	 */
-	noDocumentCookie: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents importing next/document outside of pages/_document.jsx in Next.js projects.
-	 */
-	noDocumentImportInPage: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Require the use of === and !==.
-	 */
-	noDoubleEquals: noDoubleEqualsConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate @import rules.
-	 */
-	noDuplicateAtImportRules: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate case labels.
-	 */
-	noDuplicateCase: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate class members.
-	 */
-	noDuplicateClassMembers: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate custom properties within declaration blocks.
-	 */
-	noDuplicateCustomProperties: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate conditions in if-else-if chains
-	 */
-	noDuplicateElseIf: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * No duplicated fields in GraphQL operations.
-	 */
-	noDuplicateFields: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate names within font families.
-	 */
-	noDuplicateFontNames: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents JSX properties to be assigned multiple times.
-	 */
-	noDuplicateJsxProps: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow two keys with the same name inside objects.
-	 */
-	noDuplicateObjectKeys: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate function parameter name.
-	 */
-	noDuplicateParameters: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate properties within declaration blocks.
-	 */
-	noDuplicateProperties: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow duplicate selectors within keyframe blocks.
-	 */
-	noDuplicateSelectorsKeyframeBlock: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * A describe block should not contain duplicate hooks.
-	 */
-	noDuplicateTestHooks: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow CSS empty blocks.
-	 */
-	noEmptyBlock: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow empty block statements and static blocks.
-	 */
-	noEmptyBlockStatements: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the declaration of empty interfaces.
-	 */
-	noEmptyInterface: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow variables from evolving into any type through reassignments.
-	 */
-	noEvolvingTypes: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the any type usage.
-	 */
-	noExplicitAny: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow using export or module.exports in files containing tests
-	 */
-	noExportsInTest: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
-	 */
-	noExtraNonNullAssertion: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow fallthrough of switch clauses.
-	 */
-	noFallthroughSwitchClause: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow focused tests.
-	 */
-	noFocusedTests: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow reassigning function declarations.
-	 */
-	noFunctionAssign: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow assignments to native objects and read-only global variables.
-	 */
-	noGlobalAssign: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Use Number.isFinite instead of global isFinite.
-	 */
-	noGlobalIsFinite: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Use Number.isNaN instead of global isNaN.
-	 */
-	noGlobalIsNan: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent using the next/head module in pages/_document.js on Next.js projects.
-	 */
-	noHeadImportInDocument: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow use of implicit any type on variable declarations.
-	 */
-	noImplicitAnyLet: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow assigning to imported bindings
-	 */
-	noImportAssign: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow invalid !important within keyframe declarations
-	 */
-	noImportantInKeyframe: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallows the use of irregular whitespace characters.
-	 */
-	noIrregularWhitespace: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow labels that share a name with a variable
-	 */
-	noLabelVar: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow characters made with multiple code points in character class syntax.
-	 */
-	noMisleadingCharacterClass: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce proper usage of new and constructor.
-	 */
-	noMisleadingInstantiator: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Checks that the assertion function, for example expect, is placed inside an it() function call.
-	 */
-	noMisplacedAssertion: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow shorthand assign when variable appears on both sides.
-	 */
-	noMisrefactoredShorthandAssign: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow octal escape sequences in string literals
-	 */
-	noOctalEscape: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow direct use of Object.prototype builtins.
-	 */
-	noPrototypeBuiltins: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents React-specific JSX properties from being used.
-	 */
-	noReactSpecificProps: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow variable, function, class, and type redeclarations in the same scope.
-	 */
-	noRedeclare: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents from having redundant "use strict".
-	 */
-	noRedundantUseStrict: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow comparisons where both sides are exactly the same.
-	 */
-	noSelfCompare: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow identifiers from shadowing restricted names.
-	 */
-	noShadowRestrictedNames: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow shorthand properties that override related longhand properties.
-	 */
-	noShorthandPropertyOverrides: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow disabled tests.
-	 */
-	noSkippedTests: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents the use of sparse arrays (arrays with holes).
-	 */
-	noSparseArray: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * It detects possible "wrong" semicolons inside JSX elements.
-	 */
-	noSuspiciousSemicolonInJsx: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow template literal placeholder syntax in regular strings.
-	 */
-	noTemplateCurlyInString: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow then property.
-	 */
-	noThenProperty: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unsafe declaration merging between interfaces and classes.
-	 */
-	noUnsafeDeclarationMerging: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow using unsafe negation.
-	 */
-	noUnsafeNegation: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of var
-	 */
-	noVar: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow with statements in non-strict contexts.
-	 */
-	noWith: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
-	/**
-	 * Disallow the use of overload signatures that are not next to each other.
-	 */
-	useAdjacentOverloadSignatures: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Ensure async functions utilize await.
-	 */
-	useAwait: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce default clauses in switch statements to be last
-	 */
-	useDefaultSwitchClauseLast: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce passing a message value when creating a built-in error.
-	 */
-	useErrorMessage: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce get methods to always return a value.
-	 */
-	useGetterReturn: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforces the use of a recommended display strategy with Google Fonts.
-	 */
-	useGoogleFontDisplay: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Require for-in loops to include an if statement.
-	 */
-	useGuardForIn: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Use Array.isArray() instead of instanceof Array.
-	 */
-	useIsArray: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Require using the namespace keyword over the module keyword to declare TypeScript namespaces.
-	 */
-	useNamespaceKeyword: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce using the digits argument with Number#toFixed().
-	 */
-	useNumberToFixedDigitsArgument: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the use of the directive "use strict" in script files.
-	 */
-	useStrictMode: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Use standard constants instead of approximated literals.
+     */
+    noApproximativeNumericConstant: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Discourage the usage of Array index in keys.
+     */
+    noArrayIndexKey: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow assignments in expressions.
+     */
+    noAssignInExpressions: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallows using an async function as a Promise executor.
+     */
+    noAsyncPromiseExecutor: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow reassigning exceptions in catch clauses.
+     */
+    noCatchAssign: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow reassigning class members.
+     */
+    noClassAssign: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent comments from being inserted as text nodes
+     */
+    noCommentText: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow comparing against -0
+     */
+    noCompareNegZero: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow labeled statements that are not loops.
+     */
+    noConfusingLabels: noConfusingLabelsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow void type outside of generic or return types.
+     */
+    noConfusingVoidType: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of console.
+     */
+    noConsole: noConsoleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow TypeScript const enum
+     */
+    noConstEnum: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents from having control characters and some escape sequences that match control characters in regular expression literals.
+     */
+    noControlCharactersInRegex: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of debugger
+     */
+    noDebugger: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow direct assignments to document.cookie.
+     */
+    noDocumentCookie: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents importing next/document outside of pages/_document.jsx in Next.js projects.
+     */
+    noDocumentImportInPage: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Require the use of === and !==.
+     */
+    noDoubleEquals: noDoubleEqualsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate @import rules.
+     */
+    noDuplicateAtImportRules: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate case labels.
+     */
+    noDuplicateCase: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate class members.
+     */
+    noDuplicateClassMembers: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate custom properties within declaration blocks.
+     */
+    noDuplicateCustomProperties: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate conditions in if-else-if chains
+     */
+    noDuplicateElseIf: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * No duplicated fields in GraphQL operations.
+     */
+    noDuplicateFields: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate names within font families.
+     */
+    noDuplicateFontNames: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents JSX properties to be assigned multiple times.
+     */
+    noDuplicateJsxProps: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow two keys with the same name inside objects.
+     */
+    noDuplicateObjectKeys: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate function parameter name.
+     */
+    noDuplicateParameters: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate properties within declaration blocks.
+     */
+    noDuplicateProperties: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate selectors within keyframe blocks.
+     */
+    noDuplicateSelectorsKeyframeBlock: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * A describe block should not contain duplicate hooks.
+     */
+    noDuplicateTestHooks: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow CSS empty blocks.
+     */
+    noEmptyBlock: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow empty block statements and static blocks.
+     */
+    noEmptyBlockStatements: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the declaration of empty interfaces.
+     */
+    noEmptyInterface: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow variables from evolving into any type through reassignments.
+     */
+    noEvolvingTypes: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the any type usage.
+     */
+    noExplicitAny: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using export or module.exports in files containing tests
+     */
+    noExportsInTest: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
+     */
+    noExtraNonNullAssertion: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow fallthrough of switch clauses.
+     */
+    noFallthroughSwitchClause: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow focused tests.
+     */
+    noFocusedTests: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow reassigning function declarations.
+     */
+    noFunctionAssign: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow assignments to native objects and read-only global variables.
+     */
+    noGlobalAssign: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Use Number.isFinite instead of global isFinite.
+     */
+    noGlobalIsFinite: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Use Number.isNaN instead of global isNaN.
+     */
+    noGlobalIsNan: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent using the next/head module in pages/_document.js on Next.js projects.
+     */
+    noHeadImportInDocument: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow use of implicit any type on variable declarations.
+     */
+    noImplicitAnyLet: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow assigning to imported bindings
+     */
+    noImportAssign: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow invalid !important within keyframe declarations
+     */
+    noImportantInKeyframe: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallows the use of irregular whitespace characters.
+     */
+    noIrregularWhitespace: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow labels that share a name with a variable
+     */
+    noLabelVar: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow characters made with multiple code points in character class syntax.
+     */
+    noMisleadingCharacterClass: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce proper usage of new and constructor.
+     */
+    noMisleadingInstantiator: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Checks that the assertion function, for example expect, is placed inside an it() function call.
+     */
+    noMisplacedAssertion: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow shorthand assign when variable appears on both sides.
+     */
+    noMisrefactoredShorthandAssign: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow octal escape sequences in string literals
+     */
+    noOctalEscape: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow direct use of Object.prototype builtins.
+     */
+    noPrototypeBuiltins: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents React-specific JSX properties from being used.
+     */
+    noReactSpecificProps: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow variable, function, class, and type redeclarations in the same scope.
+     */
+    noRedeclare: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents from having redundant "use strict".
+     */
+    noRedundantUseStrict: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow comparisons where both sides are exactly the same.
+     */
+    noSelfCompare: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow identifiers from shadowing restricted names.
+     */
+    noShadowRestrictedNames: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow shorthand properties that override related longhand properties.
+     */
+    noShorthandPropertyOverrides: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow disabled tests.
+     */
+    noSkippedTests: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents the use of sparse arrays (arrays with holes).
+     */
+    noSparseArray: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * It detects possible "wrong" semicolons inside JSX elements.
+     */
+    noSuspiciousSemicolonInJsx: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow template literal placeholder syntax in regular strings.
+     */
+    noTemplateCurlyInString: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow then property.
+     */
+    noThenProperty: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unsafe declaration merging between interfaces and classes.
+     */
+    noUnsafeDeclarationMerging: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using unsafe negation.
+     */
+    noUnsafeNegation: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of var
+     */
+    noVar: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow with statements in non-strict contexts.
+     */
+    noWith: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Disallow the use of overload signatures that are not next to each other.
+     */
+    useAdjacentOverloadSignatures: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Ensure async functions utilize await.
+     */
+    useAwait: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce default clauses in switch statements to be last
+     */
+    useDefaultSwitchClauseLast: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce passing a message value when creating a built-in error.
+     */
+    useErrorMessage: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce get methods to always return a value.
+     */
+    useGetterReturn: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces the use of a recommended display strategy with Google Fonts.
+     */
+    useGoogleFontDisplay: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Require for-in loops to include an if statement.
+     */
+    useGuardForIn: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Use Array.isArray() instead of instanceof Array.
+     */
+    useIsArray: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Require using the namespace keyword over the module keyword to declare TypeScript namespaces.
+     */
+    useNamespaceKeyword: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using the digits argument with Number#toFixed().
+     */
+    useNumberToFixedDigitsArgument: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of the directive "use strict" in script files.
+     */
+    useStrictMode: ruleFixConfigurationSchema.optional().nullable()
 });
 
-export const importMatcherSchema = z.record(z.string(), z.unknown()).and(
-	z.object({
-		source: sourcesMatcherSchema.optional().nullable(),
-		type: z.boolean().optional().nullable(),
-	}),
-);
+export const importMatcherSchema = z.record(z.string(), z.unknown()).and(z.object({
+    source: sourcesMatcherSchema.optional().nullable(),
+    type: z.boolean().optional().nullable()
+}));
 
 export const severityOrGroupForA11YSchema = z.union([groupPlainConfigurationSchema, a11ySchema]);
 
@@ -2594,42 +2436,30 @@ export const severityOrGroupForSecuritySchema = z.union([groupPlainConfiguration
 
 export const severityOrGroupForSuspiciousSchema = z.union([groupPlainConfigurationSchema, suspiciousSchema]);
 
-export const useExhaustiveDependenciesConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithUseExhaustiveDependenciesOptionsSchema,
-]);
+export const useExhaustiveDependenciesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveDependenciesOptionsSchema]);
 
-export const noRestrictedElementsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoRestrictedElementsOptionsSchema,
-]);
+export const noRestrictedElementsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedElementsOptionsSchema]);
 
-export const restrictedImportsConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithRestrictedImportsOptionsSchema,
-]);
+export const restrictedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithRestrictedImportsOptionsSchema]);
 
-export const noRestrictedTypesConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNoRestrictedTypesOptionsSchema,
-]);
+export const noRestrictedTypesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedTypesOptionsSchema]);
 
 /**
  * Rule's options.
  */
 export const namingConventionOptionsSchema = z.object({
-	/**
-	 * Custom conventions.
-	 */
-	conventions: z.array(conventionSchema).optional(),
-	/**
-	 * If `false`, then non-ASCII characters are allowed.
-	 */
-	requireAscii: z.boolean().optional(),
-	/**
-	 * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
-	 */
-	strictCase: z.boolean().optional(),
+    /**
+     * Custom conventions.
+     */
+    conventions: z.array(conventionSchema).optional(),
+    /**
+     * If `false`, then non-ASCII characters are allowed.
+     */
+    requireAscii: z.boolean().optional(),
+    /**
+     * If `false`, then consecutive uppercase are allowed in _camel_ and _pascal_ cases. This does not affect other [Case].
+     */
+    strictCase: z.boolean().optional()
 });
 
 export const groupMatcherSchema = z.union([importMatcherSchema, sourceMatcherSchema]);
@@ -2640,419 +2470,419 @@ export const importGroupSchema = z.union([groupMatcherSchema, z.array(groupMatch
  * A list of rules that belong to this group
  */
 export const correctnessSchema = z.object({
-	/**
-	 * Prevent passing of children as props.
-	 */
-	noChildrenProp: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents from having const variables being re-assigned.
-	 */
-	noConstAssign: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow constant expressions in conditions
-	 */
-	noConstantCondition: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of Math.min and Math.max to clamp a value where the result itself is constant.
-	 */
-	noConstantMathMinMaxClamp: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow returning a value from a constructor.
-	 */
-	noConstructorReturn: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow empty character classes in regular expression literals.
-	 */
-	noEmptyCharacterClassInRegex: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallows empty destructuring patterns.
-	 */
-	noEmptyPattern: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow calling global object properties as functions
-	 */
-	noGlobalObjectCalls: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow function and var declarations that are accessible outside their block.
-	 */
-	noInnerDeclarations: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Ensure that builtins are correctly instantiated.
-	 */
-	noInvalidBuiltinInstantiation: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
-	 */
-	noInvalidConstructorSuper: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow non-standard direction values for linear gradient functions.
-	 */
-	noInvalidDirectionInLinearGradient: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallows invalid named grid areas in CSS Grid Layouts.
-	 */
-	noInvalidGridAreas: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of @import at-rules in invalid positions.
-	 */
-	noInvalidPositionAtImportRule: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of variables and function parameters before their declaration
-	 */
-	noInvalidUseBeforeDeclaration: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow missing var function for css variables.
-	 */
-	noMissingVarFunction: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Forbid the use of Node.js builtin modules.
-	 */
-	noNodejsModules: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow \8 and \9 escape sequences in string literals.
-	 */
-	noNonoctalDecimalEscape: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow literal numbers that lose precision
-	 */
-	noPrecisionLoss: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Restrict imports of private exports.
-	 */
-	noPrivateImports: noPrivateImportsConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent the usage of the return value of React.render.
-	 */
-	noRenderReturnValue: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow assignments where both sides are exactly the same.
-	 */
-	noSelfAssign: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow returning a value from a setter
-	 */
-	noSetterReturn: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow comparison of expressions modifying the string case with non-compliant value.
-	 */
-	noStringCaseMismatch: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow lexical declarations in switch clauses.
-	 */
-	noSwitchDeclarations: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of dependencies that aren't specified in the package.json.
-	 */
-	noUndeclaredDependencies: noUndeclaredDependenciesConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents the usage of variables that haven't been declared inside the document.
-	 */
-	noUndeclaredVariables: undeclaredVariablesConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unknown CSS value functions.
-	 */
-	noUnknownFunction: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unknown media feature names.
-	 */
-	noUnknownMediaFeatureName: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unknown properties.
-	 */
-	noUnknownProperty: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unknown pseudo-class selectors.
-	 */
-	noUnknownPseudoClass: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unknown pseudo-element selectors.
-	 */
-	noUnknownPseudoElement: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unknown type selectors.
-	 */
-	noUnknownTypeSelector: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unknown CSS units.
-	 */
-	noUnknownUnit: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unmatchable An+B selectors.
-	 */
-	noUnmatchableAnbSelector: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unreachable code
-	 */
-	noUnreachable: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Ensures the super() constructor is called exactly once on every code  path in a class constructor before this is accessed if the class has a superclass
-	 */
-	noUnreachableSuper: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow control flow statements in finally blocks.
-	 */
-	noUnsafeFinally: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of optional chaining in contexts where the undefined value is not allowed.
-	 */
-	noUnsafeOptionalChaining: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unused function parameters.
-	 */
-	noUnusedFunctionParameters: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unused imports.
-	 */
-	noUnusedImports: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unused labels.
-	 */
-	noUnusedLabels: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unused private class members
-	 */
-	noUnusedPrivateClassMembers: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unused variables.
-	 */
-	noUnusedVariables: noUnusedVariablesConfigurationSchema.optional().nullable(),
-	/**
-	 * This rules prevents void elements (AKA self-closing elements) from having children.
-	 */
-	noVoidElementsWithChildren: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow returning a value from a function with the return type 'void'
-	 */
-	noVoidTypeReturn: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
-	/**
-	 * Enforce all dependencies are correctly specified in a React hook.
-	 */
-	useExhaustiveDependencies: useExhaustiveDependenciesConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce that all React hooks are being called from the Top Level component functions.
-	 */
-	useHookAtTopLevel: deprecatedHooksConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce file extensions for relative imports.
-	 */
-	useImportExtensions: useImportExtensionsConfigurationSchema.optional().nullable(),
-	/**
-	 * Require calls to isNaN() when checking for NaN.
-	 */
-	useIsNan: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow missing key props in iterators/collection literals.
-	 */
-	useJsxKeyInIterable: useJsxKeyInIterableConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce "for" loop update clause moving the counter in the right direction.
-	 */
-	useValidForDirection: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * This rule checks that the result of a typeof expression is compared to a valid value.
-	 */
-	useValidTypeof: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Require generator functions to contain yield.
-	 */
-	useYield: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent passing of children as props.
+     */
+    noChildrenProp: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents from having const variables being re-assigned.
+     */
+    noConstAssign: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow constant expressions in conditions
+     */
+    noConstantCondition: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of Math.min and Math.max to clamp a value where the result itself is constant.
+     */
+    noConstantMathMinMaxClamp: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow returning a value from a constructor.
+     */
+    noConstructorReturn: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow empty character classes in regular expression literals.
+     */
+    noEmptyCharacterClassInRegex: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallows empty destructuring patterns.
+     */
+    noEmptyPattern: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow calling global object properties as functions
+     */
+    noGlobalObjectCalls: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow function and var declarations that are accessible outside their block.
+     */
+    noInnerDeclarations: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Ensure that builtins are correctly instantiated.
+     */
+    noInvalidBuiltinInstantiation: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
+     */
+    noInvalidConstructorSuper: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow non-standard direction values for linear gradient functions.
+     */
+    noInvalidDirectionInLinearGradient: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallows invalid named grid areas in CSS Grid Layouts.
+     */
+    noInvalidGridAreas: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of @import at-rules in invalid positions.
+     */
+    noInvalidPositionAtImportRule: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of variables and function parameters before their declaration
+     */
+    noInvalidUseBeforeDeclaration: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow missing var function for css variables.
+     */
+    noMissingVarFunction: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Forbid the use of Node.js builtin modules.
+     */
+    noNodejsModules: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow \8 and \9 escape sequences in string literals.
+     */
+    noNonoctalDecimalEscape: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow literal numbers that lose precision
+     */
+    noPrecisionLoss: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Restrict imports of private exports.
+     */
+    noPrivateImports: noPrivateImportsConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent the usage of the return value of React.render.
+     */
+    noRenderReturnValue: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow assignments where both sides are exactly the same.
+     */
+    noSelfAssign: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow returning a value from a setter
+     */
+    noSetterReturn: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow comparison of expressions modifying the string case with non-compliant value.
+     */
+    noStringCaseMismatch: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow lexical declarations in switch clauses.
+     */
+    noSwitchDeclarations: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of dependencies that aren't specified in the package.json.
+     */
+    noUndeclaredDependencies: noUndeclaredDependenciesConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents the usage of variables that haven't been declared inside the document.
+     */
+    noUndeclaredVariables: undeclaredVariablesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown CSS value functions.
+     */
+    noUnknownFunction: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown media feature names.
+     */
+    noUnknownMediaFeatureName: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown properties.
+     */
+    noUnknownProperty: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown pseudo-class selectors.
+     */
+    noUnknownPseudoClass: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown pseudo-element selectors.
+     */
+    noUnknownPseudoElement: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown type selectors.
+     */
+    noUnknownTypeSelector: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown CSS units.
+     */
+    noUnknownUnit: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unmatchable An+B selectors.
+     */
+    noUnmatchableAnbSelector: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unreachable code
+     */
+    noUnreachable: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Ensures the super() constructor is called exactly once on every code  path in a class constructor before this is accessed if the class has a superclass
+     */
+    noUnreachableSuper: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow control flow statements in finally blocks.
+     */
+    noUnsafeFinally: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of optional chaining in contexts where the undefined value is not allowed.
+     */
+    noUnsafeOptionalChaining: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unused function parameters.
+     */
+    noUnusedFunctionParameters: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unused imports.
+     */
+    noUnusedImports: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unused labels.
+     */
+    noUnusedLabels: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unused private class members
+     */
+    noUnusedPrivateClassMembers: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unused variables.
+     */
+    noUnusedVariables: noUnusedVariablesConfigurationSchema.optional().nullable(),
+    /**
+     * This rules prevents void elements (AKA self-closing elements) from having children.
+     */
+    noVoidElementsWithChildren: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow returning a value from a function with the return type 'void'
+     */
+    noVoidTypeReturn: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Enforce all dependencies are correctly specified in a React hook.
+     */
+    useExhaustiveDependencies: useExhaustiveDependenciesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that all React hooks are being called from the Top Level component functions.
+     */
+    useHookAtTopLevel: deprecatedHooksConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce file extensions for relative imports.
+     */
+    useImportExtensions: useImportExtensionsConfigurationSchema.optional().nullable(),
+    /**
+     * Require calls to isNaN() when checking for NaN.
+     */
+    useIsNan: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow missing key props in iterators/collection literals.
+     */
+    useJsxKeyInIterable: useJsxKeyInIterableConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce "for" loop update clause moving the counter in the right direction.
+     */
+    useValidForDirection: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * This rule checks that the result of a typeof expression is compared to a valid value.
+     */
+    useValidTypeof: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Require generator functions to contain yield.
+     */
+    useYield: ruleConfigurationSchema.optional().nullable()
 });
 
 /**
  * A list of rules that belong to this group
  */
 export const nurserySchema = z.object({
-	/**
-	 * Disallow await inside loops.
-	 */
-	noAwaitInLoop: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow bitwise operators.
-	 */
-	noBitwiseOperators: noBitwiseOperatorsConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow expressions where the operation doesn't affect the value
-	 */
-	noConstantBinaryExpression: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow destructuring props inside JSX components in Solid projects.
-	 */
-	noDestructuredProps: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Require Promise-like statements to be handled appropriately.
-	 */
-	noFloatingPromises: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of __dirname and __filename in the global scope.
-	 */
-	noGlobalDirnameFilename: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of the !important style.
-	 */
-	noImportantStyles: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent import cycles.
-	 */
-	noImportCycles: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallows defining React components inside other components.
-	 */
-	noNestedComponentDefinitions: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow use event handlers on non-interactive elements.
-	 */
-	noNoninteractiveElementInteractions: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of process global.
-	 */
-	noProcessGlobal: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow assigning to React component props.
-	 */
-	noReactPropAssign: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of configured elements.
-	 */
-	noRestrictedElements: noRestrictedElementsConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow usage of sensitive data such as API keys and tokens.
-	 */
-	noSecrets: noSecretsConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow variable declarations from shadowing variables declared in the outer scope.
-	 */
-	noShadow: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevents the use of the TypeScript directive @ts-expect-error.
-	 */
-	noTsIgnore: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unknown at-rules.
-	 */
-	noUnknownAtRule: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Warn when importing non-existing exports.
-	 */
-	noUnresolvedImports: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent duplicate polyfills from Polyfill.io.
-	 */
-	noUnwantedPolyfillio: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow useless backreferences in regular expression literals that always match an empty string.
-	 */
-	noUselessBackrefInRegex: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow unnecessary escapes in string literals.
-	 */
-	noUselessEscapeInString: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of useless undefined.
-	 */
-	noUselessUndefined: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
-	/**
-	 * Enforce that getters and setters for the same property are adjacent in class and object definitions.
-	 */
-	useAdjacentGetterSetter: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Require the consistent declaration of object literals. Defaults to explicit definitions.
-	 */
-	useConsistentObjectDefinition: useConsistentObjectDefinitionConfigurationSchema.optional().nullable(),
-	/**
-	 * Use static Response methods instead of new Response() constructor when possible.
-	 */
-	useConsistentResponse: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Require switch-case statements to be exhaustive.
-	 */
-	useExhaustiveSwitchCases: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce types in functions, methods, variables, and parameters.
-	 */
-	useExplicitType: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Require that all exports are declared after all non-export statements.
-	 */
-	useExportsLast: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce using Solid's \<For /> component for mapping an array to JSX elements.
-	 */
-	useForComponent: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Ensure the preconnect attribute is used when using Google Fonts.
-	 */
-	useGoogleFontPreconnect: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prefer Array#{indexOf,lastIndexOf}() over Array#{findIndex,findLastIndex}() when looking for the index of an item.
-	 */
-	useIndexOf: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce consistent return values in iterable callbacks.
-	 */
-	useIterableCallbackReturn: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforces the use of with { type: "json" } for JSON module imports.
-	 */
-	useJsonImportAttribute: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce specifying the name of GraphQL operations.
-	 */
-	useNamedOperation: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Validates that all enum values are capitalized.
-	 */
-	useNamingConvention: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the use of numeric separators in numeric literals.
-	 */
-	useNumericSeparators: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prefer object spread over Object.assign() when constructing new objects.
-	 */
-	useObjectSpread: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the consistent use of the radix argument when using parseInt().
-	 */
-	useParseIntRadix: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce JSDoc comment lines to start with a single asterisk, except for the first one.
-	 */
-	useSingleJsDocAsterisk: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the sorting of CSS utility classes.
-	 */
-	useSortedClasses: utilityClassSortingConfigurationSchema.optional().nullable(),
-	/**
-	 * Require a description parameter for the Symbol().
-	 */
-	useSymbolDescription: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent the usage of static string literal id attribute on elements.
-	 */
-	useUniqueElementIds: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow await inside loops.
+     */
+    noAwaitInLoop: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow bitwise operators.
+     */
+    noBitwiseOperators: noBitwiseOperatorsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow expressions where the operation doesn't affect the value
+     */
+    noConstantBinaryExpression: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow destructuring props inside JSX components in Solid projects.
+     */
+    noDestructuredProps: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Require Promise-like statements to be handled appropriately.
+     */
+    noFloatingPromises: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of __dirname and __filename in the global scope.
+     */
+    noGlobalDirnameFilename: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent import cycles.
+     */
+    noImportCycles: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of the !important style.
+     */
+    noImportantStyles: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallows defining React components inside other components.
+     */
+    noNestedComponentDefinitions: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow use event handlers on non-interactive elements.
+     */
+    noNoninteractiveElementInteractions: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of process global.
+     */
+    noProcessGlobal: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow assigning to React component props.
+     */
+    noReactPropAssign: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of configured elements.
+     */
+    noRestrictedElements: noRestrictedElementsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow usage of sensitive data such as API keys and tokens.
+     */
+    noSecrets: noSecretsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow variable declarations from shadowing variables declared in the outer scope.
+     */
+    noShadow: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevents the use of the TypeScript directive @ts-ignore.
+     */
+    noTsIgnore: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown at-rules.
+     */
+    noUnknownAtRule: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Warn when importing non-existing exports.
+     */
+    noUnresolvedImports: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent duplicate polyfills from Polyfill.io.
+     */
+    noUnwantedPolyfillio: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow useless backreferences in regular expression literals that always match an empty string.
+     */
+    noUselessBackrefInRegex: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary escapes in string literals.
+     */
+    noUselessEscapeInString: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of useless undefined.
+     */
+    noUselessUndefined: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Enforce that getters and setters for the same property are adjacent in class and object definitions.
+     */
+    useAdjacentGetterSetter: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Require the consistent declaration of object literals. Defaults to explicit definitions.
+     */
+    useConsistentObjectDefinition: useConsistentObjectDefinitionConfigurationSchema.optional().nullable(),
+    /**
+     * Use static Response methods instead of new Response() constructor when possible.
+     */
+    useConsistentResponse: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Require switch-case statements to be exhaustive.
+     */
+    useExhaustiveSwitchCases: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce types in functions, methods, variables, and parameters.
+     */
+    useExplicitType: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Require that all exports are declared after all non-export statements.
+     */
+    useExportsLast: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using Solid's \<For /> component for mapping an array to JSX elements.
+     */
+    useForComponent: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Ensure the preconnect attribute is used when using Google Fonts.
+     */
+    useGoogleFontPreconnect: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer Array#{indexOf,lastIndexOf}() over Array#{findIndex,findLastIndex}() when looking for the index of an item.
+     */
+    useIndexOf: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce consistent return values in iterable callbacks.
+     */
+    useIterableCallbackReturn: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces the use of with { type: "json" } for JSON module imports.
+     */
+    useJsonImportAttribute: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce specifying the name of GraphQL operations.
+     */
+    useNamedOperation: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Validates that all enum values are capitalized.
+     */
+    useNamingConvention: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of numeric separators in numeric literals.
+     */
+    useNumericSeparators: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer object spread over Object.assign() when constructing new objects.
+     */
+    useObjectSpread: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the consistent use of the radix argument when using parseInt().
+     */
+    useParseIntRadix: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce JSDoc comment lines to start with a single asterisk, except for the first one.
+     */
+    useSingleJsDocAsterisk: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the sorting of CSS utility classes.
+     */
+    useSortedClasses: utilityClassSortingConfigurationSchema.optional().nullable(),
+    /**
+     * Require a description parameter for the Symbol().
+     */
+    useSymbolDescription: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent the usage of static string literal id attribute on elements.
+     */
+    useUniqueElementIds: ruleConfigurationSchema.optional().nullable()
 });
 
 export const ruleWithNamingConventionOptionsSchema = z.object({
-	/**
-	 * The kind of the code actions emitted by the rule
-	 */
-	fix: fixKindSchema.optional().nullable(),
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: rulePlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: namingConventionOptionsSchema.optional(),
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: namingConventionOptionsSchema.optional()
 });
 
 export const importGroupsSchema = z.array(importGroupSchema);
@@ -3061,445 +2891,439 @@ export const severityOrGroupForCorrectnessSchema = z.union([groupPlainConfigurat
 
 export const severityOrGroupForNurserySchema = z.union([groupPlainConfigurationSchema, nurserySchema]);
 
-export const namingConventionConfigurationSchema = z.union([
-	rulePlainConfigurationSchema,
-	ruleWithNamingConventionOptionsSchema,
-]);
+export const namingConventionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNamingConventionOptionsSchema]);
 
 /**
  * A list of rules that belong to this group
  */
 export const styleSchema = z.object({
-	/**
-	 * Disallow use of CommonJs module system in favor of ESM style imports.
-	 */
-	noCommonJs: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow default exports.
-	 */
-	noDefaultExport: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow a lower specificity selector from coming after a higher specificity selector.
-	 */
-	noDescendingSpecificity: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow using a callback in asynchronous tests and hooks.
-	 */
-	noDoneCallback: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow TypeScript enum.
-	 */
-	noEnum: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow exporting an imported variable.
-	 */
-	noExportedImports: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent usage of \<head> element in a Next.js project.
-	 */
-	noHeadElement: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow implicit true values on JSX boolean attributes
-	 */
-	noImplicitBoolean: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
-	 */
-	noInferrableTypes: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of TypeScript's namespaces.
-	 */
-	noNamespace: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow negation in the condition of an if statement if it has an else clause.
-	 */
-	noNegationElse: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow nested ternary expressions.
-	 */
-	noNestedTernary: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow non-null assertions using the ! postfix operator.
-	 */
-	noNonNullAssertion: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow reassigning function parameters.
-	 */
-	noParameterAssign: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of parameter properties in class constructors.
-	 */
-	noParameterProperties: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of process.env.
-	 */
-	noProcessEnv: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * This rule allows you to specify global variable names that you don’t want to use in your application.
-	 */
-	noRestrictedGlobals: restrictedGlobalsConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow specified modules when loaded by import or require.
-	 */
-	noRestrictedImports: restrictedImportsConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow user defined types.
-	 */
-	noRestrictedTypes: noRestrictedTypesConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of constants which its value is the upper-case version of its name.
-	 */
-	noShoutyConstants: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the use of String.slice() over String.substr() and String.substring().
-	 */
-	noSubstr: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow template literals if interpolation and special-character handling are not needed
-	 */
-	noUnusedTemplateLiteral: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow else block when the if block breaks early.
-	 */
-	noUselessElse: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow use of @value rule in css modules.
-	 */
-	noValueAtRule: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of yoda expressions.
-	 */
-	noYodaExpression: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
-	/**
-	 * Disallow Array constructors.
-	 */
-	useArrayLiterals: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the use of as const over literal type and type annotation.
-	 */
-	useAsConstAssertion: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Use at() instead of integer index access.
-	 */
-	useAtIndex: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Requires following curly brace conventions.
-	 */
-	useBlockStatements: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce using else if instead of nested if in else clauses.
-	 */
-	useCollapsedElseIf: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce using single if instead of nested if clauses.
-	 */
-	useCollapsedIf: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce declaring components only within modules that export React Components exclusively.
-	 */
-	useComponentExportOnlyModules: useComponentExportOnlyModulesConfigurationSchema.optional().nullable(),
-	/**
-	 * Require consistently using either T\[] or Array\<T>
-	 */
-	useConsistentArrayType: consistentArrayTypeConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the use of new for all builtins, except String, Number and Boolean.
-	 */
-	useConsistentBuiltinInstantiation: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * This rule enforces consistent use of curly braces inside JSX attributes and JSX children.
-	 */
-	useConsistentCurlyBraces: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Require consistent accessibility modifiers on class properties and methods.
-	 */
-	useConsistentMemberAccessibility: consistentMemberAccessibilityConfigurationSchema.optional().nullable(),
-	/**
-	 * Require const declarations for variables that are only assigned once.
-	 */
-	useConst: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce default function parameters and optional function parameters to be last.
-	 */
-	useDefaultParameterLast: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Require the default clause in switch statements.
-	 */
-	useDefaultSwitchClause: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Require specifying the reason argument when using @deprecated directive
-	 */
-	useDeprecatedReason: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Require that each enum member value be explicitly initialized.
-	 */
-	useEnumInitializers: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value.
-	 */
-	useExplicitLengthCheck: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow the use of Math.pow in favor of the ** operator.
-	 */
-	useExponentiationOperator: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Promotes the use of export type for types.
-	 */
-	useExportType: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce naming conventions for JavaScript and TypeScript filenames.
-	 */
-	useFilenamingConvention: filenamingConventionConfigurationSchema.optional().nullable(),
-	/**
-	 * This rule recommends a for-of loop when in a for loop, the index used to extract an item from the iterated array.
-	 */
-	useForOf: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * This rule enforces the use of \<>...\</> over \<Fragment>...\</Fragment>.
-	 */
-	useFragmentSyntax: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Promotes the use of import type for types.
-	 */
-	useImportType: importTypeConfigurationSchema.optional().nullable(),
-	/**
-	 * Require all enum members to be literal values.
-	 */
-	useLiteralEnumMembers: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce naming conventions for everything across a codebase.
-	 */
-	useNamingConvention: namingConventionConfigurationSchema.optional().nullable(),
-	/**
-	 * Promotes the usage of node:assert/strict over node:assert.
-	 */
-	useNodeAssertStrict: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforces using the node: protocol for Node.js builtin modules.
-	 */
-	useNodejsImportProtocol: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Use the Number properties instead of global ones.
-	 */
-	useNumberNamespace: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prevent extra closing tags for components without children.
-	 */
-	useSelfClosingElements: useSelfClosingElementsConfigurationSchema.optional().nullable(),
-	/**
-	 * Require assignment operator shorthand where possible.
-	 */
-	useShorthandAssign: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce using function types instead of object type with call signatures.
-	 */
-	useShorthandFunctionType: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow multiple variable declarations in the same variable statement
-	 */
-	useSingleVarDeclarator: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Prefer template literals over string concatenation.
-	 */
-	useTemplate: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Require new when throwing an error.
-	 */
-	useThrowNewError: ruleFixConfigurationSchema.optional().nullable(),
-	/**
-	 * Disallow throwing non-Error values.
-	 */
-	useThrowOnlyError: ruleConfigurationSchema.optional().nullable(),
-	/**
-	 * Enforce the use of String.trimStart() and String.trimEnd() over String.trimLeft() and String.trimRight().
-	 */
-	useTrimStartEnd: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow use of CommonJs module system in favor of ESM style imports.
+     */
+    noCommonJs: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow default exports.
+     */
+    noDefaultExport: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow a lower specificity selector from coming after a higher specificity selector.
+     */
+    noDescendingSpecificity: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using a callback in asynchronous tests and hooks.
+     */
+    noDoneCallback: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow TypeScript enum.
+     */
+    noEnum: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow exporting an imported variable.
+     */
+    noExportedImports: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent usage of \<head> element in a Next.js project.
+     */
+    noHeadElement: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow implicit true values on JSX boolean attributes
+     */
+    noImplicitBoolean: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
+     */
+    noInferrableTypes: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of TypeScript's namespaces.
+     */
+    noNamespace: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow negation in the condition of an if statement if it has an else clause.
+     */
+    noNegationElse: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow nested ternary expressions.
+     */
+    noNestedTernary: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow non-null assertions using the ! postfix operator.
+     */
+    noNonNullAssertion: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow reassigning function parameters.
+     */
+    noParameterAssign: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of parameter properties in class constructors.
+     */
+    noParameterProperties: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of process.env.
+     */
+    noProcessEnv: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * This rule allows you to specify global variable names that you don’t want to use in your application.
+     */
+    noRestrictedGlobals: restrictedGlobalsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow specified modules when loaded by import or require.
+     */
+    noRestrictedImports: restrictedImportsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow user defined types.
+     */
+    noRestrictedTypes: noRestrictedTypesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of constants which its value is the upper-case version of its name.
+     */
+    noShoutyConstants: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of String.slice() over String.substr() and String.substring().
+     */
+    noSubstr: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow template literals if interpolation and special-character handling are not needed
+     */
+    noUnusedTemplateLiteral: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow else block when the if block breaks early.
+     */
+    noUselessElse: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow use of @value rule in css modules.
+     */
+    noValueAtRule: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of yoda expressions.
+     */
+    noYodaExpression: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Disallow Array constructors.
+     */
+    useArrayLiterals: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of as const over literal type and type annotation.
+     */
+    useAsConstAssertion: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Use at() instead of integer index access.
+     */
+    useAtIndex: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Requires following curly brace conventions.
+     */
+    useBlockStatements: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using else if instead of nested if in else clauses.
+     */
+    useCollapsedElseIf: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using single if instead of nested if clauses.
+     */
+    useCollapsedIf: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce declaring components only within modules that export React Components exclusively.
+     */
+    useComponentExportOnlyModules: useComponentExportOnlyModulesConfigurationSchema.optional().nullable(),
+    /**
+     * Require consistently using either T\[] or Array\<T>
+     */
+    useConsistentArrayType: consistentArrayTypeConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of new for all builtins, except String, Number and Boolean.
+     */
+    useConsistentBuiltinInstantiation: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * This rule enforces consistent use of curly braces inside JSX attributes and JSX children.
+     */
+    useConsistentCurlyBraces: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Require consistent accessibility modifiers on class properties and methods.
+     */
+    useConsistentMemberAccessibility: consistentMemberAccessibilityConfigurationSchema.optional().nullable(),
+    /**
+     * Require const declarations for variables that are only assigned once.
+     */
+    useConst: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce default function parameters and optional function parameters to be last.
+     */
+    useDefaultParameterLast: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Require the default clause in switch statements.
+     */
+    useDefaultSwitchClause: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Require specifying the reason argument when using @deprecated directive
+     */
+    useDeprecatedReason: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Require that each enum member value be explicitly initialized.
+     */
+    useEnumInitializers: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value.
+     */
+    useExplicitLengthCheck: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of Math.pow in favor of the ** operator.
+     */
+    useExponentiationOperator: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Promotes the use of export type for types.
+     */
+    useExportType: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce naming conventions for JavaScript and TypeScript filenames.
+     */
+    useFilenamingConvention: filenamingConventionConfigurationSchema.optional().nullable(),
+    /**
+     * This rule recommends a for-of loop when in a for loop, the index used to extract an item from the iterated array.
+     */
+    useForOf: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * This rule enforces the use of \<>...\</> over \<Fragment>...\</Fragment>.
+     */
+    useFragmentSyntax: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Promotes the use of import type for types.
+     */
+    useImportType: importTypeConfigurationSchema.optional().nullable(),
+    /**
+     * Require all enum members to be literal values.
+     */
+    useLiteralEnumMembers: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce naming conventions for everything across a codebase.
+     */
+    useNamingConvention: namingConventionConfigurationSchema.optional().nullable(),
+    /**
+     * Promotes the usage of node:assert/strict over node:assert.
+     */
+    useNodeAssertStrict: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces using the node: protocol for Node.js builtin modules.
+     */
+    useNodejsImportProtocol: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Use the Number properties instead of global ones.
+     */
+    useNumberNamespace: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent extra closing tags for components without children.
+     */
+    useSelfClosingElements: useSelfClosingElementsConfigurationSchema.optional().nullable(),
+    /**
+     * Require assignment operator shorthand where possible.
+     */
+    useShorthandAssign: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using function types instead of object type with call signatures.
+     */
+    useShorthandFunctionType: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow multiple variable declarations in the same variable statement
+     */
+    useSingleVarDeclarator: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer template literals over string concatenation.
+     */
+    useTemplate: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Require new when throwing an error.
+     */
+    useThrowNewError: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow throwing non-Error values.
+     */
+    useThrowOnlyError: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of String.trimStart() and String.trimEnd() over String.trimLeft() and String.trimRight().
+     */
+    useTrimStartEnd: ruleFixConfigurationSchema.optional().nullable()
 });
 
 export const optionsSchema = z.object({
-	groups: importGroupsSchema.optional(),
+    groups: importGroupsSchema.optional()
 });
 
 export const severityOrGroupForStyleSchema = z.union([groupPlainConfigurationSchema, styleSchema]);
 
 export const rulesSchema = z.object({
-	a11y: severityOrGroupForA11YSchema.optional().nullable(),
-	complexity: severityOrGroupForComplexitySchema.optional().nullable(),
-	correctness: severityOrGroupForCorrectnessSchema.optional().nullable(),
-	nursery: severityOrGroupForNurserySchema.optional().nullable(),
-	performance: severityOrGroupForPerformanceSchema.optional().nullable(),
-	/**
-	 * It enables the lint rules recommended by Biome. `true` by default.
-	 */
-	recommended: z.boolean().optional().nullable(),
-	security: severityOrGroupForSecuritySchema.optional().nullable(),
-	style: severityOrGroupForStyleSchema.optional().nullable(),
-	suspicious: severityOrGroupForSuspiciousSchema.optional().nullable(),
+    a11y: severityOrGroupForA11YSchema.optional().nullable(),
+    complexity: severityOrGroupForComplexitySchema.optional().nullable(),
+    correctness: severityOrGroupForCorrectnessSchema.optional().nullable(),
+    nursery: severityOrGroupForNurserySchema.optional().nullable(),
+    performance: severityOrGroupForPerformanceSchema.optional().nullable(),
+    /**
+     * It enables the lint rules recommended by Biome. `true` by default.
+     */
+    recommended: z.boolean().optional().nullable(),
+    security: severityOrGroupForSecuritySchema.optional().nullable(),
+    style: severityOrGroupForStyleSchema.optional().nullable(),
+    suspicious: severityOrGroupForSuspiciousSchema.optional().nullable()
 });
 
 export const ruleAssistWithOptionsForOptionsSchema = z.object({
-	/**
-	 * The severity of the emitted diagnostics by the rule
-	 */
-	level: ruleAssistPlainConfigurationSchema,
-	/**
-	 * Rule's options
-	 */
-	options: optionsSchema,
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: ruleAssistPlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: optionsSchema
 });
 
 export const linterConfigurationSchema = z.object({
-	/**
-	 * An object where the keys are the names of the domains, and the values are `all`, `recommended`, or `none`.
-	 */
-	domains: ruleDomainsSchema.optional().nullable(),
-	/**
-	 * if `false`, it disables the feature and the linter won't be executed. `true` by default
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * A list of glob patterns. The analyzer will handle only those files/folders that will match these patterns.
-	 */
-	includes: z.array(normalizedGlobSchema).optional().nullable(),
-	/**
-	 * List of rules
-	 */
-	rules: rulesSchema.optional().nullable(),
+    /**
+     * An object where the keys are the names of the domains, and the values are `all`, `recommended`, or `none`.
+     */
+    domains: ruleDomainsSchema.optional().nullable(),
+    /**
+     * if `false`, it disables the feature and the linter won't be executed. `true` by default
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * A list of glob patterns. The analyzer will handle only those files/folders that will match these patterns.
+     */
+    includes: z.array(normalizedGlobSchema).optional().nullable(),
+    /**
+     * List of rules
+     */
+    rules: rulesSchema.optional().nullable()
 });
 
-export const ruleAssistConfigurationForOptionsSchema = z.union([
-	ruleAssistPlainConfigurationSchema,
-	ruleAssistWithOptionsForOptionsSchema,
-]);
+export const ruleAssistConfigurationForOptionsSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithOptionsForOptionsSchema]);
 
 export const overrideLinterConfigurationSchema = z.object({
-	/**
-	 * List of rules
-	 */
-	domains: ruleDomainsSchema.optional().nullable(),
-	/**
-	 * if `false`, it disables the feature and the linter won't be executed. `true` by default
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * List of rules
-	 */
-	rules: rulesSchema.optional().nullable(),
+    /**
+     * List of rules
+     */
+    domains: ruleDomainsSchema.optional().nullable(),
+    /**
+     * if `false`, it disables the feature and the linter won't be executed. `true` by default
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * List of rules
+     */
+    rules: rulesSchema.optional().nullable()
 });
 
 /**
  * A list of rules that belong to this group
  */
 export const sourceSchema = z.object({
-	/**
-	 * Provides a code action to sort the imports and exports in the file using a built-in or custom order.
-	 */
-	organizeImports: ruleAssistConfigurationForOptionsSchema.optional().nullable(),
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended: z.boolean().optional().nullable(),
-	/**
-	 * Enforce attribute sorting in JSX elements.
-	 */
-	useSortedAttributes: ruleAssistConfigurationForNullSchema.optional().nullable(),
-	/**
-	 * Sorts the keys of a JSON object in natural order
-	 */
-	useSortedKeys: ruleAssistConfigurationForNullSchema.optional().nullable(),
-	/**
-	 * Enforce ordering of CSS properties and nested rules.
-	 */
-	useSortedProperties: ruleAssistConfigurationForNullSchema.optional().nullable(),
+    /**
+     * Provides a code action to sort the imports and exports in the file using a built-in or custom order.
+     */
+    organizeImports: ruleAssistConfigurationForOptionsSchema.optional().nullable(),
+    /**
+     * It enables the recommended rules for this group
+     */
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Enforce attribute sorting in JSX elements.
+     */
+    useSortedAttributes: ruleAssistConfigurationForNullSchema.optional().nullable(),
+    /**
+     * Sorts the keys of a JSON object in natural order
+     */
+    useSortedKeys: ruleAssistConfigurationForNullSchema.optional().nullable(),
+    /**
+     * Enforce ordering of CSS properties and nested rules.
+     */
+    useSortedProperties: ruleAssistConfigurationForNullSchema.optional().nullable()
 });
 
 export const actionsSchema = z.object({
-	/**
-	 * It enables the assist actions recommended by Biome. `true` by default.
-	 */
-	recommended: z.boolean().optional().nullable(),
-	source: sourceSchema.optional().nullable(),
+    /**
+     * It enables the assist actions recommended by Biome. `true` by default.
+     */
+    recommended: z.boolean().optional().nullable(),
+    source: sourceSchema.optional().nullable()
 });
 
 export const assistConfigurationSchema = z.object({
-	/**
-	 * Whether Biome should fail in CLI if the assist were not applied to the code.
-	 */
-	actions: actionsSchema.optional().nullable(),
-	/**
-	 * Whether Biome should enable assist via LSP and CLI.
-	 */
-	enabled: boolSchema.optional().nullable(),
-	/**
-	 * A list of glob patterns. Biome will include files/folders that will match these patterns.
-	 */
-	includes: z.array(normalizedGlobSchema).optional().nullable(),
+    /**
+     * Whether Biome should fail in CLI if the assist were not applied to the code.
+     */
+    actions: actionsSchema.optional().nullable(),
+    /**
+     * Whether Biome should enable assist via LSP and CLI.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * A list of glob patterns. Biome will include files/folders that will match these patterns.
+     */
+    includes: z.array(normalizedGlobSchema).optional().nullable()
 });
 
 export const overrideAssistConfigurationSchema = z.object({
-	/**
-	 * List of actions
-	 */
-	actions: actionsSchema.optional().nullable(),
-	/**
-	 * if `false`, it disables the feature and the assist won't be executed. `true` by default
-	 */
-	enabled: boolSchema.optional().nullable(),
+    /**
+     * List of actions
+     */
+    actions: actionsSchema.optional().nullable(),
+    /**
+     * if `false`, it disables the feature and the assist won't be executed. `true` by default
+     */
+    enabled: boolSchema.optional().nullable()
 });
 
 export const overridePatternSchema = z.object({
-	/**
-	 * Specific configuration for the Json language
-	 */
-	assist: overrideAssistConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the CSS language
-	 */
-	css: cssConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the filesystem
-	 */
-	files: overrideFilesConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the Json language
-	 */
-	formatter: overrideFormatterConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the Graphql language
-	 */
-	graphql: graphqlConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the GritQL language
-	 */
-	grit: gritConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the GritQL language
-	 */
-	html: htmlConfigurationSchema.optional().nullable(),
-	/**
-	 * A list of glob patterns. Biome will include files/folders that will match these patterns.
-	 */
-	includes: overrideGlobsSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the JavaScript language
-	 */
-	javascript: jsConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the Json language
-	 */
-	json: jsonConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the Json language
-	 */
-	linter: overrideLinterConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for additional plugins
-	 */
-	plugins: pluginsSchema.optional().nullable(),
+    /**
+     * Specific configuration for the Json language
+     */
+    assist: overrideAssistConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the CSS language
+     */
+    css: cssConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the filesystem
+     */
+    files: overrideFilesConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the Json language
+     */
+    formatter: overrideFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the Graphql language
+     */
+    graphql: graphqlConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the GritQL language
+     */
+    grit: gritConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the GritQL language
+     */
+    html: htmlConfigurationSchema.optional().nullable(),
+    /**
+     * A list of glob patterns. Biome will include files/folders that will match these patterns.
+     */
+    includes: overrideGlobsSchema.optional().nullable(),
+    /**
+     * Specific configuration for the JavaScript language
+     */
+    javascript: jsConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the Json language
+     */
+    json: jsonConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the Json language
+     */
+    linter: overrideLinterConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for additional plugins
+     */
+    plugins: pluginsSchema.optional().nullable()
 });
 
 export const overridesSchema = z.array(overridePatternSchema);
@@ -3508,68 +3332,68 @@ export const overridesSchema = z.array(overridePatternSchema);
  * The configuration that is contained inside the file `biome.json`
  */
 export const configurationSchema = z.object({
-	/**
-	 * A field for the [JSON schema](https://json-schema.org/) specification
-	 */
-	$schema: schemaSchema.optional().nullable(),
-	/**
-	 * Specific configuration for assists
-	 */
-	assist: assistConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the Css language
-	 */
-	css: cssConfigurationSchema.optional().nullable(),
-	/**
-	 * A list of paths to other JSON files, used to extends the current configuration.
-	 */
-	extends: extendsSchema.optional().nullable(),
-	/**
-	 * The configuration of the filesystem
-	 */
-	files: filesConfigurationSchema.optional().nullable(),
-	/**
-	 * The configuration of the formatter
-	 */
-	formatter: formatterConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the GraphQL language
-	 */
-	graphql: graphqlConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the GraphQL language
-	 */
-	grit: gritConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the HTML language
-	 */
-	html: htmlConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the JavaScript language
-	 */
-	javascript: jsConfigurationSchema.optional().nullable(),
-	/**
-	 * Specific configuration for the Json language
-	 */
-	json: jsonConfigurationSchema.optional().nullable(),
-	/**
-	 * The configuration for the linter
-	 */
-	linter: linterConfigurationSchema.optional().nullable(),
-	/**
-	 * A list of granular patterns that should be applied only to a sub set of files
-	 */
-	overrides: overridesSchema.optional().nullable(),
-	/**
-	 * List of plugins to load.
-	 */
-	plugins: pluginsSchema.optional().nullable(),
-	/**
-	 * Indicates whether this configuration file is at the root of a Biome project. By default, this is `true`.
-	 */
-	root: boolSchema.optional().nullable(),
-	/**
-	 * The configuration of the VCS integration
-	 */
-	vcs: vcsConfigurationSchema.optional().nullable(),
+    /**
+     * A field for the [JSON schema](https://json-schema.org/) specification
+     */
+    $schema: schemaSchema.optional().nullable(),
+    /**
+     * Specific configuration for assists
+     */
+    assist: assistConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the Css language
+     */
+    css: cssConfigurationSchema.optional().nullable(),
+    /**
+     * A list of paths to other JSON files, used to extends the current configuration.
+     */
+    extends: extendsSchema.optional().nullable(),
+    /**
+     * The configuration of the filesystem
+     */
+    files: filesConfigurationSchema.optional().nullable(),
+    /**
+     * The configuration of the formatter
+     */
+    formatter: formatterConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the GraphQL language
+     */
+    graphql: graphqlConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the GraphQL language
+     */
+    grit: gritConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the HTML language
+     */
+    html: htmlConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the JavaScript language
+     */
+    javascript: jsConfigurationSchema.optional().nullable(),
+    /**
+     * Specific configuration for the Json language
+     */
+    json: jsonConfigurationSchema.optional().nullable(),
+    /**
+     * The configuration for the linter
+     */
+    linter: linterConfigurationSchema.optional().nullable(),
+    /**
+     * A list of granular patterns that should be applied only to a sub set of files
+     */
+    overrides: overridesSchema.optional().nullable(),
+    /**
+     * List of plugins to load.
+     */
+    plugins: pluginsSchema.optional().nullable(),
+    /**
+     * Indicates whether this configuration file is at the root of a Biome project. By default, this is `true`.
+     */
+    root: boolSchema.optional().nullable(),
+    /**
+     * The configuration of the VCS integration
+     */
+    vcs: vcsConfigurationSchema.optional().nullable()
 });
