@@ -1,35 +1,41 @@
 {
-  "name": "@cookielab.io/biome-config",
-  "version": "0.0.1",
-  "description": "Biome rulesets for various project types.",
-  "keywords": [
-    "biome",
-    "biome-config"
-  ],
-  "packageManager": "pnpm@10.12.1",
-  "engines": {
-    "node": "24.2.0"
-  },
-  "type": "module",
-  "scripts": {
-    "build": "tsx script/build --target ./dist",
-    "generate": "tsx script/generateSchema --source ./node_modules/@biomejs/biome/configuration_schema.json --target ./src/generated/configuration.ts",
-    "doc": "typedoc",
-    "lint": "biome check",
-    "format": "biome format --write",
-    "types": "tsc"
-  },
-  "peerDependencies": {
-    "@biomejs/biome": "2.0.0-beta.6"
-  },
-  "devDependencies": {
-    "@types/node": "24.0.0",
-    "json-schema-to-typescript": "15.0.4",
-    "ts-to-zod": "3.15.0",
-    "tsx": "4.19.4",
-    "typedoc": "0.28.5",
-    "typedoc-plugin-markdown": "4.6.4",
-    "typescript": "5.8.3",
-    "zod": "3.25.57"
-  }
+	"name": "@cookielab.io/biome-config",
+	"version": "0.0.1",
+	"description": "Biome rulesets for various project types.",
+	"exports": {
+		"./base": "./dist/base.json",
+		"./frontend": "./dist/frontend.json",
+		"./react": "./dist/react.json",
+		"./next": "./dist/next.json",
+		"./node": "./dist/node.json",
+		"./graphql": "./dist/graphql.json"
+	},
+	"main": "./dist/base.json",
+	"keywords": ["biome", "biome-config"],
+	"packageManager": "pnpm@10.12.1",
+	"engines": {
+		"node": "24.2.0"
+	},
+	"type": "module",
+	"scripts": {
+		"build": "tsx script/build --target ./dist",
+		"generate": "tsx script/generateSchema --source ./node_modules/@biomejs/biome/configuration_schema.json --target ./src/generated/configuration.ts",
+		"doc": "typedoc",
+		"lint": "biome check",
+		"format": "biome format --write",
+		"types": "tsc"
+	},
+	"peerDependencies": {
+		"@biomejs/biome": "2.0.0-beta.6"
+	},
+	"devDependencies": {
+		"@types/node": "24.0.0",
+		"json-schema-to-typescript": "15.0.4",
+		"ts-to-zod": "3.15.0",
+		"tsx": "4.19.4",
+		"typedoc": "0.28.5",
+		"typedoc-plugin-markdown": "4.6.4",
+		"typescript": "5.8.3",
+		"zod": "3.25.57"
+	}
 }

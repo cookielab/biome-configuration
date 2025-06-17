@@ -32,7 +32,7 @@ Then extend your Biome configuration with the appropriate configuration:
 
 ```json
 {
-  "extends": ["@cookielab.io/biome-config/base.json"]
+  "extends": ["@cookielab.io/biome-config"]
 }
 ```
 
@@ -40,14 +40,14 @@ Then extend your Biome configuration with the appropriate configuration:
 
 The following configurations are available. You can click through to their respective documentation for more details.
 
-| Name     | Import                                     | Description                                                                                                 |
-| -------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------------- |
-| Base     | `@cookielab.io/biome-config/base.json`     | The base configuration that all rulesets extend from. All specific rules (React, Node, etc.) are disabled.  |
-| Frontend | `@cookielab.io/biome-config/frontend.json` | Extends from Base and has all the frontend-related rules added. Mostly accessibility and CSS-related rules. |
-| React    | `@cookielab.io/biome-config/react.json`    | Extends from Frontend. Adds all the React-related rules.                                                    |
-| Next     | `@cookielab.io/biome-config/next.json`     | Extends from React. Adds all the Next.js-related rules.                                                     |
-| GraphQL  | `@cookielab.io/biome-config/graphql.json`  | Extends from Base. Adds all the GraphQL-related rules.                                                      |
-| Node     | `@cookielab.io/biome-config/node.json`     | Extends from Base. Adds all the Node-related rules.                                                         |
+| Name     | Import                                | Description                                                                                                 |
+| -------- | ------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Base     | `@cookielab.io/biome-config`          | `@cookielab.io/biome-config/base`                                                                           | The base configuration that all rulesets extend from. All specific rules (React, Node, etc.) are disabled. |
+| Frontend | `@cookielab.io/biome-config/frontend` | Extends from Base and has all the frontend-related rules added. Mostly accessibility and CSS-related rules. |
+| React    | `@cookielab.io/biome-config/react`    | Extends from Frontend. Adds all the React-related rules.                                                    |
+| Next     | `@cookielab.io/biome-config/next`     | Extends from React. Adds all the Next.js-related rules.                                                     |
+| GraphQL  | `@cookielab.io/biome-config/graphql`  | Extends from Base. Adds all the GraphQL-related rules.                                                      |
+| Node     | `@cookielab.io/biome-config/node`     | Extends from Base. Adds all the Node-related rules.                                                         |
 
 In addition to the rulesets above, a top-level configuration is included. See [the documentation](_media/README.md) for more information.
 
