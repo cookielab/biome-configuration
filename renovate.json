@@ -64,5 +64,6 @@
   "commitMessageAction": "update",
   "commitMessageTopic": "{{depName}}",
   "commitMessageExtra": "to {{newVersion}}",
-  "commitBodyTable": true
+  "commitBodyTable": true,
+  "reviewersFromCodeOwners": true
 }
