@@ -4,10 +4,6 @@
 
 # Cookielab's Biome Configuration
 
-## ⚠️ Beta Version ⚠️
-
-Currently, the project depends on the beta version of [Biome 2.0](https://next.biomejs.dev/). Please be aware before installing.
-
 This package contains [Biome](https://biomejs.dev) configuration for our code style.
 
 The code style aims to be as strict and defensive as possible to avoid bugs & unwanted side-effects and to improve code readability.
