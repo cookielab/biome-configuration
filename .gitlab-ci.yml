@@ -14,7 +14,7 @@ default:
   before_script:
     - npm install -g corepack@latest
     - corepack enable
-    - corepack prepare pnpm@10.12.1 --activate
+    - corepack prepare pnpm --activate
     - pnpm config set store-dir $PNPM_STORE_PATH
     - pnpm install
 
