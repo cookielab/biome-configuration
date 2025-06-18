@@ -95,7 +95,3 @@ publish:
     - pnpm build
     - pnpm config set -- '//registry.npmjs.org/:_authToken' "${NPM_AUTH_TOKEN}"
     - pnpm publish --verbose --access public --no-git-checks
-
-  release:
-    tag_name: "$CI_COMMIT_TAG"
-    description: "$CI_COMMIT_TAG"
