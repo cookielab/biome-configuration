@@ -139,6 +139,11 @@ export const stableHookResultSchema = z.union([z.boolean(), z.tuple([z.number()]
 
 export const objectPropertySyntaxSchema = z.union([z.literal("explicit"), z.literal("shorthand")]);
 
+/**
+ * Specifies whether property assignments on function parameters are allowed or denied.
+ */
+export const propertyAssignmentModeSchema = z.union([z.literal("allow"), z.literal("deny")]);
+
 export const customRestrictedImportOptionsSchema = z.object({
     /**
      * Names of the exported members that allowed to be not be used.
@@ -799,7 +804,7 @@ export const undeclaredVariablesOptionsSchema = z.record(z.string(), z.unknown()
 
 export const noUnusedVariablesOptionsSchema = z.object({
     /**
-     * Whether to ignore unused variables from an object destructuring with a spread (i.e.: whether `a` and `b` in `const { a, b, ...rest } = obj` should be ignored by this rule).
+     * Whether to ignore unused variables from an object destructuring with a spread.
      */
     ignoreRestSiblings: z.boolean().optional()
 });
@@ -938,6 +943,16 @@ export const noBlankTargetOptionsSchema = z.object({
      * Whether `noreferrer` is allowed in addition to `noopener`.
      */
     allowNoReferrer: z.boolean().optional()
+});
+
+/**
+ * Options for the rule `NoParameterAssign`
+ */
+export const noParameterAssignOptionsSchema = z.object({
+    /**
+     * Whether to report an error when a dependency is listed in the dependencies array but isn't used. Defaults to `allow`.
+     */
+    propertyAssignment: propertyAssignmentModeSchema.and(z.string()).optional()
 });
 
 /**
@@ -1449,6 +1464,17 @@ export const ruleWithNoBlankTargetOptionsSchema = z.object({
     options: noBlankTargetOptionsSchema.optional()
 });
 
+export const ruleWithNoParameterAssignOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noParameterAssignOptionsSchema.optional()
+});
+
 export const ruleWithRestrictedGlobalsOptionsSchema = z.object({
     /**
      * The severity of the emitted diagnostics by the rule
@@ -1637,6 +1663,8 @@ export const noRestrictedElementsOptionsSchema = z.object({
 });
 
 export const noBlankTargetConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBlankTargetOptionsSchema]);
+
+export const noParameterAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoParameterAssignOptionsSchema]);
 
 export const restrictedGlobalsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithRestrictedGlobalsOptionsSchema]);
 
@@ -2952,7 +2980,7 @@ export const styleSchema = z.object({
     /**
      * Disallow reassigning function parameters.
      */
-    noParameterAssign: ruleConfigurationSchema.optional().nullable(),
+    noParameterAssign: noParameterAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of parameter properties in class constructors.
      */

@@ -1,6 +1,6 @@
 {
 	"name": "@cookielab.io/biome-config",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "Biome rulesets for various project types.",
 	"files": [
 	  "dist"
@@ -29,7 +29,7 @@
 		"types": "tsc"
 	},
 	"peerDependencies": {
-		"@biomejs/biome": "2.0.0-beta.6"
+		"@biomejs/biome": "2.0.0"
 	},
 	"devDependencies": {
 		"@types/node": "24.0.0",
