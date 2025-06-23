@@ -1,5 +1,12 @@
 # @cookielab.io/biome-config
 
+## 0.2.0
+
+### Major Changes
+
+- Update Biome to `2.0.4`
+- Add `useReadonlyClassProperties` rule to `base`
+
 ## 0.1.0
 
 ### Major Changes

@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: rules/base.ts:645
+Defined in: rules/base.ts:646
 
 ## Type declaration
 
@@ -807,6 +807,10 @@ Graduated to the `style` category.
 #### nursery.useParseIntRadix
 
 > `readonly` **useParseIntRadix**: `"error"` = `"error"`
+
+#### nursery.useReadonlyClassProperties
+
+> `readonly` **useReadonlyClassProperties**: `"warn"` = `"warn"`
 
 #### nursery.useSingleJsDocAsterisk
 

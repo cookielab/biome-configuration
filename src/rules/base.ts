@@ -319,6 +319,7 @@ const nursery = {
 	useNumericSeparators: "error",
 	useObjectSpread: "error",
 	useParseIntRadix: "error",
+	useReadonlyClassProperties: "warn",
 	useSingleJsDocAsterisk: "warn",
 	/**
 	 * Frontend-only rule.

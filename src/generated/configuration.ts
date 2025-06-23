@@ -881,6 +881,16 @@ export const useConsistentObjectDefinitionOptionsSchema = z.object({
     syntax: objectPropertySyntaxSchema.and(z.string()).optional()
 });
 
+/**
+ * Rule's options
+ */
+export const readonlyClassPropertiesOptionsSchema = z.object({
+    /**
+     * When `true`, the keywords `public`, `protected`, and `private` are analyzed by the rule.
+     */
+    checkAllProperties: z.boolean().optional()
+});
+
 export const utilityClassSortingOptionsSchema = z.object({
     /**
      * Additional attributes that will be sorted.
@@ -1432,6 +1442,21 @@ export const ruleWithUseConsistentObjectDefinitionOptionsSchema = z.object({
     options: useConsistentObjectDefinitionOptionsSchema.optional()
 });
 
+export const ruleWithReadonlyClassPropertiesOptionsSchema = z.object({
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: readonlyClassPropertiesOptionsSchema.optional()
+});
+
 export const ruleWithUtilityClassSortingOptionsSchema = z.object({
     /**
      * The kind of the code actions emitted by the rule
@@ -1652,6 +1677,8 @@ export const noBitwiseOperatorsConfigurationSchema = z.union([rulePlainConfigura
 export const noSecretsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSecretsOptionsSchema]);
 
 export const useConsistentObjectDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentObjectDefinitionOptionsSchema]);
+
+export const readonlyClassPropertiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithReadonlyClassPropertiesOptionsSchema]);
 
 export const utilityClassSortingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUtilityClassSortingOptionsSchema]);
 
@@ -2880,6 +2907,10 @@ export const nurserySchema = z.object({
      * Enforce the consistent use of the radix argument when using parseInt().
      */
     useParseIntRadix: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce marking members as readonly if they are never modified outside the constructor.
+     */
+    useReadonlyClassProperties: readonlyClassPropertiesConfigurationSchema.optional().nullable(),
     /**
      * Enforce JSDoc comment lines to start with a single asterisk, except for the first one.
      */

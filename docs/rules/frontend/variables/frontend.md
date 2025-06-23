@@ -778,6 +778,10 @@ Graduated to the `style` category.
 
 > `readonly` **useParseIntRadix**: `"error"` = `"error"`
 
+#### nursery.useReadonlyClassProperties
+
+> `readonly` **useReadonlyClassProperties**: `"warn"` = `"warn"`
+
 #### nursery.useSingleJsDocAsterisk
 
 > `readonly` **useSingleJsDocAsterisk**: `"warn"` = `"warn"`
