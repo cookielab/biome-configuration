@@ -1,4 +1,4 @@
-image: node:24.2.0-alpine3.22
+image: node:24.3.0-alpine3.22
 
 stages:
   - prebuild
