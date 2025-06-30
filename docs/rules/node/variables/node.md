@@ -618,6 +618,12 @@ React-only rule.
 
 Solid-only rule.
 
+#### nursery.noExcessiveLinesPerFunction
+
+> `readonly` **noExcessiveLinesPerFunction**: `"off"` = `"off"`
+
+Does not really make sense as high line count != high complexity.
+
 #### nursery.noFloatingPromises
 
 > `readonly` **noFloatingPromises**: `"error"` = `"error"`
@@ -629,6 +635,10 @@ Solid-only rule.
 Should only be enabled per-project, depending on the bundler and CommonJS/ESM usage.
 
 Recommended level would be `error`.
+
+#### nursery.noImplicitCoercion
+
+> `readonly` **noImplicitCoercion**: `"error"` = `"error"`
 
 #### nursery.noImportantStyles
 
@@ -679,6 +689,10 @@ React-only rule.
 #### nursery.noTsIgnore
 
 > `readonly` **noTsIgnore**: `"warn"` = `"warn"`
+
+#### nursery.noUnassignedVariables
+
+> `readonly` **noUnassignedVariables**: `"error"` = `"error"`
 
 #### nursery.noUnknownAtRule
 
@@ -823,6 +837,10 @@ Frontend-only rule.
 #### nursery.useSymbolDescription
 
 > `readonly` **useSymbolDescription**: `"error"` = `"error"`
+
+#### nursery.useUnifiedTypeSignature
+
+> `readonly` **useUnifiedTypeSignature**: `"warn"` = `"warn"`
 
 #### nursery.useUniqueElementIds
 
@@ -1215,6 +1233,12 @@ React-only rule.
 ### suspicious
 
 > `readonly` **suspicious**: `object`
+
+#### suspicious.noAlert
+
+> `readonly` **noAlert**: `"off"` = `"off"`
+
+Frontend-only rule.
 
 #### suspicious.noApproximativeNumericConstant
 

@@ -231,6 +231,10 @@ const nursery = {
 	 * Solid-only rule.
 	 */
 	noDestructuredProps: "off",
+	/**
+	 * Does not really make sense as high line count != high complexity.
+	 */
+	noExcessiveLinesPerFunction: "off",
 	noFloatingPromises: "error",
 	/**
 	 * Should only be enabled per-project, depending on the bundler and CommonJS/ESM usage.
@@ -238,6 +242,7 @@ const nursery = {
 	 * Recommended level would be `error`.
 	 */
 	noGlobalDirnameFilename: "off",
+	noImplicitCoercion: "error",
 	/**
 	 * Frontend-only rule.
 	 */
@@ -263,6 +268,7 @@ const nursery = {
 	noSecrets: "error",
 	noShadow: "error",
 	noTsIgnore: "warn",
+	noUnassignedVariables: "error",
 	/**
 	 * Frontend-only rule.
 	 */
@@ -326,6 +332,7 @@ const nursery = {
 	 */
 	useSortedClasses: "off",
 	useSymbolDescription: "error",
+	useUnifiedTypeSignature: "warn",
 	/**
 	 * React-only rule.
 	 */
@@ -502,6 +509,10 @@ const style = {
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
+	/**
+	 * Frontend-only rule.
+	 */
+	noAlert: "off",
 	noApproximativeNumericConstant: "error",
 	/**
 	 * React-only rule.

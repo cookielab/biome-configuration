@@ -104,6 +104,7 @@ const style = {
 const suspicious = {
 	...base.suspicious,
 
+	noAlert: "error",
 	noDocumentCookie: "error",
 	noDocumentImportInPage: "error",
 	noDuplicateAtImportRules: "error",

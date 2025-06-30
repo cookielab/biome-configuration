@@ -865,6 +865,21 @@ export const noBitwiseOperatorsOptionsSchema = z.object({
     allow: z.array(z.string()).optional()
 });
 
+export const noExcessiveLinesPerFunctionOptionsSchema = z.object({
+    /**
+     * The maximum number of lines allowed in a function body.
+     */
+    maxLines: z.number().optional(),
+    /**
+     * When this options is set to `true`, blank lines in the function body are not counted towards the maximum line limit.
+     */
+    skipBlankLines: z.boolean().optional(),
+    /**
+     * When this option is set to `true`, Immediately Invoked Function Expressions (IIFEs) are not checked for the maximum line limit.
+     */
+    skipIifes: z.boolean().optional()
+});
+
 export const customRestrictedElementsSchema = z.record(z.string(), z.string());
 
 export const noSecretsOptionsSchema = z.object({
@@ -1416,6 +1431,17 @@ export const ruleWithNoBitwiseOperatorsOptionsSchema = z.object({
     options: noBitwiseOperatorsOptionsSchema.optional()
 });
 
+export const ruleWithNoExcessiveLinesPerFunctionOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noExcessiveLinesPerFunctionOptionsSchema.optional()
+});
+
 export const ruleWithNoSecretsOptionsSchema = z.object({
     /**
      * The severity of the emitted diagnostics by the rule
@@ -1673,6 +1699,8 @@ export const useExhaustiveDependenciesOptionsSchema = z.object({
 });
 
 export const noBitwiseOperatorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBitwiseOperatorsOptionsSchema]);
+
+export const noExcessiveLinesPerFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveLinesPerFunctionOptionsSchema]);
 
 export const noSecretsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSecretsOptionsSchema]);
 
@@ -2148,6 +2176,10 @@ export const ruleWithNoRestrictedTypesOptionsSchema = z.object({
  * A list of rules that belong to this group
  */
 export const suspiciousSchema = z.object({
+    /**
+     * Disallow the use of alert, confirm, and prompt.
+     */
+    noAlert: ruleConfigurationSchema.optional().nullable(),
     /**
      * Use standard constants instead of approximated literals.
      */
@@ -2768,6 +2800,10 @@ export const nurserySchema = z.object({
      */
     noDestructuredProps: ruleConfigurationSchema.optional().nullable(),
     /**
+     * Restrict the number of lines of code in a function.
+     */
+    noExcessiveLinesPerFunction: noExcessiveLinesPerFunctionConfigurationSchema.optional().nullable(),
+    /**
      * Require Promise-like statements to be handled appropriately.
      */
     noFloatingPromises: ruleFixConfigurationSchema.optional().nullable(),
@@ -2775,6 +2811,10 @@ export const nurserySchema = z.object({
      * Disallow the use of __dirname and __filename in the global scope.
      */
     noGlobalDirnameFilename: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow shorthand type conversions.
+     */
+    noImplicitCoercion: ruleFixConfigurationSchema.optional().nullable(),
     /**
      * Prevent import cycles.
      */
@@ -2815,6 +2855,10 @@ export const nurserySchema = z.object({
      * Prevents the use of the TypeScript directive @ts-ignore.
      */
     noTsIgnore: ruleFixConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow let or var variables that are read but never assigned.
+     */
+    noUnassignedVariables: ruleConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown at-rules.
      */
@@ -2923,6 +2967,10 @@ export const nurserySchema = z.object({
      * Require a description parameter for the Symbol().
      */
     useSymbolDescription: ruleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow overload signatures that can be unified into a single signature.
+     */
+    useUnifiedTypeSignature: ruleFixConfigurationSchema.optional().nullable(),
     /**
      * Prevent the usage of static string literal id attribute on elements.
      */
