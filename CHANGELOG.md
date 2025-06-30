@@ -1,5 +1,11 @@
 # @cookielab.io/biome-config
 
+## 0.3.1
+
+### General Changes
+
+- Rename `LICENSE.md` to `LICENSE`
+
 ## 0.3.0
 
 ### General Changes
