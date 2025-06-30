@@ -1,5 +1,21 @@
 # @cookielab.io/biome-config
 
+## 0.3.0
+
+### General Changes
+
+- Update Biome to `2.0.6`
+- Loosen up the peer-dependency of Biome from strictly the same version to `>=`
+
+### Rule Changes
+
+- ## **New**:
+  - `"noExcessiveLinesPerFunction": "off"` added to `base.nursery`
+  - `"noImplicitConversion": "error"` added to `base.nursery`
+  - `noUnassignedVariables": "error"` added to `base.nursery`
+  - `"useUnifiedTypeSignature": "warn"` added to `base.nursery`
+  - `"noAlert": "error"` added to `frontend.suspicious`
+
 ## 0.2.0
 
 ### Major Changes
