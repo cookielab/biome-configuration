@@ -1,5 +1,17 @@
 # @cookielab.io/biome-config
 
+## 0.4.0
+
+### General Changes
+
+- Update Biome to `2.0.11`
+
+### Rule Changes
+
+- ## New:
+  - `"noMagicNumbers": "warn"` added to `base.nursery`
+  - `"noMisusedPromises": "error"` added to `base.nursery`
+
 ## 0.3.1
 
 ### General Changes
@@ -15,7 +27,7 @@
 
 ### Rule Changes
 
-- ## **New**:
+- ## New:
   - `"noExcessiveLinesPerFunction": "off"` added to `base.nursery`
   - `"noImplicitConversion": "error"` added to `base.nursery`
   - `noUnassignedVariables": "error"` added to `base.nursery`
