@@ -3,5 +3,12 @@
 	"extends": ["./dist/node.json"],
 	"files": {
 		"includes": ["src/**/*.ts", "scripts/**/*.ts", "!**/generated/**"]
+	},
+	"linter": {
+		"rules": {
+			"nursery": {
+				"noUnresolvedImports": "off"
+			}
+		}
 	}
 }

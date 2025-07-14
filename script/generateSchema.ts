@@ -16,7 +16,7 @@ import { generate as generateZodSchema } from "ts-to-zod";
  * @returns Zod V4 schema string
  */
 const migrateToZod4 = (schema: string): string => {
-	return schema.replace('from "zod"', 'from "zod/v4"').replaceAll("z.record(", "z.record(z.string(), ");
+	return schema.replaceAll("z.record(", "z.record(z.string(), ");
 }
 
 /**
