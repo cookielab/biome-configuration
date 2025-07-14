@@ -15,7 +15,7 @@
 	},
 	"main": "./dist/base.json",
 	"keywords": ["biome", "biome-config"],
-	"packageManager": "pnpm@10.12.4",
+	"packageManager": "pnpm@10.13.1",
 	"type": "module",
 	"scripts": {
 		"build": "tsx script/build --target ./dist",
