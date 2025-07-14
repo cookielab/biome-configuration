@@ -248,6 +248,8 @@ const nursery = {
 	 */
 	noImportantStyles: "off",
 	noImportCycles: "error",
+	noMagicNumbers: "warn",
+	noMisusedPromises: "error",
 	/**
 	 * React-only rule.
 	 */

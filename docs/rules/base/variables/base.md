@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: rules/base.ts:657
+Defined in: rules/base.ts:659
 
 ## Type declaration
 
@@ -651,6 +651,14 @@ Frontend-only rule.
 #### nursery.noImportCycles
 
 > `readonly` **noImportCycles**: `"error"` = `"error"`
+
+#### nursery.noMagicNumbers
+
+> `readonly` **noMagicNumbers**: `"warn"` = `"warn"`
+
+#### nursery.noMisusedPromises
+
+> `readonly` **noMisusedPromises**: `"error"` = `"error"`
 
 #### nursery.noNestedComponentDefinitions
 
