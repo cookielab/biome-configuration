@@ -1,5 +1,16 @@
 # @cookielab.io/biome-config
 
+## 0.5.0
+
+### General Changes
+
+- Update Biome to `2.1.2`
+
+### Rule Changes
+
+- ## New
+  - `"noVueReservedProps": "off"` added to `base.nursery`
+
 ## 0.4.0
 
 ### General Changes

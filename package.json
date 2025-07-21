@@ -1,6 +1,6 @@
 {
 	"name": "@cookielab.io/biome-config",
-	"version": "0.4.0",
+	"version": "0.5.0",
 	"description": "Biome rulesets for various project types.",
 	"files": [
 	  "dist"
