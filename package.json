@@ -26,7 +26,7 @@
 		"types": "tsc"
 	},
 	"peerDependencies": {
-		"@biomejs/biome": ">=2.1.1"
+		"@biomejs/biome": ">=2.1.2"
 	},
 	"devDependencies": {
 		"@types/node": "24.0.15",
