@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: rules/base.ts:659
+Defined in: rules/base.ts:663
 
 ## Type declaration
 
@@ -731,6 +731,12 @@ NextJS-only rule.
 #### nursery.noUselessUndefined
 
 > `readonly` **noUselessUndefined**: `"error"` = `"error"`
+
+#### nursery.noVueReservedProps
+
+> `readonly` **noVueReservedProps**: `"off"` = `"off"`
+
+Vue-only rule.
 
 #### nursery.recommended
 

@@ -1134,6 +1134,8 @@ export const noUselessEscapeInStringOptionsSchema = z.object({});
 
 export const noUselessUndefinedOptionsSchema = z.object({});
 
+export const noVueReservedPropsOptionsSchema = z.object({});
+
 export const useAdjacentGetterSetterOptionsSchema = z.object({});
 
 export const useConsistentObjectDefinitionOptionsSchema = z.object({
@@ -1208,7 +1210,12 @@ export const useSymbolDescriptionOptionsSchema = z.object({});
 
 export const useUnifiedTypeSignatureOptionsSchema = z.object({});
 
-export const useUniqueElementIdsOptionsSchema = z.object({});
+export const useUniqueElementIdsOptionsSchema = z.object({
+    /**
+     * Component names that accept an `id` prop that does not translate to a DOM element id.
+     */
+    excludedComponents: z.array(z.string()).optional()
+});
 
 export const noAccumulatingSpreadOptionsSchema = z.object({});
 
@@ -3780,6 +3787,17 @@ export const ruleWithNoUselessUndefinedOptionsSchema = z.object({
     options: noUselessUndefinedOptionsSchema.optional()
 });
 
+export const ruleWithNoVueReservedPropsOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noVueReservedPropsOptionsSchema.optional()
+});
+
 export const ruleWithUseAdjacentGetterSetterOptionsSchema = z.object({
     /**
      * The severity of the emitted diagnostics by the rule
@@ -6328,6 +6346,8 @@ export const noUselessEscapeInStringConfigurationSchema = z.union([rulePlainConf
 
 export const noUselessUndefinedConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessUndefinedOptionsSchema]);
 
+export const noVueReservedPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedPropsOptionsSchema]);
+
 export const useAdjacentGetterSetterConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAdjacentGetterSetterOptionsSchema]);
 
 export const useConsistentObjectDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentObjectDefinitionOptionsSchema]);
@@ -8143,6 +8163,10 @@ export const nurserySchema = z.object({
      * Disallow the use of useless undefined.
      */
     noUselessUndefined: noUselessUndefinedConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow reserved names to be used as props.
+     */
+    noVueReservedProps: noVueReservedPropsConfigurationSchema.optional().nullable(),
     /**
      * It enables the recommended rules for this group
      */

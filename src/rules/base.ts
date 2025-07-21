@@ -283,6 +283,10 @@ const nursery = {
 	noUselessBackrefInRegex: "error",
 	noUselessEscapeInString: "error",
 	noUselessUndefined: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueReservedProps: "off",
 	recommended: false,
 	useAdjacentGetterSetter: "error",
 	useConsistentObjectDefinition: {

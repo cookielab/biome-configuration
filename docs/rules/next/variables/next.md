@@ -682,6 +682,12 @@ Recommended level would be `error`.
 
 > `readonly` **noUselessUndefined**: `"error"` = `"error"`
 
+#### nursery.noVueReservedProps
+
+> `readonly` **noVueReservedProps**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### nursery.recommended
 
 > `readonly` **recommended**: `false` = `false`
