@@ -1,5 +1,21 @@
 # @cookielab.io/biome-config
 
+## 0.6.0
+
+### Rule Changes
+
+- ## Change
+  - `"useLiteralKeys": "off"` disabled in `base.complexity` due to clashes with a strict Typescript config. When accessing `Record<string, unknown>`, index-access is preferred.
+  - `"noSecrets": "off"` disabled in `base.nursery` due to too many false-positives
+  - `"noUnresolvedImports": "off"` disabled in `base.nursery` due to too many false-positives
+
+### Assist Changes
+
+- ## Change
+  - `"useSortedAttributes": "off"` disabled as manual sorting is preferred.
+  - `"useSortedKeys": "off"` disabled as manual sorting is preferred.
+  - `"useSortedProperties": "off"` disabled as manual sorting is preferred.
+
 ## 0.5.0
 
 ### General Changes
