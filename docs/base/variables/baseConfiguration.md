@@ -53,15 +53,21 @@ The aim here is to configure as much as possible so that all of the use cases of
 
 #### assist.actions.source.useSortedAttributes
 
-> `readonly` **useSortedAttributes**: `"on"` = `"on"`
+> `readonly` **useSortedAttributes**: `"off"` = `"off"`
+
+Manual sorting is preferred.
 
 #### assist.actions.source.useSortedKeys
 
-> `readonly` **useSortedKeys**: `"on"` = `"on"`
+> `readonly` **useSortedKeys**: `"off"` = `"off"`
+
+Manual sorting is preferred.
 
 #### assist.actions.source.useSortedProperties
 
-> `readonly` **useSortedProperties**: `"on"` = `"on"`
+> `readonly` **useSortedProperties**: `"off"` = `"off"`
+
+Manual sorting is preferred.
 
 ### css
 

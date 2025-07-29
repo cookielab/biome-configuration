@@ -28,9 +28,18 @@ const baseConfiguration = {
 					},
 				},
 				recommended: false,
-				useSortedAttributes: "on",
-				useSortedKeys: "on",
-				useSortedProperties: "on",
+				/**
+				 * Manual sorting is preferred.
+				 */
+				useSortedAttributes: "off",
+				/**
+				 * Manual sorting is preferred.
+				 */
+				useSortedKeys: "off",
+				/**
+				 * Manual sorting is preferred.
+				 */
+				useSortedProperties: "off",
 			},
 		},
 	},

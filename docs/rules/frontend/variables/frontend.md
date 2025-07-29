@@ -306,7 +306,9 @@ React-only rule.
 
 #### complexity.useLiteralKeys
 
-> `readonly` **useLiteralKeys**: `"error"` = `"error"`
+> `readonly` **useLiteralKeys**: `"off"` = `"off"`
+
+Clashes with index-based access required by a strict Typescript configuration when using records with `string` as the key type.
 
 #### complexity.useNumericLiterals
 
@@ -664,7 +666,9 @@ React-only rule.
 
 #### nursery.noSecrets
 
-> `readonly` **noSecrets**: `"error"` = `"error"`
+> `readonly` **noSecrets**: `"off"` = `"off"`
+
+Produces too many false-positives for now.
 
 #### nursery.noShadow
 
@@ -684,7 +688,9 @@ React-only rule.
 
 #### nursery.noUnresolvedImports
 
-> `readonly` **noUnresolvedImports**: `"warn"` = `"warn"`
+> `readonly` **noUnresolvedImports**: `"off"` = `"off"`
+
+Produces too many false-positives for now.
 
 #### nursery.noUnwantedPolyfillio
 

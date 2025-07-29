@@ -94,7 +94,10 @@ const complexity = {
 	useArrowFunction: "error",
 	useDateNow: "error",
 	useFlatMap: "error",
-	useLiteralKeys: "error",
+	/**
+	 * Clashes with index-based access required by a strict Typescript configuration when using records with `string` as the key type.
+	 */
+	useLiteralKeys: "off",
 	useNumericLiterals: "error",
 	useOptionalChain: "error",
 	useRegexLiterals: "error",
@@ -267,7 +270,10 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noRestrictedElements: "off",
-	noSecrets: "error",
+	/**
+	 * Produces too many false-positives for now.
+	 */
+	noSecrets: "off",
 	noShadow: "error",
 	noTsIgnore: "warn",
 	noUnassignedVariables: "error",
@@ -275,7 +281,10 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noUnknownAtRule: "off",
-	noUnresolvedImports: "warn",
+	/**
+	 * Produces too many false-positives for now.
+	 */
+	noUnresolvedImports: "off",
 	/**
 	 * NextJS-only rule.
 	 */
