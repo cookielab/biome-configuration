@@ -36,6 +36,6 @@
 		"typedoc": "0.28.9",
 		"typedoc-plugin-markdown": "4.8.0",
 		"typescript": "5.8.3",
-		"zod": "4.0.11"
+		"zod": "4.0.14"
 	}
 }

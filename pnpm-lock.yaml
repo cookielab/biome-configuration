@@ -34,8 +34,8 @@ importers:
         specifier: 5.8.3
         version: 5.8.3
       zod:
-        specifier: 4.0.11
-        version: 4.0.11
+        specifier: 4.0.14
+        version: 4.0.14
 
 packages:
 
@@ -810,8 +810,8 @@ packages:
   zod@3.25.74:
     resolution: {integrity: sha512-J8poo92VuhKjNknViHRAIuuN6li/EwFbAC8OedzI8uxpEPGiXHGQu9wemIAioIpqgfB4SySaJhdk0mH5Y4ICBg==}
 
-  zod@4.0.11:
-    resolution: {integrity: sha512-LVrgstTaQJek72n6ZGxhAhH/Q24PhGx4lIAcgBmjtvjRq0qYjiH9U0o3hfuC2vfExsnpoHElc4XOJjMKQjUQxg==}
+  zod@4.0.14:
+    resolution: {integrity: sha512-nGFJTnJN6cM2v9kXL+SOBq3AtjQby3Mv5ySGFof5UGRHrRioSJ5iG680cYNjE/yWk671nROcpPj4hAS8nyLhSw==}
 
 snapshots:
 
@@ -1532,4 +1532,4 @@ snapshots:
 
   zod@3.25.74: {}
 
-  zod@4.0.11: {}
+  zod@4.0.14: {}
