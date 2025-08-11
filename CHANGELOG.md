@@ -1,5 +1,32 @@
 # @cookielab.io/biome-config
 
+## 0.7.0
+
+### General Changes
+
+- Update Biome to `2.1.4`
+
+### Rule Changes
+
+- ## New
+  - `"noNonNullAssertedOptionalChain": "error"` added to `base.nursery`
+  - `"noQuickfickBiome": "off"` added to `base.nursery`
+  - `"noQwikUseVisibleTask": "off"` added to `base.nursery`
+  - `"noUnnecessaryConditions": "warn"` added to `base.nursery`
+  - `"noVueDataObjectDeclaration": "off"` added to `base.nursery`
+  - `"noVueReservedKeys": "off"` added to `base.nursery`
+  - `"useAnchorHref"`
+    - `"off"` added to `base.nursery`
+    - `"error"` added to `frontend.nursery`
+  - `"useConsistentTypeDefinitions": "error"` added to `base.nursery`, requires `type` instead of `interface`
+  - `"useImageSize"`
+    - `"off"` added to `base.nursery`
+    - `"warn"` added to `frontend.nursery`
+  - `"useQwikClassList": "off"` added to `base.nursery`
+  - `"useReactFunctionComponents"`
+    - `"off"` added to `base.nursery`
+    - `"error"` added to `react.nursery`
+
 ## 0.6.0
 
 ### Rule Changes
