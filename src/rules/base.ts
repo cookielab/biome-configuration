@@ -261,7 +261,16 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noNoninteractiveElementInteractions: "off",
+	noNonNullAssertedOptionalChain: "error",
 	noProcessGlobal: "error",
+	/**
+	 * Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
+	 */
+	noQuickfixBiome: "off",
+	/**
+	 * Qwik-only rule.
+	 */
+	noQwikUseVisibleTask: "off",
 	/**
 	 * React-only rule.
 	 */
@@ -281,6 +290,7 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noUnknownAtRule: "off",
+	noUnnecessaryConditions: "warn",
 	/**
 	 * Produces too many false-positives for now.
 	 */
@@ -295,9 +305,21 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
+	noVueDataObjectDeclaration: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueReservedKeys: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	noVueReservedProps: "off",
 	recommended: false,
 	useAdjacentGetterSetter: "error",
+	/**
+	 * JSX-only rule.
+	 */
+	useAnchorHref: "off",
 	useConsistentObjectDefinition: {
 		level: "error",
 		options: {
@@ -305,6 +327,20 @@ const nursery = {
 		},
 	},
 	useConsistentResponse: "warn",
+	/**
+	 * `type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
+	 * conditional types, `type` is the recommended approach.
+	 *
+	 * This rule should be disabled only for cases when needing to use `class ClassName implements Interface`.
+	 *
+	 * For in-depth explanation see https://www.totaltypescript.com/type-vs-interface-which-should-you-use
+	 */
+	useConsistentTypeDefinitions: {
+		level: "error",
+		options: {
+			style: "type",
+		},
+	},
 	useExhaustiveSwitchCases: "error",
 	/**
 	 * The rule is currently missing the option to make the following usage valid:
@@ -326,6 +362,10 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	useGoogleFontPreconnect: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	useImageSize: "off",
 	useIndexOf: "error",
 	useIterableCallbackReturn: "error",
 	useJsonImportAttribute: "error",
@@ -340,6 +380,14 @@ const nursery = {
 	useNumericSeparators: "error",
 	useObjectSpread: "error",
 	useParseIntRadix: "error",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikClasslist: "off",
+	/**
+	 * React-only rule.
+	 */
+	useReactFunctionComponents: "off",
 	useReadonlyClassProperties: "warn",
 	useSingleJsDocAsterisk: "warn",
 	/**

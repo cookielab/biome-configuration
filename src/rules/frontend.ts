@@ -80,7 +80,9 @@ const nursery = {
 	noImportantStyles: "error",
 	noNoninteractiveElementInteractions: "error",
 	noUnknownAtRule: "error",
+	useAnchorHref: "error",
 	useGoogleFontPreconnect: "error",
+	useImageSize: "warn",
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

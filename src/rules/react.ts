@@ -39,6 +39,7 @@ const nursery = {
 	noNestedComponentDefinitions: "error",
 	noReactPropAssign: "error",
 	noRestrictedElements: "error",
+	useReactFunctionComponents: "error",
 	useUniqueElementIds: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

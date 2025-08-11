@@ -8,7 +8,7 @@
 
 > `const` **frontend**: `object`
 
-Defined in: rules/frontend.ts:121
+Defined in: rules/frontend.ts:123
 
 ## Type declaration
 
@@ -648,9 +648,25 @@ React-only rule.
 
 > `readonly` **noNoninteractiveElementInteractions**: `"error"` = `"error"`
 
+#### nursery.noNonNullAssertedOptionalChain
+
+> `readonly` **noNonNullAssertedOptionalChain**: `"error"` = `"error"`
+
 #### nursery.noProcessGlobal
 
 > `readonly` **noProcessGlobal**: `"error"` = `"error"`
+
+#### nursery.noQuickfixBiome
+
+> `readonly` **noQuickfixBiome**: `"off"` = `"off"`
+
+Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
+
+#### nursery.noQwikUseVisibleTask
+
+> `readonly` **noQwikUseVisibleTask**: `"off"` = `"off"`
+
+Qwik-only rule.
 
 #### nursery.noReactPropAssign
 
@@ -686,6 +702,10 @@ Produces too many false-positives for now.
 
 > `readonly` **noUnknownAtRule**: `"error"` = `"error"`
 
+#### nursery.noUnnecessaryConditions
+
+> `readonly` **noUnnecessaryConditions**: `"warn"` = `"warn"`
+
 #### nursery.noUnresolvedImports
 
 > `readonly` **noUnresolvedImports**: `"off"` = `"off"`
@@ -710,6 +730,18 @@ NextJS-only rule.
 
 > `readonly` **noUselessUndefined**: `"error"` = `"error"`
 
+#### nursery.noVueDataObjectDeclaration
+
+> `readonly` **noVueDataObjectDeclaration**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### nursery.noVueReservedKeys
+
+> `readonly` **noVueReservedKeys**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### nursery.noVueReservedProps
 
 > `readonly` **noVueReservedProps**: `"off"` = `"off"`
@@ -723,6 +755,10 @@ Vue-only rule.
 #### nursery.useAdjacentGetterSetter
 
 > `readonly` **useAdjacentGetterSetter**: `"error"` = `"error"`
+
+#### nursery.useAnchorHref
+
+> `readonly` **useAnchorHref**: `"error"` = `"error"`
 
 #### nursery.useConsistentObjectDefinition
 
@@ -743,6 +779,29 @@ Vue-only rule.
 #### nursery.useConsistentResponse
 
 > `readonly` **useConsistentResponse**: `"warn"` = `"warn"`
+
+#### nursery.useConsistentTypeDefinitions
+
+> `readonly` **useConsistentTypeDefinitions**: `object`
+
+`type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
+conditional types, `type` is the recommended approach.
+
+This rule should be disabled only for cases when needing to use `class ClassName implements Interface`.
+
+For in-depth explanation see https://www.totaltypescript.com/type-vs-interface-which-should-you-use
+
+#### nursery.useConsistentTypeDefinitions.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### nursery.useConsistentTypeDefinitions.options
+
+> `readonly` **options**: `object`
+
+#### nursery.useConsistentTypeDefinitions.options.style
+
+> `readonly` **style**: `"type"` = `"type"`
 
 #### nursery.useExhaustiveSwitchCases
 
@@ -775,6 +834,10 @@ Solid-only rule.
 #### nursery.useGoogleFontPreconnect
 
 > `readonly` **useGoogleFontPreconnect**: `"error"` = `"error"`
+
+#### nursery.useImageSize
+
+> `readonly` **useImageSize**: `"warn"` = `"warn"`
 
 #### nursery.useIndexOf
 
@@ -811,6 +874,18 @@ Graduated to the `style` category.
 #### nursery.useParseIntRadix
 
 > `readonly` **useParseIntRadix**: `"error"` = `"error"`
+
+#### nursery.useQwikClasslist
+
+> `readonly` **useQwikClasslist**: `"off"` = `"off"`
+
+Qwik-only rule.
+
+#### nursery.useReactFunctionComponents
+
+> `readonly` **useReactFunctionComponents**: `"off"` = `"off"`
+
+React-only rule.
 
 #### nursery.useReadonlyClassProperties
 

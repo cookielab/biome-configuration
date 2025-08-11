@@ -119,7 +119,13 @@ export const dependencyAvailabilitySchema = z.union([z.boolean(), z.tuple([z.str
 
 export const stableHookResultSchema = z.union([z.boolean(), z.tuple([z.number()]).rest(z.number())]);
 
+export const useAnchorHrefOptionsSchema = z.null();
+
 export const objectPropertySyntaxSchema = z.union([z.literal("explicit"), z.literal("shorthand")]);
+
+export const consistentTypeDefinitionSchema = z.union([z.literal("interface"), z.literal("type")]);
+
+export const useImageSizeOptionsSchema = z.null();
 
 /**
  * Supported cases.
@@ -1091,7 +1097,12 @@ export const noGlobalDirnameFilenameOptionsSchema = z.object({});
 
 export const noImplicitCoercionOptionsSchema = z.object({});
 
-export const noImportCyclesOptionsSchema = z.object({});
+export const noImportCyclesOptionsSchema = z.object({
+    /**
+     * Ignores type-only imports when finding an import cycle. A type-only import (`import type`) will be removed by the compiler, so it cuts an import cycle at runtime. Note that named type imports (`import { type Foo }`) aren't considered as type-only because it's not removed by the compiler if the `verbatimModuleSyntax` option is enabled. Enabled by default.
+     */
+    ignoreTypes: z.boolean().optional()
+});
 
 export const noImportantStylesOptionsSchema = z.object({});
 
@@ -1101,9 +1112,20 @@ export const noMisusedPromisesOptionsSchema = z.object({});
 
 export const noNestedComponentDefinitionsOptionsSchema = z.object({});
 
+export const noNonNullAssertedOptionalChainOptionsSchema = z.object({});
+
 export const noNoninteractiveElementInteractionsOptionsSchema = z.object({});
 
 export const noProcessGlobalOptionsSchema = z.object({});
+
+export const noQuickfixBiomeOptionsSchema = z.object({
+    /**
+     * A list of additional JSON files that should be checked.
+     */
+    additionalPaths: z.array(z.string()).optional()
+});
+
+export const noQwikUseVisibleTaskOptionsSchema = z.object({});
 
 export const noReactPropAssignOptionsSchema = z.object({});
 
@@ -1124,6 +1146,8 @@ export const noUnassignedVariablesOptionsSchema = z.object({});
 
 export const noUnknownAtRuleOptionsSchema = z.object({});
 
+export const noUnnecessaryConditionsOptionsSchema = z.object({});
+
 export const noUnresolvedImportsOptionsSchema = z.object({});
 
 export const noUnwantedPolyfillioOptionsSchema = z.object({});
@@ -1134,9 +1158,24 @@ export const noUselessEscapeInStringOptionsSchema = z.object({});
 
 export const noUselessUndefinedOptionsSchema = z.object({});
 
+export const noVueDataObjectDeclarationOptionsSchema = z.object({});
+
+export const noVueReservedKeysOptionsSchema = z.object({});
+
 export const noVueReservedPropsOptionsSchema = z.object({});
 
 export const useAdjacentGetterSetterOptionsSchema = z.object({});
+
+export const ruleWithUseAnchorHrefOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useAnchorHrefOptionsSchema.optional()
+});
 
 export const useConsistentObjectDefinitionOptionsSchema = z.object({
     /**
@@ -1147,6 +1186,10 @@ export const useConsistentObjectDefinitionOptionsSchema = z.object({
 
 export const useConsistentResponseOptionsSchema = z.object({});
 
+export const useConsistentTypeDefinitionsOptionsSchema = z.object({
+    style: consistentTypeDefinitionSchema.and(z.string()).optional()
+});
+
 export const useExhaustiveSwitchCasesOptionsSchema = z.object({});
 
 export const useExplicitTypeOptionsSchema = z.object({});
@@ -1156,6 +1199,17 @@ export const useExportsLastOptionsSchema = z.object({});
 export const useForComponentOptionsSchema = z.object({});
 
 export const useGoogleFontPreconnectOptionsSchema = z.object({});
+
+export const ruleWithUseImageSizeOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useImageSizeOptionsSchema.optional()
+});
 
 export const useIndexOfOptionsSchema = z.object({});
 
@@ -1185,6 +1239,10 @@ export const useNumericSeparatorsOptionsSchema = z.object({});
 export const useObjectSpreadOptionsSchema = z.object({});
 
 export const useParseIntRadixOptionsSchema = z.object({});
+
+export const useQwikClasslistOptionsSchema = z.object({});
+
+export const useReactFunctionComponentsOptionsSchema = z.object({});
 
 export const useReadonlyClassPropertiesOptionsSchema = z.object({
     /**
@@ -3628,6 +3686,17 @@ export const ruleWithNoNestedComponentDefinitionsOptionsSchema = z.object({
     options: noNestedComponentDefinitionsOptionsSchema.optional()
 });
 
+export const ruleWithNoNonNullAssertedOptionalChainOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noNonNullAssertedOptionalChainOptionsSchema.optional()
+});
+
 export const ruleWithNoNoninteractiveElementInteractionsOptionsSchema = z.object({
     /**
      * The severity of the emitted diagnostics by the rule
@@ -3652,6 +3721,32 @@ export const ruleWithNoProcessGlobalOptionsSchema = z.object({
      * Rule's options
      */
     options: noProcessGlobalOptionsSchema.optional()
+});
+
+export const ruleWithNoQuickfixBiomeOptionsSchema = z.object({
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noQuickfixBiomeOptionsSchema.optional()
+});
+
+export const ruleWithNoQwikUseVisibleTaskOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noQwikUseVisibleTaskOptionsSchema.optional()
 });
 
 export const ruleWithNoReactPropAssignOptionsSchema = z.object({
@@ -3724,6 +3819,17 @@ export const ruleWithNoUnknownAtRuleOptionsSchema = z.object({
     options: noUnknownAtRuleOptionsSchema.optional()
 });
 
+export const ruleWithNoUnnecessaryConditionsOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noUnnecessaryConditionsOptionsSchema.optional()
+});
+
 export const ruleWithNoUnresolvedImportsOptionsSchema = z.object({
     /**
      * The severity of the emitted diagnostics by the rule
@@ -3787,6 +3893,32 @@ export const ruleWithNoUselessUndefinedOptionsSchema = z.object({
     options: noUselessUndefinedOptionsSchema.optional()
 });
 
+export const ruleWithNoVueDataObjectDeclarationOptionsSchema = z.object({
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noVueDataObjectDeclarationOptionsSchema.optional()
+});
+
+export const ruleWithNoVueReservedKeysOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noVueReservedKeysOptionsSchema.optional()
+});
+
 export const ruleWithNoVueReservedPropsOptionsSchema = z.object({
     /**
      * The severity of the emitted diagnostics by the rule
@@ -3808,6 +3940,8 @@ export const ruleWithUseAdjacentGetterSetterOptionsSchema = z.object({
      */
     options: useAdjacentGetterSetterOptionsSchema.optional()
 });
+
+export const useAnchorHrefConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAnchorHrefOptionsSchema]);
 
 export const ruleWithUseConsistentObjectDefinitionOptionsSchema = z.object({
     /**
@@ -3837,6 +3971,21 @@ export const ruleWithUseConsistentResponseOptionsSchema = z.object({
      * Rule's options
      */
     options: useConsistentResponseOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentTypeDefinitionsOptionsSchema = z.object({
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useConsistentTypeDefinitionsOptionsSchema.optional()
 });
 
 export const ruleWithUseExhaustiveSwitchCasesOptionsSchema = z.object({
@@ -3901,6 +4050,8 @@ export const ruleWithUseGoogleFontPreconnectOptionsSchema = z.object({
      */
     options: useGoogleFontPreconnectOptionsSchema.optional()
 });
+
+export const useImageSizeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImageSizeOptionsSchema]);
 
 export const ruleWithUseIndexOfOptionsSchema = z.object({
     /**
@@ -4001,6 +4152,28 @@ export const ruleWithUseParseIntRadixOptionsSchema = z.object({
      * Rule's options
      */
     options: useParseIntRadixOptionsSchema.optional()
+});
+
+export const ruleWithUseQwikClasslistOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useQwikClasslistOptionsSchema.optional()
+});
+
+export const ruleWithUseReactFunctionComponentsOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useReactFunctionComponentsOptionsSchema.optional()
 });
 
 export const ruleWithUseReadonlyClassPropertiesOptionsSchema = z.object({
@@ -6320,9 +6493,15 @@ export const noMisusedPromisesConfigurationSchema = z.union([rulePlainConfigurat
 
 export const noNestedComponentDefinitionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNestedComponentDefinitionsOptionsSchema]);
 
+export const noNonNullAssertedOptionalChainConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNonNullAssertedOptionalChainOptionsSchema]);
+
 export const noNoninteractiveElementInteractionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNoninteractiveElementInteractionsOptionsSchema]);
 
 export const noProcessGlobalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoProcessGlobalOptionsSchema]);
+
+export const noQuickfixBiomeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoQuickfixBiomeOptionsSchema]);
+
+export const noQwikUseVisibleTaskConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoQwikUseVisibleTaskOptionsSchema]);
 
 export const noReactPropAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactPropAssignOptionsSchema]);
 
@@ -6336,6 +6515,8 @@ export const noUnassignedVariablesConfigurationSchema = z.union([rulePlainConfig
 
 export const noUnknownAtRuleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnknownAtRuleOptionsSchema]);
 
+export const noUnnecessaryConditionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnnecessaryConditionsOptionsSchema]);
+
 export const noUnresolvedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnresolvedImportsOptionsSchema]);
 
 export const noUnwantedPolyfillioConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnwantedPolyfillioOptionsSchema]);
@@ -6346,6 +6527,10 @@ export const noUselessEscapeInStringConfigurationSchema = z.union([rulePlainConf
 
 export const noUselessUndefinedConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessUndefinedOptionsSchema]);
 
+export const noVueDataObjectDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDataObjectDeclarationOptionsSchema]);
+
+export const noVueReservedKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedKeysOptionsSchema]);
+
 export const noVueReservedPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedPropsOptionsSchema]);
 
 export const useAdjacentGetterSetterConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAdjacentGetterSetterOptionsSchema]);
@@ -6353,6 +6538,8 @@ export const useAdjacentGetterSetterConfigurationSchema = z.union([rulePlainConf
 export const useConsistentObjectDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentObjectDefinitionOptionsSchema]);
 
 export const useConsistentResponseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentResponseOptionsSchema]);
+
+export const useConsistentTypeDefinitionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentTypeDefinitionsOptionsSchema]);
 
 export const useExhaustiveSwitchCasesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveSwitchCasesOptionsSchema]);
 
@@ -6377,6 +6564,10 @@ export const useNumericSeparatorsConfigurationSchema = z.union([rulePlainConfigu
 export const useObjectSpreadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseObjectSpreadOptionsSchema]);
 
 export const useParseIntRadixConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseParseIntRadixOptionsSchema]);
+
+export const useQwikClasslistConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikClasslistOptionsSchema]);
+
+export const useReactFunctionComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactFunctionComponentsOptionsSchema]);
 
 export const useReadonlyClassPropertiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReadonlyClassPropertiesOptionsSchema]);
 
@@ -8108,6 +8299,10 @@ export const nurserySchema = z.object({
      */
     noNestedComponentDefinitions: noNestedComponentDefinitionsConfigurationSchema.optional().nullable(),
     /**
+     * Disallow non-null assertions after optional chaining expressions.
+     */
+    noNonNullAssertedOptionalChain: noNonNullAssertedOptionalChainConfigurationSchema.optional().nullable(),
+    /**
      * Disallow use event handlers on non-interactive elements.
      */
     noNoninteractiveElementInteractions: noNoninteractiveElementInteractionsConfigurationSchema.optional().nullable(),
@@ -8115,6 +8310,14 @@ export const nurserySchema = z.object({
      * Disallow the use of process global.
      */
     noProcessGlobal: noProcessGlobalConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use if quickfix.biome inside editor settings file.
+     */
+    noQuickfixBiome: noQuickfixBiomeConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow useVisibleTask$() functions in Qwik components.
+     */
+    noQwikUseVisibleTask: noQwikUseVisibleTaskConfigurationSchema.optional().nullable(),
     /**
      * Disallow assigning to React component props.
      */
@@ -8144,6 +8347,10 @@ export const nurserySchema = z.object({
      */
     noUnknownAtRule: noUnknownAtRuleConfigurationSchema.optional().nullable(),
     /**
+     * Disallow unnecessary type-based conditions that can be statically determined as redundant.
+     */
+    noUnnecessaryConditions: noUnnecessaryConditionsConfigurationSchema.optional().nullable(),
+    /**
      * Warn when importing non-existing exports.
      */
     noUnresolvedImports: noUnresolvedImportsConfigurationSchema.optional().nullable(),
@@ -8164,6 +8371,14 @@ export const nurserySchema = z.object({
      */
     noUselessUndefined: noUselessUndefinedConfigurationSchema.optional().nullable(),
     /**
+     * Enforce that Vue component data options are declared as functions.
+     */
+    noVueDataObjectDeclaration: noVueDataObjectDeclarationConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow reserved keys in Vue component data and computed properties.
+     */
+    noVueReservedKeys: noVueReservedKeysConfigurationSchema.optional().nullable(),
+    /**
      * Disallow reserved names to be used as props.
      */
     noVueReservedProps: noVueReservedPropsConfigurationSchema.optional().nullable(),
@@ -8176,6 +8391,10 @@ export const nurserySchema = z.object({
      */
     useAdjacentGetterSetter: useAdjacentGetterSetterConfigurationSchema.optional().nullable(),
     /**
+     * Enforces href attribute for \<a> elements.
+     */
+    useAnchorHref: useAnchorHrefConfigurationSchema.optional().nullable(),
+    /**
      * Require the consistent declaration of object literals. Defaults to explicit definitions.
      */
     useConsistentObjectDefinition: useConsistentObjectDefinitionConfigurationSchema.optional().nullable(),
@@ -8183,6 +8402,10 @@ export const nurserySchema = z.object({
      * Use static Response methods instead of new Response() constructor when possible.
      */
     useConsistentResponse: useConsistentResponseConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce type definitions to consistently use either interface or type.
+     */
+    useConsistentTypeDefinitions: useConsistentTypeDefinitionsConfigurationSchema.optional().nullable(),
     /**
      * Require switch-case statements to be exhaustive.
      */
@@ -8203,6 +8426,10 @@ export const nurserySchema = z.object({
      * Ensure the preconnect attribute is used when using Google Fonts.
      */
     useGoogleFontPreconnect: useGoogleFontPreconnectConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces that \<img> elements have both width and height attributes.
+     */
+    useImageSize: useImageSizeConfigurationSchema.optional().nullable(),
     /**
      * Prefer Array#{indexOf,lastIndexOf}() over Array#{findIndex,findLastIndex}() when looking for the index of an item.
      */
@@ -8235,6 +8462,14 @@ export const nurserySchema = z.object({
      * Enforce the consistent use of the radix argument when using parseInt().
      */
     useParseIntRadix: useParseIntRadixConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer using the class prop as a classlist over the classnames helper.
+     */
+    useQwikClasslist: useQwikClasslistConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that components are defined as functions and never as classes.
+     */
+    useReactFunctionComponents: useReactFunctionComponentsConfigurationSchema.optional().nullable(),
     /**
      * Enforce marking members as readonly if they are never modified outside the constructor.
      */
