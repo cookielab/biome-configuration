@@ -1,5 +1,61 @@
 # @cookielab.io/biome-config
 
+## Unreleased
+
+### General Changes
+
+- Update Biome to `2.2.0`
+
+### Rule Changes
+
+- ## Moved from `nursery` to stable categories
+  - `noAwaitInLoops` moved to `performance.noAwaitInLoops`
+  - `noBitwiseOperators` moved to `suspicious.noBitwiseOperators`
+  - `noConstantBinaryExpressions` moved to `suspicious.noConstantBinaryExpressions`
+  - `noGlobalDirnameFilename` moved to `correctness.noGlobalDirnameFilename`
+  - `noImplicitCoercions` moved to `complexity.noImplicitCoercions`
+  - `noImportantStyles` moved to `complexity.noImportantStyles`
+  - `noMagicNumbers` moved to `style.noMagicNumbers`
+  - `noNestedComponentDefinitions` moved to `correctness.noNestedComponentDefinitions`
+  - `noNoninteractiveElementInteractions` moved to `a11y.noNoninteractiveElementInteractions`
+  - `noProcessGlobal` moved to `correctness.noProcessGlobal`
+  - `noQuickfixBiome` moved to `suspicious.noQuickfixBiome`
+  - `noReactPropAssignments` moved to `correctness.noReactPropAssignments` (renamed from `noReactPropAssign`)
+  - `noRestrictedElements` moved to `correctness.noRestrictedElements`
+  - `noSolidDestructuredProps` moved to `correctness.noSolidDestructuredProps` (renamed from `noDestructuredProps`)
+  - `noTsIgnore` moved to `suspicious.noTsIgnore`
+  - `noUnassignedVariables` moved to `suspicious.noUnassignedVariables`
+  - `noUnknownAtRules` moved to `suspicious.noUnknownAtRules` (renamed from `noUnknownAtRule`)
+  - `noUnwantedPolyfillio` moved to `performance.noUnwantedPolyfillio`
+  - `noUselessEscapeInString` moved to `suspicious.noUselessEscapeInString`
+  - `noUselessRegexBackrefs` moved to `suspicious.noUselessRegexBackrefs` (renamed from `noUselessBackrefInRegex`)
+  - `useConsistentObjectDefinitions` moved to `style.useConsistentObjectDefinitions` (renamed from `useConsistentObjectDefinition`)
+  - `useExportsLast` moved to `style.useExportsLast`
+  - `useGoogleFontPreconnect` moved to `performance.useGoogleFontPreconnect`
+  - `useGraphqlNamedOperations` moved to `correctness.useGraphqlNamedOperations` (renamed from `useNamedOperation`)
+  - `useGraphqlNamingConvention` moved to `style.useGraphqlNamingConvention` (renamed from part of `useNamingConvention`)
+  - `useGroupedAccessorPairs` moved to `style.useGroupedAccessorPairs` (renamed from `useAdjacentGetterSetter`)
+  - `useIndexOf` moved to `complexity.useIndexOf`
+  - `useIterableCallbackReturn` moved to `suspicious.useIterableCallbackReturn`
+  - `useJsonImportAttributes` moved to `correctness.useJsonImportAttributes` (renamed from `useJsonImportAttribute`)
+  - `useNamingConvention` moved to `style.useNamingConvention` with level changed from `"off"` to `"warn"`
+  - `useNumericSeparators` moved to `style.useNumericSeparators`
+  - `useObjectSpread` moved to `style.useObjectSpread`
+  - `useParseIntRadix` moved to `correctness.useParseIntRadix`
+  - `useReadonlyClassProperties` moved to `style.useReadonlyClassProperties`
+  - `useSingleJsDocAsterisk` moved to `correctness.useSingleJsDocAsterisk`
+  - `useSolidForComponent` moved to `performance.useSolidForComponent` (renamed from `useForComponent`)
+  - `useStaticResponseMethods` moved to `suspicious.useStaticResponseMethods` (renamed from `useConsistentResponse`)
+  - `useSymbolDescription` moved to `style.useSymbolDescription`
+  - `useUniqueElementIds` moved to `correctness.useUniqueElementIds`
+  - `useUnifiedTypeSignatures` moved to `style.useUnifiedTypeSignatures` (renamed from `useUnifiedTypeSignature`)
+
+  - ## New
+  - `noBiomeFirstException: "error"` added to `suspicious`
+  - `noNextAsyncClientComponent: "off"` added to `base.nursery`
+  - `useMaxParams: "error"` added to `base.nursery`
+  - `useBiomeIgnoreFolder: "error"` added to `suspicious`
+
 ## 0.7.0
 
 ### General Changes
