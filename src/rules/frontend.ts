@@ -23,6 +23,7 @@ const a11y = {
 	noHeaderScope: "error",
 	noInteractiveElementToNoninteractiveRole: "error",
 	noLabelWithoutControl: "error",
+	noNoninteractiveElementInteractions: "error",
 	noNoninteractiveElementToInteractiveRole: "error",
 	noNoninteractiveTabindex: "error",
 	noPositiveTabindex: "error",
@@ -56,6 +57,8 @@ const a11y = {
 
 const complexity = {
 	...base.complexity,
+
+	noImportantStyles: "error",
 } as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
 
 const correctness = {
@@ -77,17 +80,15 @@ const correctness = {
 const nursery = {
 	...base.nursery,
 
-	noImportantStyles: "error",
-	noNoninteractiveElementInteractions: "error",
-	noUnknownAtRule: "error",
 	useAnchorHref: "error",
-	useGoogleFontPreconnect: "error",
 	useImageSize: "warn",
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
 	...base.performance,
+
+	useGoogleFontPreconnect: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
 const security = {
@@ -116,6 +117,7 @@ const suspicious = {
 	noEmptyBlock: "error",
 	noEmptyBlockStatements: "error",
 	noImportantInKeyframe: "error",
+	noUnknownAtRules: "error",
 	noShorthandPropertyOverrides: "error",
 	useGoogleFontDisplay: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;

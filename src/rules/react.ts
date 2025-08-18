@@ -26,21 +26,21 @@ const correctness = {
 	...frontend.correctness,
 
 	noChildrenProp: "error",
+	noNestedComponentDefinitions: "error",
+	noReactPropAssignments: "error",
 	noRenderReturnValue: "error",
+	noRestrictedElements: "error",
 	noVoidElementsWithChildren: "error",
 	useExhaustiveDependencies: "error",
 	useHookAtTopLevel: "error",
 	useJsxKeyInIterable: "error",
+	useUniqueElementIds: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
 	...frontend.nursery,
 
-	noNestedComponentDefinitions: "error",
-	noReactPropAssign: "error",
-	noRestrictedElements: "error",
 	useReactFunctionComponents: "error",
-	useUniqueElementIds: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

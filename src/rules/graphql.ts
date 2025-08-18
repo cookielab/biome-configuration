@@ -22,12 +22,12 @@ const complexity = {
 
 const correctness = {
 	...base.correctness,
+
+	useGraphqlNamedOperations: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
 	...base.nursery,
-
-	useNamedOperation: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -41,6 +41,7 @@ const security = {
 const style = {
 	...base.style,
 
+	useGraphqlNamingConvention: "error",
 	useDeprecatedReason: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 

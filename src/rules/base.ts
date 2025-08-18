@@ -23,6 +23,7 @@ const a11y = {
 	noHeaderScope: "off",
 	noInteractiveElementToNoninteractiveRole: "off",
 	noLabelWithoutControl: "off",
+	noNoninteractiveElementInteractions: "off",
 	noNoninteractiveElementToInteractiveRole: "off",
 	noNoninteractiveTabindex: "off",
 	noPositiveTabindex: "off",
@@ -64,10 +65,19 @@ const complexity = {
 	noCommaOperator: "error",
 	noEmptyTypeParameters: "error",
 	noExcessiveCognitiveComplexity: "warn",
+	/**
+	 * Does not really make sense as high line count != high complexity.
+	 */
+	noExcessiveLinesPerFunction: "off",
 	noExcessiveNestedTestSuites: "warn",
 	noExtraBooleanCast: "error",
 	noFlatMapIdentity: "error",
 	noForEach: "error",
+	noImplicitCoercions: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	noImportantStyles: "off",
 	noStaticOnlyClass: "error",
 	noThisInStatic: "error",
 	noUselessCatch: "error",
@@ -94,6 +104,7 @@ const complexity = {
 	useArrowFunction: "error",
 	useDateNow: "error",
 	useFlatMap: "error",
+	useIndexOf: "error",
 	/**
 	 * Clashes with index-based access required by a strict Typescript configuration when using records with `string` as the key type.
 	 */
@@ -207,6 +218,10 @@ const correctness = {
 	 */
 	useExhaustiveDependencies: "off",
 	/**
+	 * GraphQL-only rule.
+	 */
+	useGraphqlNamedOperations: "off",
+	/**
 	 * React-only rule.
 	 */
 	useHookAtTopLevel: "off",
@@ -224,83 +239,57 @@ const correctness = {
 	useValidForDirection: "error",
 	useValidTypeof: "error",
 	useYield: "error",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
-
-const nursery = {
-	noAwaitInLoop: "warn",
-	noBitwiseOperators: "error",
-	noConstantBinaryExpression: "error",
-	/**
-	 * Solid-only rule.
-	 */
-	noDestructuredProps: "off",
-	/**
-	 * Does not really make sense as high line count != high complexity.
-	 */
-	noExcessiveLinesPerFunction: "off",
-	noFloatingPromises: "error",
 	/**
 	 * Should only be enabled per-project, depending on the bundler and CommonJS/ESM usage.
 	 *
 	 * Recommended level would be `error`.
 	 */
 	noGlobalDirnameFilename: "off",
-	noImplicitCoercion: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	noImportantStyles: "off",
-	noImportCycles: "error",
-	noMagicNumbers: "warn",
-	noMisusedPromises: "error",
 	/**
 	 * React-only rule.
 	 */
 	noNestedComponentDefinitions: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	noNoninteractiveElementInteractions: "off",
-	noNonNullAssertedOptionalChain: "error",
 	noProcessGlobal: "error",
-	/**
-	 * Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
-	 */
-	noQuickfixBiome: "off",
-	/**
-	 * Qwik-only rule.
-	 */
-	noQwikUseVisibleTask: "off",
 	/**
 	 * React-only rule.
 	 */
-	noReactPropAssign: "off",
+	noReactPropAssignments: "off",
 	/**
 	 * React-only rule.
 	 */
 	noRestrictedElements: "off",
 	/**
+	 * Solid-only rule.
+	 */
+	noSolidDestructuredProps: "off",
+	useJsonImportAttributes: "error",
+	useParseIntRadix: "error",
+	useSingleJsDocAsterisk: "warn",
+	/**
+	 * React-only rule.
+	 */
+	useUniqueElementIds: "off",
+} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+
+const nursery = {
+	noFloatingPromises: "error",
+	noImportCycles: "error",
+	noMisusedPromises: "error",
+	noNonNullAssertedOptionalChain: "error",
+	/**
+	 * Qwik-only rule.
+	 */
+	noQwikUseVisibleTask: "off",
+	/**
 	 * Produces too many false-positives for now.
 	 */
 	noSecrets: "off",
 	noShadow: "error",
-	noTsIgnore: "warn",
-	noUnassignedVariables: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	noUnknownAtRule: "off",
 	noUnnecessaryConditions: "warn",
 	/**
 	 * Produces too many false-positives for now.
 	 */
 	noUnresolvedImports: "off",
-	/**
-	 * NextJS-only rule.
-	 */
-	noUnwantedPolyfillio: "off",
-	noUselessBackrefInRegex: "error",
-	noUselessEscapeInString: "error",
 	noUselessUndefined: "error",
 	/**
 	 * Vue-only rule.
@@ -315,18 +304,10 @@ const nursery = {
 	 */
 	noVueReservedProps: "off",
 	recommended: false,
-	useAdjacentGetterSetter: "error",
 	/**
 	 * JSX-only rule.
 	 */
 	useAnchorHref: "off",
-	useConsistentObjectDefinition: {
-		level: "error",
-		options: {
-			syntax: "explicit",
-		},
-	},
-	useConsistentResponse: "warn",
 	/**
 	 * `type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
 	 * conditional types, `type` is the recommended approach.
@@ -353,33 +334,10 @@ const nursery = {
 	 * ```
 	 */
 	useExplicitType: "off",
-	useExportsLast: "error",
-	/**
-	 * Solid-only rule.
-	 */
-	useForComponent: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	useGoogleFontPreconnect: "off",
 	/**
 	 * Frontend-only rule.
 	 */
 	useImageSize: "off",
-	useIndexOf: "error",
-	useIterableCallbackReturn: "error",
-	useJsonImportAttribute: "error",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useNamedOperation: "off",
-	/**
-	 * Graduated to the `style` category.
-	 */
-	useNamingConvention: "off",
-	useNumericSeparators: "error",
-	useObjectSpread: "error",
-	useParseIntRadix: "error",
 	/**
 	 * Qwik-only rule.
 	 */
@@ -388,18 +346,15 @@ const nursery = {
 	 * React-only rule.
 	 */
 	useReactFunctionComponents: "off",
-	useReadonlyClassProperties: "warn",
-	useSingleJsDocAsterisk: "warn",
 	/**
 	 * Frontend-only rule.
 	 */
 	useSortedClasses: "off",
-	useSymbolDescription: "error",
-	useUnifiedTypeSignature: "warn",
 	/**
-	 * React-only rule.
+	 * NextJS-only rule.
 	 */
-	useUniqueElementIds: "off",
+	noNextAsyncClientComponent: "off",
+	useMaxParams: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -420,6 +375,19 @@ const performance = {
 	noReExportAll: "error",
 	recommended: false,
 	useTopLevelRegex: "error",
+	noAwaitInLoops: "warn",
+	/**
+	 * NextJS-only rule.
+	 */
+	noUnwantedPolyfillio: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	useGoogleFontPreconnect: "off",
+	/**
+	 * Solid-only rule.
+	 */
+	useSolidForComponent: "off",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
 const security = {
@@ -546,10 +514,6 @@ const style = {
 	 */
 	useLiteralEnumMembers: "off",
 	/**
-	 * Should only be enabled per-project.
-	 */
-	useNamingConvention: "off",
-	/**
 	 * Node-only rule.
 	 */
 	useNodeAssertStrict: "off",
@@ -569,6 +533,25 @@ const style = {
 	useThrowNewError: "error",
 	useThrowOnlyError: "error",
 	useTrimStartEnd: "error",
+	noMagicNumbers: "warn",
+	useConsistentObjectDefinitions: {
+		level: "error",
+		options: {
+			syntax: "explicit",
+		},
+	},
+	useExportsLast: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useGraphqlNamingConvention: "off",
+	useGroupedAccessorPairs: "error",
+	useNamingConvention: "warn",
+	useNumericSeparators: "error",
+	useObjectSpread: "error",
+	useReadonlyClassProperties: "warn",
+	useSymbolDescription: "error",
+	useUnifiedTypeSignatures: "warn",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
@@ -696,6 +679,10 @@ const suspicious = {
 	noSuspiciousSemicolonInJsx: "off",
 	noTemplateCurlyInString: "error",
 	noThenProperty: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	noUnknownAtRules: "off",
 	noUnsafeDeclarationMerging: "error",
 	noUnsafeNegation: "error",
 	noVar: "error",
@@ -715,6 +702,20 @@ const suspicious = {
 	useNamespaceKeyword: "error",
 	useNumberToFixedDigitsArgument: "error",
 	useStrictMode: "error",
+	noBiomeFirstException: "error",
+	noBitwiseOperators: "error",
+	noConstantBinaryExpressions: "error",
+	/**
+	 * Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
+	 */
+	noQuickfixBiome: "off",
+	noTsIgnore: "error",
+	noUnassignedVariables: "error",
+	noUselessEscapeInString: "error",
+	noUselessRegexBackrefs: "error",
+	useBiomeIgnoreFolder: "error",
+	useIterableCallbackReturn: "error",
+	useStaticResponseMethods: "warn",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
 const base = {

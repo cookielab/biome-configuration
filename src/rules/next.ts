@@ -26,14 +26,13 @@ const correctness = {
 
 const nursery = {
 	...react.nursery,
-
-	noUnwantedPolyfillio: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
 	...react.performance,
 
 	noImgElement: "error",
+	noUnwantedPolyfillio: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
 const security = {

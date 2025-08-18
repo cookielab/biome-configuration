@@ -8,7 +8,7 @@
 
 > `const` **next**: `object`
 
-Defined in: rules/next.ts:55
+Defined in: rules/next.ts:54
 
 ## Type declaration
 
@@ -47,6 +47,10 @@ Defined in: rules/next.ts:55
 #### a11y.noLabelWithoutControl
 
 > `readonly` **noLabelWithoutControl**: `"error"` = `"error"`
+
+#### a11y.noNoninteractiveElementInteractions
+
+> `readonly` **noNoninteractiveElementInteractions**: `"error"` = `"error"`
 
 #### a11y.noNoninteractiveElementToInteractiveRole
 
@@ -194,6 +198,12 @@ No point in banning any types globally. Should be done per-project, if at all.
 
 > `readonly` **noExcessiveCognitiveComplexity**: `"warn"` = `"warn"`
 
+#### complexity.noExcessiveLinesPerFunction
+
+> `readonly` **noExcessiveLinesPerFunction**: `"off"` = `"off"`
+
+Does not really make sense as high line count != high complexity.
+
 #### complexity.noExcessiveNestedTestSuites
 
 > `readonly` **noExcessiveNestedTestSuites**: `"warn"` = `"warn"`
@@ -209,6 +219,14 @@ No point in banning any types globally. Should be done per-project, if at all.
 #### complexity.noForEach
 
 > `readonly` **noForEach**: `"error"` = `"error"`
+
+#### complexity.noImplicitCoercions
+
+> `readonly` **noImplicitCoercions**: `"error"` = `"error"`
+
+#### complexity.noImportantStyles
+
+> `readonly` **noImportantStyles**: `"error"` = `"error"`
 
 #### complexity.noStaticOnlyClass
 
@@ -302,6 +320,10 @@ No point in banning any types globally. Should be done per-project, if at all.
 
 > `readonly` **useFlatMap**: `"error"` = `"error"`
 
+#### complexity.useIndexOf
+
+> `readonly` **useIndexOf**: `"error"` = `"error"`
+
 #### complexity.useLiteralKeys
 
 > `readonly` **useLiteralKeys**: `"off"` = `"off"`
@@ -364,6 +386,14 @@ Clashes with index-based access required by a strict Typescript configuration wh
 
 > `readonly` **noEmptyPattern**: `"error"` = `"error"`
 
+#### correctness.noGlobalDirnameFilename
+
+> `readonly` **noGlobalDirnameFilename**: `"off"` = `"off"`
+
+Should only be enabled per-project, depending on the bundler and CommonJS/ESM usage.
+
+Recommended level would be `error`.
+
 #### correctness.noGlobalObjectCalls
 
 > `readonly` **noGlobalObjectCalls**: `"error"` = `"error"`
@@ -400,6 +430,10 @@ Clashes with index-based access required by a strict Typescript configuration wh
 
 > `readonly` **noMissingVarFunction**: `"error"` = `"error"`
 
+#### correctness.noNestedComponentDefinitions
+
+> `readonly` **noNestedComponentDefinitions**: `"error"` = `"error"`
+
 #### correctness.noNodejsModules
 
 > `readonly` **noNodejsModules**: `"error"` = `"error"`
@@ -418,9 +452,21 @@ Should only be disabled in Node projects.
 
 > `readonly` **noPrivateImports**: `"error"` = `"error"`
 
+#### correctness.noProcessGlobal
+
+> `readonly` **noProcessGlobal**: `"error"` = `"error"`
+
+#### correctness.noReactPropAssignments
+
+> `readonly` **noReactPropAssignments**: `"error"` = `"error"`
+
 #### correctness.noRenderReturnValue
 
 > `readonly` **noRenderReturnValue**: `"error"` = `"error"`
+
+#### correctness.noRestrictedElements
+
+> `readonly` **noRestrictedElements**: `"error"` = `"error"`
 
 #### correctness.noSelfAssign
 
@@ -429,6 +475,12 @@ Should only be disabled in Node projects.
 #### correctness.noSetterReturn
 
 > `readonly` **noSetterReturn**: `"error"` = `"error"`
+
+#### correctness.noSolidDestructuredProps
+
+> `readonly` **noSolidDestructuredProps**: `"off"` = `"off"`
+
+Solid-only rule.
 
 #### correctness.noStringCaseMismatch
 
@@ -532,6 +584,12 @@ Frontend-only rule.
 
 > `readonly` **useExhaustiveDependencies**: `"error"` = `"error"`
 
+#### correctness.useGraphqlNamedOperations
+
+> `readonly` **useGraphqlNamedOperations**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### correctness.useHookAtTopLevel
 
 > `readonly` **useHookAtTopLevel**: `"error"` = `"error"`
@@ -548,9 +606,25 @@ Recommended level would be `error`.
 
 > `readonly` **useIsNan**: `"error"` = `"error"`
 
+#### correctness.useJsonImportAttributes
+
+> `readonly` **useJsonImportAttributes**: `"error"` = `"error"`
+
 #### correctness.useJsxKeyInIterable
 
 > `readonly` **useJsxKeyInIterable**: `"error"` = `"error"`
+
+#### correctness.useParseIntRadix
+
+> `readonly` **useParseIntRadix**: `"error"` = `"error"`
+
+#### correctness.useSingleJsDocAsterisk
+
+> `readonly` **useSingleJsDocAsterisk**: `"warn"` = `"warn"`
+
+#### correctness.useUniqueElementIds
+
+> `readonly` **useUniqueElementIds**: `"error"` = `"error"`
 
 #### correctness.useValidForDirection
 
@@ -568,97 +642,33 @@ Recommended level would be `error`.
 
 > `readonly` **nursery**: `object`
 
-#### nursery.noAwaitInLoop
-
-> `readonly` **noAwaitInLoop**: `"warn"` = `"warn"`
-
-#### nursery.noBitwiseOperators
-
-> `readonly` **noBitwiseOperators**: `"error"` = `"error"`
-
-#### nursery.noConstantBinaryExpression
-
-> `readonly` **noConstantBinaryExpression**: `"error"` = `"error"`
-
-#### nursery.noDestructuredProps
-
-> `readonly` **noDestructuredProps**: `"off"` = `"off"`
-
-Solid-only rule.
-
-#### nursery.noExcessiveLinesPerFunction
-
-> `readonly` **noExcessiveLinesPerFunction**: `"off"` = `"off"`
-
-Does not really make sense as high line count != high complexity.
-
 #### nursery.noFloatingPromises
 
 > `readonly` **noFloatingPromises**: `"error"` = `"error"`
-
-#### nursery.noGlobalDirnameFilename
-
-> `readonly` **noGlobalDirnameFilename**: `"off"` = `"off"`
-
-Should only be enabled per-project, depending on the bundler and CommonJS/ESM usage.
-
-Recommended level would be `error`.
-
-#### nursery.noImplicitCoercion
-
-> `readonly` **noImplicitCoercion**: `"error"` = `"error"`
-
-#### nursery.noImportantStyles
-
-> `readonly` **noImportantStyles**: `"error"` = `"error"`
 
 #### nursery.noImportCycles
 
 > `readonly` **noImportCycles**: `"error"` = `"error"`
 
-#### nursery.noMagicNumbers
-
-> `readonly` **noMagicNumbers**: `"warn"` = `"warn"`
-
 #### nursery.noMisusedPromises
 
 > `readonly` **noMisusedPromises**: `"error"` = `"error"`
 
-#### nursery.noNestedComponentDefinitions
+#### nursery.noNextAsyncClientComponent
 
-> `readonly` **noNestedComponentDefinitions**: `"error"` = `"error"`
+> `readonly` **noNextAsyncClientComponent**: `"off"` = `"off"`
 
-#### nursery.noNoninteractiveElementInteractions
-
-> `readonly` **noNoninteractiveElementInteractions**: `"error"` = `"error"`
+NextJS-only rule.
 
 #### nursery.noNonNullAssertedOptionalChain
 
 > `readonly` **noNonNullAssertedOptionalChain**: `"error"` = `"error"`
-
-#### nursery.noProcessGlobal
-
-> `readonly` **noProcessGlobal**: `"error"` = `"error"`
-
-#### nursery.noQuickfixBiome
-
-> `readonly` **noQuickfixBiome**: `"off"` = `"off"`
-
-Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
 
 #### nursery.noQwikUseVisibleTask
 
 > `readonly` **noQwikUseVisibleTask**: `"off"` = `"off"`
 
 Qwik-only rule.
-
-#### nursery.noReactPropAssign
-
-> `readonly` **noReactPropAssign**: `"error"` = `"error"`
-
-#### nursery.noRestrictedElements
-
-> `readonly` **noRestrictedElements**: `"error"` = `"error"`
 
 #### nursery.noSecrets
 
@@ -670,18 +680,6 @@ Produces too many false-positives for now.
 
 > `readonly` **noShadow**: `"error"` = `"error"`
 
-#### nursery.noTsIgnore
-
-> `readonly` **noTsIgnore**: `"warn"` = `"warn"`
-
-#### nursery.noUnassignedVariables
-
-> `readonly` **noUnassignedVariables**: `"error"` = `"error"`
-
-#### nursery.noUnknownAtRule
-
-> `readonly` **noUnknownAtRule**: `"error"` = `"error"`
-
 #### nursery.noUnnecessaryConditions
 
 > `readonly` **noUnnecessaryConditions**: `"warn"` = `"warn"`
@@ -691,18 +689,6 @@ Produces too many false-positives for now.
 > `readonly` **noUnresolvedImports**: `"off"` = `"off"`
 
 Produces too many false-positives for now.
-
-#### nursery.noUnwantedPolyfillio
-
-> `readonly` **noUnwantedPolyfillio**: `"error"` = `"error"`
-
-#### nursery.noUselessBackrefInRegex
-
-> `readonly` **noUselessBackrefInRegex**: `"error"` = `"error"`
-
-#### nursery.noUselessEscapeInString
-
-> `readonly` **noUselessEscapeInString**: `"error"` = `"error"`
 
 #### nursery.noUselessUndefined
 
@@ -730,33 +716,9 @@ Vue-only rule.
 
 > `readonly` **recommended**: `false` = `false`
 
-#### nursery.useAdjacentGetterSetter
-
-> `readonly` **useAdjacentGetterSetter**: `"error"` = `"error"`
-
 #### nursery.useAnchorHref
 
 > `readonly` **useAnchorHref**: `"error"` = `"error"`
-
-#### nursery.useConsistentObjectDefinition
-
-> `readonly` **useConsistentObjectDefinition**: `object`
-
-#### nursery.useConsistentObjectDefinition.level
-
-> `readonly` **level**: `"error"` = `"error"`
-
-#### nursery.useConsistentObjectDefinition.options
-
-> `readonly` **options**: `object`
-
-#### nursery.useConsistentObjectDefinition.options.syntax
-
-> `readonly` **syntax**: `"explicit"` = `"explicit"`
-
-#### nursery.useConsistentResponse
-
-> `readonly` **useConsistentResponse**: `"warn"` = `"warn"`
 
 #### nursery.useConsistentTypeDefinitions
 
@@ -799,59 +761,13 @@ const returnsString = (): string => "value";
 const isDefinitelyString = returnsString(); // isDefinitelyString would have to have it's typed explicitly written out
 ```
 
-#### nursery.useExportsLast
-
-> `readonly` **useExportsLast**: `"error"` = `"error"`
-
-#### nursery.useForComponent
-
-> `readonly` **useForComponent**: `"off"` = `"off"`
-
-Solid-only rule.
-
-#### nursery.useGoogleFontPreconnect
-
-> `readonly` **useGoogleFontPreconnect**: `"error"` = `"error"`
-
 #### nursery.useImageSize
 
 > `readonly` **useImageSize**: `"warn"` = `"warn"`
 
-#### nursery.useIndexOf
+#### nursery.useMaxParams
 
-> `readonly` **useIndexOf**: `"error"` = `"error"`
-
-#### nursery.useIterableCallbackReturn
-
-> `readonly` **useIterableCallbackReturn**: `"error"` = `"error"`
-
-#### nursery.useJsonImportAttribute
-
-> `readonly` **useJsonImportAttribute**: `"error"` = `"error"`
-
-#### nursery.useNamedOperation
-
-> `readonly` **useNamedOperation**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.useNamingConvention
-
-> `readonly` **useNamingConvention**: `"off"` = `"off"`
-
-Graduated to the `style` category.
-
-#### nursery.useNumericSeparators
-
-> `readonly` **useNumericSeparators**: `"error"` = `"error"`
-
-#### nursery.useObjectSpread
-
-> `readonly` **useObjectSpread**: `"error"` = `"error"`
-
-#### nursery.useParseIntRadix
-
-> `readonly` **useParseIntRadix**: `"error"` = `"error"`
+> `readonly` **useMaxParams**: `"error"` = `"error"`
 
 #### nursery.useQwikClasslist
 
@@ -863,29 +779,9 @@ Qwik-only rule.
 
 > `readonly` **useReactFunctionComponents**: `"error"` = `"error"`
 
-#### nursery.useReadonlyClassProperties
-
-> `readonly` **useReadonlyClassProperties**: `"warn"` = `"warn"`
-
-#### nursery.useSingleJsDocAsterisk
-
-> `readonly` **useSingleJsDocAsterisk**: `"warn"` = `"warn"`
-
 #### nursery.useSortedClasses
 
 > `readonly` **useSortedClasses**: `"error"` = `"error"`
-
-#### nursery.useSymbolDescription
-
-> `readonly` **useSymbolDescription**: `"error"` = `"error"`
-
-#### nursery.useUnifiedTypeSignature
-
-> `readonly` **useUnifiedTypeSignature**: `"warn"` = `"warn"`
-
-#### nursery.useUniqueElementIds
-
-> `readonly` **useUniqueElementIds**: `"error"` = `"error"`
 
 ### performance
 
@@ -894,6 +790,10 @@ Qwik-only rule.
 #### performance.noAccumulatingSpread
 
 > `readonly` **noAccumulatingSpread**: `"error"` = `"error"`
+
+#### performance.noAwaitInLoops
+
+> `readonly` **noAwaitInLoops**: `"warn"` = `"warn"`
 
 #### performance.noBarrelFile
 
@@ -923,9 +823,23 @@ Recommended level would be `error`.
 
 > `readonly` **noReExportAll**: `"error"` = `"error"`
 
+#### performance.noUnwantedPolyfillio
+
+> `readonly` **noUnwantedPolyfillio**: `"error"` = `"error"`
+
 #### performance.recommended
 
 > `readonly` **recommended**: `false` = `false`
+
+#### performance.useGoogleFontPreconnect
+
+> `readonly` **useGoogleFontPreconnect**: `"error"` = `"error"`
+
+#### performance.useSolidForComponent
+
+> `readonly` **useSolidForComponent**: `"off"` = `"off"`
+
+Solid-only rule.
 
 #### performance.useTopLevelRegex
 
@@ -1002,6 +916,10 @@ Recommended level would be `error`.
 #### style.noInferrableTypes
 
 > `readonly` **noInferrableTypes**: `"error"` = `"error"`
+
+#### style.noMagicNumbers
+
+> `readonly` **noMagicNumbers**: `"warn"` = `"warn"`
 
 #### style.noNamespace
 
@@ -1135,6 +1053,22 @@ Shouting is not a crime.
 
 > `readonly` **useConsistentMemberAccessibility**: `"error"` = `"error"`
 
+#### style.useConsistentObjectDefinitions
+
+> `readonly` **useConsistentObjectDefinitions**: `object`
+
+#### style.useConsistentObjectDefinitions.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### style.useConsistentObjectDefinitions.options
+
+> `readonly` **options**: `object`
+
+#### style.useConsistentObjectDefinitions.options.syntax
+
+> `readonly` **syntax**: `"explicit"` = `"explicit"`
+
 #### style.useConst
 
 > `readonly` **useConst**: `"error"` = `"error"`
@@ -1169,6 +1103,10 @@ Enums are forbidden.
 
 > `readonly` **useExponentiationOperator**: `"error"` = `"error"`
 
+#### style.useExportsLast
+
+> `readonly` **useExportsLast**: `"error"` = `"error"`
+
 #### style.useExportType
 
 > `readonly` **useExportType**: `"error"` = `"error"`
@@ -1187,6 +1125,16 @@ Should only be enabled per-project.
 
 > `readonly` **useFragmentSyntax**: `"error"` = `"error"`
 
+#### style.useGraphqlNamingConvention
+
+> `readonly` **useGraphqlNamingConvention**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+#### style.useGroupedAccessorPairs
+
+> `readonly` **useGroupedAccessorPairs**: `"error"` = `"error"`
+
 #### style.useImportType
 
 > `readonly` **useImportType**: `"error"` = `"error"`
@@ -1199,9 +1147,7 @@ Enums are forbidden.
 
 #### style.useNamingConvention
 
-> `readonly` **useNamingConvention**: `"off"` = `"off"`
-
-Should only be enabled per-project.
+> `readonly` **useNamingConvention**: `"warn"` = `"warn"`
 
 #### style.useNodeAssertStrict
 
@@ -1219,6 +1165,18 @@ Node-only rule.
 
 > `readonly` **useNumberNamespace**: `"error"` = `"error"`
 
+#### style.useNumericSeparators
+
+> `readonly` **useNumericSeparators**: `"error"` = `"error"`
+
+#### style.useObjectSpread
+
+> `readonly` **useObjectSpread**: `"error"` = `"error"`
+
+#### style.useReadonlyClassProperties
+
+> `readonly` **useReadonlyClassProperties**: `"warn"` = `"warn"`
+
 #### style.useSelfClosingElements
 
 > `readonly` **useSelfClosingElements**: `"error"` = `"error"`
@@ -1235,6 +1193,10 @@ Node-only rule.
 
 > `readonly` **useSingleVarDeclarator**: `"error"` = `"error"`
 
+#### style.useSymbolDescription
+
+> `readonly` **useSymbolDescription**: `"error"` = `"error"`
+
 #### style.useTemplate
 
 > `readonly` **useTemplate**: `"error"` = `"error"`
@@ -1250,6 +1212,10 @@ Node-only rule.
 #### style.useTrimStartEnd
 
 > `readonly` **useTrimStartEnd**: `"error"` = `"error"`
+
+#### style.useUnifiedTypeSignatures
+
+> `readonly` **useUnifiedTypeSignatures**: `"warn"` = `"warn"`
 
 ### suspicious
 
@@ -1274,6 +1240,14 @@ Node-only rule.
 #### suspicious.noAsyncPromiseExecutor
 
 > `readonly` **noAsyncPromiseExecutor**: `"error"` = `"error"`
+
+#### suspicious.noBiomeFirstException
+
+> `readonly` **noBiomeFirstException**: `"error"` = `"error"`
+
+#### suspicious.noBitwiseOperators
+
+> `readonly` **noBitwiseOperators**: `"error"` = `"error"`
 
 #### suspicious.noCatchAssign
 
@@ -1302,6 +1276,10 @@ Node-only rule.
 #### suspicious.noConsole
 
 > `readonly` **noConsole**: `"error"` = `"error"`
+
+#### suspicious.noConstantBinaryExpressions
+
+> `readonly` **noConstantBinaryExpressions**: `"error"` = `"error"`
 
 #### suspicious.noConstEnum
 
@@ -1483,6 +1461,12 @@ Frontend-only rule.
 
 > `readonly` **noPrototypeBuiltins**: `"error"` = `"error"`
 
+#### suspicious.noQuickfixBiome
+
+> `readonly` **noQuickfixBiome**: `"off"` = `"off"`
+
+Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
+
 #### suspicious.noReactSpecificProps
 
 > `readonly` **noReactSpecificProps**: `"error"` = `"error"`
@@ -1527,6 +1511,18 @@ Frontend-only rule.
 
 > `readonly` **noThenProperty**: `"error"` = `"error"`
 
+#### suspicious.noTsIgnore
+
+> `readonly` **noTsIgnore**: `"error"` = `"error"`
+
+#### suspicious.noUnassignedVariables
+
+> `readonly` **noUnassignedVariables**: `"error"` = `"error"`
+
+#### suspicious.noUnknownAtRules
+
+> `readonly` **noUnknownAtRules**: `"error"` = `"error"`
+
 #### suspicious.noUnsafeDeclarationMerging
 
 > `readonly` **noUnsafeDeclarationMerging**: `"error"` = `"error"`
@@ -1534,6 +1530,14 @@ Frontend-only rule.
 #### suspicious.noUnsafeNegation
 
 > `readonly` **noUnsafeNegation**: `"error"` = `"error"`
+
+#### suspicious.noUselessEscapeInString
+
+> `readonly` **noUselessEscapeInString**: `"error"` = `"error"`
+
+#### suspicious.noUselessRegexBackrefs
+
+> `readonly` **noUselessRegexBackrefs**: `"error"` = `"error"`
 
 #### suspicious.noVar
 
@@ -1554,6 +1558,10 @@ Frontend-only rule.
 #### suspicious.useAwait
 
 > `readonly` **useAwait**: `"error"` = `"error"`
+
+#### suspicious.useBiomeIgnoreFolder
+
+> `readonly` **useBiomeIgnoreFolder**: `"error"` = `"error"`
 
 #### suspicious.useDefaultSwitchClauseLast
 
@@ -1579,6 +1587,10 @@ Frontend-only rule.
 
 > `readonly` **useIsArray**: `"error"` = `"error"`
 
+#### suspicious.useIterableCallbackReturn
+
+> `readonly` **useIterableCallbackReturn**: `"error"` = `"error"`
+
 #### suspicious.useNamespaceKeyword
 
 > `readonly` **useNamespaceKeyword**: `"error"` = `"error"`
@@ -1586,6 +1598,10 @@ Frontend-only rule.
 #### suspicious.useNumberToFixedDigitsArgument
 
 > `readonly` **useNumberToFixedDigitsArgument**: `"error"` = `"error"`
+
+#### suspicious.useStaticResponseMethods
+
+> `readonly` **useStaticResponseMethods**: `"warn"` = `"warn"`
 
 #### suspicious.useStrictMode
 
