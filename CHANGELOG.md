@@ -1,6 +1,12 @@
 # @cookielab.io/biome-config
 
-## Unreleased
+## v0.8.1
+
+### General Changes
+
+- Switch from a private Gitlab repo to a public Github one
+
+## v0.8.0
 
 ### General Changes
 
