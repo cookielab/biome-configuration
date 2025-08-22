@@ -1,6 +1,6 @@
 {
 	"name": "@cookielab.io/biome-config",
-	"version": "0.8.1",
+	"version": "0.8.2",
 	"description": "Biome rulesets for various project types.",
 	"files": [
 	  "dist"
@@ -17,6 +17,9 @@
 	"keywords": ["biome", "biome-config"],
 	"packageManager": "pnpm@10.14.0",
 	"type": "module",
+	"repository": {
+	  "url": "https://github.com/cookielab/biome-configuration"
+	},
 	"scripts": {
 		"build": "tsx script/build --target ./dist",
 		"generate": "tsx script/generateSchema --source ./node_modules/@biomejs/biome/configuration_schema.json --target ./src/generated/configuration.ts",
