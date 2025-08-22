@@ -660,7 +660,7 @@ const suspicious = {
 	noOctalEscape: "error",
 	noPrototypeBuiltins: "error",
 	/**
-	 * React-only rule.
+	 * Solid and qwik rule only.
 	 */
 	noReactSpecificProps: "off",
 	noRedeclare: "error",

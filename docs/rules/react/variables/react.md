@@ -8,7 +8,7 @@
 
 > `const` **react**: `object`
 
-Defined in: [rules/react.ts:76](https://github.com/cookielab/biome-configuration/blob/main/src/rules/react.ts#L76)
+Defined in: [rules/react.ts:75](https://github.com/cookielab/biome-configuration/blob/main/src/rules/react.ts#L75)
 
 ## Type declaration
 
@@ -1477,7 +1477,9 @@ Disables "quickfix" actions from being defined in Biome configuration. Left up t
 
 #### suspicious.noReactSpecificProps
 
-> `readonly` **noReactSpecificProps**: `"error"` = `"error"`
+> `readonly` **noReactSpecificProps**: `"off"` = `"off"`
+
+Solid and qwik rule only.
 
 #### suspicious.noRedeclare
 
