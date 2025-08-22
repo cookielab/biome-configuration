@@ -69,7 +69,6 @@ const suspicious = {
 	noArrayIndexKey: "error",
 	noCommentText: "error",
 	noDuplicateJsxProps: "error",
-	noReactSpecificProps: "error",
 	noSuspiciousSemicolonInJsx: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 

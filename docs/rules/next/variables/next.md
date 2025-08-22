@@ -1469,7 +1469,9 @@ Disables "quickfix" actions from being defined in Biome configuration. Left up t
 
 #### suspicious.noReactSpecificProps
 
-> `readonly` **noReactSpecificProps**: `"error"` = `"error"`
+> `readonly` **noReactSpecificProps**: `"off"` = `"off"`
+
+Solid and qwik rule only.
 
 #### suspicious.noRedeclare
 

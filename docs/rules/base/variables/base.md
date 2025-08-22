@@ -1579,7 +1579,7 @@ Disables "quickfix" actions from being defined in Biome configuration. Left up t
 
 > `readonly` **noReactSpecificProps**: `"off"` = `"off"`
 
-React-only rule.
+Solid and qwik rule only.
 
 #### suspicious.noRedeclare
 
