@@ -4,9 +4,21 @@
 
 # Cookielab's Biome Configuration
 
+---
+
+[![Check](https://github.com/cookielab/biome-configuration/actions/workflows/check.yaml/badge.svg)](https://github.com/cookielab/biome-configuration/actions/workflows/check.yaml)
+
+[![npm version](https://badge.fury.io/js/@cookielab.io%2Fbiome-config.svg?icon=si%3Anpm)](https://badge.fury.io/js/@cookielab.io%2Fbiome-config)
+
+---
+
 This package contains [Biome](https://biomejs.dev) configuration for our code style.
 
 The code style aims to be as strict and defensive as possible to avoid bugs & unwanted side-effects and to improve code readability.
+
+## Documentation
+
+For detailed explanation on how the configuration is set up, [see the attached documentation](https://github.com/cookielab/biome-configuration/tree/main/docs).
 
 ## Installation
 
