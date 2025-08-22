@@ -1,5 +1,12 @@
 # @cookielab.io/biome-config
 
+## v.0.8.2
+
+### General Changes
+
+- Fix naming of the CHANGELOG file
+- Add `repository.url` to `package.json` to enable provenance
+
 ## v0.8.1
 
 ### General Changes
