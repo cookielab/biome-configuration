@@ -1,0 +1,83 @@
+name: Check
+
+on:
+  push:
+    branches:
+      - "main"
+
+  pull_request:
+
+env:
+  PNPM_STORE_PATH: .pnpm-store
+
+jobs:
+  prebuild:
+    name: Prebuild
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Check generated Zod types are up-to-date
+        run: |
+          pnpm generate
+          if ! git diff --exit-code; then
+            echo "The generated Zod types are not up-to-date. Please run \"pnpm generate\" locally and then commit the changes."
+            exit 1
+          fi
+
+      - name: Check generated documentation is up-to-date
+        run: |
+          pnpm doc
+          if ! git diff --exit-code; then
+            echo "The documentation files are not up-to-date. Please run \"pnpm doc\" locally and then commit the changes."
+            exit 1
+          fi
+
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    needs: prebuild
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build
+        run: |
+          pnpm build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: build-output
+          path: dist/
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v5.0.0
+        with:
+          name: build-output
+          path: dist/
+
+      - name: Lint
+        run: |
+          pnpm lint
