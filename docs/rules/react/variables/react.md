@@ -8,7 +8,7 @@
 
 > `const` **react**: `object`
 
-Defined in: [rules/react.ts:76](https://github.com/cookielab/biome-configuration/blob/efbcc72e41f5b09411ec5cc7383f5b56c72a5c34/src/rules/react.ts#L76)
+Defined in: [rules/react.ts:76](https://github.com/cookielab/biome-configuration/blob/main/src/rules/react.ts#L76)
 
 ## Type declaration
 

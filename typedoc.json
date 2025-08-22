@@ -4,5 +4,6 @@
   "out": "./docs",
   "entryPointStrategy": "expand",
   "entryPoints": ["./src"],
-  "exclude": ["**/generated/*"]
+  "exclude": ["**/generated/*"],
+  "gitRevision": "main"
 }

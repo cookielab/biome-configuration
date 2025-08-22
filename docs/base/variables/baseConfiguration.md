@@ -8,7 +8,7 @@
 
 > `const` **baseConfiguration**: `object`
 
-Defined in: [base.ts:19](https://github.com/cookielab/biome-configuration/blob/efbcc72e41f5b09411ec5cc7383f5b56c72a5c34/src/base.ts#L19)
+Defined in: [base.ts:19](https://github.com/cookielab/biome-configuration/blob/main/src/base.ts#L19)
 
 This is the base configuration used in all of the rule sets.
 The aim here is to configure as much as possible so that all of the use cases of Biome can be used across editors in a consistent manner.
