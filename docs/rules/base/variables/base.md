@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: rules/base.ts:721
+Defined in: [rules/base.ts:721](https://github.com/cookielab/biome-configuration/blob/efbcc72e41f5b09411ec5cc7383f5b56c72a5c34/src/rules/base.ts#L721)
 
 ## Type declaration
 

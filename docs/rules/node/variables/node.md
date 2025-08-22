@@ -8,7 +8,7 @@
 
 > `const` **node**: `object`
 
-Defined in: rules/node.ts:52
+Defined in: [rules/node.ts:52](https://github.com/cookielab/biome-configuration/blob/efbcc72e41f5b09411ec5cc7383f5b56c72a5c34/src/rules/node.ts#L52)
 
 ## Type declaration
 
