@@ -10,7 +10,7 @@
 
 Defined in: [rules/react.ts:75](https://github.com/cookielab/biome-configuration/blob/main/src/rules/react.ts#L75)
 
-## Type declaration
+## Type Declaration
 
 ### a11y
 

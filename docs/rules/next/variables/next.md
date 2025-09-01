@@ -10,7 +10,7 @@
 
 Defined in: [rules/next.ts:54](https://github.com/cookielab/biome-configuration/blob/main/src/rules/next.ts#L54)
 
-## Type declaration
+## Type Declaration
 
 ### a11y
 

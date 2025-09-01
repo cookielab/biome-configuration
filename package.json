@@ -3,7 +3,7 @@
 	"version": "0.8.2",
 	"description": "Biome rulesets for various project types.",
 	"files": [
-	  "dist"
+		"dist"
 	],
 	"exports": {
 		"./base": "./dist/base.json",
@@ -14,11 +14,14 @@
 		"./graphql": "./dist/graphql.json"
 	},
 	"main": "./dist/base.json",
-	"keywords": ["biome", "biome-config"],
+	"keywords": [
+		"biome",
+		"biome-config"
+	],
 	"packageManager": "pnpm@10.14.0",
 	"type": "module",
 	"repository": {
-	  "url": "https://github.com/cookielab/biome-configuration"
+		"url": "https://github.com/cookielab/biome-configuration"
 	},
 	"scripts": {
 		"build": "tsx script/build --target ./dist",
@@ -35,10 +38,10 @@
 		"@types/node": "24.3.0",
 		"json-schema-to-typescript": "15.0.4",
 		"ts-to-zod": "3.15.0",
-		"tsx": "4.20.4",
-		"typedoc": "0.28.10",
+		"tsx": "4.20.5",
+		"typedoc": "0.28.12",
 		"typedoc-plugin-markdown": "4.8.1",
 		"typescript": "5.9.2",
-		"zod": "4.0.17"
+		"zod": "4.1.5"
 	}
 }

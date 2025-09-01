@@ -13,7 +13,7 @@ Defined in: [base.ts:19](https://github.com/cookielab/biome-configuration/blob/m
 This is the base configuration used in all of the rule sets.
 The aim here is to configure as much as possible so that all of the use cases of Biome can be used across editors in a consistent manner.
 
-## Type declaration
+## Type Declaration
 
 ### assist
 

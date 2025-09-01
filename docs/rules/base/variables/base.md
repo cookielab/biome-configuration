@@ -10,7 +10,7 @@
 
 Defined in: [rules/base.ts:721](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L721)
 
-## Type declaration
+## Type Declaration
 
 ### a11y
 
