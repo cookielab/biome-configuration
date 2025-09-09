@@ -41,8 +41,8 @@ const security = {
 const style = {
 	...base.style,
 
-	useGraphqlNamingConvention: "error",
 	useDeprecatedReason: "error",
+	useGraphqlNamingConvention: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {

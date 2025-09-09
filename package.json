@@ -1,6 +1,6 @@
 {
 	"name": "@cookielab.io/biome-config",
-	"version": "0.8.2",
+	"version": "0.9.0",
 	"description": "Biome rulesets for various project types.",
 	"files": [
 		"dist"
@@ -18,7 +18,7 @@
 		"biome",
 		"biome-config"
 	],
-	"packageManager": "pnpm@10.14.0",
+	"packageManager": "pnpm@10.15.1",
 	"type": "module",
 	"repository": {
 		"url": "https://github.com/cookielab/biome-configuration"
@@ -32,10 +32,10 @@
 		"types": "tsc"
 	},
 	"peerDependencies": {
-		"@biomejs/biome": ">=2.2.0"
+		"@biomejs/biome": ">=2.2.3"
 	},
 	"devDependencies": {
-		"@types/node": "24.3.0",
+		"@types/node": "24.3.1",
 		"json-schema-to-typescript": "15.0.4",
 		"ts-to-zod": "3.15.0",
 		"tsx": "4.20.5",

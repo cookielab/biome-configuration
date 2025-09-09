@@ -1160,6 +1160,11 @@ export const noUnnecessaryConditionsOptionsSchema = z.object({});
 
 export const noUnresolvedImportsOptionsSchema = z.object({});
 
+/**
+ * Options for the `noUselessCatchBinding` rule. Currently empty; reserved for future extensions (e.g. allowlist of names).
+ */
+export const noUselessCatchBindingOptionsSchema = z.object({});
+
 export const noUselessUndefinedOptionsSchema = z.object({});
 
 export const noVueDataObjectDeclarationOptionsSchema = z.object({});
@@ -1178,6 +1183,8 @@ export const ruleWithUseAnchorHrefOptionsSchema = z.object({
      */
     options: useAnchorHrefOptionsSchema.optional()
 });
+
+export const useConsistentArrowReturnOptionsSchema = z.object({});
 
 export const useConsistentTypeDefinitionsOptionsSchema = z.object({
     style: consistentTypeDefinitionSchema.and(z.string()).optional()
@@ -1218,6 +1225,13 @@ export const useSortedClassesOptionsSchema = z.object({
      * Names of the functions or tagged templates that will be sorted.
      */
     functions: z.array(z.string()).optional().nullable()
+});
+
+export const useVueMultiWordComponentNamesOptionsSchema = z.object({
+    /**
+     * Component names to ignore (allowed to be single-word).
+     */
+    ignores: z.array(z.string()).optional()
 });
 
 export const noAccumulatingSpreadOptionsSchema = z.object({});
@@ -3874,6 +3888,21 @@ export const ruleWithNoUnresolvedImportsOptionsSchema = z.object({
     options: noUnresolvedImportsOptionsSchema.optional()
 });
 
+export const ruleWithNoUselessCatchBindingOptionsSchema = z.object({
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noUselessCatchBindingOptionsSchema.optional()
+});
+
 export const ruleWithNoUselessUndefinedOptionsSchema = z.object({
     /**
      * The kind of the code actions emitted by the rule
@@ -3927,6 +3956,21 @@ export const ruleWithNoVueReservedPropsOptionsSchema = z.object({
 });
 
 export const useAnchorHrefConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAnchorHrefOptionsSchema]);
+
+export const ruleWithUseConsistentArrowReturnOptionsSchema = z.object({
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useConsistentArrowReturnOptionsSchema.optional()
+});
 
 export const ruleWithUseConsistentTypeDefinitionsOptionsSchema = z.object({
     /**
@@ -4017,6 +4061,17 @@ export const ruleWithUseSortedClassesOptionsSchema = z.object({
      * Rule's options
      */
     options: useSortedClassesOptionsSchema.optional()
+});
+
+export const ruleWithUseVueMultiWordComponentNamesOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useVueMultiWordComponentNamesOptionsSchema.optional()
 });
 
 export const ruleWithNoAccumulatingSpreadOptionsSchema = z.object({
@@ -6619,6 +6674,8 @@ export const noUnnecessaryConditionsConfigurationSchema = z.union([rulePlainConf
 
 export const noUnresolvedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnresolvedImportsOptionsSchema]);
 
+export const noUselessCatchBindingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessCatchBindingOptionsSchema]);
+
 export const noUselessUndefinedConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessUndefinedOptionsSchema]);
 
 export const noVueDataObjectDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDataObjectDeclarationOptionsSchema]);
@@ -6626,6 +6683,8 @@ export const noVueDataObjectDeclarationConfigurationSchema = z.union([rulePlainC
 export const noVueReservedKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedKeysOptionsSchema]);
 
 export const noVueReservedPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedPropsOptionsSchema]);
+
+export const useConsistentArrowReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentArrowReturnOptionsSchema]);
 
 export const useConsistentTypeDefinitionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentTypeDefinitionsOptionsSchema]);
 
@@ -6640,6 +6699,8 @@ export const useQwikClasslistConfigurationSchema = z.union([rulePlainConfigurati
 export const useReactFunctionComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactFunctionComponentsOptionsSchema]);
 
 export const useSortedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSortedClassesOptionsSchema]);
+
+export const useVueMultiWordComponentNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueMultiWordComponentNamesOptionsSchema]);
 
 export const noAccumulatingSpreadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAccumulatingSpreadOptionsSchema]);
 
@@ -7089,7 +7150,7 @@ export const a11ySchema = z.object({
      */
     noSvgWithoutTitle: noSvgWithoutTitleConfigurationSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -7311,7 +7372,7 @@ export const complexitySchema = z.object({
      */
     noVoid: noVoidConfigurationSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -7431,6 +7492,10 @@ export const nurserySchema = z.object({
      */
     noUnresolvedImports: noUnresolvedImportsConfigurationSchema.optional().nullable(),
     /**
+     * Disallow unused catch bindings.
+     */
+    noUselessCatchBinding: noUselessCatchBindingConfigurationSchema.optional().nullable(),
+    /**
      * Disallow the use of useless undefined.
      */
     noUselessUndefined: noUselessUndefinedConfigurationSchema.optional().nullable(),
@@ -7447,13 +7512,17 @@ export const nurserySchema = z.object({
      */
     noVueReservedProps: noVueReservedPropsConfigurationSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
      * Enforces href attribute for \<a> elements.
      */
     useAnchorHref: useAnchorHrefConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce consistent arrow function bodies.
+     */
+    useConsistentArrowReturn: useConsistentArrowReturnConfigurationSchema.optional().nullable(),
     /**
      * Enforce type definitions to consistently use either interface or type.
      */
@@ -7485,7 +7554,11 @@ export const nurserySchema = z.object({
     /**
      * Enforce the sorting of CSS utility classes.
      */
-    useSortedClasses: useSortedClassesConfigurationSchema.optional().nullable()
+    useSortedClasses: useSortedClassesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce multi-word component names in Vue components.
+     */
+    useVueMultiWordComponentNames: useVueMultiWordComponentNamesConfigurationSchema.optional().nullable()
 });
 
 /**
@@ -7529,7 +7602,7 @@ export const performanceSchema = z.object({
      */
     noUnwantedPolyfillio: noUnwantedPolyfillioConfigurationSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -7567,7 +7640,7 @@ export const securitySchema = z.object({
      */
     noGlobalEval: noGlobalEvalConfigurationSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable()
 });
@@ -7931,7 +8004,7 @@ export const suspiciousSchema = z.object({
      */
     noWith: noWithConfigurationSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -8252,7 +8325,7 @@ export const correctnessSchema = z.object({
      */
     noVoidTypeReturn: noVoidTypeReturnConfigurationSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -8479,7 +8552,7 @@ export const styleSchema = z.object({
      */
     noYodaExpression: noYodaExpressionConfigurationSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -8711,7 +8784,7 @@ export const sourceSchema = z.object({
      */
     organizeImports: ruleAssistConfigurationForOrganizeImportsOptionsSchema.optional().nullable(),
     /**
-     * It enables the recommended rules for this group
+     * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -8719,7 +8792,7 @@ export const sourceSchema = z.object({
      */
     useSortedAttributes: ruleAssistConfigurationForUseSortedAttributesOptionsSchema.optional().nullable(),
     /**
-     * Sorts the keys of a JSON object in natural order
+     * Sort the keys of a JSON object in natural order.
      */
     useSortedKeys: ruleAssistConfigurationForUseSortedKeysOptionsSchema.optional().nullable(),
     /**

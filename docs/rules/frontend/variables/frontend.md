@@ -712,6 +712,10 @@ Produces too many false-positives for now.
 
 Produces too many false-positives for now.
 
+#### nursery.noUselessCatchBinding
+
+> `readonly` **noUselessCatchBinding**: `"error"` = `"error"`
+
 #### nursery.noUselessUndefined
 
 > `readonly` **noUselessUndefined**: `"error"` = `"error"`
@@ -741,6 +745,10 @@ Vue-only rule.
 #### nursery.useAnchorHref
 
 > `readonly` **useAnchorHref**: `"error"` = `"error"`
+
+#### nursery.useConsistentArrowReturn
+
+> `readonly` **useConsistentArrowReturn**: `"error"` = `"error"`
 
 #### nursery.useConsistentTypeDefinitions
 
@@ -806,6 +814,12 @@ React-only rule.
 #### nursery.useSortedClasses
 
 > `readonly` **useSortedClasses**: `"error"` = `"error"`
+
+#### nursery.useVueMultiWordComponentNames
+
+> `readonly` **useVueMultiWordComponentNames**: `"off"` = `"off"`
+
+Vue-only rule.
 
 ### performance
 

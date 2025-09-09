@@ -1,5 +1,18 @@
 # @cookielab.io/biome-config
 
+## v0.9.0
+
+### General Changes
+
+- Update Biome to `2.2.3`
+
+### Rule Changes
+
+- ## Added to `nursery`
+    - `"noUselessCatchBinding": "error"`
+    - `"useConsistentArrowReturn": "error"`
+    - `"useVueMultiWordComponentNames": "off"`
+
 ## v.0.8.2
 
 ### General Changes

@@ -1,5 +1,12 @@
 {
 	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"assist": {
+		"actions": {
+			"source": {
+				"useSortedKeys": "on"
+			}
+		}
+	},
 	"extends": ["./dist/node.json"],
 	"files": {
 		"includes": ["src/**/*.ts", "scripts/**/*.ts", "!**/generated"]

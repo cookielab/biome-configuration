@@ -117,8 +117,8 @@ const suspicious = {
 	noEmptyBlock: "error",
 	noEmptyBlockStatements: "error",
 	noImportantInKeyframe: "error",
-	noUnknownAtRules: "error",
 	noShorthandPropertyOverrides: "error",
+	noUnknownAtRules: "error",
 	useGoogleFontDisplay: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
