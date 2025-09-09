@@ -234,7 +234,7 @@ Does not really make sense as high line count != high complexity.
 
 #### complexity.noThisInStatic
 
-> `readonly` **noThisInStatic**: `"error"` = `"error"`
+> `readonly` **noThisInStatic**: `"off"` = `"off"`
 
 #### complexity.noUselessCatch
 

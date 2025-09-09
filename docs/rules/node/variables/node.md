@@ -236,7 +236,7 @@ Frontend-only rule.
 
 #### complexity.noThisInStatic
 
-> `readonly` **noThisInStatic**: `"error"` = `"error"`
+> `readonly` **noThisInStatic**: `"off"` = `"off"`
 
 #### complexity.noUselessCatch
 

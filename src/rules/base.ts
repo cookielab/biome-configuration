@@ -79,7 +79,7 @@ const complexity = {
 	 */
 	noImportantStyles: "off",
 	noStaticOnlyClass: "error",
-	noThisInStatic: "error",
+	noThisInStatic: "off",
 	noUselessCatch: "error",
 	noUselessConstructor: "error",
 	noUselessContinue: "error",

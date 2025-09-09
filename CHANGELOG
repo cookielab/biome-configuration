@@ -12,6 +12,8 @@
     - `"noUselessCatchBinding": "error"`
     - `"useConsistentArrowReturn": "error"`
     - `"useVueMultiWordComponentNames": "off"`
+- ## Changed
+    - `"noThisInStatic": "off"`
 
 ## v.0.8.2
 
