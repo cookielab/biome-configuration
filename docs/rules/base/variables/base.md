@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: [rules/base.ts:727](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L727)
+Defined in: [rules/base.ts:732](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L732)
 
 ## Type Declaration
 
@@ -1141,7 +1141,19 @@ React-only rule.
 
 #### style.useConsistentMemberAccessibility
 
-> `readonly` **useConsistentMemberAccessibility**: `"error"` = `"error"`
+> `readonly` **useConsistentMemberAccessibility**: `object`
+
+#### style.useConsistentMemberAccessibility.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### style.useConsistentMemberAccessibility.options
+
+> `readonly` **options**: `object`
+
+#### style.useConsistentMemberAccessibility.options.accessibility
+
+> `readonly` **accessibility**: `"explicit"` = `"explicit"`
 
 #### style.useConsistentObjectDefinitions
 

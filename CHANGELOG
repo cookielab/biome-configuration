@@ -1,5 +1,12 @@
 # @cookielab.io/biome-config
 
+## v0.10.0
+
+### Rule Changes
+
+- ## Changed
+    - `"useConsistentMemberAccessibility": "error"` -> `"useConsistentMemberAccessibility": { "level": "error", options: { "accessibility": "explicit" } }`
+
 ## v0.9.0
 
 ### General Changes
