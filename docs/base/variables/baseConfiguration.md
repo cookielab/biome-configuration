@@ -135,7 +135,7 @@ Manual sorting is preferred.
 
 #### formatter.attributePosition
 
-> `readonly` **attributePosition**: `"auto"` = `"auto"`
+> `readonly` **attributePosition**: `"multiline"` = `"multiline"`
 
 #### formatter.bracketSameLine
 
