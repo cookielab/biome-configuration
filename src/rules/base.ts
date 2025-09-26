@@ -488,7 +488,12 @@ const style = {
 	 * React-only rule.
 	 */
 	useConsistentCurlyBraces: "off",
-	useConsistentMemberAccessibility: "error",
+	useConsistentMemberAccessibility: {
+		level: "error",
+		options: {
+			accessibility: "explicit",
+		},
+	},
 	useConsistentObjectDefinitions: {
 		level: "error",
 		options: {

@@ -1103,7 +1103,19 @@ React-only rule.
 
 #### style.useConsistentMemberAccessibility
 
-> `readonly` **useConsistentMemberAccessibility**: `"error"` = `"error"`
+> `readonly` **useConsistentMemberAccessibility**: `object`
+
+#### style.useConsistentMemberAccessibility.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### style.useConsistentMemberAccessibility.options
+
+> `readonly` **options**: `object`
+
+#### style.useConsistentMemberAccessibility.options.accessibility
+
+> `readonly` **accessibility**: `"explicit"` = `"explicit"`
 
 #### style.useConsistentObjectDefinitions
 
