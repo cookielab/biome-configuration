@@ -70,7 +70,7 @@ const baseConfiguration = {
 	},
 
 	formatter: {
-		attributePosition: "auto",
+		attributePosition: "multiline",
 		bracketSameLine: false,
 		bracketSpacing: true,
 		enabled: true,
