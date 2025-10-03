@@ -1,0 +1,97 @@
+// Plugin to enforce grouped exports for JS/TS files
+// Matches individual export statements and suggests converting to grouped exports
+
+// Match export const/let/var declarations
+`export $declaration` where {
+    $declaration <: or {
+        `const $name = $_`,
+        `let $name = $_`,
+        `var $name = $_`
+    },
+    register_diagnostic(
+        span = $declaration,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match export function declarations
+`export function $name($_) { $_ }` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match export async function declarations
+`export async function $name($_) { $_ }` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match export class declarations
+`export class $name $_ { $_ }` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match export interface declarations (TypeScript)
+`export interface $name $_ { $_ }` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export type { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match export type aliases (TypeScript)
+`export type $name = $_` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export type { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match export enum declarations (TypeScript)
+`export enum $name { $_ }` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match arrow function exports with const
+`export const $name = $_ => $_` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match function expression exports
+`export const $name = function($_) { $_ }` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
+
+// Match async arrow function exports
+`export const $name = async $_ => $_` where {
+    register_diagnostic(
+        span = $name,
+        message = "Use grouped exports instead of individual exports. Consider moving this to an 'export { ... }' statement at the end of the file.",
+        severity = "warn"
+    )
+}
