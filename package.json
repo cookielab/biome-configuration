@@ -11,7 +11,8 @@
 		"./react": "./dist/react.json",
 		"./next": "./dist/next.json",
 		"./node": "./dist/node.json",
-		"./graphql": "./dist/graphql.json"
+		"./graphql": "./dist/graphql.json",
+		"./plugins": "./plugins"
 	},
 	"main": "./dist/base.json",
 	"keywords": [

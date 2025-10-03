@@ -10,7 +10,9 @@ const LINE_WIDTH = 120 as const;
 const INDENT_WIDTH = 2 as const;
 const LINE_ENDING = "lf" as const satisfies z.infer<typeof lineEndingSchema>;
 const INDENT_STYLE = "tab" as const satisfies z.infer<typeof indentStyleSchema>;
-const QUOTE_STYLE = "double" as const satisfies z.infer<typeof quoteStyleSchema>;
+const QUOTE_STYLE = "double" as const satisfies z.infer<
+	typeof quoteStyleSchema
+>;
 
 /**
  * This is the base configuration used in all of the rule sets.
@@ -180,6 +182,8 @@ const baseConfiguration = {
 	linter: {
 		enabled: true,
 	},
+
+	plugins: ["@cookielab.io/plugins/useGroupedExportsLast.grit"],
 } as const satisfies z.infer<typeof configurationSchema>;
 
 export { baseConfiguration };
