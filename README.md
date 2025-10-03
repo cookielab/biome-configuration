@@ -12,6 +12,15 @@ This package contains [Biome](https://biomejs.dev) configuration for our code st
 
 The code style aims to be as strict and defensive as possible to avoid bugs & unwanted side-effects and to improve code readability.
 
+The ruleset is inspired by the [Tiger Style](https://tigerstyle.dev/) coding principles and pretty much boils to the following core principles:
+
+1. Security
+   a. Being proactive about bugs instead of reactive
+2. Performance
+3. Developer Experience
+   a. Explicit over implicit code
+   b. Consistent code style
+
 ## Documentation
 
 For detailed explanation on how the configuration is set up, [see the attached documentation](https://github.com/cookielab/biome-configuration/tree/main/docs).
