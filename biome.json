@@ -3,6 +3,7 @@
 	"assist": {
 		"actions": {
 			"source": {
+				"useSortedAttributes": "on",
 				"useSortedKeys": "on"
 			}
 		}

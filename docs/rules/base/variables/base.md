@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: [rules/base.ts:732](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L732)
+Defined in: [rules/base.ts:766](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L766)
 
 ## Type Declaration
 
@@ -688,6 +688,22 @@ React-only rule.
 
 > `readonly` **nursery**: `object`
 
+#### nursery.noDeprecatedImports
+
+> `readonly` **noDeprecatedImports**: `"warn"` = `"warn"`
+
+#### nursery.noDuplicateDependencies
+
+> `readonly` **noDuplicateDependencies**: `"off"` = `"off"`
+
+NodeJS-only rule.
+
+#### nursery.noEmptySource
+
+> `readonly` **noEmptySource**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### nursery.noFloatingPromises
 
 > `readonly` **noFloatingPromises**: `"error"` = `"error"`
@@ -695,6 +711,12 @@ React-only rule.
 #### nursery.noImportCycles
 
 > `readonly` **noImportCycles**: `"error"` = `"error"`
+
+#### nursery.noJsxLiterals
+
+> `readonly` **noJsxLiterals**: `"off"` = `"off"`
+
+JSX-dialects only rule.
 
 #### nursery.noMisusedPromises
 
@@ -716,6 +738,12 @@ NextJS-only rule.
 
 Qwik-only rule.
 
+#### nursery.noReactForwardRef
+
+> `readonly` **noReactForwardRef**: `"off"` = `"off"`
+
+React-only rule.
+
 #### nursery.noSecrets
 
 > `readonly` **noSecrets**: `"off"` = `"off"`
@@ -736,6 +764,10 @@ Produces too many false-positives for now.
 
 Produces too many false-positives for now.
 
+#### nursery.noUnusedExpressions
+
+> `readonly` **noUnusedExpressions**: `"error"` = `"error"`
+
 #### nursery.noUselessCatchBinding
 
 > `readonly` **noUselessCatchBinding**: `"error"` = `"error"`
@@ -747,6 +779,12 @@ Produces too many false-positives for now.
 #### nursery.noVueDataObjectDeclaration
 
 > `readonly` **noVueDataObjectDeclaration**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### nursery.noVueDuplicateKeys
+
+> `readonly` **noVueDuplicateKeys**: `"off"` = `"off"`
 
 Vue-only rule.
 
@@ -799,6 +837,12 @@ For in-depth explanation see https://www.totaltypescript.com/type-vs-interface-w
 
 > `readonly` **style**: `"type"` = `"type"`
 
+#### nursery.useDeprecatedDate
+
+> `readonly` **useDeprecatedDate**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### nursery.useExhaustiveSwitchCases
 
 > `readonly` **useExhaustiveSwitchCases**: `"error"` = `"error"`
@@ -830,6 +874,18 @@ Frontend-only rule.
 #### nursery.useQwikClasslist
 
 > `readonly` **useQwikClasslist**: `"off"` = `"off"`
+
+Qwik-only rule.
+
+#### nursery.useQwikMethodUsage
+
+> `readonly` **useQwikMethodUsage**: `"off"` = `"off"`
+
+Qwik-only rule.
+
+#### nursery.useQwikValidLexicalScope
+
+> `readonly` **useQwikValidLexicalScope**: `"off"` = `"off"`
 
 Qwik-only rule.
 

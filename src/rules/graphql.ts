@@ -28,6 +28,9 @@ const correctness = {
 
 const nursery = {
 	...base.nursery,
+
+	noEmptySource: "error",
+	useDeprecatedDate: "warn",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

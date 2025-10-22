@@ -40,6 +40,10 @@ const correctness = {
 const nursery = {
 	...frontend.nursery,
 
+	/**
+	 * Should only be a recommendation as not every React project will be using translations.
+	 */
+	noJsxLiterals: "warn",
 	useReactFunctionComponents: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

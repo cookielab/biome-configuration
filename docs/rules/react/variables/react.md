@@ -8,7 +8,7 @@
 
 > `const` **react**: `object`
 
-Defined in: [rules/react.ts:75](https://github.com/cookielab/biome-configuration/blob/main/src/rules/react.ts#L75)
+Defined in: [rules/react.ts:79](https://github.com/cookielab/biome-configuration/blob/main/src/rules/react.ts#L79)
 
 ## Type Declaration
 
@@ -642,6 +642,22 @@ Recommended level would be `error`.
 
 > `readonly` **nursery**: `object`
 
+#### nursery.noDeprecatedImports
+
+> `readonly` **noDeprecatedImports**: `"warn"` = `"warn"`
+
+#### nursery.noDuplicateDependencies
+
+> `readonly` **noDuplicateDependencies**: `"off"` = `"off"`
+
+NodeJS-only rule.
+
+#### nursery.noEmptySource
+
+> `readonly` **noEmptySource**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### nursery.noFloatingPromises
 
 > `readonly` **noFloatingPromises**: `"error"` = `"error"`
@@ -649,6 +665,12 @@ Recommended level would be `error`.
 #### nursery.noImportCycles
 
 > `readonly` **noImportCycles**: `"error"` = `"error"`
+
+#### nursery.noJsxLiterals
+
+> `readonly` **noJsxLiterals**: `"warn"` = `"warn"`
+
+Should only be a recommendation as not every React project will be using translations.
 
 #### nursery.noMisusedPromises
 
@@ -670,6 +692,12 @@ NextJS-only rule.
 
 Qwik-only rule.
 
+#### nursery.noReactForwardRef
+
+> `readonly` **noReactForwardRef**: `"off"` = `"off"`
+
+React-only rule.
+
 #### nursery.noSecrets
 
 > `readonly` **noSecrets**: `"off"` = `"off"`
@@ -690,6 +718,10 @@ Produces too many false-positives for now.
 
 Produces too many false-positives for now.
 
+#### nursery.noUnusedExpressions
+
+> `readonly` **noUnusedExpressions**: `"error"` = `"error"`
+
 #### nursery.noUselessCatchBinding
 
 > `readonly` **noUselessCatchBinding**: `"error"` = `"error"`
@@ -701,6 +733,12 @@ Produces too many false-positives for now.
 #### nursery.noVueDataObjectDeclaration
 
 > `readonly` **noVueDataObjectDeclaration**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### nursery.noVueDuplicateKeys
+
+> `readonly` **noVueDuplicateKeys**: `"off"` = `"off"`
 
 Vue-only rule.
 
@@ -751,6 +789,12 @@ For in-depth explanation see https://www.totaltypescript.com/type-vs-interface-w
 
 > `readonly` **style**: `"type"` = `"type"`
 
+#### nursery.useDeprecatedDate
+
+> `readonly` **useDeprecatedDate**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### nursery.useExhaustiveSwitchCases
 
 > `readonly` **useExhaustiveSwitchCases**: `"error"` = `"error"`
@@ -780,6 +824,18 @@ const isDefinitelyString = returnsString(); // isDefinitelyString would have to 
 #### nursery.useQwikClasslist
 
 > `readonly` **useQwikClasslist**: `"off"` = `"off"`
+
+Qwik-only rule.
+
+#### nursery.useQwikMethodUsage
+
+> `readonly` **useQwikMethodUsage**: `"off"` = `"off"`
+
+Qwik-only rule.
+
+#### nursery.useQwikValidLexicalScope
+
+> `readonly` **useQwikValidLexicalScope**: `"off"` = `"off"`
 
 Qwik-only rule.
 

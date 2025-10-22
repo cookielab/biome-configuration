@@ -45,7 +45,7 @@ The aim here is to configure as much as possible so that all of the use cases of
 
 #### assist.actions.source.organizeImports.options.groups
 
-> `readonly` **groups**: \[\{ `type`: `true`; \}\]
+> `readonly` **groups**: \[`":URL:"`, `":BUN:"`, `":NODE:"`, `":PACKAGE:"`, `":PACKAGE_WITH_PROTOCOL:"`, `":ALIAS:"`, `":PATH:"`\]
 
 #### assist.actions.source.recommended
 

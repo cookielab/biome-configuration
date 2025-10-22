@@ -2,9 +2,25 @@
 
 ## v1.0.0
 
+Updating to a new major version mainly because of the import sorting. As the confgiuration schema changed, it was better to just explicitely sort the groups. Making this a potentional breaking change that would either require a configuration update or re-format of the whole project.
+
 ### General Changes
 
 - Update Biome to `2.2.7`
+
+### Rule Changes
+
+- ## Added to `base.nursery`
+    - `"noDeprecatedImports": "warn"`
+    - `"noUnusedExpressions": "error"`
+- ## Added to `graphql.nursery`
+    - `"noEmptySource": "error"`
+    - `"useDeprecatedDate": "warn"`
+- ## Added to `node.nursery`
+    - `"noDuplicateDependencies": "error"`
+- ## Added to `react.nursery`
+    - `"noJsxLiterals": "warn"`
+    - `"useReactFunctionComponents": "error"`
 
 ### Configuration Changes
 

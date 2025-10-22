@@ -272,8 +272,21 @@ const correctness = {
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
+	noDeprecatedImports: "warn",
+	/**
+	 * NodeJS-only rule.
+	 */
+	noDuplicateDependencies: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noEmptySource: "off",
 	noFloatingPromises: "error",
 	noImportCycles: "error",
+	/**
+	 * JSX-dialects only rule.
+	 */
+	noJsxLiterals: "off",
 	noMisusedPromises: "error",
 	/**
 	 * NextJS-only rule.
@@ -285,6 +298,10 @@ const nursery = {
 	 */
 	noQwikUseVisibleTask: "off",
 	/**
+	 * React-only rule.
+	 */
+	noReactForwardRef: "off",
+	/**
 	 * Produces too many false-positives for now.
 	 */
 	noSecrets: "off",
@@ -294,12 +311,17 @@ const nursery = {
 	 * Produces too many false-positives for now.
 	 */
 	noUnresolvedImports: "off",
+	noUnusedExpressions: "error",
 	noUselessCatchBinding: "error",
 	noUselessUndefined: "error",
 	/**
 	 * Vue-only rule.
 	 */
 	noVueDataObjectDeclaration: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueDuplicateKeys: "off",
 	/**
 	 * Vue-only rule.
 	 */
@@ -328,6 +350,10 @@ const nursery = {
 			style: "type",
 		},
 	},
+	/**
+	 * GraphQL-only rule.
+	 */
+	useDeprecatedDate: "off",
 	useExhaustiveSwitchCases: "error",
 	/**
 	 * The rule is currently missing the option to make the following usage valid:
@@ -349,6 +375,14 @@ const nursery = {
 	 * Qwik-only rule.
 	 */
 	useQwikClasslist: "off",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikMethodUsage: "off",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikValidLexicalScope: "off",
 	/**
 	 * React-only rule.
 	 */

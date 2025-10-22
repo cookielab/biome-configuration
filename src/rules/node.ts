@@ -28,6 +28,8 @@ const correctness = {
 
 const nursery = {
 	...base.nursery,
+
+	noDuplicateDependencies: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
