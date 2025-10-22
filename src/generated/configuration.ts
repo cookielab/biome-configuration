@@ -120,6 +120,8 @@ export const stableHookResultSchema = z.union([z.boolean(), z.tuple([z.number()]
 
 export const useAnchorHrefOptionsSchema = z.null();
 
+export const useConsistentArrowReturnStyleSchema = z.union([z.literal("asNeeded"), z.literal("always"), z.literal("never")]);
+
 export const consistentTypeDefinitionSchema = z.union([z.literal("interface"), z.literal("type")]);
 
 export const useImageSizeOptionsSchema = z.null();
@@ -713,7 +715,7 @@ export const jsonParserConfigurationSchema = z.object({
     allowTrailingCommas: boolSchema.optional().nullable()
 });
 
-export const ruleDomainsSchema = z.record(z.string(), ruleDomainValueSchema);
+export const ruleDomainsSchema = z.record(z.string(), z.string(), ruleDomainValueSchema);
 
 export const noAccessKeyOptionsSchema = z.object({});
 
@@ -982,7 +984,7 @@ export const noReactPropAssignmentsOptionsSchema = z.object({});
 
 export const noRenderReturnValueOptionsSchema = z.object({});
 
-export const customRestrictedElementsSchema = z.record(z.string(), z.string());
+export const customRestrictedElementsSchema = z.record(z.string(), z.string(), z.string());
 
 export const noSelfAssignOptionsSchema = z.object({});
 
@@ -1130,6 +1132,17 @@ export const useValidTypeofOptionsSchema = z.object({});
 
 export const useYieldOptionsSchema = z.object({});
 
+export const noDeprecatedImportsOptionsSchema = z.object({});
+
+export const noDuplicateDependenciesOptionsSchema = z.object({});
+
+export const noEmptySourceOptionsSchema = z.object({
+    /**
+     * Whether comments are considered meaningful
+     */
+    allowComments: z.boolean().optional()
+});
+
 export const noFloatingPromisesOptionsSchema = z.object({});
 
 export const noImportCyclesOptionsSchema = z.object({
@@ -1139,6 +1152,21 @@ export const noImportCyclesOptionsSchema = z.object({
     ignoreTypes: z.boolean().optional()
 });
 
+export const noJsxLiteralsOptionsSchema = z.object({
+    /**
+     * An array of strings that won't trigger the rule. Whitespaces are taken into consideration
+     */
+    allowedStrings: z.array(z.string()).optional(),
+    /**
+     * When enabled, strings inside props are always ignored
+     */
+    ignoreProps: z.boolean().optional(),
+    /**
+     * When enabled, also flag string literals inside JSX expressions and attributes
+     */
+    noStrings: z.boolean().optional()
+});
+
 export const noMisusedPromisesOptionsSchema = z.object({});
 
 export const noNextAsyncClientComponentOptionsSchema = z.object({});
@@ -1146,6 +1174,8 @@ export const noNextAsyncClientComponentOptionsSchema = z.object({});
 export const noNonNullAssertedOptionalChainOptionsSchema = z.object({});
 
 export const noQwikUseVisibleTaskOptionsSchema = z.object({});
+
+export const noReactForwardRefOptionsSchema = z.object({});
 
 export const noSecretsOptionsSchema = z.object({
     /**
@@ -1160,6 +1190,8 @@ export const noUnnecessaryConditionsOptionsSchema = z.object({});
 
 export const noUnresolvedImportsOptionsSchema = z.object({});
 
+export const noUnusedExpressionsOptionsSchema = z.object({});
+
 /**
  * Options for the `noUselessCatchBinding` rule. Currently empty; reserved for future extensions (e.g. allowlist of names).
  */
@@ -1168,6 +1200,8 @@ export const noUselessCatchBindingOptionsSchema = z.object({});
 export const noUselessUndefinedOptionsSchema = z.object({});
 
 export const noVueDataObjectDeclarationOptionsSchema = z.object({});
+
+export const noVueDuplicateKeysOptionsSchema = z.object({});
 
 export const noVueReservedKeysOptionsSchema = z.object({});
 
@@ -1184,10 +1218,28 @@ export const ruleWithUseAnchorHrefOptionsSchema = z.object({
     options: useAnchorHrefOptionsSchema.optional()
 });
 
-export const useConsistentArrowReturnOptionsSchema = z.object({});
+/**
+ * Options for the `useConsistentArrowReturn` rule.
+ */
+export const useConsistentArrowReturnOptionsSchema = z.object({
+    /**
+     * Determines whether the rule enforces a consistent style when the return value is an object literal.
+     *
+     * This option is only applicable when used in conjunction with the `asNeeded` option.
+     */
+    requireForObjectLiteral: z.boolean().optional(),
+    /**
+     * The style to enforce for arrow function return statements.
+     */
+    style: useConsistentArrowReturnStyleSchema.and(z.string()).optional()
+});
 
 export const useConsistentTypeDefinitionsOptionsSchema = z.object({
     style: consistentTypeDefinitionSchema.and(z.string()).optional()
+});
+
+export const useDeprecatedDateOptionsSchema = z.object({
+    argumentName: z.string().optional()
 });
 
 export const useExhaustiveSwitchCasesOptionsSchema = z.object({});
@@ -1213,6 +1265,10 @@ export const useMaxParamsOptionsSchema = z.object({
 });
 
 export const useQwikClasslistOptionsSchema = z.object({});
+
+export const useQwikMethodUsageOptionsSchema = z.object({});
+
+export const useQwikValidLexicalScopeOptionsSchema = z.object({});
 
 export const useReactFunctionComponentsOptionsSchema = z.object({});
 
@@ -1318,7 +1374,7 @@ export const noRestrictedGlobalsOptionsSchema = z.object({
     /**
      * A list of names that should trigger the rule
      */
-    deniedGlobals: z.record(z.string(), z.string()).optional()
+    deniedGlobals: z.record(z.string(), z.string(), z.string()).optional()
 });
 
 export const pathsSchema = z.union([z.string(), pathOptionsSchema]);
@@ -3770,6 +3826,39 @@ export const ruleWithUseYieldOptionsSchema = z.object({
     options: useYieldOptionsSchema.optional()
 });
 
+export const ruleWithNoDeprecatedImportsOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noDeprecatedImportsOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateDependenciesOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noDuplicateDependenciesOptionsSchema.optional()
+});
+
+export const ruleWithNoEmptySourceOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noEmptySourceOptionsSchema.optional()
+});
+
 export const ruleWithNoFloatingPromisesOptionsSchema = z.object({
     /**
      * The kind of the code actions emitted by the rule
@@ -3794,6 +3883,17 @@ export const ruleWithNoImportCyclesOptionsSchema = z.object({
      * Rule's options
      */
     options: noImportCyclesOptionsSchema.optional()
+});
+
+export const ruleWithNoJsxLiteralsOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noJsxLiteralsOptionsSchema.optional()
 });
 
 export const ruleWithNoMisusedPromisesOptionsSchema = z.object({
@@ -3844,6 +3944,21 @@ export const ruleWithNoQwikUseVisibleTaskOptionsSchema = z.object({
     options: noQwikUseVisibleTaskOptionsSchema.optional()
 });
 
+export const ruleWithNoReactForwardRefOptionsSchema = z.object({
+    /**
+     * The kind of the code actions emitted by the rule
+     */
+    fix: fixKindSchema.optional().nullable(),
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noReactForwardRefOptionsSchema.optional()
+});
+
 export const ruleWithNoSecretsOptionsSchema = z.object({
     /**
      * The severity of the emitted diagnostics by the rule
@@ -3886,6 +4001,17 @@ export const ruleWithNoUnresolvedImportsOptionsSchema = z.object({
      * Rule's options
      */
     options: noUnresolvedImportsOptionsSchema.optional()
+});
+
+export const ruleWithNoUnusedExpressionsOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noUnusedExpressionsOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessCatchBindingOptionsSchema = z.object({
@@ -3931,6 +4057,17 @@ export const ruleWithNoVueDataObjectDeclarationOptionsSchema = z.object({
      * Rule's options
      */
     options: noVueDataObjectDeclarationOptionsSchema.optional()
+});
+
+export const ruleWithNoVueDuplicateKeysOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: noVueDuplicateKeysOptionsSchema.optional()
 });
 
 export const ruleWithNoVueReservedKeysOptionsSchema = z.object({
@@ -3987,6 +4124,17 @@ export const ruleWithUseConsistentTypeDefinitionsOptionsSchema = z.object({
     options: useConsistentTypeDefinitionsOptionsSchema.optional()
 });
 
+export const ruleWithUseDeprecatedDateOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useDeprecatedDateOptionsSchema.optional()
+});
+
 export const ruleWithUseExhaustiveSwitchCasesOptionsSchema = z.object({
     /**
      * The kind of the code actions emitted by the rule
@@ -4035,6 +4183,28 @@ export const ruleWithUseQwikClasslistOptionsSchema = z.object({
      * Rule's options
      */
     options: useQwikClasslistOptionsSchema.optional()
+});
+
+export const ruleWithUseQwikMethodUsageOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useQwikMethodUsageOptionsSchema.optional()
+});
+
+export const ruleWithUseQwikValidLexicalScopeOptionsSchema = z.object({
+    /**
+     * The severity of the emitted diagnostics by the rule
+     */
+    level: rulePlainConfigurationSchema,
+    /**
+     * Rule's options
+     */
+    options: useQwikValidLexicalScopeOptionsSchema.optional()
 });
 
 export const ruleWithUseReactFunctionComponentsOptionsSchema = z.object({
@@ -6654,9 +6824,17 @@ export const useExhaustiveDependenciesOptionsSchema = z.object({
     reportUnnecessaryDependencies: z.boolean().optional()
 });
 
+export const noDeprecatedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDeprecatedImportsOptionsSchema]);
+
+export const noDuplicateDependenciesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateDependenciesOptionsSchema]);
+
+export const noEmptySourceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptySourceOptionsSchema]);
+
 export const noFloatingPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFloatingPromisesOptionsSchema]);
 
 export const noImportCyclesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImportCyclesOptionsSchema]);
+
+export const noJsxLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxLiteralsOptionsSchema]);
 
 export const noMisusedPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisusedPromisesOptionsSchema]);
 
@@ -6666,6 +6844,8 @@ export const noNonNullAssertedOptionalChainConfigurationSchema = z.union([rulePl
 
 export const noQwikUseVisibleTaskConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoQwikUseVisibleTaskOptionsSchema]);
 
+export const noReactForwardRefConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactForwardRefOptionsSchema]);
+
 export const noSecretsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSecretsOptionsSchema]);
 
 export const noShadowConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoShadowOptionsSchema]);
@@ -6674,11 +6854,15 @@ export const noUnnecessaryConditionsConfigurationSchema = z.union([rulePlainConf
 
 export const noUnresolvedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnresolvedImportsOptionsSchema]);
 
+export const noUnusedExpressionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedExpressionsOptionsSchema]);
+
 export const noUselessCatchBindingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessCatchBindingOptionsSchema]);
 
 export const noUselessUndefinedConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessUndefinedOptionsSchema]);
 
 export const noVueDataObjectDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDataObjectDeclarationOptionsSchema]);
+
+export const noVueDuplicateKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDuplicateKeysOptionsSchema]);
 
 export const noVueReservedKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedKeysOptionsSchema]);
 
@@ -6688,6 +6872,8 @@ export const useConsistentArrowReturnConfigurationSchema = z.union([rulePlainCon
 
 export const useConsistentTypeDefinitionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentTypeDefinitionsOptionsSchema]);
 
+export const useDeprecatedDateConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDeprecatedDateOptionsSchema]);
+
 export const useExhaustiveSwitchCasesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveSwitchCasesOptionsSchema]);
 
 export const useExplicitTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitTypeOptionsSchema]);
@@ -6695,6 +6881,10 @@ export const useExplicitTypeConfigurationSchema = z.union([rulePlainConfiguratio
 export const useMaxParamsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMaxParamsOptionsSchema]);
 
 export const useQwikClasslistConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikClasslistOptionsSchema]);
+
+export const useQwikMethodUsageConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikMethodUsageOptionsSchema]);
+
+export const useQwikValidLexicalScopeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikValidLexicalScopeOptionsSchema]);
 
 export const useReactFunctionComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactFunctionComponentsOptionsSchema]);
 
@@ -6871,7 +7061,7 @@ export const useTrimStartEndConfigurationSchema = z.union([rulePlainConfiguratio
 export const useUnifiedTypeSignaturesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnifiedTypeSignaturesOptionsSchema]);
 
 export const noRestrictedTypesOptionsSchema = z.object({
-    types: z.record(z.string(), customRestrictedTypeSchema).optional()
+    types: z.record(z.string(), z.string(), customRestrictedTypeSchema).optional()
 });
 
 export const conventionSchema = z.object({
@@ -7084,7 +7274,7 @@ export const sourcesMatcherSchema = z.union([sourceMatcherSchema, z.array(source
 /**
  * A list of rules that belong to this group
  */
-export const a11ySchema = z.object({
+export const a11YSchema = z.object({
     /**
      * Enforce that the accessKey attribute is not used on any HTML element.
      */
@@ -7452,6 +7642,18 @@ export const ruleWithUseExhaustiveDependenciesOptionsSchema = z.object({
  */
 export const nurserySchema = z.object({
     /**
+     * Restrict imports of deprecated exports.
+     */
+    noDeprecatedImports: noDeprecatedImportsConfigurationSchema.optional().nullable(),
+    /**
+     * Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: "bundledDependencies", "bundleDependencies", "dependencies", "devDependencies", "overrides", "optionalDependencies", and "peerDependencies".
+     */
+    noDuplicateDependencies: noDuplicateDependenciesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow empty sources.
+     */
+    noEmptySource: noEmptySourceConfigurationSchema.optional().nullable(),
+    /**
      * Require Promise-like statements to be handled appropriately.
      */
     noFloatingPromises: noFloatingPromisesConfigurationSchema.optional().nullable(),
@@ -7459,6 +7661,10 @@ export const nurserySchema = z.object({
      * Prevent import cycles.
      */
     noImportCycles: noImportCyclesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow string literals inside JSX elements.
+     */
+    noJsxLiterals: noJsxLiteralsConfigurationSchema.optional().nullable(),
     /**
      * Disallow Promises to be used in places where they are almost certainly a mistake.
      */
@@ -7476,6 +7682,10 @@ export const nurserySchema = z.object({
      */
     noQwikUseVisibleTask: noQwikUseVisibleTaskConfigurationSchema.optional().nullable(),
     /**
+     * Replaces usages of forwardRef with passing ref as a prop.
+     */
+    noReactForwardRef: noReactForwardRefConfigurationSchema.optional().nullable(),
+    /**
      * Disallow usage of sensitive data such as API keys and tokens.
      */
     noSecrets: noSecretsConfigurationSchema.optional().nullable(),
@@ -7492,6 +7702,10 @@ export const nurserySchema = z.object({
      */
     noUnresolvedImports: noUnresolvedImportsConfigurationSchema.optional().nullable(),
     /**
+     * Disallow expression statements that are neither a function call nor an assignment.
+     */
+    noUnusedExpressions: noUnusedExpressionsConfigurationSchema.optional().nullable(),
+    /**
      * Disallow unused catch bindings.
      */
     noUselessCatchBinding: noUselessCatchBindingConfigurationSchema.optional().nullable(),
@@ -7503,6 +7717,10 @@ export const nurserySchema = z.object({
      * Enforce that Vue component data options are declared as functions.
      */
     noVueDataObjectDeclaration: noVueDataObjectDeclarationConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate keys in Vue component data, methods, computed properties, and other options.
+     */
+    noVueDuplicateKeys: noVueDuplicateKeysConfigurationSchema.optional().nullable(),
     /**
      * Disallow reserved keys in Vue component data and computed properties.
      */
@@ -7528,6 +7746,10 @@ export const nurserySchema = z.object({
      */
     useConsistentTypeDefinitions: useConsistentTypeDefinitionsConfigurationSchema.optional().nullable(),
     /**
+     * Require the @deprecated directive to specify a deletion date.
+     */
+    useDeprecatedDate: useDeprecatedDateConfigurationSchema.optional().nullable(),
+    /**
      * Require switch-case statements to be exhaustive.
      */
     useExhaustiveSwitchCases: useExhaustiveSwitchCasesConfigurationSchema.optional().nullable(),
@@ -7547,6 +7769,14 @@ export const nurserySchema = z.object({
      * Prefer using the class prop as a classlist over the classnames helper.
      */
     useQwikClasslist: useQwikClasslistConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow use* hooks outside of component$ or other use* hooks in Qwik applications.
+     */
+    useQwikMethodUsage: useQwikMethodUsageConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unserializable expressions in Qwik dollar ($) scopes.
+     */
+    useQwikValidLexicalScope: useQwikValidLexicalScopeConfigurationSchema.optional().nullable(),
     /**
      * Enforce that components are defined as functions and never as classes.
      */
@@ -8065,12 +8295,12 @@ export const suspiciousSchema = z.object({
     useStrictMode: useStrictModeConfigurationSchema.optional().nullable()
 });
 
-export const importMatcherSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const importMatcherSchema = z.record(z.string(), z.string(), z.unknown()).and(z.object({
     source: sourcesMatcherSchema.optional().nullable(),
     type: z.boolean().optional().nullable()
 }));
 
-export const severityOrGroupForA11YSchema = z.union([groupPlainConfigurationSchema, a11ySchema]);
+export const severityOrGroupForA11YSchema = z.union([groupPlainConfigurationSchema, a11YSchema]);
 
 export const severityOrGroupForComplexitySchema = z.union([groupPlainConfigurationSchema, complexitySchema]);
 
@@ -8407,7 +8637,7 @@ export const noRestrictedImportsOptionsSchema = z.object({
     /**
      * A list of import paths that should trigger the rule.
      */
-    paths: z.record(z.string(), pathsSchema).optional(),
+    paths: z.record(z.string(), z.string(), pathsSchema).optional(),
     /**
      * gitignore-style patterns that should trigger the rule.
      */
