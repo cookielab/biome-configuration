@@ -24,7 +24,7 @@ const baseConfiguration = {
 				organizeImports: {
 					level: "on",
 					options: {
-						groups: [{ type: true }],
+						groups: [":URL:", ":BUN:", ":NODE:", ":PACKAGE:", ":PACKAGE_WITH_PROTOCOL:", ":ALIAS:", ":PATH:"],
 					},
 				},
 				recommended: false,

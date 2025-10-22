@@ -1,10 +1,15 @@
 # @cookielab.io/biome-config
 
-## v0.10.0
+## v1.0.0
 
 ### General Changes
 
 - Update Biome to `2.2.7`
+
+### Configuration Changes
+
+- ## Changed
+    - Updated import groups to be more logical
 
 ### Rule Changes
 
