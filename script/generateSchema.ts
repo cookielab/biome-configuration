@@ -6,20 +6,6 @@ import { compileFromFile } from "json-schema-to-typescript";
 import { generate as generateZodSchema } from "ts-to-zod";
 
 /**
- * Converts a Zod V3 schema string to V4.
- *
- * Necessary as `ts-to-zod` does not support V4 yet.
- * For now only the import and `z.record` updates are necessary.
- *
- * @param schema - Zod V3 schema string
- *
- * @returns Zod V4 schema string
- */
-const migrateToZod4 = (schema: string): string => {
-	return schema.replaceAll("z.record(", "z.record(z.string(), ");
-}
-
-/**
  * Generate a new Zod schema file using the source JSON schema file.
  *
  * @param source - Path to the source JSON schema file
@@ -33,9 +19,9 @@ const generateTypeScriptTypes = async (source: string, target: string): Promise<
 		sourceText: configurationType,
 	});
 
-	const zodV4Schema = migrateToZod4(getZodSchemasFile("."));
+	const schema = getZodSchemasFile(".");
 
-	fs.writeFileSync(target, zodV4Schema);
+	fs.writeFileSync(target, schema);
 }
 
 /**

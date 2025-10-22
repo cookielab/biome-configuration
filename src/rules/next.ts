@@ -1,6 +1,6 @@
 import type z from "zod";
 import type {
-	a11ySchema,
+	a11YSchema,
 	complexitySchema,
 	correctnessSchema,
 	nurserySchema,
@@ -14,7 +14,7 @@ import { react } from "./react";
 
 const a11y = {
 	...react.a11y,
-} as const satisfies z.infer<ReturnType<typeof a11ySchema.required>>;
+} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
 
 const complexity = {
 	...react.complexity,

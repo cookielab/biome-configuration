@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import type {
-	a11ySchema,
+	a11YSchema,
 	complexitySchema,
 	correctnessSchema,
 	nurserySchema,
@@ -53,7 +53,7 @@ const a11y = {
 	useValidAriaValues: "error",
 	useValidAutocomplete: "error",
 	useValidLang: "error",
-} as const satisfies z.infer<ReturnType<typeof a11ySchema.required>>;
+} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
 
 const complexity = {
 	...base.complexity,

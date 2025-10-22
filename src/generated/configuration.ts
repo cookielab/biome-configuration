@@ -715,7 +715,7 @@ export const jsonParserConfigurationSchema = z.object({
     allowTrailingCommas: boolSchema.optional().nullable()
 });
 
-export const ruleDomainsSchema = z.record(z.string(), z.string(), ruleDomainValueSchema);
+export const ruleDomainsSchema = z.record(z.string(), ruleDomainValueSchema);
 
 export const noAccessKeyOptionsSchema = z.object({});
 
@@ -984,7 +984,7 @@ export const noReactPropAssignmentsOptionsSchema = z.object({});
 
 export const noRenderReturnValueOptionsSchema = z.object({});
 
-export const customRestrictedElementsSchema = z.record(z.string(), z.string(), z.string());
+export const customRestrictedElementsSchema = z.record(z.string(), z.string());
 
 export const noSelfAssignOptionsSchema = z.object({});
 
@@ -1374,7 +1374,7 @@ export const noRestrictedGlobalsOptionsSchema = z.object({
     /**
      * A list of names that should trigger the rule
      */
-    deniedGlobals: z.record(z.string(), z.string(), z.string()).optional()
+    deniedGlobals: z.record(z.string(), z.string()).optional()
 });
 
 export const pathsSchema = z.union([z.string(), pathOptionsSchema]);
@@ -7061,7 +7061,7 @@ export const useTrimStartEndConfigurationSchema = z.union([rulePlainConfiguratio
 export const useUnifiedTypeSignaturesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnifiedTypeSignaturesOptionsSchema]);
 
 export const noRestrictedTypesOptionsSchema = z.object({
-    types: z.record(z.string(), z.string(), customRestrictedTypeSchema).optional()
+    types: z.record(z.string(), customRestrictedTypeSchema).optional()
 });
 
 export const conventionSchema = z.object({
@@ -8295,7 +8295,7 @@ export const suspiciousSchema = z.object({
     useStrictMode: useStrictModeConfigurationSchema.optional().nullable()
 });
 
-export const importMatcherSchema = z.record(z.string(), z.string(), z.unknown()).and(z.object({
+export const importMatcherSchema = z.record(z.string(), z.unknown()).and(z.object({
     source: sourcesMatcherSchema.optional().nullable(),
     type: z.boolean().optional().nullable()
 }));
@@ -8637,7 +8637,7 @@ export const noRestrictedImportsOptionsSchema = z.object({
     /**
      * A list of import paths that should trigger the rule.
      */
-    paths: z.record(z.string(), z.string(), pathsSchema).optional(),
+    paths: z.record(z.string(), pathsSchema).optional(),
     /**
      * gitignore-style patterns that should trigger the rule.
      */
