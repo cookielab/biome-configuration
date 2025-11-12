@@ -32,10 +32,10 @@
 		"types": "tsc"
 	},
 	"peerDependencies": {
-		"@biomejs/biome": ">=2.2.7"
+		"@biomejs/biome": ">=2.3.5"
 	},
 	"devDependencies": {
-		"@types/node": "24.9.1",
+		"@types/node": "24.10.1",
 		"json-schema-to-typescript": "15.0.4",
 		"ts-to-zod": "5.0.1",
 		"tsx": "4.20.6",

@@ -168,6 +168,10 @@ const correctness = {
 	noPrivateImports: "error",
 	noProcessGlobal: "error",
 	/**
+	 * Qwik-only rule
+	 */
+	noQwikUseVisibleTask: "off",
+	/**
 	 * React-only rule.
 	 */
 	noReactPropAssignments: "off",
@@ -249,6 +253,10 @@ const correctness = {
 	 */
 	useHookAtTopLevel: "off",
 	/**
+	 * Frontend-only rule.
+	 */
+	useImageSize: "off",
+	/**
 	 * Should only be enabled per-project, depending on the bundler usage.
 	 *
 	 * Recommended level would be `error`.
@@ -261,6 +269,10 @@ const correctness = {
 	 */
 	useJsxKeyInIterable: "off",
 	useParseIntRadix: "error",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikClasslist: "off",
 	useSingleJsDocAsterisk: "warn",
 	/**
 	 * React-only rule.
@@ -272,6 +284,10 @@ const correctness = {
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
+	/**
+	 * `continue` helps to avoid nesting inside loop bodies.
+	 */
+	noContinue: "off",
 	noDeprecatedImports: "warn",
 	/**
 	 * NodeJS-only rule.
@@ -284,6 +300,16 @@ const nursery = {
 	noFloatingPromises: "error",
 	noImportCycles: "error",
 	/**
+	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
+	 * Although, the usage in for-loops makes sense and is thus allowed.
+	 */
+	noIncrementDecrement: {
+		level: "error",
+		options: {
+			allowForLoopAfterthoughts: true,
+		},
+	},
+	/**
 	 * JSX-dialects only rule.
 	 */
 	noJsxLiterals: "off",
@@ -292,20 +318,19 @@ const nursery = {
 	 * NextJS-only rule.
 	 */
 	noNextAsyncClientComponent: "off",
-	noNonNullAssertedOptionalChain: "error",
 	/**
-	 * Qwik-only rule.
+	 * Just making sure there are no unused parameters in recursive functions.
 	 */
-	noQwikUseVisibleTask: "off",
+	noParametersOnlyUsedInRecursion: "off",
 	/**
 	 * React-only rule.
 	 */
 	noReactForwardRef: "off",
-	/**
-	 * Produces too many false-positives for now.
-	 */
-	noSecrets: "off",
 	noShadow: "error",
+	/**
+	 * JSX-only rule.
+	 */
+	noUnknownAttribute: "off",
 	noUnnecessaryConditions: "warn",
 	/**
 	 * Produces too many false-positives for now.
@@ -332,24 +357,10 @@ const nursery = {
 	noVueReservedProps: "off",
 	recommended: false,
 	/**
-	 * JSX-only rule.
+	 * Enforces all sorting operations to be explicitly defined.
 	 */
-	useAnchorHref: "off",
+	useArraySortCompare: "error",
 	useConsistentArrowReturn: "error",
-	/**
-	 * `type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
-	 * conditional types, `type` is the recommended approach.
-	 *
-	 * This rule should be disabled only for cases when needing to use `class ClassName implements Interface`.
-	 *
-	 * For in-depth explanation see https://www.totaltypescript.com/type-vs-interface-which-should-you-use
-	 */
-	useConsistentTypeDefinitions: {
-		level: "error",
-		options: {
-			style: "type",
-		},
-	},
 	/**
 	 * GraphQL-only rule.
 	 */
@@ -366,15 +377,7 @@ const nursery = {
 	 * ```
 	 */
 	useExplicitType: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	useImageSize: "off",
 	useMaxParams: "error",
-	/**
-	 * Qwik-only rule.
-	 */
-	useQwikClasslist: "off",
 	/**
 	 * Qwik-only rule.
 	 */
@@ -384,13 +387,13 @@ const nursery = {
 	 */
 	useQwikValidLexicalScope: "off",
 	/**
-	 * React-only rule.
-	 */
-	useReactFunctionComponents: "off",
-	/**
 	 * Frontend-only rule.
 	 */
 	useSortedClasses: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueDefineMacrosOrder: "off",
 	/**
 	 * Vue-only rule.
 	 */
@@ -444,6 +447,10 @@ const security = {
 	 */
 	noDangerouslySetInnerHtmlWithChildren: "off",
 	noGlobalEval: "error",
+	/**
+	 * Produces too many false-positives.
+	 */
+	noSecrets: "off",
 	recommended: false,
 } as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
 
@@ -534,6 +541,20 @@ const style = {
 			syntax: "explicit",
 		},
 	},
+	/**
+	 * `type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
+	 * conditional types, `type` is the recommended approach.
+	 *
+	 * This rule should be disabled only for cases when needing to use `class ClassName implements Interface`.
+	 *
+	 * For in-depth explanation see https://www.totaltypescript.com/type-vs-interface-which-should-you-use
+	 */
+	useConsistentTypeDefinitions: {
+		level: "error",
+		options: {
+			style: "type",
+		},
+	},
 	useConst: "error",
 	useDefaultParameterLast: "error",
 	/**
@@ -583,6 +604,10 @@ const style = {
 	useNumberNamespace: "error",
 	useNumericSeparators: "error",
 	useObjectSpread: "error",
+	/**
+	 * React-only rule.
+	 */
+	useReactFunctionComponents: "off",
 	useReadonlyClassProperties: "warn",
 	/**
 	 * React-only rule.
@@ -705,6 +730,7 @@ const suspicious = {
 	noMisleadingInstantiator: "error",
 	noMisplacedAssertion: "error",
 	noMisrefactoredShorthandAssign: "error",
+	noNonNullAssertedOptionalChain: "error",
 	noOctalEscape: "error",
 	noPrototypeBuiltins: "error",
 	/**

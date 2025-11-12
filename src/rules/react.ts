@@ -44,7 +44,7 @@ const nursery = {
 	 * Should only be a recommendation as not every React project will be using translations.
 	 */
 	noJsxLiterals: "warn",
-	useReactFunctionComponents: "error",
+	noUnknownAttribute: "warn",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -64,6 +64,7 @@ const style = {
 	useComponentExportOnlyModules: "error",
 	useConsistentCurlyBraces: "error",
 	useFragmentSyntax: "error",
+	useReactFunctionComponents: "error",
 	useSelfClosingElements: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 

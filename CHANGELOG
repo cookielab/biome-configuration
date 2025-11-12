@@ -6,7 +6,7 @@ Updating to a new major version mainly because of the import sorting. As the con
 
 ### General Changes
 
-- Update Biome to `2.2.7`
+- Update Biome to `2.3.5`
 
 ### Rule Changes
 
@@ -28,6 +28,24 @@ Updating to a new major version mainly because of the import sorting. As the con
     - Updated import groups to be more logical
 
 ### Rule Changes
+
+- ## Moved from `nursery` to stable categories
+    - `noNonNullAssertedOptionalChain` moved to `suspicious.noNonNullAssertedOptionalChain`
+    - `useConsistentTypeDefinitions` moved to `style.useConsistentTypeDefinitions`
+    - `useReactFunctionComponents` moved to `style.useReactFunctionComponents`
+    - `noSecrets` moved to `security.noSecrets`
+    - `useImageSize` moved to `correctness.useImageSize` (with frontend override to `"warn"`)
+    - `useAnchorHref` moved to `correctness.useAnchorHref` (with frontend override to `"error"`)
+    - `noQwikUseVisibleTask` moved to `correctness.noQwikUseVisibleTask`
+    - `useQwikClasslist` moved to `correctness.useQwikClasslist`
+
+- ## Added to `base.nursery`
+    - `"noContinue": "off"`
+    - `"noIncrementDecrement": { "level": "error", "options": { "allowForLoopAfterthoughts": true } }`
+    - `"noParametersOnlyUsedInRecursion": "off"`
+    - `"noUnknownAttribute": "off"`
+    - `"useArraySortCompare": "error"`
+    - `"useVueDefineMacrosOrder": "off"`
 
 - ## Changed
     - `"useConsistentMemberAccessibility": "error"` -> `"useConsistentMemberAccessibility": { "level": "error", options: { "accessibility": "explicit" } }`

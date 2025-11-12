@@ -8,7 +8,7 @@
 
 > `const` **frontend**: `object`
 
-Defined in: [rules/frontend.ts:125](https://github.com/cookielab/biome-configuration/blob/main/src/rules/frontend.ts#L125)
+Defined in: [rules/frontend.ts:124](https://github.com/cookielab/biome-configuration/blob/main/src/rules/frontend.ts#L124)
 
 ## Type Declaration
 
@@ -462,6 +462,12 @@ Should only be disabled in Node projects.
 
 > `readonly` **noProcessGlobal**: `"error"` = `"error"`
 
+#### correctness.noQwikUseVisibleTask
+
+> `readonly` **noQwikUseVisibleTask**: `"off"` = `"off"`
+
+Qwik-only rule
+
 #### correctness.noReactPropAssignments
 
 > `readonly` **noReactPropAssignments**: `"off"` = `"off"`
@@ -612,6 +618,10 @@ GraphQL-only rule.
 
 React-only rule.
 
+#### correctness.useImageSize
+
+> `readonly` **useImageSize**: `"warn"` = `"warn"`
+
 #### correctness.useImportExtensions
 
 > `readonly` **useImportExtensions**: `"off"` = `"off"`
@@ -637,6 +647,12 @@ React-only rule.
 #### correctness.useParseIntRadix
 
 > `readonly` **useParseIntRadix**: `"error"` = `"error"`
+
+#### correctness.useQwikClasslist
+
+> `readonly` **useQwikClasslist**: `"off"` = `"off"`
+
+Qwik-only rule.
 
 #### correctness.useSingleJsDocAsterisk
 
@@ -664,6 +680,12 @@ React-only rule.
 
 > `readonly` **nursery**: `object`
 
+#### nursery.noContinue
+
+> `readonly` **noContinue**: `"off"` = `"off"`
+
+`continue` helps to avoid nesting inside loop bodies.
+
 #### nursery.noDeprecatedImports
 
 > `readonly` **noDeprecatedImports**: `"warn"` = `"warn"`
@@ -688,6 +710,25 @@ GraphQL-only rule.
 
 > `readonly` **noImportCycles**: `"error"` = `"error"`
 
+#### nursery.noIncrementDecrement
+
+> `readonly` **noIncrementDecrement**: `object`
+
+This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
+Although, the usage in for-loops makes sense and is thus allowed.
+
+#### nursery.noIncrementDecrement.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### nursery.noIncrementDecrement.options
+
+> `readonly` **options**: `object`
+
+#### nursery.noIncrementDecrement.options.allowForLoopAfterthoughts
+
+> `readonly` **allowForLoopAfterthoughts**: `true` = `true`
+
 #### nursery.noJsxLiterals
 
 > `readonly` **noJsxLiterals**: `"off"` = `"off"`
@@ -704,15 +745,11 @@ JSX-dialects only rule.
 
 NextJS-only rule.
 
-#### nursery.noNonNullAssertedOptionalChain
+#### nursery.noParametersOnlyUsedInRecursion
 
-> `readonly` **noNonNullAssertedOptionalChain**: `"error"` = `"error"`
+> `readonly` **noParametersOnlyUsedInRecursion**: `"off"` = `"off"`
 
-#### nursery.noQwikUseVisibleTask
-
-> `readonly` **noQwikUseVisibleTask**: `"off"` = `"off"`
-
-Qwik-only rule.
+Just making sure there are no unused parameters in recursive functions.
 
 #### nursery.noReactForwardRef
 
@@ -720,15 +757,15 @@ Qwik-only rule.
 
 React-only rule.
 
-#### nursery.noSecrets
-
-> `readonly` **noSecrets**: `"off"` = `"off"`
-
-Produces too many false-positives for now.
-
 #### nursery.noShadow
 
 > `readonly` **noShadow**: `"error"` = `"error"`
+
+#### nursery.noUnknownAttribute
+
+> `readonly` **noUnknownAttribute**: `"off"` = `"off"`
+
+JSX-only rule.
 
 #### nursery.noUnnecessaryConditions
 
@@ -780,36 +817,15 @@ Vue-only rule.
 
 > `readonly` **recommended**: `false` = `false`
 
-#### nursery.useAnchorHref
+#### nursery.useArraySortCompare
 
-> `readonly` **useAnchorHref**: `"error"` = `"error"`
+> `readonly` **useArraySortCompare**: `"error"` = `"error"`
+
+Enforces all sorting operations to be explicitly defined.
 
 #### nursery.useConsistentArrowReturn
 
 > `readonly` **useConsistentArrowReturn**: `"error"` = `"error"`
-
-#### nursery.useConsistentTypeDefinitions
-
-> `readonly` **useConsistentTypeDefinitions**: `object`
-
-`type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
-conditional types, `type` is the recommended approach.
-
-This rule should be disabled only for cases when needing to use `class ClassName implements Interface`.
-
-For in-depth explanation see https://www.totaltypescript.com/type-vs-interface-which-should-you-use
-
-#### nursery.useConsistentTypeDefinitions.level
-
-> `readonly` **level**: `"error"` = `"error"`
-
-#### nursery.useConsistentTypeDefinitions.options
-
-> `readonly` **options**: `object`
-
-#### nursery.useConsistentTypeDefinitions.options.style
-
-> `readonly` **style**: `"type"` = `"type"`
 
 #### nursery.useDeprecatedDate
 
@@ -835,19 +851,9 @@ const returnsString = (): string => "value";
 const isDefinitelyString = returnsString(); // isDefinitelyString would have to have it's typed explicitly written out
 ```
 
-#### nursery.useImageSize
-
-> `readonly` **useImageSize**: `"warn"` = `"warn"`
-
 #### nursery.useMaxParams
 
 > `readonly` **useMaxParams**: `"error"` = `"error"`
-
-#### nursery.useQwikClasslist
-
-> `readonly` **useQwikClasslist**: `"off"` = `"off"`
-
-Qwik-only rule.
 
 #### nursery.useQwikMethodUsage
 
@@ -861,15 +867,15 @@ Qwik-only rule.
 
 Qwik-only rule.
 
-#### nursery.useReactFunctionComponents
-
-> `readonly` **useReactFunctionComponents**: `"off"` = `"off"`
-
-React-only rule.
-
 #### nursery.useSortedClasses
 
 > `readonly` **useSortedClasses**: `"error"` = `"error"`
+
+#### nursery.useVueDefineMacrosOrder
+
+> `readonly` **useVueDefineMacrosOrder**: `"off"` = `"off"`
+
+Vue-only rule.
 
 #### nursery.useVueMultiWordComponentNames
 
@@ -970,6 +976,12 @@ React-only rule.
 #### security.noGlobalEval
 
 > `readonly` **noGlobalEval**: `"error"` = `"error"`
+
+#### security.noSecrets
+
+> `readonly` **noSecrets**: `"off"` = `"off"`
+
+Produces too many false-positives.
 
 #### security.recommended
 
@@ -1189,6 +1201,29 @@ React-only rule.
 
 > `readonly` **syntax**: `"explicit"` = `"explicit"`
 
+#### style.useConsistentTypeDefinitions
+
+> `readonly` **useConsistentTypeDefinitions**: `object`
+
+`type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
+conditional types, `type` is the recommended approach.
+
+This rule should be disabled only for cases when needing to use `class ClassName implements Interface`.
+
+For in-depth explanation see https://www.totaltypescript.com/type-vs-interface-which-should-you-use
+
+#### style.useConsistentTypeDefinitions.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### style.useConsistentTypeDefinitions.options
+
+> `readonly` **options**: `object`
+
+#### style.useConsistentTypeDefinitions.options.style
+
+> `readonly` **style**: `"type"` = `"type"`
+
 #### style.useConst
 
 > `readonly` **useConst**: `"error"` = `"error"`
@@ -1294,6 +1329,12 @@ Node-only rule.
 #### style.useObjectSpread
 
 > `readonly` **useObjectSpread**: `"error"` = `"error"`
+
+#### style.useReactFunctionComponents
+
+> `readonly` **useReactFunctionComponents**: `"off"` = `"off"`
+
+React-only rule.
 
 #### style.useReadonlyClassProperties
 
@@ -1584,6 +1625,10 @@ NextJS-only rule.
 #### suspicious.noMisrefactoredShorthandAssign
 
 > `readonly` **noMisrefactoredShorthandAssign**: `"error"` = `"error"`
+
+#### suspicious.noNonNullAssertedOptionalChain
+
+> `readonly` **noNonNullAssertedOptionalChain**: `"error"` = `"error"`
 
 #### suspicious.noOctalEscape
 

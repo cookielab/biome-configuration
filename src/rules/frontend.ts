@@ -75,13 +75,12 @@ const correctness = {
 	noUnknownPseudoElement: "error",
 	noUnknownTypeSelector: "error",
 	noUnmatchableAnbSelector: "error",
+	useImageSize: "warn",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
 	...base.nursery,
 
-	useAnchorHref: "error",
-	useImageSize: "warn",
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
