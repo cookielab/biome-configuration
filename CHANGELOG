@@ -1,5 +1,11 @@
 # @cookielab.io/biome-config
 
+## v1.0.1
+
+### General Changes
+
+- Update the patch version to fix the NPM release
+
 ## v1.0.0
 
 Updating to a new major version mainly because of the import sorting. As the confgiuration schema changed, it was better to just explicitely sort the groups. Making this a potentional breaking change that would either require a configuration update or re-format of the whole project.
