@@ -511,6 +511,7 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	useUniqueVariableNames: "off",
+	useVueConsistentDefinePropsDeclaration: "off",
 	/**
 	 * Vue-only rule.
 	 */
