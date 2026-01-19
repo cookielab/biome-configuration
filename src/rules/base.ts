@@ -379,6 +379,10 @@ const nursery = {
 	noScriptUrl: "off",
 	noShadow: "error",
 	/**
+	 * NextJS-only rule.
+	 */
+	noSyncScripts: "off",
+	/**
 	 * JSX-only rule.
 	 */
 	noUnknownAttribute: "off",
