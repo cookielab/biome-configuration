@@ -508,6 +508,10 @@ const nursery = {
 	 */
 	useUniqueInputFieldNames: "off",
 	/**
+	 * GraphQL-only rule.
+	 */
+	useUniqueVariableNames: "off",
+	/**
 	 * Vue-only rule.
 	 */
 	useVueDefineMacrosOrder: "off",
