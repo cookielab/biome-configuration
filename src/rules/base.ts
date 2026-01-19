@@ -488,6 +488,10 @@ const nursery = {
 	 */
 	useSortedClasses: "off",
 	/**
+	 * Spread syntax is more readable than using `Object.apply`.
+	 */
+	useSpread: "error",
+	/**
 	 * Vue-only rule.
 	 */
 	useVueDefineMacrosOrder: "off",
