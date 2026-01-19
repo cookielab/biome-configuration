@@ -335,6 +335,10 @@ const nursery = {
 	 * JSX-dialects only rule.
 	 */
 	noJsxLiterals: "off",
+	/**
+	 * React-only rule.
+	 */
+	noJsxPropsBind: "off",
 	noMisusedPromises: "error",
 	/**
 	 * NextJS-only rule.
