@@ -303,6 +303,10 @@ const nursery = {
 	 */
 	noDuplicateDependencies: "off",
 	/**
+	 * React & Solid.js only rule.
+	 */
+	noDuplicatedSpreadProps: "off",
+	/**
 	 * GraphQL-only rule.
 	 */
 	noEmptySource: "off",

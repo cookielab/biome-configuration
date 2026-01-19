@@ -41,6 +41,10 @@ const nursery = {
 	...frontend.nursery,
 
 	/**
+	 * Prevents unnecessary computations as spreading props twice makes React go crazy.
+	 */
+	noDuplicatedSpreadProps: "error",
+	/**
 	 * Should only be a recommendation as not every React project will be using translations.
 	 */
 	noJsxLiterals: "warn",
