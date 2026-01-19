@@ -432,6 +432,10 @@ const nursery = {
 	 * Enforces all sorting operations to be explicitly defined.
 	 */
 	useArraySortCompare: "error",
+	/**
+	 * There is no need to await non-Promise values.
+	 */
+	useAwaitThenable: "error",
 	useConsistentArrowReturn: "error",
 	/**
 	 * GraphQL-only rule.
