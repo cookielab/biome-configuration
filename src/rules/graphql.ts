@@ -52,6 +52,10 @@ const nursery = {
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	useUniqueGraphqlOperationName: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	useUniqueInputFieldNames: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
