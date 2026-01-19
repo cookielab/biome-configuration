@@ -445,6 +445,11 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	useDeprecatedDate: "off",
+	/**
+	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
+	 * The level is left at `info` to at least let the user know that the option exists.
+	 */
+	useDestructuring: "info",
 	useExhaustiveSwitchCases: "error",
 	/**
 	 * The rule is currently missing the option to make the following usage valid:
