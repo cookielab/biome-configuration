@@ -440,6 +440,10 @@ const nursery = {
 	/**
 	 * GraphQL-only rule.
 	 */
+	useConsistentGraphqlDescriptions: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
 	useDeprecatedDate: "off",
 	useExhaustiveSwitchCases: "error",
 	/**

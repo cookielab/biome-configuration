@@ -30,6 +30,15 @@ const nursery = {
 	...base.nursery,
 
 	noEmptySource: "error",
+	/**
+	 * Enforces a consistent style of descriptions.
+	 */
+	useConsistentGraphqlDescriptions: {
+		level: "error",
+		options: {
+			style: "block",
+		},
+	},
 	useDeprecatedDate: "warn",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
