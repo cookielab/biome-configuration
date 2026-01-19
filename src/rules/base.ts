@@ -290,6 +290,10 @@ const nursery = {
 	 */
 	noAmbiguousAnchorText: "warn",
 	/**
+	 * NextJS-only rule.
+	 */
+	noBeforeInteractiveScriptOutsideDocument: "off",
+	/**
 	 * `continue` helps to avoid nesting inside loop bodies.
 	 */
 	noContinue: "off",

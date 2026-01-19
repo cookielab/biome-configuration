@@ -26,6 +26,11 @@ const correctness = {
 
 const nursery = {
 	...react.nursery,
+
+	/**
+	 * Enforces the correct usage of `beforeInteractive` scripts.
+	 */
+	noBeforeInteractiveScriptOutsideDocument: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
