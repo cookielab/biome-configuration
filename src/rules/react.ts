@@ -51,6 +51,10 @@ const nursery = {
 	 * Using `bind` is treated by React as a new function on each render.
 	 */
 	noJsxPropsBind: "error",
+	/**
+	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
+	 */
+	noLeakedRender: "error",
 	noUnknownAttribute: "warn",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

@@ -339,6 +339,10 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noJsxPropsBind: "off",
+	/**
+	 * React-only rule.
+	 */
+	noLeakedRender: "off",
 	noMisusedPromises: "error",
 	/**
 	 * NextJS-only rule.
