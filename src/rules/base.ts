@@ -373,6 +373,10 @@ const nursery = {
 	 * There is no need to assign anything when returning.
 	 */
 	noReturnAssign: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	noScriptUrl: "off",
 	noShadow: "error",
 	/**
 	 * JSX-only rule.
