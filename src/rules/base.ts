@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useNamingConvention: Biome rule names use consecutive uppercase characters, unfortunately. */
 import type { z } from "zod";
 import type {
 	a11YSchema,
