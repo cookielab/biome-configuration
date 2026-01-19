@@ -480,6 +480,10 @@ const nursery = {
 	 */
 	useRegexpExec: "error",
 	/**
+	 * This rule should only be enabled in a specific project as every project uses different required scripts.
+	 */
+	useRequiredScripts: "off",
+	/**
 	 * Frontend-only rule.
 	 */
 	useSortedClasses: "off",
