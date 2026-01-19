@@ -369,6 +369,10 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noReactForwardRef: "off",
+	/**
+	 * There is no need to assign anything when returning.
+	 */
+	noReturnAssign: "error",
 	noShadow: "error",
 	/**
 	 * JSX-only rule.
