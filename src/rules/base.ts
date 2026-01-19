@@ -525,6 +525,7 @@ const nursery = {
 	useVueMultiWordComponentNames: "off",
 	useVueValidTemplateRoot: "off",
 	useVueValidVBind: "off",
+	useVueValidVCloak: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
