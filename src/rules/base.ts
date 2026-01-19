@@ -419,6 +419,10 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	noVueReservedProps: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueSetupPropsReactivityLoss: "off",
 	recommended: false,
 	/**
 	 * Enforces all sorting operations to be explicitly defined.
