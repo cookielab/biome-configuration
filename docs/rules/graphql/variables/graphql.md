@@ -8,7 +8,7 @@
 
 > `const` **graphql**: `object`
 
-Defined in: [rules/graphql.ts:57](https://github.com/cookielab/biome-configuration/blob/main/src/rules/graphql.ts#L57)
+Defined in: [rules/graphql.ts:86](https://github.com/cookielab/biome-configuration/blob/main/src/rules/graphql.ts#L86)
 
 ## Type Declaration
 
@@ -704,6 +704,19 @@ React-only rule.
 
 > `readonly` **nursery**: `object`
 
+#### nursery.noAmbiguousAnchorText
+
+> `readonly` **noAmbiguousAnchorText**: `"warn"` = `"warn"`
+
+This rule promotes  more accessible interfaces. However, turning this into an error would be too harsh as a lot of links would not meet the necessary criteria to pass.
+Leaving the level to `warn` keeps the balance between being helpful and annoying/fighting with designers.
+
+#### nursery.noBeforeInteractiveScriptOutsideDocument
+
+> `readonly` **noBeforeInteractiveScriptOutsideDocument**: `"off"` = `"off"`
+
+NextJS-only rule.
+
 #### nursery.noContinue
 
 > `readonly` **noContinue**: `"off"` = `"off"`
@@ -720,13 +733,32 @@ React-only rule.
 
 NodeJS-only rule.
 
+#### nursery.noDuplicatedSpreadProps
+
+> `readonly` **noDuplicatedSpreadProps**: `"off"` = `"off"`
+
+React & Solid.js only rule.
+
 #### nursery.noEmptySource
 
 > `readonly` **noEmptySource**: `"error"` = `"error"`
 
+#### nursery.noEqualsToNull
+
+> `readonly` **noEqualsToNull**: `"off"` = `"off"`
+
+Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
+
 #### nursery.noFloatingPromises
 
 > `readonly` **noFloatingPromises**: `"error"` = `"error"`
+
+#### nursery.noForIn
+
+> `readonly` **noForIn**: `"warn"` = `"warn"`
+
+`for-in` loops are usually just a typo when trying to remember how `for-of` is written.
+ As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
 
 #### nursery.noImportCycles
 
@@ -757,9 +789,34 @@ Although, the usage in for-loops makes sense and is thus allowed.
 
 JSX-dialects only rule.
 
+#### nursery.noJsxPropsBind
+
+> `readonly` **noJsxPropsBind**: `"off"` = `"off"`
+
+React-only rule.
+
+#### nursery.noLeakedRender
+
+> `readonly` **noLeakedRender**: `"off"` = `"off"`
+
+React-only rule.
+
 #### nursery.noMisusedPromises
 
 > `readonly` **noMisusedPromises**: `"error"` = `"error"`
+
+#### nursery.noMultiAssign
+
+> `readonly` **noMultiAssign**: `"error"` = `"error"`
+
+Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
+Keeping the assignments separate makes them more readable.
+
+#### nursery.noMultiStr
+
+> `readonly` **noMultiStr**: `"error"` = `"error"`
+
+Using strings with ``` is a better approach.
 
 #### nursery.noNextAsyncClientComponent
 
@@ -773,15 +830,52 @@ NextJS-only rule.
 
 Just making sure there are no unused parameters in recursive functions.
 
+#### nursery.noProto
+
+> `readonly` **noProto**: `"error"` = `"error"`
+
+This approach to accessing object's prototype is deprecated since 2009.
+
 #### nursery.noReactForwardRef
 
 > `readonly` **noReactForwardRef**: `"off"` = `"off"`
 
 React-only rule.
 
+#### nursery.noReturnAssign
+
+> `readonly` **noReturnAssign**: `"error"` = `"error"`
+
+There is no need to assign anything when returning.
+
+#### nursery.noScriptUrl
+
+> `readonly` **noScriptUrl**: `"off"` = `"off"`
+
+Frontend-only rule.
+
 #### nursery.noShadow
 
 > `readonly` **noShadow**: `"error"` = `"error"`
+
+#### nursery.noSyncScripts
+
+> `readonly` **noSyncScripts**: `"off"` = `"off"`
+
+NextJS-only rule.
+
+#### nursery.noTernary
+
+> `readonly` **noTernary**: `"off"` = `"off"`
+
+Ternaries are a superior way of assigning to variables.
+They only become hard to read once they become nested or use long conditions.
+
+#### nursery.noUndeclaredEnvVars
+
+> `readonly` **noUndeclaredEnvVars**: `"off"` = `"off"`
+
+Turborepo-only rule.
 
 #### nursery.noUnknownAttribute
 
@@ -835,6 +929,18 @@ Vue-only rule.
 
 Vue-only rule.
 
+#### nursery.noVueSetupPropsReactivityLoss
+
+> `readonly` **noVueSetupPropsReactivityLoss**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### nursery.noVueVIfWithVFor
+
+> `readonly` **noVueVIfWithVFor**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### nursery.recommended
 
 > `readonly` **recommended**: `false` = `false`
@@ -845,13 +951,44 @@ Vue-only rule.
 
 Enforces all sorting operations to be explicitly defined.
 
+#### nursery.useAwaitThenable
+
+> `readonly` **useAwaitThenable**: `"error"` = `"error"`
+
+There is no need to await non-Promise values.
+
 #### nursery.useConsistentArrowReturn
 
 > `readonly` **useConsistentArrowReturn**: `"error"` = `"error"`
 
+#### nursery.useConsistentGraphqlDescriptions
+
+> `readonly` **useConsistentGraphqlDescriptions**: `object`
+
+Enforces a consistent style of descriptions.
+
+#### nursery.useConsistentGraphqlDescriptions.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### nursery.useConsistentGraphqlDescriptions.options
+
+> `readonly` **options**: `object`
+
+#### nursery.useConsistentGraphqlDescriptions.options.style
+
+> `readonly` **style**: `"block"` = `"block"`
+
 #### nursery.useDeprecatedDate
 
 > `readonly` **useDeprecatedDate**: `"warn"` = `"warn"`
+
+#### nursery.useDestructuring
+
+> `readonly` **useDestructuring**: `"info"` = `"info"`
+
+Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
+The level is left at `info` to at least let the user know that the option exists.
 
 #### nursery.useExhaustiveSwitchCases
 
@@ -871,6 +1008,12 @@ const returnsString = (): string => "value";
 const isDefinitelyString = returnsString(); // isDefinitelyString would have to have it's typed explicitly written out
 ```
 
+#### nursery.useFind
+
+> `readonly` **useFind**: `"error"` = `"error"`
+
+Much more readable approach then indexing into a possibly empty array.
+
 #### nursery.useMaxParams
 
 > `readonly` **useMaxParams**: `"error"` = `"error"`
@@ -887,11 +1030,71 @@ Qwik-only rule.
 
 Qwik-only rule.
 
+#### nursery.useRegexpExec
+
+> `readonly` **useRegexpExec**: `"error"` = `"error"`
+
+`RegExp.exec` is slightly faster than `String.match`.
+
+#### nursery.useRequiredScripts
+
+> `readonly` **useRequiredScripts**: `"off"` = `"off"`
+
+This rule should only be enabled in a specific project as every project uses different required scripts.
+
 #### nursery.useSortedClasses
 
 > `readonly` **useSortedClasses**: `"off"` = `"off"`
 
 Frontend-only rule.
+
+#### nursery.useSpread
+
+> `readonly` **useSpread**: `"error"` = `"error"`
+
+Spread syntax is more readable than using `Object.apply`.
+
+#### nursery.useUniqueArgumentNames
+
+> `readonly` **useUniqueArgumentNames**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.useUniqueFieldDefinitionNames
+
+> `readonly` **useUniqueFieldDefinitionNames**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.useUniqueGraphqlOperationName
+
+> `readonly` **useUniqueGraphqlOperationName**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.useUniqueInputFieldNames
+
+> `readonly` **useUniqueInputFieldNames**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.useUniqueVariableNames
+
+> `readonly` **useUniqueVariableNames**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.useVueConsistentDefinePropsDeclaration
+
+> `readonly` **useVueConsistentDefinePropsDeclaration**: `"off"` = `"off"`
+
+#### nursery.useVueConsistentVBindStyle
+
+> `readonly` **useVueConsistentVBindStyle**: `"off"` = `"off"`
+
+#### nursery.useVueConsistentVOnStyle
+
+> `readonly` **useVueConsistentVOnStyle**: `"off"` = `"off"`
 
 #### nursery.useVueDefineMacrosOrder
 
@@ -899,11 +1102,67 @@ Frontend-only rule.
 
 Vue-only rule.
 
+#### nursery.useVueHyphenatedAttributes
+
+> `readonly` **useVueHyphenatedAttributes**: `"off"` = `"off"`
+
 #### nursery.useVueMultiWordComponentNames
 
 > `readonly` **useVueMultiWordComponentNames**: `"off"` = `"off"`
 
 Vue-only rule.
+
+#### nursery.useVueValidTemplateRoot
+
+> `readonly` **useVueValidTemplateRoot**: `"off"` = `"off"`
+
+#### nursery.useVueValidVBind
+
+> `readonly` **useVueValidVBind**: `"off"` = `"off"`
+
+#### nursery.useVueValidVCloak
+
+> `readonly` **useVueValidVCloak**: `"off"` = `"off"`
+
+#### nursery.useVueValidVElse
+
+> `readonly` **useVueValidVElse**: `"off"` = `"off"`
+
+#### nursery.useVueValidVElseIf
+
+> `readonly` **useVueValidVElseIf**: `"off"` = `"off"`
+
+#### nursery.useVueValidVHtml
+
+> `readonly` **useVueValidVHtml**: `"off"` = `"off"`
+
+#### nursery.useVueValidVIf
+
+> `readonly` **useVueValidVIf**: `"off"` = `"off"`
+
+#### nursery.useVueValidVOn
+
+> `readonly` **useVueValidVOn**: `"off"` = `"off"`
+
+#### nursery.useVueValidVOnce
+
+> `readonly` **useVueValidVOnce**: `"off"` = `"off"`
+
+#### nursery.useVueValidVPre
+
+> `readonly` **useVueValidVPre**: `"off"` = `"off"`
+
+#### nursery.useVueValidVText
+
+> `readonly` **useVueValidVText**: `"off"` = `"off"`
+
+#### nursery.useVueVapor
+
+> `readonly` **useVueVapor**: `"off"` = `"off"`
+
+#### nursery.useVueVForKey
+
+> `readonly` **useVueVForKey**: `"off"` = `"off"`
 
 ### performance
 
