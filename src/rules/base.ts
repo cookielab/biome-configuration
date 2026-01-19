@@ -512,6 +512,7 @@ const nursery = {
 	 */
 	useUniqueVariableNames: "off",
 	useVueConsistentDefinePropsDeclaration: "off",
+	useVueConsistentVBindStyle: "off",
 	/**
 	 * Vue-only rule.
 	 */
