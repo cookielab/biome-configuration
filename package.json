@@ -43,11 +43,11 @@
 		"commit-and-tag-version": "12.6.1",
 		"conventional-changelog-conventionalcommits": "9.1.0",
 		"json-schema-to-typescript": "15.0.4",
-		"ts-to-zod": "5.0.1",
+		"ts-to-zod": "5.1.0",
 		"tsx": "4.20.6",
 		"typedoc": "0.28.16",
 		"typedoc-plugin-markdown": "4.9.0",
 		"typescript": "5.9.3",
-		"zod": "4.1.12"
+		"zod": "4.3.5"
 	}
 }
