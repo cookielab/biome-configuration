@@ -476,6 +476,10 @@ const nursery = {
 	 */
 	useQwikValidLexicalScope: "off",
 	/**
+	 * `RegExp.exec` is slightly faster than `String.match`.
+	 */
+	useRegexpExec: "error",
+	/**
 	 * Frontend-only rule.
 	 */
 	useSortedClasses: "off",
