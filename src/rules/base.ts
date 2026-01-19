@@ -315,6 +315,11 @@ const nursery = {
 	 */
 	noEqualsToNull: "off",
 	noFloatingPromises: "error",
+	/**
+	 * `for-in` loops are usually just a typo when trying to remember how `for-of` is written.
+	 *  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
+	 */
+	noForIn: "warn",
 	noImportCycles: "error",
 	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
