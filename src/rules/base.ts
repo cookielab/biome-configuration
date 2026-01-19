@@ -383,6 +383,11 @@ const nursery = {
 	 */
 	noSyncScripts: "off",
 	/**
+	 * Ternaries are a superior way of assigning to variables.
+	 * They only become hard to read once they become nested or use long conditions.
+	 */
+	noTernary: "off",
+	/**
 	 * JSX-only rule.
 	 */
 	noUnknownAttribute: "off",
