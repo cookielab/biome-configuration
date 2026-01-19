@@ -388,6 +388,10 @@ const nursery = {
 	 */
 	noTernary: "off",
 	/**
+	 * Turborepo-only rule.
+	 */
+	noUndeclaredEnvVars: "off",
+	/**
 	 * JSX-only rule.
 	 */
 	noUnknownAttribute: "off",
