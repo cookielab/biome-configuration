@@ -462,6 +462,10 @@ const nursery = {
 	 * ```
 	 */
 	useExplicitType: "off",
+	/**
+	 * Much more readable approach then indexing into a possibly empty array.
+	 */
+	useFind: "error",
 	useMaxParams: "error",
 	/**
 	 * Qwik-only rule.
