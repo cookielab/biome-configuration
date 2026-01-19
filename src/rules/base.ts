@@ -345,6 +345,11 @@ const nursery = {
 	noLeakedRender: "off",
 	noMisusedPromises: "error",
 	/**
+	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
+	 * Keeping the assignments separate makes them more readable.
+	 */
+	noMultiAssign: "error",
+	/**
 	 * NextJS-only rule.
 	 */
 	noNextAsyncClientComponent: "off",
