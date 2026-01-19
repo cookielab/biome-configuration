@@ -529,6 +529,7 @@ const nursery = {
 	useVueValidVElse: "off",
 	useVueValidVElseIf: "off",
 	useVueValidVHtml: "off",
+	useVueValidVIf: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
