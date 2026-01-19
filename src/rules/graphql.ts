@@ -30,7 +30,36 @@ const nursery = {
 	...base.nursery,
 
 	noEmptySource: "error",
+	/**
+	 * Enforces a consistent style of descriptions.
+	 */
+	useConsistentGraphqlDescriptions: {
+		level: "error",
+		options: {
+			style: "block",
+		},
+	},
 	useDeprecatedDate: "warn",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	useUniqueArgumentNames: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	useUniqueFieldDefinitionNames: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	useUniqueGraphqlOperationName: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	useUniqueInputFieldNames: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	useUniqueVariableNames: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

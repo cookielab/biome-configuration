@@ -39,11 +39,22 @@ const correctness = {
 
 const nursery = {
 	...frontend.nursery,
-
+	/**
+	 * Prevents unnecessary computations as spreading props twice makes React go crazy.
+	 */
+	noDuplicatedSpreadProps: "error",
 	/**
 	 * Should only be a recommendation as not every React project will be using translations.
 	 */
 	noJsxLiterals: "warn",
+	/**
+	 * Using `bind` is treated by React as a new function on each render.
+	 */
+	noJsxPropsBind: "error",
+	/**
+	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
+	 */
+	noLeakedRender: "error",
 	noUnknownAttribute: "warn",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

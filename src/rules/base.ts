@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/useNamingConvention: Biome rule names use consecutive uppercase characters, unfortunately. */
 import type { z } from "zod";
 import type {
 	a11YSchema,
@@ -285,6 +286,15 @@ const correctness = {
 
 const nursery = {
 	/**
+	 * This rule promotes  more accessible interfaces. However, turning this into an error would be too harsh as a lot of links would not meet the necessary criteria to pass.
+	 * Leaving the level to `warn` keeps the balance between being helpful and annoying/fighting with designers.
+	 */
+	noAmbiguousAnchorText: "warn",
+	/**
+	 * NextJS-only rule.
+	 */
+	noBeforeInteractiveScriptOutsideDocument: "off",
+	/**
 	 * `continue` helps to avoid nesting inside loop bodies.
 	 */
 	noContinue: "off",
@@ -294,10 +304,23 @@ const nursery = {
 	 */
 	noDuplicateDependencies: "off",
 	/**
+	 * React & Solid.js only rule.
+	 */
+	noDuplicatedSpreadProps: "off",
+	/**
 	 * GraphQL-only rule.
 	 */
 	noEmptySource: "off",
+	/**
+	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
+	 */
+	noEqualsToNull: "off",
 	noFloatingPromises: "error",
+	/**
+	 * `for-in` loops are usually just a typo when trying to remember how `for-of` is written.
+	 *  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
+	 */
+	noForIn: "warn",
 	noImportCycles: "error",
 	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
@@ -313,7 +336,24 @@ const nursery = {
 	 * JSX-dialects only rule.
 	 */
 	noJsxLiterals: "off",
+	/**
+	 * React-only rule.
+	 */
+	noJsxPropsBind: "off",
+	/**
+	 * React-only rule.
+	 */
+	noLeakedRender: "off",
 	noMisusedPromises: "error",
+	/**
+	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
+	 * Keeping the assignments separate makes them more readable.
+	 */
+	noMultiAssign: "error",
+	/**
+	 * Using strings with ``` is a better approach.
+	 */
+	noMultiStr: "error",
 	/**
 	 * NextJS-only rule.
 	 */
@@ -323,10 +363,35 @@ const nursery = {
 	 */
 	noParametersOnlyUsedInRecursion: "off",
 	/**
+	 * This approach to accessing object's prototype is deprecated since 2009.
+	 */
+	noProto: "error",
+	/**
 	 * React-only rule.
 	 */
 	noReactForwardRef: "off",
+	/**
+	 * There is no need to assign anything when returning.
+	 */
+	noReturnAssign: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	noScriptUrl: "off",
 	noShadow: "error",
+	/**
+	 * NextJS-only rule.
+	 */
+	noSyncScripts: "off",
+	/**
+	 * Ternaries are a superior way of assigning to variables.
+	 * They only become hard to read once they become nested or use long conditions.
+	 */
+	noTernary: "off",
+	/**
+	 * Turborepo-only rule.
+	 */
+	noUndeclaredEnvVars: "off",
 	/**
 	 * JSX-only rule.
 	 */
@@ -355,16 +420,37 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	noVueReservedProps: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueSetupPropsReactivityLoss: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueVIfWithVFor: "off",
 	recommended: false,
 	/**
 	 * Enforces all sorting operations to be explicitly defined.
 	 */
 	useArraySortCompare: "error",
+	/**
+	 * There is no need to await non-Promise values.
+	 */
+	useAwaitThenable: "error",
 	useConsistentArrowReturn: "error",
 	/**
 	 * GraphQL-only rule.
 	 */
+	useConsistentGraphqlDescriptions: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
 	useDeprecatedDate: "off",
+	/**
+	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
+	 * The level is left at `info` to at least let the user know that the option exists.
+	 */
+	useDestructuring: "info",
 	useExhaustiveSwitchCases: "error",
 	/**
 	 * The rule is currently missing the option to make the following usage valid:
@@ -377,6 +463,10 @@ const nursery = {
 	 * ```
 	 */
 	useExplicitType: "off",
+	/**
+	 * Much more readable approach then indexing into a possibly empty array.
+	 */
+	useFind: "error",
 	useMaxParams: "error",
 	/**
 	 * Qwik-only rule.
@@ -387,17 +477,66 @@ const nursery = {
 	 */
 	useQwikValidLexicalScope: "off",
 	/**
+	 * `RegExp.exec` is slightly faster than `String.match`.
+	 */
+	useRegexpExec: "error",
+	/**
+	 * This rule should only be enabled in a specific project as every project uses different required scripts.
+	 */
+	useRequiredScripts: "off",
+	/**
 	 * Frontend-only rule.
 	 */
 	useSortedClasses: "off",
 	/**
+	 * Spread syntax is more readable than using `Object.apply`.
+	 */
+	useSpread: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useUniqueArgumentNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useUniqueFieldDefinitionNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useUniqueGraphqlOperationName: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useUniqueInputFieldNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useUniqueVariableNames: "off",
+	useVueConsistentDefinePropsDeclaration: "off",
+	useVueConsistentVBindStyle: "off",
+	useVueConsistentVOnStyle: "off",
+	/**
 	 * Vue-only rule.
 	 */
 	useVueDefineMacrosOrder: "off",
+	useVueHyphenatedAttributes: "off",
 	/**
 	 * Vue-only rule.
 	 */
 	useVueMultiWordComponentNames: "off",
+	useVueValidTemplateRoot: "off",
+	useVueValidVBind: "off",
+	useVueValidVCloak: "off",
+	useVueValidVElse: "off",
+	useVueValidVElseIf: "off",
+	useVueValidVHtml: "off",
+	useVueValidVIf: "off",
+	useVueValidVOn: "off",
+	useVueValidVOnce: "off",
+	useVueValidVPre: "off",
+	useVueValidVText: "off",
+	useVueVapor: "off",
+	useVueVForKey: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

@@ -81,6 +81,10 @@ const correctness = {
 const nursery = {
 	...base.nursery,
 
+	/**
+	 * This rule should help with preventing any XSS vulnerabilities.
+	 */
+	noScriptUrl: "error",
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
