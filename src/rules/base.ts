@@ -518,6 +518,7 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	useVueDefineMacrosOrder: "off",
+	useVueHyphenatedAttributes: "off",
 	/**
 	 * Vue-only rule.
 	 */
