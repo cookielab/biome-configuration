@@ -350,6 +350,10 @@ const nursery = {
 	 */
 	noMultiAssign: "error",
 	/**
+	 * Using strings with ``` is a better approach.
+	 */
+	noMultiStr: "error",
+	/**
 	 * NextJS-only rule.
 	 */
 	noNextAsyncClientComponent: "off",
