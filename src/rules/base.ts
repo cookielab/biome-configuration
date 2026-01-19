@@ -534,6 +534,7 @@ const nursery = {
 	useVueValidVOnce: "off",
 	useVueValidVPre: "off",
 	useVueValidVText: "off",
+	useVueVapor: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
