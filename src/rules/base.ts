@@ -362,6 +362,10 @@ const nursery = {
 	 */
 	noParametersOnlyUsedInRecursion: "off",
 	/**
+	 * This approach to accessing object's prototype is deprecated since 2009.
+	 */
+	noProto: "error",
+	/**
 	 * React-only rule.
 	 */
 	noReactForwardRef: "off",
