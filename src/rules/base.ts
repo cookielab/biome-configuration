@@ -575,6 +575,10 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	noRootType: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueOptionsApi: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
