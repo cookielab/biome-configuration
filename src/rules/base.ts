@@ -537,6 +537,10 @@ const nursery = {
 	useVueValidVText: "off",
 	useVueVapor: "off",
 	useVueVForKey: "off",
+	/**
+	 * Enforces a more readable regular expression.
+	 */
+	noDivRegex: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
