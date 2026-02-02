@@ -541,6 +541,10 @@ const nursery = {
 	 * Enforces a more readable regular expression.
 	 */
 	noDivRegex: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	noDuplicateAttributes: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
