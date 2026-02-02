@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.2.0](https://github.com/cookielab/biome-configuration/compare/v1.1.0...v1.2.0) (2026-02-02)
+
+
+### Features
+
+* **biome:** update to 2.3.13 ([#14](https://github.com/cookielab/biome-configuration/issues/14)) ([4786120](https://github.com/cookielab/biome-configuration/commit/4786120644efe0be4e6321a389ec2e8748b79270))
+* **nursery:** add definition for noDuplicateAttributes with level error ([709aefb](https://github.com/cookielab/biome-configuration/commit/709aefbd9b1703bf2d5a7bc30e6365c4b0427586))
+* **nursery:** add noDivRegex rule with level error ([9b5c6fb](https://github.com/cookielab/biome-configuration/commit/9b5c6fbf9c4379ddeeaddb2d9b807921124ab0a5))
+* **nursery:** add noDuplicateEnumValueNames with level error ([96d0987](https://github.com/cookielab/biome-configuration/commit/96d09879e1e154565d17b99a48bb62e9b7c0c32d))
+* **nursery:** add noDuplicateEnumValues with level error ([b028224](https://github.com/cookielab/biome-configuration/commit/b0282242d4dd7a82f9a105e8ffe3ec7dd408f8f3))
+* **nursery:** add noExcessiveClassesPerFile with level warn ([48f2959](https://github.com/cookielab/biome-configuration/commit/48f29596ec86ad1501486e951e53b0fc3998e016))
+* **nursery:** add noExcessiveLinesPerFile with level off ([d37c129](https://github.com/cookielab/biome-configuration/commit/d37c129b00be55586f437c2e6f4a7f50f9aa795b))
+* **nursery:** add noFloatingClasses with level error ([57144d2](https://github.com/cookielab/biome-configuration/commit/57144d2afdc0595b6f4162e9113ea25e4185601d))
+* **nursery:** add noRootType with level off ([3c771f6](https://github.com/cookielab/biome-configuration/commit/3c771f651e8f8be54cc71cf73f65eb1a13357e5a))
+* **nursery:** add noVueOptionsApi with level off ([763ad4f](https://github.com/cookielab/biome-configuration/commit/763ad4fddbdda1bbc2ccd862c06bec37e530dbba))
+* **nursery:** add useConsistentEnumValueTypes with level error ([32ab62e](https://github.com/cookielab/biome-configuration/commit/32ab62e519bf1c15974e7ece0c3dc8e97f222124))
+* **nursery:** add useErrorCause with level error ([b09e470](https://github.com/cookielab/biome-configuration/commit/b09e470cdf4d65cf57979ed0c0b357410b2c8361))
+* **nursery:** add useInlineScriptId with level error ([1e28bf5](https://github.com/cookielab/biome-configuration/commit/1e28bf5ad02f6f7d075cdd6bc730fa5451eb19a3))
+* **nursery:** add useLoneAnonymousOperation with level error ([ca3cca0](https://github.com/cookielab/biome-configuration/commit/ca3cca089cb99e4977abac0d02c490ae62cfac2c))
+* **nursery:** add useLoneExecutableDefinition with level error ([c8fdbc0](https://github.com/cookielab/biome-configuration/commit/c8fdbc076bafa3bd05244dcd57ec221ca96a2c0f))
+* **nursery:** rename useUniqueArgumentNames to noDuplicateArgumentNames ([0516bed](https://github.com/cookielab/biome-configuration/commit/0516bed103d682e5d275ebb0b7a30dcac19d51ee))
+* **nursery:** rename useUniqueFieldDefinitionNames to noDuplicateFieldDefinitionNames ([870dbe4](https://github.com/cookielab/biome-configuration/commit/870dbe442656b7b351f9a7a8e94b8c292115d4e6))
+* **nursery:** rename useUniqueGraphqlOperationName to noDuplicateGraphqlOperationName ([afef1af](https://github.com/cookielab/biome-configuration/commit/afef1afcb05a567f1ca7d62c7d1bfdcbcf66ab8d))
+* **nursery:** rename useUniqueInputFieldNames to noDuplicateInputFieldNames ([5becbf3](https://github.com/cookielab/biome-configuration/commit/5becbf37d4dd38e8eee1dda1f9633d74916240cd))
+* **nursery:** rename useUniqueVariableNames to noDuplicateVariableNames ([56e43a5](https://github.com/cookielab/biome-configuration/commit/56e43a59b2af74341b2774d7cbc17f8802cea39d))
+
 ## [1.1.0](https://github.com/cookielab/biome-configuration/compare/v1.0.1...v1.1.0) (2026-01-19)
 
 
