@@ -36,9 +36,9 @@
 		"@biomejs/biome": ">=2.3.11"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "20.3.1",
-		"@commitlint/config-conventional": "20.3.1",
-		"@commitlint/types": "20.3.1",
+		"@commitlint/cli": "20.4.1",
+		"@commitlint/config-conventional": "20.4.1",
+		"@commitlint/types": "20.4.0",
 		"@types/node": "24.10.1",
 		"commit-and-tag-version": "12.6.1",
 		"conventional-changelog-conventionalcommits": "9.1.0",
