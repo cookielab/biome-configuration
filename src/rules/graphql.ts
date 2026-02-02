@@ -40,6 +40,10 @@ const nursery = {
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	noDuplicateGraphqlOperationName: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateInputFieldNames: "error",
 
 	noEmptySource: "error",
 	/**
@@ -52,10 +56,6 @@ const nursery = {
 		},
 	},
 	useDeprecatedDate: "warn",
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	useUniqueInputFieldNames: "error",
 	/**
 	 * GraphQL should not enable this behavior in the first place.
 	 */
