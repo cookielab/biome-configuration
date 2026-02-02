@@ -563,6 +563,10 @@ const nursery = {
 			maxClasses: 2,
 		},
 	},
+	/**
+	 * The rule is left as `off`. If required, it should be enabled on a project level.
+	 */
+	noExcessiveLinesPerFile: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
