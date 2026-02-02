@@ -545,6 +545,10 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noDuplicateAttributes: "off",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	noDuplicateEnumValueNames: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
