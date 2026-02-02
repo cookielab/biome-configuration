@@ -503,7 +503,7 @@ const nursery = {
 	/**
 	 * GraphQL-only rule.
 	 */
-	useUniqueGraphqlOperationName: "off",
+	noDuplicateGraphqlOperationName: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
