@@ -49,6 +49,44 @@ Then extend your Biome configuration with the appropriate configuration:
 }
 ```
 
+### Monorepo Usage
+
+The recommended way of using the configuration for monorepositories is to follow [the official guidelines](https://biomejs.dev/guides/big-projects/). For example, the following layout of the repository is recommended:
+
+```
+    project
+        biome.json
+
+        packages
+            server
+                biome.json
+
+            logger
+                biome.json
+
+            frontend
+                biome.json
+```
+
+The configuration file at the root of the project is used as the root configuration that each of the child packages extend from. The configuration can simply extend the base configuration and be modified to match your team's preferences.
+
+```json
+{
+  "extends": ["@cookielab.io/biome-config/base"]
+}
+```
+
+The extended configuration of each package then has to specify it is not the root configuration file with `"root": false"` and reference the root configuration file in the `extends` field as a relative path. For example:
+
+```json
+{
+  "root": false,
+  "extends": ["../../biome.json", "@cookielab.io/biome-config/react"]
+}
+```
+
+Nevertheless, if you do not plan on sharing any project-wide modifications to the configuration, you can skip the `//` extension and drop the top-level configuration file. Each configuration preset in this project already extends from `base` by default.
+
 ## Available Configurations
 
 The following configurations are available. You can click through to their respective documentation for more details.
