@@ -28,6 +28,7 @@ const correctness = {
 
 const nursery = {
 	...base.nursery,
+
 	/**
 	 * GraphQL should not enable this behavior in the first place.
 	 */
@@ -48,7 +49,6 @@ const nursery = {
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	noDuplicateVariableNames: "error",
-
 	noEmptySource: "error",
 	/**
 	 * Enforces a consistent style of descriptions.
@@ -60,6 +60,10 @@ const nursery = {
 		},
 	},
 	useDeprecatedDate: "warn",
+	/**
+	 * This rule helps with writing valid GraphQL queries.
+	 */
+	useLoneAnonymousOperation: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

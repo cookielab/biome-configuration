@@ -591,6 +591,10 @@ const nursery = {
 	 * NextJS-only rule.
 	 */
 	useInlineScriptId: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useLoneAnonymousOperation: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
