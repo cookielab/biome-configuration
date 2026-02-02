@@ -28,6 +28,10 @@ const correctness = {
 
 const nursery = {
 	...base.nursery,
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateArgumentNames: "error",
 
 	noEmptySource: "error",
 	/**
@@ -40,10 +44,6 @@ const nursery = {
 		},
 	},
 	useDeprecatedDate: "warn",
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	useUniqueArgumentNames: "error",
 	/**
 	 * GraphQL should not enable this behavior in the first place.
 	 */

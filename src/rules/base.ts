@@ -495,7 +495,7 @@ const nursery = {
 	/**
 	 * GraphQL-only rule.
 	 */
-	useUniqueArgumentNames: "off",
+	noDuplicateArgumentNames: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
