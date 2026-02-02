@@ -579,6 +579,10 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	noVueOptionsApi: "off",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	useConsistentEnumValueType: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
