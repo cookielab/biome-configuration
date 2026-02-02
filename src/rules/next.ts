@@ -35,6 +35,10 @@ const nursery = {
 	 * Synchronous scripts by themselves impact the performance.
 	 */
 	noSyncScripts: "error",
+	/**
+	 * Inline script IDs are required for compiler tracking and optimization.
+	 */
+	useInlineScriptId: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

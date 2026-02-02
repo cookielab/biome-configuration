@@ -587,6 +587,10 @@ const nursery = {
 	 * Promotes better error-handling practices.
 	 */
 	useErrorCause: "error",
+	/**
+	 * NextJS-only rule.
+	 */
+	useInlineScriptId: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
