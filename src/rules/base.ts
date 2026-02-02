@@ -567,6 +567,10 @@ const nursery = {
 	 * The rule is left as `off`. If required, it should be enabled on a project level.
 	 */
 	noExcessiveLinesPerFile: "off",
+	/**
+	 * Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
+	 */
+	noFloatingClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
