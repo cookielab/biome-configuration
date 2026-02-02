@@ -595,6 +595,10 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	useLoneAnonymousOperation: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useLoneExecutableDefinition: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

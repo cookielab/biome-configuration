@@ -64,6 +64,10 @@ const nursery = {
 	 * This rule helps with writing valid GraphQL queries.
 	 */
 	useLoneAnonymousOperation: "error",
+	/**
+	 * This rule helps with writing maintainable GraphQL.
+	 */
+	useLoneExecutableDefinition: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
