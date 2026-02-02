@@ -553,6 +553,16 @@ const nursery = {
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
 	noDuplicateEnumValues: "error",
+	/**
+	 * Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
+	 * The configuration is left up at the `warn` level to let maintainers know that a rule like this exists and can be configured differently.
+	 */
+	noExcessiveClassesPerFile: {
+		level: "warn",
+		options: {
+			maxClasses: 2,
+		},
+	},
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
