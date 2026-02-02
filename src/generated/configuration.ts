@@ -1228,7 +1228,25 @@ export const noContinueOptionsSchema = z.object({});
 
 export const noDeprecatedImportsOptionsSchema = z.object({});
 
+export const noDivRegexOptionsSchema = z.object({});
+
+export const noDuplicateArgumentNamesOptionsSchema = z.object({});
+
+export const noDuplicateAttributesOptionsSchema = z.object({});
+
 export const noDuplicateDependenciesOptionsSchema = z.object({});
+
+export const noDuplicateEnumValueNamesOptionsSchema = z.object({});
+
+export const noDuplicateEnumValuesOptionsSchema = z.object({});
+
+export const noDuplicateFieldDefinitionNamesOptionsSchema = z.object({});
+
+export const noDuplicateGraphqlOperationNameOptionsSchema = z.object({});
+
+export const noDuplicateInputFieldNamesOptionsSchema = z.object({});
+
+export const noDuplicateVariableNamesOptionsSchema = z.object({});
 
 export const noDuplicatedSpreadPropsOptionsSchema = z.object({});
 
@@ -1240,6 +1258,26 @@ export const noEmptySourceOptionsSchema = z.object({
 });
 
 export const noEqualsToNullOptionsSchema = z.object({});
+
+export const noExcessiveClassesPerFileOptionsSchema = z.object({
+    /**
+     * The maximum number of classes allowed in a file.
+     */
+    maxClasses: z.number().optional().nullable()
+});
+
+export const noExcessiveLinesPerFileOptionsSchema = z.object({
+    /**
+     * The maximum number of lines allowed in a file.
+     */
+    maxLines: z.number().optional().nullable(),
+    /**
+     * When this option is set to `true`, blank lines are not counted towards the maximum line limit.
+     */
+    skipBlankLines: z.boolean().optional().nullable()
+});
+
+export const noFloatingClassesOptionsSchema = z.object({});
 
 export const noFloatingPromisesOptionsSchema = z.object({});
 
@@ -1297,6 +1335,14 @@ export const noReactForwardRefOptionsSchema = z.object({});
 
 export const noReturnAssignOptionsSchema = z.object({});
 
+export const noRootTypeOptionsSchema = z.object({
+    /**
+     * A list of disallowed root types (e.g. "mutation" and/or "subscription").
+     * The values of the list are case-insensitive.
+     */
+    disallow: z.array(z.string()).optional()
+});
+
 export const noScriptUrlOptionsSchema = z.object({});
 
 export const noShadowOptionsSchema = z.object({});
@@ -1337,6 +1383,8 @@ export const noVueDataObjectDeclarationOptionsSchema = z.object({});
 
 export const noVueDuplicateKeysOptionsSchema = z.object({});
 
+export const noVueOptionsApiOptionsSchema = z.object({});
+
 export const noVueReservedKeysOptionsSchema = z.object({});
 
 export const noVueReservedPropsOptionsSchema = z.object({});
@@ -1365,6 +1413,8 @@ export const useConsistentArrowReturnOptionsSchema = z.object({
     style: useConsistentArrowReturnStyleSchema.optional().nullable()
 });
 
+export const useConsistentEnumValueTypeOptionsSchema = z.object({});
+
 export const useConsistentGraphqlDescriptionsOptionsSchema = z.object({
     /**
      * The description style to enforce. Defaults to "block"
@@ -1378,11 +1428,27 @@ export const useDeprecatedDateOptionsSchema = z.object({
 
 export const useDestructuringOptionsSchema = z.object({});
 
+/**
+ * Options for the `useErrorCause` rule.
+ */
+export const useErrorCauseOptionsSchema = z.object({
+    /**
+     * When set to `true`, the rule requires that `catch` clauses have a parameter.
+     */
+    requireCatchParameter: z.boolean().optional()
+});
+
 export const useExhaustiveSwitchCasesOptionsSchema = z.object({});
 
 export const useExplicitTypeOptionsSchema = z.object({});
 
 export const useFindOptionsSchema = z.object({});
+
+export const useInlineScriptIdOptionsSchema = z.object({});
+
+export const useLoneAnonymousOperationOptionsSchema = z.object({});
+
+export const useLoneExecutableDefinitionOptionsSchema = z.object({});
 
 export const useMaxParamsOptionsSchema = z.object({
     /**
@@ -1416,16 +1482,6 @@ export const useSortedClassesOptionsSchema = z.object({
 });
 
 export const useSpreadOptionsSchema = z.object({});
-
-export const useUniqueArgumentNamesOptionsSchema = z.object({});
-
-export const useUniqueFieldDefinitionNamesOptionsSchema = z.object({});
-
-export const useUniqueGraphqlOperationNameOptionsSchema = z.object({});
-
-export const useUniqueInputFieldNamesOptionsSchema = z.object({});
-
-export const useUniqueVariableNamesOptionsSchema = z.object({});
 
 export const useVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
     style: declarationStyleSchema.optional().nullable()
@@ -3025,9 +3081,55 @@ export const ruleWithNoDeprecatedImportsOptionsSchema = z.object({
     options: noDeprecatedImportsOptionsSchema.optional()
 });
 
+export const ruleWithNoDivRegexOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noDivRegexOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateArgumentNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateArgumentNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateAttributesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateAttributesOptionsSchema.optional()
+});
+
 export const ruleWithNoDuplicateDependenciesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noDuplicateDependenciesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateEnumValueNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateEnumValueNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateEnumValuesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateEnumValuesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateFieldDefinitionNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateGraphqlOperationNameOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateGraphqlOperationNameOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateInputFieldNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateInputFieldNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateVariableNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateVariableNamesOptionsSchema.optional()
 });
 
 export const ruleWithNoDuplicatedSpreadPropsOptionsSchema = z.object({
@@ -3044,6 +3146,21 @@ export const ruleWithNoEqualsToNullOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noEqualsToNullOptionsSchema.optional()
+});
+
+export const ruleWithNoExcessiveClassesPerFileOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noExcessiveClassesPerFileOptionsSchema.optional()
+});
+
+export const ruleWithNoExcessiveLinesPerFileOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noExcessiveLinesPerFileOptionsSchema.optional()
+});
+
+export const ruleWithNoFloatingClassesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noFloatingClassesOptionsSchema.optional()
 });
 
 export const ruleWithNoFloatingPromisesOptionsSchema = z.object({
@@ -3125,6 +3242,11 @@ export const ruleWithNoReturnAssignOptionsSchema = z.object({
     options: noReturnAssignOptionsSchema.optional()
 });
 
+export const ruleWithNoRootTypeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noRootTypeOptionsSchema.optional()
+});
+
 export const ruleWithNoScriptUrlOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noScriptUrlOptionsSchema.optional()
@@ -3193,6 +3315,11 @@ export const ruleWithNoVueDuplicateKeysOptionsSchema = z.object({
     options: noVueDuplicateKeysOptionsSchema.optional()
 });
 
+export const ruleWithNoVueOptionsApiOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueOptionsApiOptionsSchema.optional()
+});
+
 export const ruleWithNoVueReservedKeysOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noVueReservedKeysOptionsSchema.optional()
@@ -3229,6 +3356,11 @@ export const ruleWithUseConsistentArrowReturnOptionsSchema = z.object({
     options: useConsistentArrowReturnOptionsSchema.optional()
 });
 
+export const ruleWithUseConsistentEnumValueTypeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useConsistentEnumValueTypeOptionsSchema.optional()
+});
+
 export const ruleWithUseConsistentGraphqlDescriptionsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useConsistentGraphqlDescriptionsOptionsSchema.optional()
@@ -3242,6 +3374,11 @@ export const ruleWithUseDeprecatedDateOptionsSchema = z.object({
 export const ruleWithUseDestructuringOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useDestructuringOptionsSchema.optional()
+});
+
+export const ruleWithUseErrorCauseOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useErrorCauseOptionsSchema.optional()
 });
 
 export const ruleWithUseExhaustiveSwitchCasesOptionsSchema = z.object({
@@ -3258,6 +3395,21 @@ export const ruleWithUseExplicitTypeOptionsSchema = z.object({
 export const ruleWithUseFindOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useFindOptionsSchema.optional()
+});
+
+export const ruleWithUseInlineScriptIdOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useInlineScriptIdOptionsSchema.optional()
+});
+
+export const ruleWithUseLoneAnonymousOperationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useLoneAnonymousOperationOptionsSchema.optional()
+});
+
+export const ruleWithUseLoneExecutableDefinitionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useLoneExecutableDefinitionOptionsSchema.optional()
 });
 
 export const ruleWithUseMaxParamsOptionsSchema = z.object({
@@ -3295,31 +3447,6 @@ export const ruleWithUseSpreadOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useSpreadOptionsSchema.optional()
-});
-
-export const ruleWithUseUniqueArgumentNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useUniqueArgumentNamesOptionsSchema.optional()
-});
-
-export const ruleWithUseUniqueFieldDefinitionNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useUniqueFieldDefinitionNamesOptionsSchema.optional()
-});
-
-export const ruleWithUseUniqueGraphqlOperationNameOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useUniqueGraphqlOperationNameOptionsSchema.optional()
-});
-
-export const ruleWithUseUniqueInputFieldNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useUniqueInputFieldNamesOptionsSchema.optional()
-});
-
-export const ruleWithUseUniqueVariableNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useUniqueVariableNamesOptionsSchema.optional()
 });
 
 export const ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
@@ -4765,13 +4892,37 @@ export const noContinueConfigurationSchema = z.union([rulePlainConfigurationSche
 
 export const noDeprecatedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDeprecatedImportsOptionsSchema]);
 
+export const noDivRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDivRegexOptionsSchema]);
+
+export const noDuplicateArgumentNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateArgumentNamesOptionsSchema]);
+
+export const noDuplicateAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateAttributesOptionsSchema]);
+
 export const noDuplicateDependenciesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateDependenciesOptionsSchema]);
+
+export const noDuplicateEnumValueNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateEnumValueNamesOptionsSchema]);
+
+export const noDuplicateEnumValuesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateEnumValuesOptionsSchema]);
+
+export const noDuplicateFieldDefinitionNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema]);
+
+export const noDuplicateGraphqlOperationNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateGraphqlOperationNameOptionsSchema]);
+
+export const noDuplicateInputFieldNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateInputFieldNamesOptionsSchema]);
+
+export const noDuplicateVariableNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateVariableNamesOptionsSchema]);
 
 export const noDuplicatedSpreadPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicatedSpreadPropsOptionsSchema]);
 
 export const noEmptySourceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptySourceOptionsSchema]);
 
 export const noEqualsToNullConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEqualsToNullOptionsSchema]);
+
+export const noExcessiveClassesPerFileConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveClassesPerFileOptionsSchema]);
+
+export const noExcessiveLinesPerFileConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveLinesPerFileOptionsSchema]);
+
+export const noFloatingClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFloatingClassesOptionsSchema]);
 
 export const noFloatingPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFloatingPromisesOptionsSchema]);
 
@@ -4803,6 +4954,8 @@ export const noReactForwardRefConfigurationSchema = z.union([rulePlainConfigurat
 
 export const noReturnAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReturnAssignOptionsSchema]);
 
+export const noRootTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRootTypeOptionsSchema]);
+
 export const noScriptUrlConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoScriptUrlOptionsSchema]);
 
 export const noShadowConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoShadowOptionsSchema]);
@@ -4829,6 +4982,8 @@ export const noVueDataObjectDeclarationConfigurationSchema = z.union([rulePlainC
 
 export const noVueDuplicateKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDuplicateKeysOptionsSchema]);
 
+export const noVueOptionsApiConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueOptionsApiOptionsSchema]);
+
 export const noVueReservedKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedKeysOptionsSchema]);
 
 export const noVueReservedPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedPropsOptionsSchema]);
@@ -4843,17 +4998,27 @@ export const useAwaitThenableConfigurationSchema = z.union([rulePlainConfigurati
 
 export const useConsistentArrowReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentArrowReturnOptionsSchema]);
 
+export const useConsistentEnumValueTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentEnumValueTypeOptionsSchema]);
+
 export const useConsistentGraphqlDescriptionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentGraphqlDescriptionsOptionsSchema]);
 
 export const useDeprecatedDateConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDeprecatedDateOptionsSchema]);
 
 export const useDestructuringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDestructuringOptionsSchema]);
 
+export const useErrorCauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseErrorCauseOptionsSchema]);
+
 export const useExhaustiveSwitchCasesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveSwitchCasesOptionsSchema]);
 
 export const useExplicitTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitTypeOptionsSchema]);
 
 export const useFindConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseFindOptionsSchema]);
+
+export const useInlineScriptIdConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseInlineScriptIdOptionsSchema]);
+
+export const useLoneAnonymousOperationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLoneAnonymousOperationOptionsSchema]);
+
+export const useLoneExecutableDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLoneExecutableDefinitionOptionsSchema]);
 
 export const useMaxParamsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMaxParamsOptionsSchema]);
 
@@ -4868,16 +5033,6 @@ export const useRequiredScriptsConfigurationSchema = z.union([rulePlainConfigura
 export const useSortedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSortedClassesOptionsSchema]);
 
 export const useSpreadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSpreadOptionsSchema]);
-
-export const useUniqueArgumentNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUniqueArgumentNamesOptionsSchema]);
-
-export const useUniqueFieldDefinitionNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUniqueFieldDefinitionNamesOptionsSchema]);
-
-export const useUniqueGraphqlOperationNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUniqueGraphqlOperationNameOptionsSchema]);
-
-export const useUniqueInputFieldNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUniqueInputFieldNamesOptionsSchema]);
-
-export const useUniqueVariableNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUniqueVariableNamesOptionsSchema]);
 
 export const useVueConsistentDefinePropsDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema]);
 
@@ -5306,82 +5461,82 @@ export const importGroupSchema = z.union([groupMatcherSchema, z.array(groupMatch
 export const a11YSchema = z.object({
     /**
      * Enforce that the accessKey attribute is not used on any HTML element.
-     * See <https://biomejs.dev/linter/rules/no-access-key>
+     * See https://biomejs.dev/linter/rules/no-access-key
      */
     noAccessKey: noAccessKeyConfigurationSchema.optional().nullable(),
     /**
      * Enforce that aria-hidden="true" is not set on focusable elements.
-     * See <https://biomejs.dev/linter/rules/no-aria-hidden-on-focusable>
+     * See https://biomejs.dev/linter/rules/no-aria-hidden-on-focusable
      */
     noAriaHiddenOnFocusable: noAriaHiddenOnFocusableConfigurationSchema.optional().nullable(),
     /**
      * Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
-     * See <https://biomejs.dev/linter/rules/no-aria-unsupported-elements>
+     * See https://biomejs.dev/linter/rules/no-aria-unsupported-elements
      */
     noAriaUnsupportedElements: noAriaUnsupportedElementsConfigurationSchema.optional().nullable(),
     /**
      * Enforce that autoFocus prop is not used on elements.
-     * See <https://biomejs.dev/linter/rules/no-autofocus>
+     * See https://biomejs.dev/linter/rules/no-autofocus
      */
     noAutofocus: noAutofocusConfigurationSchema.optional().nullable(),
     /**
      * Enforces that no distracting elements are used.
-     * See <https://biomejs.dev/linter/rules/no-distracting-elements>
+     * See https://biomejs.dev/linter/rules/no-distracting-elements
      */
     noDistractingElements: noDistractingElementsConfigurationSchema.optional().nullable(),
     /**
      * The scope prop should be used only on \<th> elements.
-     * See <https://biomejs.dev/linter/rules/no-header-scope>
+     * See https://biomejs.dev/linter/rules/no-header-scope
      */
     noHeaderScope: noHeaderScopeConfigurationSchema.optional().nullable(),
     /**
      * Enforce that non-interactive ARIA roles are not assigned to interactive HTML elements.
-     * See <https://biomejs.dev/linter/rules/no-interactive-element-to-noninteractive-role>
+     * See https://biomejs.dev/linter/rules/no-interactive-element-to-noninteractive-role
      */
     noInteractiveElementToNoninteractiveRole: noInteractiveElementToNoninteractiveRoleConfigurationSchema.optional().nullable(),
     /**
      * Enforce that a label element or component has a text label and an associated input.
-     * See <https://biomejs.dev/linter/rules/no-label-without-control>
+     * See https://biomejs.dev/linter/rules/no-label-without-control
      */
     noLabelWithoutControl: noLabelWithoutControlConfigurationSchema.optional().nullable(),
     /**
      * Disallow use event handlers on non-interactive elements.
-     * See <https://biomejs.dev/linter/rules/no-noninteractive-element-interactions>
+     * See https://biomejs.dev/linter/rules/no-noninteractive-element-interactions
      */
     noNoninteractiveElementInteractions: noNoninteractiveElementInteractionsConfigurationSchema.optional().nullable(),
     /**
      * Enforce that interactive ARIA roles are not assigned to non-interactive HTML elements.
-     * See <https://biomejs.dev/linter/rules/no-noninteractive-element-to-interactive-role>
+     * See https://biomejs.dev/linter/rules/no-noninteractive-element-to-interactive-role
      */
     noNoninteractiveElementToInteractiveRole: noNoninteractiveElementToInteractiveRoleConfigurationSchema.optional().nullable(),
     /**
      * Enforce that tabIndex is not assigned to non-interactive HTML elements.
-     * See <https://biomejs.dev/linter/rules/no-noninteractive-tabindex>
+     * See https://biomejs.dev/linter/rules/no-noninteractive-tabindex
      */
     noNoninteractiveTabindex: noNoninteractiveTabindexConfigurationSchema.optional().nullable(),
     /**
      * Prevent the usage of positive integers on tabIndex property.
-     * See <https://biomejs.dev/linter/rules/no-positive-tabindex>
+     * See https://biomejs.dev/linter/rules/no-positive-tabindex
      */
     noPositiveTabindex: noPositiveTabindexConfigurationSchema.optional().nullable(),
     /**
      * Enforce img alt prop does not contain the word "image", "picture", or "photo".
-     * See <https://biomejs.dev/linter/rules/no-redundant-alt>
+     * See https://biomejs.dev/linter/rules/no-redundant-alt
      */
     noRedundantAlt: noRedundantAltConfigurationSchema.optional().nullable(),
     /**
      * Enforce explicit role property is not the same as implicit/default role property on an element.
-     * See <https://biomejs.dev/linter/rules/no-redundant-roles>
+     * See https://biomejs.dev/linter/rules/no-redundant-roles
      */
     noRedundantRoles: noRedundantRolesConfigurationSchema.optional().nullable(),
     /**
      * Enforce that static, visible elements (such as \<div>) that have click handlers use the valid role attribute.
-     * See <https://biomejs.dev/linter/rules/no-static-element-interactions>
+     * See https://biomejs.dev/linter/rules/no-static-element-interactions
      */
     noStaticElementInteractions: noStaticElementInteractionsConfigurationSchema.optional().nullable(),
     /**
      * Enforces the usage of the title element for the svg element.
-     * See <https://biomejs.dev/linter/rules/no-svg-without-title>
+     * See https://biomejs.dev/linter/rules/no-svg-without-title
      */
     noSvgWithoutTitle: noSvgWithoutTitleConfigurationSchema.optional().nullable(),
     /**
@@ -5390,107 +5545,107 @@ export const a11YSchema = z.object({
     recommended: z.boolean().optional().nullable(),
     /**
      * Enforce that all elements that require alternative text have meaningful information to relay back to the end user.
-     * See <https://biomejs.dev/linter/rules/use-alt-text>
+     * See https://biomejs.dev/linter/rules/use-alt-text
      */
     useAltText: useAltTextConfigurationSchema.optional().nullable(),
     /**
      * Enforce that anchors have content and that the content is accessible to screen readers.
-     * See <https://biomejs.dev/linter/rules/use-anchor-content>
+     * See https://biomejs.dev/linter/rules/use-anchor-content
      */
     useAnchorContent: useAnchorContentConfigurationSchema.optional().nullable(),
     /**
      * Enforce that tabIndex is assigned to non-interactive HTML elements with aria-activedescendant.
-     * See <https://biomejs.dev/linter/rules/use-aria-activedescendant-with-tabindex>
+     * See https://biomejs.dev/linter/rules/use-aria-activedescendant-with-tabindex
      */
     useAriaActivedescendantWithTabindex: useAriaActivedescendantWithTabindexConfigurationSchema.optional().nullable(),
     /**
      * Enforce that elements with ARIA roles must have all required ARIA attributes for that role.
-     * See <https://biomejs.dev/linter/rules/use-aria-props-for-role>
+     * See https://biomejs.dev/linter/rules/use-aria-props-for-role
      */
     useAriaPropsForRole: useAriaPropsForRoleConfigurationSchema.optional().nullable(),
     /**
      * Enforce that ARIA properties are valid for the roles that are supported by the element.
-     * See <https://biomejs.dev/linter/rules/use-aria-props-supported-by-role>
+     * See https://biomejs.dev/linter/rules/use-aria-props-supported-by-role
      */
     useAriaPropsSupportedByRole: useAriaPropsSupportedByRoleConfigurationSchema.optional().nullable(),
     /**
      * Enforces the usage of the attribute type for the element button.
-     * See <https://biomejs.dev/linter/rules/use-button-type>
+     * See https://biomejs.dev/linter/rules/use-button-type
      */
     useButtonType: useButtonTypeConfigurationSchema.optional().nullable(),
     /**
      * Elements with an interactive role and interaction handlers must be focusable.
-     * See <https://biomejs.dev/linter/rules/use-focusable-interactive>
+     * See https://biomejs.dev/linter/rules/use-focusable-interactive
      */
     useFocusableInteractive: useFocusableInteractiveConfigurationSchema.optional().nullable(),
     /**
      * Disallow a missing generic family keyword within font families.
-     * See <https://biomejs.dev/linter/rules/use-generic-font-names>
+     * See https://biomejs.dev/linter/rules/use-generic-font-names
      */
     useGenericFontNames: useGenericFontNamesConfigurationSchema.optional().nullable(),
     /**
      * Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.
-     * See <https://biomejs.dev/linter/rules/use-heading-content>
+     * See https://biomejs.dev/linter/rules/use-heading-content
      */
     useHeadingContent: useHeadingContentConfigurationSchema.optional().nullable(),
     /**
      * Enforce that html element has lang attribute.
-     * See <https://biomejs.dev/linter/rules/use-html-lang>
+     * See https://biomejs.dev/linter/rules/use-html-lang
      */
     useHtmlLang: useHtmlLangConfigurationSchema.optional().nullable(),
     /**
      * Enforces the usage of the attribute title for the element iframe.
-     * See <https://biomejs.dev/linter/rules/use-iframe-title>
+     * See https://biomejs.dev/linter/rules/use-iframe-title
      */
     useIframeTitle: useIframeTitleConfigurationSchema.optional().nullable(),
     /**
      * Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress.
-     * See <https://biomejs.dev/linter/rules/use-key-with-click-events>
+     * See https://biomejs.dev/linter/rules/use-key-with-click-events
      */
     useKeyWithClickEvents: useKeyWithClickEventsConfigurationSchema.optional().nullable(),
     /**
      * Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur.
-     * See <https://biomejs.dev/linter/rules/use-key-with-mouse-events>
+     * See https://biomejs.dev/linter/rules/use-key-with-mouse-events
      */
     useKeyWithMouseEvents: useKeyWithMouseEventsConfigurationSchema.optional().nullable(),
     /**
      * Enforces that audio and video elements must have a track for captions.
-     * See <https://biomejs.dev/linter/rules/use-media-caption>
+     * See https://biomejs.dev/linter/rules/use-media-caption
      */
     useMediaCaption: useMediaCaptionConfigurationSchema.optional().nullable(),
     /**
      * It detects the use of role attributes in JSX elements and suggests using semantic elements instead.
-     * See <https://biomejs.dev/linter/rules/use-semantic-elements>
+     * See https://biomejs.dev/linter/rules/use-semantic-elements
      */
     useSemanticElements: useSemanticElementsConfigurationSchema.optional().nullable(),
     /**
      * Enforce that all anchors are valid, and they are navigable elements.
-     * See <https://biomejs.dev/linter/rules/use-valid-anchor>
+     * See https://biomejs.dev/linter/rules/use-valid-anchor
      */
     useValidAnchor: useValidAnchorConfigurationSchema.optional().nullable(),
     /**
      * Ensures that ARIA properties aria-* are all valid.
-     * See <https://biomejs.dev/linter/rules/use-valid-aria-props>
+     * See https://biomejs.dev/linter/rules/use-valid-aria-props
      */
     useValidAriaProps: useValidAriaPropsConfigurationSchema.optional().nullable(),
     /**
      * Elements with ARIA roles must use a valid, non-abstract ARIA role.
-     * See <https://biomejs.dev/linter/rules/use-valid-aria-role>
+     * See https://biomejs.dev/linter/rules/use-valid-aria-role
      */
     useValidAriaRole: useValidAriaRoleConfigurationSchema.optional().nullable(),
     /**
      * Enforce that ARIA state and property values are valid.
-     * See <https://biomejs.dev/linter/rules/use-valid-aria-values>
+     * See https://biomejs.dev/linter/rules/use-valid-aria-values
      */
     useValidAriaValues: useValidAriaValuesConfigurationSchema.optional().nullable(),
     /**
      * Use valid values for the autocomplete attribute on input elements.
-     * See <https://biomejs.dev/linter/rules/use-valid-autocomplete>
+     * See https://biomejs.dev/linter/rules/use-valid-autocomplete
      */
     useValidAutocomplete: useValidAutocompleteConfigurationSchema.optional().nullable(),
     /**
      * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
-     * See <https://biomejs.dev/linter/rules/use-valid-lang>
+     * See https://biomejs.dev/linter/rules/use-valid-lang
      */
     useValidLang: useValidLangConfigurationSchema.optional().nullable()
 });
@@ -5501,162 +5656,162 @@ export const a11YSchema = z.object({
 export const complexitySchema = z.object({
     /**
      * Disallow unclear usage of consecutive space characters in regular expression literals.
-     * See <https://biomejs.dev/linter/rules/no-adjacent-spaces-in-regex>
+     * See https://biomejs.dev/linter/rules/no-adjacent-spaces-in-regex
      */
     noAdjacentSpacesInRegex: noAdjacentSpacesInRegexConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of arguments.
-     * See <https://biomejs.dev/linter/rules/no-arguments>
+     * See https://biomejs.dev/linter/rules/no-arguments
      */
     noArguments: noArgumentsConfigurationSchema.optional().nullable(),
     /**
      * Disallow primitive type aliases and misleading types.
-     * See <https://biomejs.dev/linter/rules/no-banned-types>
+     * See https://biomejs.dev/linter/rules/no-banned-types
      */
     noBannedTypes: noBannedTypesConfigurationSchema.optional().nullable(),
     /**
      * Disallow comma operator.
-     * See <https://biomejs.dev/linter/rules/no-comma-operator>
+     * See https://biomejs.dev/linter/rules/no-comma-operator
      */
     noCommaOperator: noCommaOperatorConfigurationSchema.optional().nullable(),
     /**
      * Disallow empty type parameters in type aliases and interfaces.
-     * See <https://biomejs.dev/linter/rules/no-empty-type-parameters>
+     * See https://biomejs.dev/linter/rules/no-empty-type-parameters
      */
     noEmptyTypeParameters: noEmptyTypeParametersConfigurationSchema.optional().nullable(),
     /**
      * Disallow functions that exceed a given Cognitive Complexity score.
-     * See <https://biomejs.dev/linter/rules/no-excessive-cognitive-complexity>
+     * See https://biomejs.dev/linter/rules/no-excessive-cognitive-complexity
      */
     noExcessiveCognitiveComplexity: noExcessiveCognitiveComplexityConfigurationSchema.optional().nullable(),
     /**
      * Restrict the number of lines of code in a function.
-     * See <https://biomejs.dev/linter/rules/no-excessive-lines-per-function>
+     * See https://biomejs.dev/linter/rules/no-excessive-lines-per-function
      */
     noExcessiveLinesPerFunction: noExcessiveLinesPerFunctionConfigurationSchema.optional().nullable(),
     /**
      * This rule enforces a maximum depth to nested describe() in test files.
-     * See <https://biomejs.dev/linter/rules/no-excessive-nested-test-suites>
+     * See https://biomejs.dev/linter/rules/no-excessive-nested-test-suites
      */
     noExcessiveNestedTestSuites: noExcessiveNestedTestSuitesConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary boolean casts.
-     * See <https://biomejs.dev/linter/rules/no-extra-boolean-cast>
+     * See https://biomejs.dev/linter/rules/no-extra-boolean-cast
      */
     noExtraBooleanCast: noExtraBooleanCastConfigurationSchema.optional().nullable(),
     /**
      * Disallow to use unnecessary callback on flatMap.
-     * See <https://biomejs.dev/linter/rules/no-flat-map-identity>
+     * See https://biomejs.dev/linter/rules/no-flat-map-identity
      */
     noFlatMapIdentity: noFlatMapIdentityConfigurationSchema.optional().nullable(),
     /**
      * Prefer for...of statement instead of Array.forEach.
-     * See <https://biomejs.dev/linter/rules/no-for-each>
+     * See https://biomejs.dev/linter/rules/no-for-each
      */
     noForEach: noForEachConfigurationSchema.optional().nullable(),
     /**
      * Disallow shorthand type conversions.
-     * See <https://biomejs.dev/linter/rules/no-implicit-coercions>
+     * See https://biomejs.dev/linter/rules/no-implicit-coercions
      */
     noImplicitCoercions: noImplicitCoercionsConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of the !important style.
-     * See <https://biomejs.dev/linter/rules/no-important-styles>
+     * See https://biomejs.dev/linter/rules/no-important-styles
      */
     noImportantStyles: noImportantStylesConfigurationSchema.optional().nullable(),
     /**
      * This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
-     * See <https://biomejs.dev/linter/rules/no-static-only-class>
+     * See https://biomejs.dev/linter/rules/no-static-only-class
      */
     noStaticOnlyClass: noStaticOnlyClassConfigurationSchema.optional().nullable(),
     /**
      * Disallow this and super in static contexts.
-     * See <https://biomejs.dev/linter/rules/no-this-in-static>
+     * See https://biomejs.dev/linter/rules/no-this-in-static
      */
     noThisInStatic: noThisInStaticConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary catch clauses.
-     * See <https://biomejs.dev/linter/rules/no-useless-catch>
+     * See https://biomejs.dev/linter/rules/no-useless-catch
      */
     noUselessCatch: noUselessCatchConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary constructors.
-     * See <https://biomejs.dev/linter/rules/no-useless-constructor>
+     * See https://biomejs.dev/linter/rules/no-useless-constructor
      */
     noUselessConstructor: noUselessConstructorConfigurationSchema.optional().nullable(),
     /**
      * Avoid using unnecessary continue.
-     * See <https://biomejs.dev/linter/rules/no-useless-continue>
+     * See https://biomejs.dev/linter/rules/no-useless-continue
      */
     noUselessContinue: noUselessContinueConfigurationSchema.optional().nullable(),
     /**
      * Disallow empty exports that don't change anything in a module file.
-     * See <https://biomejs.dev/linter/rules/no-useless-empty-export>
+     * See https://biomejs.dev/linter/rules/no-useless-empty-export
      */
     noUselessEmptyExport: noUselessEmptyExportConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary escape sequence in regular expression literals.
-     * See <https://biomejs.dev/linter/rules/no-useless-escape-in-regex>
+     * See https://biomejs.dev/linter/rules/no-useless-escape-in-regex
      */
     noUselessEscapeInRegex: noUselessEscapeInRegexConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary fragments.
-     * See <https://biomejs.dev/linter/rules/no-useless-fragments>
+     * See https://biomejs.dev/linter/rules/no-useless-fragments
      */
     noUselessFragments: noUselessFragmentsConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary labels.
-     * See <https://biomejs.dev/linter/rules/no-useless-label>
+     * See https://biomejs.dev/linter/rules/no-useless-label
      */
     noUselessLabel: noUselessLabelConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary nested block statements.
-     * See <https://biomejs.dev/linter/rules/no-useless-lone-block-statements>
+     * See https://biomejs.dev/linter/rules/no-useless-lone-block-statements
      */
     noUselessLoneBlockStatements: noUselessLoneBlockStatementsConfigurationSchema.optional().nullable(),
     /**
      * Disallow renaming import, export, and destructured assignments to the same name.
-     * See <https://biomejs.dev/linter/rules/no-useless-rename>
+     * See https://biomejs.dev/linter/rules/no-useless-rename
      */
     noUselessRename: noUselessRenameConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary concatenation of string or template literals.
-     * See <https://biomejs.dev/linter/rules/no-useless-string-concat>
+     * See https://biomejs.dev/linter/rules/no-useless-string-concat
      */
     noUselessStringConcat: noUselessStringConcatConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary String.raw function in template string literals without any escape sequence.
-     * See <https://biomejs.dev/linter/rules/no-useless-string-raw>
+     * See https://biomejs.dev/linter/rules/no-useless-string-raw
      */
     noUselessStringRaw: noUselessStringRawConfigurationSchema.optional().nullable(),
     /**
      * Disallow useless case in switch statements.
-     * See <https://biomejs.dev/linter/rules/no-useless-switch-case>
+     * See https://biomejs.dev/linter/rules/no-useless-switch-case
      */
     noUselessSwitchCase: noUselessSwitchCaseConfigurationSchema.optional().nullable(),
     /**
      * Disallow ternary operators when simpler alternatives exist.
-     * See <https://biomejs.dev/linter/rules/no-useless-ternary>
+     * See https://biomejs.dev/linter/rules/no-useless-ternary
      */
     noUselessTernary: noUselessTernaryConfigurationSchema.optional().nullable(),
     /**
      * Disallow useless this aliasing.
-     * See <https://biomejs.dev/linter/rules/no-useless-this-alias>
+     * See https://biomejs.dev/linter/rules/no-useless-this-alias
      */
     noUselessThisAlias: noUselessThisAliasConfigurationSchema.optional().nullable(),
     /**
      * Disallow using any or unknown as type constraint.
-     * See <https://biomejs.dev/linter/rules/no-useless-type-constraint>
+     * See https://biomejs.dev/linter/rules/no-useless-type-constraint
      */
     noUselessTypeConstraint: noUselessTypeConstraintConfigurationSchema.optional().nullable(),
     /**
      * Disallow initializing variables to undefined.
-     * See <https://biomejs.dev/linter/rules/no-useless-undefined-initialization>
+     * See https://biomejs.dev/linter/rules/no-useless-undefined-initialization
      */
     noUselessUndefinedInitialization: noUselessUndefinedInitializationConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of void operators, which is not a familiar operator.
-     * See <https://biomejs.dev/linter/rules/no-void>
+     * See https://biomejs.dev/linter/rules/no-void
      */
     noVoid: noVoidConfigurationSchema.optional().nullable(),
     /**
@@ -5665,57 +5820,57 @@ export const complexitySchema = z.object({
     recommended: z.boolean().optional().nullable(),
     /**
      * Use arrow functions over function expressions.
-     * See <https://biomejs.dev/linter/rules/use-arrow-function>
+     * See https://biomejs.dev/linter/rules/use-arrow-function
      */
     useArrowFunction: useArrowFunctionConfigurationSchema.optional().nullable(),
     /**
      * Use Date.now() to get the number of milliseconds since the Unix Epoch.
-     * See <https://biomejs.dev/linter/rules/use-date-now>
+     * See https://biomejs.dev/linter/rules/use-date-now
      */
     useDateNow: useDateNowConfigurationSchema.optional().nullable(),
     /**
      * Promotes the use of .flatMap() when map().flat() are used together.
-     * See <https://biomejs.dev/linter/rules/use-flat-map>
+     * See https://biomejs.dev/linter/rules/use-flat-map
      */
     useFlatMap: useFlatMapConfigurationSchema.optional().nullable(),
     /**
      * Prefer Array#{indexOf,lastIndexOf}() over Array#{findIndex,findLastIndex}() when looking for the index of an item.
-     * See <https://biomejs.dev/linter/rules/use-index-of>
+     * See https://biomejs.dev/linter/rules/use-index-of
      */
     useIndexOf: useIndexOfConfigurationSchema.optional().nullable(),
     /**
      * Enforce the usage of a literal access to properties over computed property access.
-     * See <https://biomejs.dev/linter/rules/use-literal-keys>
+     * See https://biomejs.dev/linter/rules/use-literal-keys
      */
     useLiteralKeys: useLiteralKeysConfigurationSchema.optional().nullable(),
     /**
      * Disallow parseInt() and Number.parseInt() in favor of binary, octal, and hexadecimal literals.
-     * See <https://biomejs.dev/linter/rules/use-numeric-literals>
+     * See https://biomejs.dev/linter/rules/use-numeric-literals
      */
     useNumericLiterals: useNumericLiteralsConfigurationSchema.optional().nullable(),
     /**
      * Enforce using concise optional chain instead of chained logical expressions.
-     * See <https://biomejs.dev/linter/rules/use-optional-chain>
+     * See https://biomejs.dev/linter/rules/use-optional-chain
      */
     useOptionalChain: useOptionalChainConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of the regular expression literals instead of the RegExp constructor if possible.
-     * See <https://biomejs.dev/linter/rules/use-regex-literals>
+     * See https://biomejs.dev/linter/rules/use-regex-literals
      */
     useRegexLiterals: useRegexLiteralsConfigurationSchema.optional().nullable(),
     /**
      * Disallow number literal object member names which are not base 10 or use underscore as separator.
-     * See <https://biomejs.dev/linter/rules/use-simple-number-keys>
+     * See https://biomejs.dev/linter/rules/use-simple-number-keys
      */
     useSimpleNumberKeys: useSimpleNumberKeysConfigurationSchema.optional().nullable(),
     /**
      * Discard redundant terms from logical expressions.
-     * See <https://biomejs.dev/linter/rules/use-simplified-logic-expression>
+     * See https://biomejs.dev/linter/rules/use-simplified-logic-expression
      */
     useSimplifiedLogicExpression: useSimplifiedLogicExpressionConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of while loops instead of for loops when the initializer and update expressions are not needed.
-     * See <https://biomejs.dev/linter/rules/use-while>
+     * See https://biomejs.dev/linter/rules/use-while
      */
     useWhile: useWhileConfigurationSchema.optional().nullable()
 });
@@ -5737,202 +5892,272 @@ export const ruleWithUseExhaustiveDependenciesOptionsSchema = z.object({
 export const nurserySchema = z.object({
     /**
      * Disallow ambiguous anchor descriptions.
-     * See <https://biomejs.dev/linter/rules/no-ambiguous-anchor-text>
+     * See https://biomejs.dev/linter/rules/no-ambiguous-anchor-text
      */
     noAmbiguousAnchorText: noAmbiguousAnchorTextConfigurationSchema.optional().nullable(),
     /**
      * Prevent usage of next/script's beforeInteractive strategy outside of pages/_document.js in a Next.js project.
-     * See <https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document>
+     * See https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document
      */
     noBeforeInteractiveScriptOutsideDocument: noBeforeInteractiveScriptOutsideDocumentConfigurationSchema.optional().nullable(),
     /**
      * Disallow continue statements.
-     * See <https://biomejs.dev/linter/rules/no-continue>
+     * See https://biomejs.dev/linter/rules/no-continue
      */
     noContinue: noContinueConfigurationSchema.optional().nullable(),
     /**
      * Restrict imports of deprecated exports.
-     * See <https://biomejs.dev/linter/rules/no-deprecated-imports>
+     * See https://biomejs.dev/linter/rules/no-deprecated-imports
      */
     noDeprecatedImports: noDeprecatedImportsConfigurationSchema.optional().nullable(),
     /**
+     * Disallow equal signs explicitly at the beginning of regular expressions.
+     * See https://biomejs.dev/linter/rules/no-div-regex
+     */
+    noDivRegex: noDivRegexConfigurationSchema.optional().nullable(),
+    /**
+     * Require all argument names for fields & directives to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-argument-names
+     */
+    noDuplicateArgumentNames: noDuplicateArgumentNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplication of attributes.
+     * See https://biomejs.dev/linter/rules/no-duplicate-attributes
+     */
+    noDuplicateAttributes: noDuplicateAttributesConfigurationSchema.optional().nullable(),
+    /**
      * Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: "bundledDependencies", "bundleDependencies", "dependencies", "devDependencies", "overrides", "optionalDependencies", and "peerDependencies".
-     * See <https://biomejs.dev/linter/rules/no-duplicate-dependencies>
+     * See https://biomejs.dev/linter/rules/no-duplicate-dependencies
      */
     noDuplicateDependencies: noDuplicateDependenciesConfigurationSchema.optional().nullable(),
     /**
+     * Require all enum value names to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-enum-value-names
+     */
+    noDuplicateEnumValueNames: noDuplicateEnumValueNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate enum member values.
+     * See https://biomejs.dev/linter/rules/no-duplicate-enum-values
+     */
+    noDuplicateEnumValues: noDuplicateEnumValuesConfigurationSchema.optional().nullable(),
+    /**
+     * Require all fields of a type to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-field-definition-names
+     */
+    noDuplicateFieldDefinitionNames: noDuplicateFieldDefinitionNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce unique operation names across a GraphQL document.
+     * See https://biomejs.dev/linter/rules/no-duplicate-graphql-operation-name
+     */
+    noDuplicateGraphqlOperationName: noDuplicateGraphqlOperationNameConfigurationSchema.optional().nullable(),
+    /**
+     * Require fields within an input object to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-input-field-names
+     */
+    noDuplicateInputFieldNames: noDuplicateInputFieldNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Require all variable definitions to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-variable-names
+     */
+    noDuplicateVariableNames: noDuplicateVariableNamesConfigurationSchema.optional().nullable(),
+    /**
      * Disallow JSX prop spreading the same identifier multiple times.
-     * See <https://biomejs.dev/linter/rules/no-duplicated-spread-props>
+     * See https://biomejs.dev/linter/rules/no-duplicated-spread-props
      */
     noDuplicatedSpreadProps: noDuplicatedSpreadPropsConfigurationSchema.optional().nullable(),
     /**
      * Disallow empty sources.
-     * See <https://biomejs.dev/linter/rules/no-empty-source>
+     * See https://biomejs.dev/linter/rules/no-empty-source
      */
     noEmptySource: noEmptySourceConfigurationSchema.optional().nullable(),
     /**
      * Require the use of === or !== for comparison with null.
-     * See <https://biomejs.dev/linter/rules/no-equals-to-null>
+     * See https://biomejs.dev/linter/rules/no-equals-to-null
      */
     noEqualsToNull: noEqualsToNullConfigurationSchema.optional().nullable(),
     /**
+     * Enforce a maximum number of classes per file.
+     * See https://biomejs.dev/linter/rules/no-excessive-classes-per-file
+     */
+    noExcessiveClassesPerFile: noExcessiveClassesPerFileConfigurationSchema.optional().nullable(),
+    /**
+     * Restrict the number of lines in a file.
+     * See https://biomejs.dev/linter/rules/no-excessive-lines-per-file
+     */
+    noExcessiveLinesPerFile: noExcessiveLinesPerFileConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow new operators outside of assignments or comparisons.
+     * See https://biomejs.dev/linter/rules/no-floating-classes
+     */
+    noFloatingClasses: noFloatingClassesConfigurationSchema.optional().nullable(),
+    /**
      * Require Promise-like statements to be handled appropriately.
-     * See <https://biomejs.dev/linter/rules/no-floating-promises>
+     * See https://biomejs.dev/linter/rules/no-floating-promises
      */
     noFloatingPromises: noFloatingPromisesConfigurationSchema.optional().nullable(),
     /**
      * Disallow iterating using a for-in loop.
-     * See <https://biomejs.dev/linter/rules/no-for-in>
+     * See https://biomejs.dev/linter/rules/no-for-in
      */
     noForIn: noForInConfigurationSchema.optional().nullable(),
     /**
      * Prevent import cycles.
-     * See <https://biomejs.dev/linter/rules/no-import-cycles>
+     * See https://biomejs.dev/linter/rules/no-import-cycles
      */
     noImportCycles: noImportCyclesConfigurationSchema.optional().nullable(),
     /**
      * Disallows the usage of the unary operators ++ and --.
-     * See <https://biomejs.dev/linter/rules/no-increment-decrement>
+     * See https://biomejs.dev/linter/rules/no-increment-decrement
      */
     noIncrementDecrement: noIncrementDecrementConfigurationSchema.optional().nullable(),
     /**
      * Disallow string literals inside JSX elements.
-     * See <https://biomejs.dev/linter/rules/no-jsx-literals>
+     * See https://biomejs.dev/linter/rules/no-jsx-literals
      */
     noJsxLiterals: noJsxLiteralsConfigurationSchema.optional().nullable(),
     /**
      * Disallow .bind(), arrow functions, or function expressions in JSX props.
-     * See <https://biomejs.dev/linter/rules/no-jsx-props-bind>
+     * See https://biomejs.dev/linter/rules/no-jsx-props-bind
      */
     noJsxPropsBind: noJsxPropsBindConfigurationSchema.optional().nullable(),
     /**
      * Prevent problematic leaked values from being rendered.
-     * See <https://biomejs.dev/linter/rules/no-leaked-render>
+     * See https://biomejs.dev/linter/rules/no-leaked-render
      */
     noLeakedRender: noLeakedRenderConfigurationSchema.optional().nullable(),
     /**
      * Disallow Promises to be used in places where they are almost certainly a mistake.
-     * See <https://biomejs.dev/linter/rules/no-misused-promises>
+     * See https://biomejs.dev/linter/rules/no-misused-promises
      */
     noMisusedPromises: noMisusedPromisesConfigurationSchema.optional().nullable(),
     /**
      * Disallow use of chained assignment expressions.
-     * See <https://biomejs.dev/linter/rules/no-multi-assign>
+     * See https://biomejs.dev/linter/rules/no-multi-assign
      */
     noMultiAssign: noMultiAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow creating multiline strings by escaping newlines.
-     * See <https://biomejs.dev/linter/rules/no-multi-str>
+     * See https://biomejs.dev/linter/rules/no-multi-str
      */
     noMultiStr: noMultiStrConfigurationSchema.optional().nullable(),
     /**
      * Prevent client components from being async functions.
-     * See <https://biomejs.dev/linter/rules/no-next-async-client-component>
+     * See https://biomejs.dev/linter/rules/no-next-async-client-component
      */
     noNextAsyncClientComponent: noNextAsyncClientComponentConfigurationSchema.optional().nullable(),
     /**
      * Disallow function parameters that are only used in recursive calls.
-     * See <https://biomejs.dev/linter/rules/no-parameters-only-used-in-recursion>
+     * See https://biomejs.dev/linter/rules/no-parameters-only-used-in-recursion
      */
     noParametersOnlyUsedInRecursion: noParametersOnlyUsedInRecursionConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of the deprecated __proto__ object property.
-     * See <https://biomejs.dev/linter/rules/no-proto>
+     * See https://biomejs.dev/linter/rules/no-proto
      */
     noProto: noProtoConfigurationSchema.optional().nullable(),
     /**
      * Replaces usages of forwardRef with passing ref as a prop.
-     * See <https://biomejs.dev/linter/rules/no-react-forward-ref>
+     * See https://biomejs.dev/linter/rules/no-react-forward-ref
      */
     noReactForwardRef: noReactForwardRefConfigurationSchema.optional().nullable(),
     /**
      * Disallow assignments in return statements.
-     * See <https://biomejs.dev/linter/rules/no-return-assign>
+     * See https://biomejs.dev/linter/rules/no-return-assign
      */
     noReturnAssign: noReturnAssignConfigurationSchema.optional().nullable(),
     /**
+     * Disallow the usage of specified root types.
+     * See https://biomejs.dev/linter/rules/no-root-type
+     */
+    noRootType: noRootTypeConfigurationSchema.optional().nullable(),
+    /**
      * Disallow javascript: URLs in HTML.
-     * See <https://biomejs.dev/linter/rules/no-script-url>
+     * See https://biomejs.dev/linter/rules/no-script-url
      */
     noScriptUrl: noScriptUrlConfigurationSchema.optional().nullable(),
     /**
      * Disallow variable declarations from shadowing variables declared in the outer scope.
-     * See <https://biomejs.dev/linter/rules/no-shadow>
+     * See https://biomejs.dev/linter/rules/no-shadow
      */
     noShadow: noShadowConfigurationSchema.optional().nullable(),
     /**
      * Prevent the usage of synchronous scripts.
-     * See <https://biomejs.dev/linter/rules/no-sync-scripts>
+     * See https://biomejs.dev/linter/rules/no-sync-scripts
      */
     noSyncScripts: noSyncScriptsConfigurationSchema.optional().nullable(),
     /**
      * Disallow ternary operators.
-     * See <https://biomejs.dev/linter/rules/no-ternary>
+     * See https://biomejs.dev/linter/rules/no-ternary
      */
     noTernary: noTernaryConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of undeclared environment variables.
-     * See <https://biomejs.dev/linter/rules/no-undeclared-env-vars>
+     * See https://biomejs.dev/linter/rules/no-undeclared-env-vars
      */
     noUndeclaredEnvVars: noUndeclaredEnvVarsConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown DOM properties.
-     * See <https://biomejs.dev/linter/rules/no-unknown-attribute>
+     * See https://biomejs.dev/linter/rules/no-unknown-attribute
      */
     noUnknownAttribute: noUnknownAttributeConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary type-based conditions that can be statically determined as redundant.
-     * See <https://biomejs.dev/linter/rules/no-unnecessary-conditions>
+     * See https://biomejs.dev/linter/rules/no-unnecessary-conditions
      */
     noUnnecessaryConditions: noUnnecessaryConditionsConfigurationSchema.optional().nullable(),
     /**
      * Warn when importing non-existing exports.
-     * See <https://biomejs.dev/linter/rules/no-unresolved-imports>
+     * See https://biomejs.dev/linter/rules/no-unresolved-imports
      */
     noUnresolvedImports: noUnresolvedImportsConfigurationSchema.optional().nullable(),
     /**
      * Disallow expression statements that are neither a function call nor an assignment.
-     * See <https://biomejs.dev/linter/rules/no-unused-expressions>
+     * See https://biomejs.dev/linter/rules/no-unused-expressions
      */
     noUnusedExpressions: noUnusedExpressionsConfigurationSchema.optional().nullable(),
     /**
      * Disallow unused catch bindings.
-     * See <https://biomejs.dev/linter/rules/no-useless-catch-binding>
+     * See https://biomejs.dev/linter/rules/no-useless-catch-binding
      */
     noUselessCatchBinding: noUselessCatchBindingConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of useless undefined.
-     * See <https://biomejs.dev/linter/rules/no-useless-undefined>
+     * See https://biomejs.dev/linter/rules/no-useless-undefined
      */
     noUselessUndefined: noUselessUndefinedConfigurationSchema.optional().nullable(),
     /**
      * Enforce that Vue component data options are declared as functions.
-     * See <https://biomejs.dev/linter/rules/no-vue-data-object-declaration>
+     * See https://biomejs.dev/linter/rules/no-vue-data-object-declaration
      */
     noVueDataObjectDeclaration: noVueDataObjectDeclarationConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate keys in Vue component data, methods, computed properties, and other options.
-     * See <https://biomejs.dev/linter/rules/no-vue-duplicate-keys>
+     * See https://biomejs.dev/linter/rules/no-vue-duplicate-keys
      */
     noVueDuplicateKeys: noVueDuplicateKeysConfigurationSchema.optional().nullable(),
     /**
+     * Disallow the use of Vue Options API.
+     * See https://biomejs.dev/linter/rules/no-vue-options-api
+     */
+    noVueOptionsApi: noVueOptionsApiConfigurationSchema.optional().nullable(),
+    /**
      * Disallow reserved keys in Vue component data and computed properties.
-     * See <https://biomejs.dev/linter/rules/no-vue-reserved-keys>
+     * See https://biomejs.dev/linter/rules/no-vue-reserved-keys
      */
     noVueReservedKeys: noVueReservedKeysConfigurationSchema.optional().nullable(),
     /**
      * Disallow reserved names to be used as props.
-     * See <https://biomejs.dev/linter/rules/no-vue-reserved-props>
+     * See https://biomejs.dev/linter/rules/no-vue-reserved-props
      */
     noVueReservedProps: noVueReservedPropsConfigurationSchema.optional().nullable(),
     /**
      * Disallow destructuring of props passed to setup in Vue projects.
-     * See <https://biomejs.dev/linter/rules/no-vue-setup-props-reactivity-loss>
+     * See https://biomejs.dev/linter/rules/no-vue-setup-props-reactivity-loss
      */
     noVueSetupPropsReactivityLoss: noVueSetupPropsReactivityLossConfigurationSchema.optional().nullable(),
     /**
      * Disallow using v-if and v-for directives on the same element.
-     * See <https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for>
+     * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
      */
     noVueVIfWithVFor: noVueVIfWithVForConfigurationSchema.optional().nullable(),
     /**
@@ -5941,202 +6166,202 @@ export const nurserySchema = z.object({
     recommended: z.boolean().optional().nullable(),
     /**
      * Require Array#sort and Array#toSorted calls to always provide a compareFunction.
-     * See <https://biomejs.dev/linter/rules/use-array-sort-compare>
+     * See https://biomejs.dev/linter/rules/use-array-sort-compare
      */
     useArraySortCompare: useArraySortCompareConfigurationSchema.optional().nullable(),
     /**
      * Enforce that await is only used on Promise values.
-     * See <https://biomejs.dev/linter/rules/use-await-thenable>
+     * See https://biomejs.dev/linter/rules/use-await-thenable
      */
     useAwaitThenable: useAwaitThenableConfigurationSchema.optional().nullable(),
     /**
      * Enforce consistent arrow function bodies.
-     * See <https://biomejs.dev/linter/rules/use-consistent-arrow-return>
+     * See https://biomejs.dev/linter/rules/use-consistent-arrow-return
      */
     useConsistentArrowReturn: useConsistentArrowReturnConfigurationSchema.optional().nullable(),
     /**
+     * Disallow enums from having both number and string members.
+     * See https://biomejs.dev/linter/rules/use-consistent-enum-value-type
+     */
+    useConsistentEnumValueType: useConsistentEnumValueTypeConfigurationSchema.optional().nullable(),
+    /**
      * Require all descriptions to follow the same style (either block or inline) to  maintain consistency and improve readability across the schema.
-     * See <https://biomejs.dev/linter/rules/use-consistent-graphql-descriptions>
+     * See https://biomejs.dev/linter/rules/use-consistent-graphql-descriptions
      */
     useConsistentGraphqlDescriptions: useConsistentGraphqlDescriptionsConfigurationSchema.optional().nullable(),
     /**
      * Require the @deprecated directive to specify a deletion date.
-     * See <https://biomejs.dev/linter/rules/use-deprecated-date>
+     * See https://biomejs.dev/linter/rules/use-deprecated-date
      */
     useDeprecatedDate: useDeprecatedDateConfigurationSchema.optional().nullable(),
     /**
      * Require destructuring from arrays and/or objects.
-     * See <https://biomejs.dev/linter/rules/use-destructuring>
+     * See https://biomejs.dev/linter/rules/use-destructuring
      */
     useDestructuring: useDestructuringConfigurationSchema.optional().nullable(),
     /**
+     * Enforce that new Error() is thrown with the original error as cause.
+     * See https://biomejs.dev/linter/rules/use-error-cause
+     */
+    useErrorCause: useErrorCauseConfigurationSchema.optional().nullable(),
+    /**
      * Require switch-case statements to be exhaustive.
-     * See <https://biomejs.dev/linter/rules/use-exhaustive-switch-cases>
+     * See https://biomejs.dev/linter/rules/use-exhaustive-switch-cases
      */
     useExhaustiveSwitchCases: useExhaustiveSwitchCasesConfigurationSchema.optional().nullable(),
     /**
      * Enforce types in functions, methods, variables, and parameters.
-     * See <https://biomejs.dev/linter/rules/use-explicit-type>
+     * See https://biomejs.dev/linter/rules/use-explicit-type
      */
     useExplicitType: useExplicitTypeConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of Array.prototype.find() over Array.prototype.filter() followed by [0] when looking for a single result.
-     * See <https://biomejs.dev/linter/rules/use-find>
+     * See https://biomejs.dev/linter/rules/use-find
      */
     useFind: useFindConfigurationSchema.optional().nullable(),
     /**
+     * Enforce id attribute on next/script components with inline content or dangerouslySetInnerHTML.
+     * See https://biomejs.dev/linter/rules/use-inline-script-id
+     */
+    useInlineScriptId: useInlineScriptIdConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow anonymous operations when more than one operation specified in document.
+     * See https://biomejs.dev/linter/rules/use-lone-anonymous-operation
+     */
+    useLoneAnonymousOperation: useLoneAnonymousOperationConfigurationSchema.optional().nullable(),
+    /**
+     * Require queries, mutations, subscriptions or fragments each to be located in separate files.
+     * See https://biomejs.dev/linter/rules/use-lone-executable-definition
+     */
+    useLoneExecutableDefinition: useLoneExecutableDefinitionConfigurationSchema.optional().nullable(),
+    /**
      * Enforce a maximum number of parameters in function definitions.
-     * See <https://biomejs.dev/linter/rules/use-max-params>
+     * See https://biomejs.dev/linter/rules/use-max-params
      */
     useMaxParams: useMaxParamsConfigurationSchema.optional().nullable(),
     /**
      * Disallow use* hooks outside of component$ or other use* hooks in Qwik applications.
-     * See <https://biomejs.dev/linter/rules/use-qwik-method-usage>
+     * See https://biomejs.dev/linter/rules/use-qwik-method-usage
      */
     useQwikMethodUsage: useQwikMethodUsageConfigurationSchema.optional().nullable(),
     /**
      * Disallow unserializable expressions in Qwik dollar ($) scopes.
-     * See <https://biomejs.dev/linter/rules/use-qwik-valid-lexical-scope>
+     * See https://biomejs.dev/linter/rules/use-qwik-valid-lexical-scope
      */
     useQwikValidLexicalScope: useQwikValidLexicalScopeConfigurationSchema.optional().nullable(),
     /**
      * Enforce RegExp#exec over String#match if no global flag is provided.
-     * See <https://biomejs.dev/linter/rules/use-regexp-exec>
+     * See https://biomejs.dev/linter/rules/use-regexp-exec
      */
     useRegexpExec: useRegexpExecConfigurationSchema.optional().nullable(),
     /**
      * Enforce the presence of required scripts in package.json.
-     * See <https://biomejs.dev/linter/rules/use-required-scripts>
+     * See https://biomejs.dev/linter/rules/use-required-scripts
      */
     useRequiredScripts: useRequiredScriptsConfigurationSchema.optional().nullable(),
     /**
      * Enforce the sorting of CSS utility classes.
-     * See <https://biomejs.dev/linter/rules/use-sorted-classes>
+     * See https://biomejs.dev/linter/rules/use-sorted-classes
      */
     useSortedClasses: useSortedClassesConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of the spread operator over .apply().
-     * See <https://biomejs.dev/linter/rules/use-spread>
+     * See https://biomejs.dev/linter/rules/use-spread
      */
     useSpread: useSpreadConfigurationSchema.optional().nullable(),
     /**
-     * Require all argument names for fields & directives to be unique.
-     * See <https://biomejs.dev/linter/rules/use-unique-argument-names>
-     */
-    useUniqueArgumentNames: useUniqueArgumentNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Require all fields of a type to be unique.
-     * See <https://biomejs.dev/linter/rules/use-unique-field-definition-names>
-     */
-    useUniqueFieldDefinitionNames: useUniqueFieldDefinitionNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce unique operation names across a GraphQL document.
-     * See <https://biomejs.dev/linter/rules/use-unique-graphql-operation-name>
-     */
-    useUniqueGraphqlOperationName: useUniqueGraphqlOperationNameConfigurationSchema.optional().nullable(),
-    /**
-     * Require fields within an input object to be unique.
-     * See <https://biomejs.dev/linter/rules/use-unique-input-field-names>
-     */
-    useUniqueInputFieldNames: useUniqueInputFieldNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Require all variable definitions to be unique.
-     * See <https://biomejs.dev/linter/rules/use-unique-variable-names>
-     */
-    useUniqueVariableNames: useUniqueVariableNamesConfigurationSchema.optional().nullable(),
-    /**
      * Enforce consistent defineProps declaration style.
-     * See <https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration>
+     * See https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration
      */
     useVueConsistentDefinePropsDeclaration: useVueConsistentDefinePropsDeclarationConfigurationSchema.optional().nullable(),
     /**
      * Enforce a consistent style for v-bind in Vue templates.
-     * See <https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style>
+     * See https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style
      */
     useVueConsistentVBindStyle: useVueConsistentVBindStyleConfigurationSchema.optional().nullable(),
     /**
      * Enforce a consistent style for v-on in Vue templates.
-     * See <https://biomejs.dev/linter/rules/use-vue-consistent-v-on-style>
+     * See https://biomejs.dev/linter/rules/use-vue-consistent-v-on-style
      */
     useVueConsistentVOnStyle: useVueConsistentVOnStyleConfigurationSchema.optional().nullable(),
     /**
      * Enforce specific order of Vue compiler macros.
-     * See <https://biomejs.dev/linter/rules/use-vue-define-macros-order>
+     * See https://biomejs.dev/linter/rules/use-vue-define-macros-order
      */
     useVueDefineMacrosOrder: useVueDefineMacrosOrderConfigurationSchema.optional().nullable(),
     /**
      * Enforce hyphenated (kebab-case) attribute names in Vue templates.
-     * See <https://biomejs.dev/linter/rules/use-vue-hyphenated-attributes>
+     * See https://biomejs.dev/linter/rules/use-vue-hyphenated-attributes
      */
     useVueHyphenatedAttributes: useVueHyphenatedAttributesConfigurationSchema.optional().nullable(),
     /**
      * Enforce multi-word component names in Vue components.
-     * See <https://biomejs.dev/linter/rules/use-vue-multi-word-component-names>
+     * See https://biomejs.dev/linter/rules/use-vue-multi-word-component-names
      */
     useVueMultiWordComponentNames: useVueMultiWordComponentNamesConfigurationSchema.optional().nullable(),
     /**
      * Enforce that elements using v-for also specify a unique key.
-     * See <https://biomejs.dev/linter/rules/use-vue-v-for-key>
+     * See https://biomejs.dev/linter/rules/use-vue-v-for-key
      */
     useVueVForKey: useVueVForKeyConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid Vue \<template> root usage.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-template-root>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-template-root
      */
     useVueValidTemplateRoot: useVueValidTemplateRootConfigurationSchema.optional().nullable(),
     /**
      * Forbids v-bind directives with missing arguments or invalid modifiers.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-bind>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-bind
      */
     useVueValidVBind: useVueValidVBindConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid v-cloak Vue directives.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-cloak>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-cloak
      */
     useVueValidVCloak: useVueValidVCloakConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid usage of v-else.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-else>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-else
      */
     useVueValidVElse: useVueValidVElseConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid v-else-if directives.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-else-if>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-else-if
      */
     useVueValidVElseIf: useVueValidVElseIfConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid v-html directives.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-html>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-html
      */
     useVueValidVHtml: useVueValidVHtmlConfigurationSchema.optional().nullable(),
     /**
      * Enforces valid v-if usage for Vue templates.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-if>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-if
      */
     useVueValidVIf: useVueValidVIfConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid v-on directives with proper arguments, modifiers, and handlers.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-on>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-on
      */
     useVueValidVOn: useVueValidVOnConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid v-once Vue directives.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-once>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-once
      */
     useVueValidVOnce: useVueValidVOnceConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid v-pre Vue directives.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-pre>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-pre
      */
     useVueValidVPre: useVueValidVPreConfigurationSchema.optional().nullable(),
     /**
      * Enforce valid v-text Vue directives.
-     * See <https://biomejs.dev/linter/rules/use-vue-valid-v-text>
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-text
      */
     useVueValidVText: useVueValidVTextConfigurationSchema.optional().nullable(),
     /**
      * Enforce opting in to Vue Vapor mode in \<script setup> blocks.
-     * See <https://biomejs.dev/linter/rules/use-vue-vapor>
+     * See https://biomejs.dev/linter/rules/use-vue-vapor
      */
     useVueVapor: useVueVaporConfigurationSchema.optional().nullable()
 });
@@ -6147,47 +6372,47 @@ export const nurserySchema = z.object({
 export const performanceSchema = z.object({
     /**
      * Disallow the use of spread (...) syntax on accumulators.
-     * See <https://biomejs.dev/linter/rules/no-accumulating-spread>
+     * See https://biomejs.dev/linter/rules/no-accumulating-spread
      */
     noAccumulatingSpread: noAccumulatingSpreadConfigurationSchema.optional().nullable(),
     /**
      * Disallow await inside loops.
-     * See <https://biomejs.dev/linter/rules/no-await-in-loops>
+     * See https://biomejs.dev/linter/rules/no-await-in-loops
      */
     noAwaitInLoops: noAwaitInLoopsConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of barrel file.
-     * See <https://biomejs.dev/linter/rules/no-barrel-file>
+     * See https://biomejs.dev/linter/rules/no-barrel-file
      */
     noBarrelFile: noBarrelFileConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of the delete operator.
-     * See <https://biomejs.dev/linter/rules/no-delete>
+     * See https://biomejs.dev/linter/rules/no-delete
      */
     noDelete: noDeleteConfigurationSchema.optional().nullable(),
     /**
      * Disallow accessing namespace imports dynamically.
-     * See <https://biomejs.dev/linter/rules/no-dynamic-namespace-import-access>
+     * See https://biomejs.dev/linter/rules/no-dynamic-namespace-import-access
      */
     noDynamicNamespaceImportAccess: noDynamicNamespaceImportAccessConfigurationSchema.optional().nullable(),
     /**
      * Prevent usage of \<img> element in a Next.js project.
-     * See <https://biomejs.dev/linter/rules/no-img-element>
+     * See https://biomejs.dev/linter/rules/no-img-element
      */
     noImgElement: noImgElementConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of namespace imports.
-     * See <https://biomejs.dev/linter/rules/no-namespace-import>
+     * See https://biomejs.dev/linter/rules/no-namespace-import
      */
     noNamespaceImport: noNamespaceImportConfigurationSchema.optional().nullable(),
     /**
      * Avoid re-export all.
-     * See <https://biomejs.dev/linter/rules/no-re-export-all>
+     * See https://biomejs.dev/linter/rules/no-re-export-all
      */
     noReExportAll: noReExportAllConfigurationSchema.optional().nullable(),
     /**
      * Prevent duplicate polyfills from Polyfill.io.
-     * See <https://biomejs.dev/linter/rules/no-unwanted-polyfillio>
+     * See https://biomejs.dev/linter/rules/no-unwanted-polyfillio
      */
     noUnwantedPolyfillio: noUnwantedPolyfillioConfigurationSchema.optional().nullable(),
     /**
@@ -6196,17 +6421,17 @@ export const performanceSchema = z.object({
     recommended: z.boolean().optional().nullable(),
     /**
      * Ensure the preconnect attribute is used when using Google Fonts.
-     * See <https://biomejs.dev/linter/rules/use-google-font-preconnect>
+     * See https://biomejs.dev/linter/rules/use-google-font-preconnect
      */
     useGoogleFontPreconnect: useGoogleFontPreconnectConfigurationSchema.optional().nullable(),
     /**
      * Enforce using Solid's \<For /> component for mapping an array to JSX elements.
-     * See <https://biomejs.dev/linter/rules/use-solid-for-component>
+     * See https://biomejs.dev/linter/rules/use-solid-for-component
      */
     useSolidForComponent: useSolidForComponentConfigurationSchema.optional().nullable(),
     /**
      * Require regex literals to be declared at the top level.
-     * See <https://biomejs.dev/linter/rules/use-top-level-regex>
+     * See https://biomejs.dev/linter/rules/use-top-level-regex
      */
     useTopLevelRegex: useTopLevelRegexConfigurationSchema.optional().nullable()
 });
@@ -6217,27 +6442,27 @@ export const performanceSchema = z.object({
 export const securitySchema = z.object({
     /**
      * Disallow target="_blank" attribute without rel="noopener".
-     * See <https://biomejs.dev/linter/rules/no-blank-target>
+     * See https://biomejs.dev/linter/rules/no-blank-target
      */
     noBlankTarget: noBlankTargetConfigurationSchema.optional().nullable(),
     /**
      * Prevent the usage of dangerous JSX props.
-     * See <https://biomejs.dev/linter/rules/no-dangerously-set-inner-html>
+     * See https://biomejs.dev/linter/rules/no-dangerously-set-inner-html
      */
     noDangerouslySetInnerHtml: noDangerouslySetInnerHtmlConfigurationSchema.optional().nullable(),
     /**
      * Report when a DOM element or a component uses both children and dangerouslySetInnerHTML prop.
-     * See <https://biomejs.dev/linter/rules/no-dangerously-set-inner-html-with-children>
+     * See https://biomejs.dev/linter/rules/no-dangerously-set-inner-html-with-children
      */
     noDangerouslySetInnerHtmlWithChildren: noDangerouslySetInnerHtmlWithChildrenConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of global eval().
-     * See <https://biomejs.dev/linter/rules/no-global-eval>
+     * See https://biomejs.dev/linter/rules/no-global-eval
      */
     noGlobalEval: noGlobalEvalConfigurationSchema.optional().nullable(),
     /**
      * Disallow usage of sensitive data such as API keys and tokens.
-     * See <https://biomejs.dev/linter/rules/no-secrets>
+     * See https://biomejs.dev/linter/rules/no-secrets
      */
     noSecrets: noSecretsConfigurationSchema.optional().nullable(),
     /**
@@ -6258,407 +6483,407 @@ export const ruleWithNoRestrictedTypesOptionsSchema = z.object({
 export const suspiciousSchema = z.object({
     /**
      * Disallow the use of alert, confirm, and prompt.
-     * See <https://biomejs.dev/linter/rules/no-alert>
+     * See https://biomejs.dev/linter/rules/no-alert
      */
     noAlert: noAlertConfigurationSchema.optional().nullable(),
     /**
      * Use standard constants instead of approximated literals.
-     * See <https://biomejs.dev/linter/rules/no-approximative-numeric-constant>
+     * See https://biomejs.dev/linter/rules/no-approximative-numeric-constant
      */
     noApproximativeNumericConstant: noApproximativeNumericConstantConfigurationSchema.optional().nullable(),
     /**
      * Discourage the usage of Array index in keys.
-     * See <https://biomejs.dev/linter/rules/no-array-index-key>
+     * See https://biomejs.dev/linter/rules/no-array-index-key
      */
     noArrayIndexKey: noArrayIndexKeyConfigurationSchema.optional().nullable(),
     /**
      * Disallow assignments in expressions.
-     * See <https://biomejs.dev/linter/rules/no-assign-in-expressions>
+     * See https://biomejs.dev/linter/rules/no-assign-in-expressions
      */
     noAssignInExpressions: noAssignInExpressionsConfigurationSchema.optional().nullable(),
     /**
      * Disallows using an async function as a Promise executor.
-     * See <https://biomejs.dev/linter/rules/no-async-promise-executor>
+     * See https://biomejs.dev/linter/rules/no-async-promise-executor
      */
     noAsyncPromiseExecutor: noAsyncPromiseExecutorConfigurationSchema.optional().nullable(),
     /**
      * Prevents the misuse of glob patterns inside the files.includes field.
-     * See <https://biomejs.dev/linter/rules/no-biome-first-exception>
+     * See https://biomejs.dev/linter/rules/no-biome-first-exception
      */
     noBiomeFirstException: noBiomeFirstExceptionConfigurationSchema.optional().nullable(),
     /**
      * Disallow bitwise operators.
-     * See <https://biomejs.dev/linter/rules/no-bitwise-operators>
+     * See https://biomejs.dev/linter/rules/no-bitwise-operators
      */
     noBitwiseOperators: noBitwiseOperatorsConfigurationSchema.optional().nullable(),
     /**
      * Disallow reassigning exceptions in catch clauses.
-     * See <https://biomejs.dev/linter/rules/no-catch-assign>
+     * See https://biomejs.dev/linter/rules/no-catch-assign
      */
     noCatchAssign: noCatchAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow reassigning class members.
-     * See <https://biomejs.dev/linter/rules/no-class-assign>
+     * See https://biomejs.dev/linter/rules/no-class-assign
      */
     noClassAssign: noClassAssignConfigurationSchema.optional().nullable(),
     /**
      * Prevent comments from being inserted as text nodes.
-     * See <https://biomejs.dev/linter/rules/no-comment-text>
+     * See https://biomejs.dev/linter/rules/no-comment-text
      */
     noCommentText: noCommentTextConfigurationSchema.optional().nullable(),
     /**
      * Disallow comparing against -0.
-     * See <https://biomejs.dev/linter/rules/no-compare-neg-zero>
+     * See https://biomejs.dev/linter/rules/no-compare-neg-zero
      */
     noCompareNegZero: noCompareNegZeroConfigurationSchema.optional().nullable(),
     /**
      * Disallow labeled statements that are not loops.
-     * See <https://biomejs.dev/linter/rules/no-confusing-labels>
+     * See https://biomejs.dev/linter/rules/no-confusing-labels
      */
     noConfusingLabels: noConfusingLabelsConfigurationSchema.optional().nullable(),
     /**
      * Disallow void type outside of generic or return types.
-     * See <https://biomejs.dev/linter/rules/no-confusing-void-type>
+     * See https://biomejs.dev/linter/rules/no-confusing-void-type
      */
     noConfusingVoidType: noConfusingVoidTypeConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of console.
-     * See <https://biomejs.dev/linter/rules/no-console>
+     * See https://biomejs.dev/linter/rules/no-console
      */
     noConsole: noConsoleConfigurationSchema.optional().nullable(),
     /**
      * Disallow TypeScript const enum.
-     * See <https://biomejs.dev/linter/rules/no-const-enum>
+     * See https://biomejs.dev/linter/rules/no-const-enum
      */
     noConstEnum: noConstEnumConfigurationSchema.optional().nullable(),
     /**
      * Disallow expressions where the operation doesn't affect the value.
-     * See <https://biomejs.dev/linter/rules/no-constant-binary-expressions>
+     * See https://biomejs.dev/linter/rules/no-constant-binary-expressions
      */
     noConstantBinaryExpressions: noConstantBinaryExpressionsConfigurationSchema.optional().nullable(),
     /**
      * Prevents from having control characters and some escape sequences that match control characters in regular expression literals.
-     * See <https://biomejs.dev/linter/rules/no-control-characters-in-regex>
+     * See https://biomejs.dev/linter/rules/no-control-characters-in-regex
      */
     noControlCharactersInRegex: noControlCharactersInRegexConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of debugger.
-     * See <https://biomejs.dev/linter/rules/no-debugger>
+     * See https://biomejs.dev/linter/rules/no-debugger
      */
     noDebugger: noDebuggerConfigurationSchema.optional().nullable(),
     /**
      * Disallow direct assignments to document.cookie.
-     * See <https://biomejs.dev/linter/rules/no-document-cookie>
+     * See https://biomejs.dev/linter/rules/no-document-cookie
      */
     noDocumentCookie: noDocumentCookieConfigurationSchema.optional().nullable(),
     /**
      * Prevents importing next/document outside of pages/_document.jsx in Next.js projects.
-     * See <https://biomejs.dev/linter/rules/no-document-import-in-page>
+     * See https://biomejs.dev/linter/rules/no-document-import-in-page
      */
     noDocumentImportInPage: noDocumentImportInPageConfigurationSchema.optional().nullable(),
     /**
      * Require the use of === and !==.
-     * See <https://biomejs.dev/linter/rules/no-double-equals>
+     * See https://biomejs.dev/linter/rules/no-double-equals
      */
     noDoubleEquals: noDoubleEqualsConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate @import rules.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-at-import-rules>
+     * See https://biomejs.dev/linter/rules/no-duplicate-at-import-rules
      */
     noDuplicateAtImportRules: noDuplicateAtImportRulesConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate case labels.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-case>
+     * See https://biomejs.dev/linter/rules/no-duplicate-case
      */
     noDuplicateCase: noDuplicateCaseConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate class members.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-class-members>
+     * See https://biomejs.dev/linter/rules/no-duplicate-class-members
      */
     noDuplicateClassMembers: noDuplicateClassMembersConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate custom properties within declaration blocks.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-custom-properties>
+     * See https://biomejs.dev/linter/rules/no-duplicate-custom-properties
      */
     noDuplicateCustomProperties: noDuplicateCustomPropertiesConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate conditions in if-else-if chains.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-else-if>
+     * See https://biomejs.dev/linter/rules/no-duplicate-else-if
      */
     noDuplicateElseIf: noDuplicateElseIfConfigurationSchema.optional().nullable(),
     /**
      * No duplicated fields in GraphQL operations.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-fields>
+     * See https://biomejs.dev/linter/rules/no-duplicate-fields
      */
     noDuplicateFields: noDuplicateFieldsConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate names within font families.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-font-names>
+     * See https://biomejs.dev/linter/rules/no-duplicate-font-names
      */
     noDuplicateFontNames: noDuplicateFontNamesConfigurationSchema.optional().nullable(),
     /**
      * Prevents JSX properties to be assigned multiple times.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-jsx-props>
+     * See https://biomejs.dev/linter/rules/no-duplicate-jsx-props
      */
     noDuplicateJsxProps: noDuplicateJsxPropsConfigurationSchema.optional().nullable(),
     /**
      * Disallow two keys with the same name inside objects.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-object-keys>
+     * See https://biomejs.dev/linter/rules/no-duplicate-object-keys
      */
     noDuplicateObjectKeys: noDuplicateObjectKeysConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate function parameter name.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-parameters>
+     * See https://biomejs.dev/linter/rules/no-duplicate-parameters
      */
     noDuplicateParameters: noDuplicateParametersConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate properties within declaration blocks.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-properties>
+     * See https://biomejs.dev/linter/rules/no-duplicate-properties
      */
     noDuplicateProperties: noDuplicatePropertiesConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate selectors within keyframe blocks.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-selectors-keyframe-block>
+     * See https://biomejs.dev/linter/rules/no-duplicate-selectors-keyframe-block
      */
     noDuplicateSelectorsKeyframeBlock: noDuplicateSelectorsKeyframeBlockConfigurationSchema.optional().nullable(),
     /**
      * A describe block should not contain duplicate hooks.
-     * See <https://biomejs.dev/linter/rules/no-duplicate-test-hooks>
+     * See https://biomejs.dev/linter/rules/no-duplicate-test-hooks
      */
     noDuplicateTestHooks: noDuplicateTestHooksConfigurationSchema.optional().nullable(),
     /**
      * Disallow CSS empty blocks.
-     * See <https://biomejs.dev/linter/rules/no-empty-block>
+     * See https://biomejs.dev/linter/rules/no-empty-block
      */
     noEmptyBlock: noEmptyBlockConfigurationSchema.optional().nullable(),
     /**
      * Disallow empty block statements and static blocks.
-     * See <https://biomejs.dev/linter/rules/no-empty-block-statements>
+     * See https://biomejs.dev/linter/rules/no-empty-block-statements
      */
     noEmptyBlockStatements: noEmptyBlockStatementsConfigurationSchema.optional().nullable(),
     /**
      * Disallow the declaration of empty interfaces.
-     * See <https://biomejs.dev/linter/rules/no-empty-interface>
+     * See https://biomejs.dev/linter/rules/no-empty-interface
      */
     noEmptyInterface: noEmptyInterfaceConfigurationSchema.optional().nullable(),
     /**
      * Disallow variables from evolving into any type through reassignments.
-     * See <https://biomejs.dev/linter/rules/no-evolving-types>
+     * See https://biomejs.dev/linter/rules/no-evolving-types
      */
     noEvolvingTypes: noEvolvingTypesConfigurationSchema.optional().nullable(),
     /**
      * Disallow the any type usage.
-     * See <https://biomejs.dev/linter/rules/no-explicit-any>
+     * See https://biomejs.dev/linter/rules/no-explicit-any
      */
     noExplicitAny: noExplicitAnyConfigurationSchema.optional().nullable(),
     /**
      * Disallow using export or module.exports in files containing tests.
-     * See <https://biomejs.dev/linter/rules/no-exports-in-test>
+     * See https://biomejs.dev/linter/rules/no-exports-in-test
      */
     noExportsInTest: noExportsInTestConfigurationSchema.optional().nullable(),
     /**
      * Prevents the wrong usage of the non-null assertion operator (!) in TypeScript files.
-     * See <https://biomejs.dev/linter/rules/no-extra-non-null-assertion>
+     * See https://biomejs.dev/linter/rules/no-extra-non-null-assertion
      */
     noExtraNonNullAssertion: noExtraNonNullAssertionConfigurationSchema.optional().nullable(),
     /**
      * Disallow fallthrough of switch clauses.
-     * See <https://biomejs.dev/linter/rules/no-fallthrough-switch-clause>
+     * See https://biomejs.dev/linter/rules/no-fallthrough-switch-clause
      */
     noFallthroughSwitchClause: noFallthroughSwitchClauseConfigurationSchema.optional().nullable(),
     /**
      * Disallow focused tests.
-     * See <https://biomejs.dev/linter/rules/no-focused-tests>
+     * See https://biomejs.dev/linter/rules/no-focused-tests
      */
     noFocusedTests: noFocusedTestsConfigurationSchema.optional().nullable(),
     /**
      * Disallow reassigning function declarations.
-     * See <https://biomejs.dev/linter/rules/no-function-assign>
+     * See https://biomejs.dev/linter/rules/no-function-assign
      */
     noFunctionAssign: noFunctionAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow assignments to native objects and read-only global variables.
-     * See <https://biomejs.dev/linter/rules/no-global-assign>
+     * See https://biomejs.dev/linter/rules/no-global-assign
      */
     noGlobalAssign: noGlobalAssignConfigurationSchema.optional().nullable(),
     /**
      * Use Number.isFinite instead of global isFinite.
-     * See <https://biomejs.dev/linter/rules/no-global-is-finite>
+     * See https://biomejs.dev/linter/rules/no-global-is-finite
      */
     noGlobalIsFinite: noGlobalIsFiniteConfigurationSchema.optional().nullable(),
     /**
      * Use Number.isNaN instead of global isNaN.
-     * See <https://biomejs.dev/linter/rules/no-global-is-nan>
+     * See https://biomejs.dev/linter/rules/no-global-is-nan
      */
     noGlobalIsNan: noGlobalIsNanConfigurationSchema.optional().nullable(),
     /**
      * Prevent using the next/head module in pages/_document.js on Next.js projects.
-     * See <https://biomejs.dev/linter/rules/no-head-import-in-document>
+     * See https://biomejs.dev/linter/rules/no-head-import-in-document
      */
     noHeadImportInDocument: noHeadImportInDocumentConfigurationSchema.optional().nullable(),
     /**
      * Disallow use of implicit any type on variable declarations.
-     * See <https://biomejs.dev/linter/rules/no-implicit-any-let>
+     * See https://biomejs.dev/linter/rules/no-implicit-any-let
      */
     noImplicitAnyLet: noImplicitAnyLetConfigurationSchema.optional().nullable(),
     /**
      * Disallow assigning to imported bindings.
-     * See <https://biomejs.dev/linter/rules/no-import-assign>
+     * See https://biomejs.dev/linter/rules/no-import-assign
      */
     noImportAssign: noImportAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow invalid !important within keyframe declarations.
-     * See <https://biomejs.dev/linter/rules/no-important-in-keyframe>
+     * See https://biomejs.dev/linter/rules/no-important-in-keyframe
      */
     noImportantInKeyframe: noImportantInKeyframeConfigurationSchema.optional().nullable(),
     /**
      * Disallows the use of irregular whitespace characters.
-     * See <https://biomejs.dev/linter/rules/no-irregular-whitespace>
+     * See https://biomejs.dev/linter/rules/no-irregular-whitespace
      */
     noIrregularWhitespace: noIrregularWhitespaceConfigurationSchema.optional().nullable(),
     /**
      * Disallow labels that share a name with a variable.
-     * See <https://biomejs.dev/linter/rules/no-label-var>
+     * See https://biomejs.dev/linter/rules/no-label-var
      */
     noLabelVar: noLabelVarConfigurationSchema.optional().nullable(),
     /**
      * Disallow characters made with multiple code points in character class syntax.
-     * See <https://biomejs.dev/linter/rules/no-misleading-character-class>
+     * See https://biomejs.dev/linter/rules/no-misleading-character-class
      */
     noMisleadingCharacterClass: noMisleadingCharacterClassConfigurationSchema.optional().nullable(),
     /**
      * Enforce proper usage of new and constructor.
-     * See <https://biomejs.dev/linter/rules/no-misleading-instantiator>
+     * See https://biomejs.dev/linter/rules/no-misleading-instantiator
      */
     noMisleadingInstantiator: noMisleadingInstantiatorConfigurationSchema.optional().nullable(),
     /**
      * Checks that the assertion function, for example expect, is placed inside an it() function call.
-     * See <https://biomejs.dev/linter/rules/no-misplaced-assertion>
+     * See https://biomejs.dev/linter/rules/no-misplaced-assertion
      */
     noMisplacedAssertion: noMisplacedAssertionConfigurationSchema.optional().nullable(),
     /**
      * Disallow shorthand assign when variable appears on both sides.
-     * See <https://biomejs.dev/linter/rules/no-misrefactored-shorthand-assign>
+     * See https://biomejs.dev/linter/rules/no-misrefactored-shorthand-assign
      */
     noMisrefactoredShorthandAssign: noMisrefactoredShorthandAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow non-null assertions after optional chaining expressions.
-     * See <https://biomejs.dev/linter/rules/no-non-null-asserted-optional-chain>
+     * See https://biomejs.dev/linter/rules/no-non-null-asserted-optional-chain
      */
     noNonNullAssertedOptionalChain: noNonNullAssertedOptionalChainConfigurationSchema.optional().nullable(),
     /**
      * Disallow octal escape sequences in string literals.
-     * See <https://biomejs.dev/linter/rules/no-octal-escape>
+     * See https://biomejs.dev/linter/rules/no-octal-escape
      */
     noOctalEscape: noOctalEscapeConfigurationSchema.optional().nullable(),
     /**
      * Disallow direct use of Object.prototype builtins.
-     * See <https://biomejs.dev/linter/rules/no-prototype-builtins>
+     * See https://biomejs.dev/linter/rules/no-prototype-builtins
      */
     noPrototypeBuiltins: noPrototypeBuiltinsConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use if quickfix.biome inside editor settings file.
-     * See <https://biomejs.dev/linter/rules/no-quickfix-biome>
+     * See https://biomejs.dev/linter/rules/no-quickfix-biome
      */
     noQuickfixBiome: noQuickfixBiomeConfigurationSchema.optional().nullable(),
     /**
      * Prevents React-specific JSX properties from being used.
-     * See <https://biomejs.dev/linter/rules/no-react-specific-props>
+     * See https://biomejs.dev/linter/rules/no-react-specific-props
      */
     noReactSpecificProps: noReactSpecificPropsConfigurationSchema.optional().nullable(),
     /**
      * Disallow variable, function, class, and type redeclarations in the same scope.
-     * See <https://biomejs.dev/linter/rules/no-redeclare>
+     * See https://biomejs.dev/linter/rules/no-redeclare
      */
     noRedeclare: noRedeclareConfigurationSchema.optional().nullable(),
     /**
      * Prevents from having redundant "use strict".
-     * See <https://biomejs.dev/linter/rules/no-redundant-use-strict>
+     * See https://biomejs.dev/linter/rules/no-redundant-use-strict
      */
     noRedundantUseStrict: noRedundantUseStrictConfigurationSchema.optional().nullable(),
     /**
      * Disallow comparisons where both sides are exactly the same.
-     * See <https://biomejs.dev/linter/rules/no-self-compare>
+     * See https://biomejs.dev/linter/rules/no-self-compare
      */
     noSelfCompare: noSelfCompareConfigurationSchema.optional().nullable(),
     /**
      * Disallow identifiers from shadowing restricted names.
-     * See <https://biomejs.dev/linter/rules/no-shadow-restricted-names>
+     * See https://biomejs.dev/linter/rules/no-shadow-restricted-names
      */
     noShadowRestrictedNames: noShadowRestrictedNamesConfigurationSchema.optional().nullable(),
     /**
      * Disallow shorthand properties that override related longhand properties.
-     * See <https://biomejs.dev/linter/rules/no-shorthand-property-overrides>
+     * See https://biomejs.dev/linter/rules/no-shorthand-property-overrides
      */
     noShorthandPropertyOverrides: noShorthandPropertyOverridesConfigurationSchema.optional().nullable(),
     /**
      * Disallow disabled tests.
-     * See <https://biomejs.dev/linter/rules/no-skipped-tests>
+     * See https://biomejs.dev/linter/rules/no-skipped-tests
      */
     noSkippedTests: noSkippedTestsConfigurationSchema.optional().nullable(),
     /**
      * Prevents the use of sparse arrays (arrays with holes).
-     * See <https://biomejs.dev/linter/rules/no-sparse-array>
+     * See https://biomejs.dev/linter/rules/no-sparse-array
      */
     noSparseArray: noSparseArrayConfigurationSchema.optional().nullable(),
     /**
      * It detects possible "wrong" semicolons inside JSX elements.
-     * See <https://biomejs.dev/linter/rules/no-suspicious-semicolon-in-jsx>
+     * See https://biomejs.dev/linter/rules/no-suspicious-semicolon-in-jsx
      */
     noSuspiciousSemicolonInJsx: noSuspiciousSemicolonInJsxConfigurationSchema.optional().nullable(),
     /**
      * Disallow template literal placeholder syntax in regular strings.
-     * See <https://biomejs.dev/linter/rules/no-template-curly-in-string>
+     * See https://biomejs.dev/linter/rules/no-template-curly-in-string
      */
     noTemplateCurlyInString: noTemplateCurlyInStringConfigurationSchema.optional().nullable(),
     /**
      * Disallow then property.
-     * See <https://biomejs.dev/linter/rules/no-then-property>
+     * See https://biomejs.dev/linter/rules/no-then-property
      */
     noThenProperty: noThenPropertyConfigurationSchema.optional().nullable(),
     /**
      * Prevents the use of the TypeScript directive @ts-ignore.
-     * See <https://biomejs.dev/linter/rules/no-ts-ignore>
+     * See https://biomejs.dev/linter/rules/no-ts-ignore
      */
     noTsIgnore: noTsIgnoreConfigurationSchema.optional().nullable(),
     /**
      * Disallow let or var variables that are read but never assigned.
-     * See <https://biomejs.dev/linter/rules/no-unassigned-variables>
+     * See https://biomejs.dev/linter/rules/no-unassigned-variables
      */
     noUnassignedVariables: noUnassignedVariablesConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown at-rules.
-     * See <https://biomejs.dev/linter/rules/no-unknown-at-rules>
+     * See https://biomejs.dev/linter/rules/no-unknown-at-rules
      */
     noUnknownAtRules: noUnknownAtRulesConfigurationSchema.optional().nullable(),
     /**
      * Disallow unsafe declaration merging between interfaces and classes.
-     * See <https://biomejs.dev/linter/rules/no-unsafe-declaration-merging>
+     * See https://biomejs.dev/linter/rules/no-unsafe-declaration-merging
      */
     noUnsafeDeclarationMerging: noUnsafeDeclarationMergingConfigurationSchema.optional().nullable(),
     /**
      * Disallow using unsafe negation.
-     * See <https://biomejs.dev/linter/rules/no-unsafe-negation>
+     * See https://biomejs.dev/linter/rules/no-unsafe-negation
      */
     noUnsafeNegation: noUnsafeNegationConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary escapes in string literals.
-     * See <https://biomejs.dev/linter/rules/no-useless-escape-in-string>
+     * See https://biomejs.dev/linter/rules/no-useless-escape-in-string
      */
     noUselessEscapeInString: noUselessEscapeInStringConfigurationSchema.optional().nullable(),
     /**
      * Disallow useless backreferences in regular expression literals that always match an empty string.
-     * See <https://biomejs.dev/linter/rules/no-useless-regex-backrefs>
+     * See https://biomejs.dev/linter/rules/no-useless-regex-backrefs
      */
     noUselessRegexBackrefs: noUselessRegexBackrefsConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of var.
-     * See <https://biomejs.dev/linter/rules/no-var>
+     * See https://biomejs.dev/linter/rules/no-var
      */
     noVar: noVarConfigurationSchema.optional().nullable(),
     /**
      * Disallow with statements in non-strict contexts.
-     * See <https://biomejs.dev/linter/rules/no-with>
+     * See https://biomejs.dev/linter/rules/no-with
      */
     noWith: noWithConfigurationSchema.optional().nullable(),
     /**
@@ -6667,72 +6892,72 @@ export const suspiciousSchema = z.object({
     recommended: z.boolean().optional().nullable(),
     /**
      * Disallow the use of overload signatures that are not next to each other.
-     * See <https://biomejs.dev/linter/rules/use-adjacent-overload-signatures>
+     * See https://biomejs.dev/linter/rules/use-adjacent-overload-signatures
      */
     useAdjacentOverloadSignatures: useAdjacentOverloadSignaturesConfigurationSchema.optional().nullable(),
     /**
      * Ensure async functions utilize await.
-     * See <https://biomejs.dev/linter/rules/use-await>
+     * See https://biomejs.dev/linter/rules/use-await
      */
     useAwait: useAwaitConfigurationSchema.optional().nullable(),
     /**
      * Promotes the correct usage for ignoring folders in the configuration file.
-     * See <https://biomejs.dev/linter/rules/use-biome-ignore-folder>
+     * See https://biomejs.dev/linter/rules/use-biome-ignore-folder
      */
     useBiomeIgnoreFolder: useBiomeIgnoreFolderConfigurationSchema.optional().nullable(),
     /**
      * Enforce default clauses in switch statements to be last.
-     * See <https://biomejs.dev/linter/rules/use-default-switch-clause-last>
+     * See https://biomejs.dev/linter/rules/use-default-switch-clause-last
      */
     useDefaultSwitchClauseLast: useDefaultSwitchClauseLastConfigurationSchema.optional().nullable(),
     /**
      * Enforce passing a message value when creating a built-in error.
-     * See <https://biomejs.dev/linter/rules/use-error-message>
+     * See https://biomejs.dev/linter/rules/use-error-message
      */
     useErrorMessage: useErrorMessageConfigurationSchema.optional().nullable(),
     /**
      * Enforce get methods to always return a value.
-     * See <https://biomejs.dev/linter/rules/use-getter-return>
+     * See https://biomejs.dev/linter/rules/use-getter-return
      */
     useGetterReturn: useGetterReturnConfigurationSchema.optional().nullable(),
     /**
      * Enforces the use of a recommended display strategy with Google Fonts.
-     * See <https://biomejs.dev/linter/rules/use-google-font-display>
+     * See https://biomejs.dev/linter/rules/use-google-font-display
      */
     useGoogleFontDisplay: useGoogleFontDisplayConfigurationSchema.optional().nullable(),
     /**
      * Require for-in loops to include an if statement.
-     * See <https://biomejs.dev/linter/rules/use-guard-for-in>
+     * See https://biomejs.dev/linter/rules/use-guard-for-in
      */
     useGuardForIn: useGuardForInConfigurationSchema.optional().nullable(),
     /**
      * Use Array.isArray() instead of instanceof Array.
-     * See <https://biomejs.dev/linter/rules/use-is-array>
+     * See https://biomejs.dev/linter/rules/use-is-array
      */
     useIsArray: useIsArrayConfigurationSchema.optional().nullable(),
     /**
      * Enforce consistent return values in iterable callbacks.
-     * See <https://biomejs.dev/linter/rules/use-iterable-callback-return>
+     * See https://biomejs.dev/linter/rules/use-iterable-callback-return
      */
     useIterableCallbackReturn: useIterableCallbackReturnConfigurationSchema.optional().nullable(),
     /**
      * Require using the namespace keyword over the module keyword to declare TypeScript namespaces.
-     * See <https://biomejs.dev/linter/rules/use-namespace-keyword>
+     * See https://biomejs.dev/linter/rules/use-namespace-keyword
      */
     useNamespaceKeyword: useNamespaceKeywordConfigurationSchema.optional().nullable(),
     /**
      * Enforce using the digits argument with Number#toFixed().
-     * See <https://biomejs.dev/linter/rules/use-number-to-fixed-digits-argument>
+     * See https://biomejs.dev/linter/rules/use-number-to-fixed-digits-argument
      */
     useNumberToFixedDigitsArgument: useNumberToFixedDigitsArgumentConfigurationSchema.optional().nullable(),
     /**
      * Use static Response methods instead of new Response() constructor when possible.
-     * See <https://biomejs.dev/linter/rules/use-static-response-methods>
+     * See https://biomejs.dev/linter/rules/use-static-response-methods
      */
     useStaticResponseMethods: useStaticResponseMethodsConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of the directive "use strict" in script files.
-     * See <https://biomejs.dev/linter/rules/use-strict-mode>
+     * See https://biomejs.dev/linter/rules/use-strict-mode
      */
     useStrictMode: useStrictModeConfigurationSchema.optional().nullable()
 });
@@ -6793,267 +7018,267 @@ export const useNamingConventionOptionsSchema = z.object({
 export const correctnessSchema = z.object({
     /**
      * Prevent passing of children as props.
-     * See <https://biomejs.dev/linter/rules/no-children-prop>
+     * See https://biomejs.dev/linter/rules/no-children-prop
      */
     noChildrenProp: noChildrenPropConfigurationSchema.optional().nullable(),
     /**
      * Prevents from having const variables being re-assigned.
-     * See <https://biomejs.dev/linter/rules/no-const-assign>
+     * See https://biomejs.dev/linter/rules/no-const-assign
      */
     noConstAssign: noConstAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow constant expressions in conditions.
-     * See <https://biomejs.dev/linter/rules/no-constant-condition>
+     * See https://biomejs.dev/linter/rules/no-constant-condition
      */
     noConstantCondition: noConstantConditionConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of Math.min and Math.max to clamp a value where the result itself is constant.
-     * See <https://biomejs.dev/linter/rules/no-constant-math-min-max-clamp>
+     * See https://biomejs.dev/linter/rules/no-constant-math-min-max-clamp
      */
     noConstantMathMinMaxClamp: noConstantMathMinMaxClampConfigurationSchema.optional().nullable(),
     /**
      * Disallow returning a value from a constructor.
-     * See <https://biomejs.dev/linter/rules/no-constructor-return>
+     * See https://biomejs.dev/linter/rules/no-constructor-return
      */
     noConstructorReturn: noConstructorReturnConfigurationSchema.optional().nullable(),
     /**
      * Disallow empty character classes in regular expression literals.
-     * See <https://biomejs.dev/linter/rules/no-empty-character-class-in-regex>
+     * See https://biomejs.dev/linter/rules/no-empty-character-class-in-regex
      */
     noEmptyCharacterClassInRegex: noEmptyCharacterClassInRegexConfigurationSchema.optional().nullable(),
     /**
      * Disallows empty destructuring patterns.
-     * See <https://biomejs.dev/linter/rules/no-empty-pattern>
+     * See https://biomejs.dev/linter/rules/no-empty-pattern
      */
     noEmptyPattern: noEmptyPatternConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of __dirname and __filename in the global scope.
-     * See <https://biomejs.dev/linter/rules/no-global-dirname-filename>
+     * See https://biomejs.dev/linter/rules/no-global-dirname-filename
      */
     noGlobalDirnameFilename: noGlobalDirnameFilenameConfigurationSchema.optional().nullable(),
     /**
      * Disallow calling global object properties as functions.
-     * See <https://biomejs.dev/linter/rules/no-global-object-calls>
+     * See https://biomejs.dev/linter/rules/no-global-object-calls
      */
     noGlobalObjectCalls: noGlobalObjectCallsConfigurationSchema.optional().nullable(),
     /**
      * Disallow function and var declarations that are accessible outside their block.
-     * See <https://biomejs.dev/linter/rules/no-inner-declarations>
+     * See https://biomejs.dev/linter/rules/no-inner-declarations
      */
     noInnerDeclarations: noInnerDeclarationsConfigurationSchema.optional().nullable(),
     /**
      * Ensure that builtins are correctly instantiated.
-     * See <https://biomejs.dev/linter/rules/no-invalid-builtin-instantiation>
+     * See https://biomejs.dev/linter/rules/no-invalid-builtin-instantiation
      */
     noInvalidBuiltinInstantiation: noInvalidBuiltinInstantiationConfigurationSchema.optional().nullable(),
     /**
      * Prevents the incorrect use of super() inside classes. It also checks whether a call super() is missing from classes that extends other constructors.
-     * See <https://biomejs.dev/linter/rules/no-invalid-constructor-super>
+     * See https://biomejs.dev/linter/rules/no-invalid-constructor-super
      */
     noInvalidConstructorSuper: noInvalidConstructorSuperConfigurationSchema.optional().nullable(),
     /**
      * Disallow non-standard direction values for linear gradient functions.
-     * See <https://biomejs.dev/linter/rules/no-invalid-direction-in-linear-gradient>
+     * See https://biomejs.dev/linter/rules/no-invalid-direction-in-linear-gradient
      */
     noInvalidDirectionInLinearGradient: noInvalidDirectionInLinearGradientConfigurationSchema.optional().nullable(),
     /**
      * Disallows invalid named grid areas in CSS Grid Layouts.
-     * See <https://biomejs.dev/linter/rules/no-invalid-grid-areas>
+     * See https://biomejs.dev/linter/rules/no-invalid-grid-areas
      */
     noInvalidGridAreas: noInvalidGridAreasConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of @import at-rules in invalid positions.
-     * See <https://biomejs.dev/linter/rules/no-invalid-position-at-import-rule>
+     * See https://biomejs.dev/linter/rules/no-invalid-position-at-import-rule
      */
     noInvalidPositionAtImportRule: noInvalidPositionAtImportRuleConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of variables, function parameters, classes, and enums before their declaration.
-     * See <https://biomejs.dev/linter/rules/no-invalid-use-before-declaration>
+     * See https://biomejs.dev/linter/rules/no-invalid-use-before-declaration
      */
     noInvalidUseBeforeDeclaration: noInvalidUseBeforeDeclarationConfigurationSchema.optional().nullable(),
     /**
      * Disallow missing var function for css variables.
-     * See <https://biomejs.dev/linter/rules/no-missing-var-function>
+     * See https://biomejs.dev/linter/rules/no-missing-var-function
      */
     noMissingVarFunction: noMissingVarFunctionConfigurationSchema.optional().nullable(),
     /**
      * Disallows defining React components inside other components.
-     * See <https://biomejs.dev/linter/rules/no-nested-component-definitions>
+     * See https://biomejs.dev/linter/rules/no-nested-component-definitions
      */
     noNestedComponentDefinitions: noNestedComponentDefinitionsConfigurationSchema.optional().nullable(),
     /**
      * Forbid the use of Node.js builtin modules.
-     * See <https://biomejs.dev/linter/rules/no-nodejs-modules>
+     * See https://biomejs.dev/linter/rules/no-nodejs-modules
      */
     noNodejsModules: noNodejsModulesConfigurationSchema.optional().nullable(),
     /**
      * Disallow \8 and \9 escape sequences in string literals.
-     * See <https://biomejs.dev/linter/rules/no-nonoctal-decimal-escape>
+     * See https://biomejs.dev/linter/rules/no-nonoctal-decimal-escape
      */
     noNonoctalDecimalEscape: noNonoctalDecimalEscapeConfigurationSchema.optional().nullable(),
     /**
      * Disallow literal numbers that lose precision.
-     * See <https://biomejs.dev/linter/rules/no-precision-loss>
+     * See https://biomejs.dev/linter/rules/no-precision-loss
      */
     noPrecisionLoss: noPrecisionLossConfigurationSchema.optional().nullable(),
     /**
      * Restrict imports of private exports.
-     * See <https://biomejs.dev/linter/rules/no-private-imports>
+     * See https://biomejs.dev/linter/rules/no-private-imports
      */
     noPrivateImports: noPrivateImportsConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of process global.
-     * See <https://biomejs.dev/linter/rules/no-process-global>
+     * See https://biomejs.dev/linter/rules/no-process-global
      */
     noProcessGlobal: noProcessGlobalConfigurationSchema.optional().nullable(),
     /**
      * Disallow useVisibleTask$() functions in Qwik components.
-     * See <https://biomejs.dev/linter/rules/no-qwik-use-visible-task>
+     * See https://biomejs.dev/linter/rules/no-qwik-use-visible-task
      */
     noQwikUseVisibleTask: noQwikUseVisibleTaskConfigurationSchema.optional().nullable(),
     /**
      * Disallow assigning to React component props.
-     * See <https://biomejs.dev/linter/rules/no-react-prop-assignments>
+     * See https://biomejs.dev/linter/rules/no-react-prop-assignments
      */
     noReactPropAssignments: noReactPropAssignmentsConfigurationSchema.optional().nullable(),
     /**
      * Prevent the usage of the return value of React.render.
-     * See <https://biomejs.dev/linter/rules/no-render-return-value>
+     * See https://biomejs.dev/linter/rules/no-render-return-value
      */
     noRenderReturnValue: noRenderReturnValueConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of configured elements.
-     * See <https://biomejs.dev/linter/rules/no-restricted-elements>
+     * See https://biomejs.dev/linter/rules/no-restricted-elements
      */
     noRestrictedElements: noRestrictedElementsConfigurationSchema.optional().nullable(),
     /**
      * Disallow assignments where both sides are exactly the same.
-     * See <https://biomejs.dev/linter/rules/no-self-assign>
+     * See https://biomejs.dev/linter/rules/no-self-assign
      */
     noSelfAssign: noSelfAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow returning a value from a setter.
-     * See <https://biomejs.dev/linter/rules/no-setter-return>
+     * See https://biomejs.dev/linter/rules/no-setter-return
      */
     noSetterReturn: noSetterReturnConfigurationSchema.optional().nullable(),
     /**
      * Disallow destructuring props inside JSX components in Solid projects.
-     * See <https://biomejs.dev/linter/rules/no-solid-destructured-props>
+     * See https://biomejs.dev/linter/rules/no-solid-destructured-props
      */
     noSolidDestructuredProps: noSolidDestructuredPropsConfigurationSchema.optional().nullable(),
     /**
      * Disallow comparison of expressions modifying the string case with non-compliant value.
-     * See <https://biomejs.dev/linter/rules/no-string-case-mismatch>
+     * See https://biomejs.dev/linter/rules/no-string-case-mismatch
      */
     noStringCaseMismatch: noStringCaseMismatchConfigurationSchema.optional().nullable(),
     /**
      * Disallow lexical declarations in switch clauses.
-     * See <https://biomejs.dev/linter/rules/no-switch-declarations>
+     * See https://biomejs.dev/linter/rules/no-switch-declarations
      */
     noSwitchDeclarations: noSwitchDeclarationsConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of dependencies that aren't specified in the package.json.
-     * See <https://biomejs.dev/linter/rules/no-undeclared-dependencies>
+     * See https://biomejs.dev/linter/rules/no-undeclared-dependencies
      */
     noUndeclaredDependencies: noUndeclaredDependenciesConfigurationSchema.optional().nullable(),
     /**
      * Prevents the usage of variables that haven't been declared inside the document.
-     * See <https://biomejs.dev/linter/rules/no-undeclared-variables>
+     * See https://biomejs.dev/linter/rules/no-undeclared-variables
      */
     noUndeclaredVariables: noUndeclaredVariablesConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown CSS value functions.
-     * See <https://biomejs.dev/linter/rules/no-unknown-function>
+     * See https://biomejs.dev/linter/rules/no-unknown-function
      */
     noUnknownFunction: noUnknownFunctionConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown media feature names.
-     * See <https://biomejs.dev/linter/rules/no-unknown-media-feature-name>
+     * See https://biomejs.dev/linter/rules/no-unknown-media-feature-name
      */
     noUnknownMediaFeatureName: noUnknownMediaFeatureNameConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown properties.
-     * See <https://biomejs.dev/linter/rules/no-unknown-property>
+     * See https://biomejs.dev/linter/rules/no-unknown-property
      */
     noUnknownProperty: noUnknownPropertyConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown pseudo-class selectors.
-     * See <https://biomejs.dev/linter/rules/no-unknown-pseudo-class>
+     * See https://biomejs.dev/linter/rules/no-unknown-pseudo-class
      */
     noUnknownPseudoClass: noUnknownPseudoClassConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown pseudo-element selectors.
-     * See <https://biomejs.dev/linter/rules/no-unknown-pseudo-element>
+     * See https://biomejs.dev/linter/rules/no-unknown-pseudo-element
      */
     noUnknownPseudoElement: noUnknownPseudoElementConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown type selectors.
-     * See <https://biomejs.dev/linter/rules/no-unknown-type-selector>
+     * See https://biomejs.dev/linter/rules/no-unknown-type-selector
      */
     noUnknownTypeSelector: noUnknownTypeSelectorConfigurationSchema.optional().nullable(),
     /**
      * Disallow unknown CSS units.
-     * See <https://biomejs.dev/linter/rules/no-unknown-unit>
+     * See https://biomejs.dev/linter/rules/no-unknown-unit
      */
     noUnknownUnit: noUnknownUnitConfigurationSchema.optional().nullable(),
     /**
      * Disallow unmatchable An+B selectors.
-     * See <https://biomejs.dev/linter/rules/no-unmatchable-anb-selector>
+     * See https://biomejs.dev/linter/rules/no-unmatchable-anb-selector
      */
     noUnmatchableAnbSelector: noUnmatchableAnbSelectorConfigurationSchema.optional().nullable(),
     /**
      * Disallow unreachable code.
-     * See <https://biomejs.dev/linter/rules/no-unreachable>
+     * See https://biomejs.dev/linter/rules/no-unreachable
      */
     noUnreachable: noUnreachableConfigurationSchema.optional().nullable(),
     /**
      * Ensures the super() constructor is called exactly once on every code  path in a class constructor before this is accessed if the class has a superclass.
-     * See <https://biomejs.dev/linter/rules/no-unreachable-super>
+     * See https://biomejs.dev/linter/rules/no-unreachable-super
      */
     noUnreachableSuper: noUnreachableSuperConfigurationSchema.optional().nullable(),
     /**
      * Disallow control flow statements in finally blocks.
-     * See <https://biomejs.dev/linter/rules/no-unsafe-finally>
+     * See https://biomejs.dev/linter/rules/no-unsafe-finally
      */
     noUnsafeFinally: noUnsafeFinallyConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of optional chaining in contexts where the undefined value is not allowed.
-     * See <https://biomejs.dev/linter/rules/no-unsafe-optional-chaining>
+     * See https://biomejs.dev/linter/rules/no-unsafe-optional-chaining
      */
     noUnsafeOptionalChaining: noUnsafeOptionalChainingConfigurationSchema.optional().nullable(),
     /**
      * Disallow unused function parameters.
-     * See <https://biomejs.dev/linter/rules/no-unused-function-parameters>
+     * See https://biomejs.dev/linter/rules/no-unused-function-parameters
      */
     noUnusedFunctionParameters: noUnusedFunctionParametersConfigurationSchema.optional().nullable(),
     /**
      * Disallow unused imports.
-     * See <https://biomejs.dev/linter/rules/no-unused-imports>
+     * See https://biomejs.dev/linter/rules/no-unused-imports
      */
     noUnusedImports: noUnusedImportsConfigurationSchema.optional().nullable(),
     /**
      * Disallow unused labels.
-     * See <https://biomejs.dev/linter/rules/no-unused-labels>
+     * See https://biomejs.dev/linter/rules/no-unused-labels
      */
     noUnusedLabels: noUnusedLabelsConfigurationSchema.optional().nullable(),
     /**
      * Disallow unused private class members.
-     * See <https://biomejs.dev/linter/rules/no-unused-private-class-members>
+     * See https://biomejs.dev/linter/rules/no-unused-private-class-members
      */
     noUnusedPrivateClassMembers: noUnusedPrivateClassMembersConfigurationSchema.optional().nullable(),
     /**
      * Disallow unused variables.
-     * See <https://biomejs.dev/linter/rules/no-unused-variables>
+     * See https://biomejs.dev/linter/rules/no-unused-variables
      */
     noUnusedVariables: noUnusedVariablesConfigurationSchema.optional().nullable(),
     /**
      * This rules prevents void elements (AKA self-closing elements) from having children.
-     * See <https://biomejs.dev/linter/rules/no-void-elements-with-children>
+     * See https://biomejs.dev/linter/rules/no-void-elements-with-children
      */
     noVoidElementsWithChildren: noVoidElementsWithChildrenConfigurationSchema.optional().nullable(),
     /**
      * Disallow returning a value from a function with the return type 'void'.
-     * See <https://biomejs.dev/linter/rules/no-void-type-return>
+     * See https://biomejs.dev/linter/rules/no-void-type-return
      */
     noVoidTypeReturn: noVoidTypeReturnConfigurationSchema.optional().nullable(),
     /**
@@ -7062,77 +7287,77 @@ export const correctnessSchema = z.object({
     recommended: z.boolean().optional().nullable(),
     /**
      * Enforce correct dependency usage within React hooks.
-     * See <https://biomejs.dev/linter/rules/use-exhaustive-dependencies>
+     * See https://biomejs.dev/linter/rules/use-exhaustive-dependencies
      */
     useExhaustiveDependencies: useExhaustiveDependenciesConfigurationSchema.optional().nullable(),
     /**
      * Enforce specifying the name of GraphQL operations.
-     * See <https://biomejs.dev/linter/rules/use-graphql-named-operations>
+     * See https://biomejs.dev/linter/rules/use-graphql-named-operations
      */
     useGraphqlNamedOperations: useGraphqlNamedOperationsConfigurationSchema.optional().nullable(),
     /**
      * Enforce that all React hooks are being called from the Top Level component functions.
-     * See <https://biomejs.dev/linter/rules/use-hook-at-top-level>
+     * See https://biomejs.dev/linter/rules/use-hook-at-top-level
      */
     useHookAtTopLevel: useHookAtTopLevelConfigurationSchema.optional().nullable(),
     /**
      * Enforces that \<img> elements have both width and height attributes.
-     * See <https://biomejs.dev/linter/rules/use-image-size>
+     * See https://biomejs.dev/linter/rules/use-image-size
      */
     useImageSize: useImageSizeConfigurationSchema.optional().nullable(),
     /**
      * Enforce file extensions for relative imports.
-     * See <https://biomejs.dev/linter/rules/use-import-extensions>
+     * See https://biomejs.dev/linter/rules/use-import-extensions
      */
     useImportExtensions: useImportExtensionsConfigurationSchema.optional().nullable(),
     /**
      * Require calls to isNaN() when checking for NaN.
-     * See <https://biomejs.dev/linter/rules/use-is-nan>
+     * See https://biomejs.dev/linter/rules/use-is-nan
      */
     useIsNan: useIsNanConfigurationSchema.optional().nullable(),
     /**
      * Enforces the use of with { type: "json" } for JSON module imports.
-     * See <https://biomejs.dev/linter/rules/use-json-import-attributes>
+     * See https://biomejs.dev/linter/rules/use-json-import-attributes
      */
     useJsonImportAttributes: useJsonImportAttributesConfigurationSchema.optional().nullable(),
     /**
      * Disallow missing key props in iterators/collection literals.
-     * See <https://biomejs.dev/linter/rules/use-jsx-key-in-iterable>
+     * See https://biomejs.dev/linter/rules/use-jsx-key-in-iterable
      */
     useJsxKeyInIterable: useJsxKeyInIterableConfigurationSchema.optional().nullable(),
     /**
      * Enforce the consistent use of the radix argument when using parseInt().
-     * See <https://biomejs.dev/linter/rules/use-parse-int-radix>
+     * See https://biomejs.dev/linter/rules/use-parse-int-radix
      */
     useParseIntRadix: useParseIntRadixConfigurationSchema.optional().nullable(),
     /**
      * Prefer using the class prop as a classlist over the classnames helper.
-     * See <https://biomejs.dev/linter/rules/use-qwik-classlist>
+     * See https://biomejs.dev/linter/rules/use-qwik-classlist
      */
     useQwikClasslist: useQwikClasslistConfigurationSchema.optional().nullable(),
     /**
      * Enforce JSDoc comment lines to start with a single asterisk, except for the first one.
-     * See <https://biomejs.dev/linter/rules/use-single-js-doc-asterisk>
+     * See https://biomejs.dev/linter/rules/use-single-js-doc-asterisk
      */
     useSingleJsDocAsterisk: useSingleJsDocAsteriskConfigurationSchema.optional().nullable(),
     /**
      * Prevent the usage of static string literal id attribute on elements.
-     * See <https://biomejs.dev/linter/rules/use-unique-element-ids>
+     * See https://biomejs.dev/linter/rules/use-unique-element-ids
      */
     useUniqueElementIds: useUniqueElementIdsConfigurationSchema.optional().nullable(),
     /**
      * Enforce "for" loop update clause moving the counter in the right direction.
-     * See <https://biomejs.dev/linter/rules/use-valid-for-direction>
+     * See https://biomejs.dev/linter/rules/use-valid-for-direction
      */
     useValidForDirection: useValidForDirectionConfigurationSchema.optional().nullable(),
     /**
      * This rule checks that the result of a typeof expression is compared to a valid value.
-     * See <https://biomejs.dev/linter/rules/use-valid-typeof>
+     * See https://biomejs.dev/linter/rules/use-valid-typeof
      */
     useValidTypeof: useValidTypeofConfigurationSchema.optional().nullable(),
     /**
      * Require generator functions to contain yield.
-     * See <https://biomejs.dev/linter/rules/use-yield>
+     * See https://biomejs.dev/linter/rules/use-yield
      */
     useYield: useYieldConfigurationSchema.optional().nullable()
 });
@@ -7170,132 +7395,132 @@ export const ruleAssistWithOrganizeImportsOptionsSchema = z.record(z.string(), z
 export const styleSchema = z.object({
     /**
      * Disallow use of CommonJs module system in favor of ESM style imports.
-     * See <https://biomejs.dev/linter/rules/no-common-js>
+     * See https://biomejs.dev/linter/rules/no-common-js
      */
     noCommonJs: noCommonJsConfigurationSchema.optional().nullable(),
     /**
      * Disallow default exports.
-     * See <https://biomejs.dev/linter/rules/no-default-export>
+     * See https://biomejs.dev/linter/rules/no-default-export
      */
     noDefaultExport: noDefaultExportConfigurationSchema.optional().nullable(),
     /**
      * Disallow a lower specificity selector from coming after a higher specificity selector.
-     * See <https://biomejs.dev/linter/rules/no-descending-specificity>
+     * See https://biomejs.dev/linter/rules/no-descending-specificity
      */
     noDescendingSpecificity: noDescendingSpecificityConfigurationSchema.optional().nullable(),
     /**
      * Disallow using a callback in asynchronous tests and hooks.
-     * See <https://biomejs.dev/linter/rules/no-done-callback>
+     * See https://biomejs.dev/linter/rules/no-done-callback
      */
     noDoneCallback: noDoneCallbackConfigurationSchema.optional().nullable(),
     /**
      * Disallow TypeScript enum.
-     * See <https://biomejs.dev/linter/rules/no-enum>
+     * See https://biomejs.dev/linter/rules/no-enum
      */
     noEnum: noEnumConfigurationSchema.optional().nullable(),
     /**
      * Disallow exporting an imported variable.
-     * See <https://biomejs.dev/linter/rules/no-exported-imports>
+     * See https://biomejs.dev/linter/rules/no-exported-imports
      */
     noExportedImports: noExportedImportsConfigurationSchema.optional().nullable(),
     /**
      * Prevent usage of \<head> element in a Next.js project.
-     * See <https://biomejs.dev/linter/rules/no-head-element>
+     * See https://biomejs.dev/linter/rules/no-head-element
      */
     noHeadElement: noHeadElementConfigurationSchema.optional().nullable(),
     /**
      * Disallow implicit true values on JSX boolean attributes.
-     * See <https://biomejs.dev/linter/rules/no-implicit-boolean>
+     * See https://biomejs.dev/linter/rules/no-implicit-boolean
      */
     noImplicitBoolean: noImplicitBooleanConfigurationSchema.optional().nullable(),
     /**
      * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
-     * See <https://biomejs.dev/linter/rules/no-inferrable-types>
+     * See https://biomejs.dev/linter/rules/no-inferrable-types
      */
     noInferrableTypes: noInferrableTypesConfigurationSchema.optional().nullable(),
     /**
      * Reports usage of "magic numbers" — numbers used directly instead of being assigned to named constants.
-     * See <https://biomejs.dev/linter/rules/no-magic-numbers>
+     * See https://biomejs.dev/linter/rules/no-magic-numbers
      */
     noMagicNumbers: noMagicNumbersConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of TypeScript's namespaces.
-     * See <https://biomejs.dev/linter/rules/no-namespace>
+     * See https://biomejs.dev/linter/rules/no-namespace
      */
     noNamespace: noNamespaceConfigurationSchema.optional().nullable(),
     /**
      * Disallow negation in the condition of an if statement if it has an else clause.
-     * See <https://biomejs.dev/linter/rules/no-negation-else>
+     * See https://biomejs.dev/linter/rules/no-negation-else
      */
     noNegationElse: noNegationElseConfigurationSchema.optional().nullable(),
     /**
      * Disallow nested ternary expressions.
-     * See <https://biomejs.dev/linter/rules/no-nested-ternary>
+     * See https://biomejs.dev/linter/rules/no-nested-ternary
      */
     noNestedTernary: noNestedTernaryConfigurationSchema.optional().nullable(),
     /**
      * Disallow non-null assertions using the ! postfix operator.
-     * See <https://biomejs.dev/linter/rules/no-non-null-assertion>
+     * See https://biomejs.dev/linter/rules/no-non-null-assertion
      */
     noNonNullAssertion: noNonNullAssertionConfigurationSchema.optional().nullable(),
     /**
      * Disallow reassigning function parameters.
-     * See <https://biomejs.dev/linter/rules/no-parameter-assign>
+     * See https://biomejs.dev/linter/rules/no-parameter-assign
      */
     noParameterAssign: noParameterAssignConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of parameter properties in class constructors.
-     * See <https://biomejs.dev/linter/rules/no-parameter-properties>
+     * See https://biomejs.dev/linter/rules/no-parameter-properties
      */
     noParameterProperties: noParameterPropertiesConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of process.env.
-     * See <https://biomejs.dev/linter/rules/no-process-env>
+     * See https://biomejs.dev/linter/rules/no-process-env
      */
     noProcessEnv: noProcessEnvConfigurationSchema.optional().nullable(),
     /**
      * This rule allows you to specify global variable names that you don’t want to use in your application.
-     * See <https://biomejs.dev/linter/rules/no-restricted-globals>
+     * See https://biomejs.dev/linter/rules/no-restricted-globals
      */
     noRestrictedGlobals: noRestrictedGlobalsConfigurationSchema.optional().nullable(),
     /**
      * Disallow specified modules when loaded by import or require.
-     * See <https://biomejs.dev/linter/rules/no-restricted-imports>
+     * See https://biomejs.dev/linter/rules/no-restricted-imports
      */
     noRestrictedImports: noRestrictedImportsConfigurationSchema.optional().nullable(),
     /**
      * Disallow user defined types.
-     * See <https://biomejs.dev/linter/rules/no-restricted-types>
+     * See https://biomejs.dev/linter/rules/no-restricted-types
      */
     noRestrictedTypes: noRestrictedTypesConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of constants which its value is the upper-case version of its name.
-     * See <https://biomejs.dev/linter/rules/no-shouty-constants>
+     * See https://biomejs.dev/linter/rules/no-shouty-constants
      */
     noShoutyConstants: noShoutyConstantsConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of String.slice() over String.substr() and String.substring().
-     * See <https://biomejs.dev/linter/rules/no-substr>
+     * See https://biomejs.dev/linter/rules/no-substr
      */
     noSubstr: noSubstrConfigurationSchema.optional().nullable(),
     /**
      * Disallow template literals if interpolation and special-character handling are not needed.
-     * See <https://biomejs.dev/linter/rules/no-unused-template-literal>
+     * See https://biomejs.dev/linter/rules/no-unused-template-literal
      */
     noUnusedTemplateLiteral: noUnusedTemplateLiteralConfigurationSchema.optional().nullable(),
     /**
      * Disallow else block when the if block breaks early.
-     * See <https://biomejs.dev/linter/rules/no-useless-else>
+     * See https://biomejs.dev/linter/rules/no-useless-else
      */
     noUselessElse: noUselessElseConfigurationSchema.optional().nullable(),
     /**
      * Disallow use of @value rule in css modules.
-     * See <https://biomejs.dev/linter/rules/no-value-at-rule>
+     * See https://biomejs.dev/linter/rules/no-value-at-rule
      */
     noValueAtRule: noValueAtRuleConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of yoda expressions.
-     * See <https://biomejs.dev/linter/rules/no-yoda-expression>
+     * See https://biomejs.dev/linter/rules/no-yoda-expression
      */
     noYodaExpression: noYodaExpressionConfigurationSchema.optional().nullable(),
     /**
@@ -7304,237 +7529,237 @@ export const styleSchema = z.object({
     recommended: z.boolean().optional().nullable(),
     /**
      * Disallow Array constructors.
-     * See <https://biomejs.dev/linter/rules/use-array-literals>
+     * See https://biomejs.dev/linter/rules/use-array-literals
      */
     useArrayLiterals: useArrayLiteralsConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of as const over literal type and type annotation.
-     * See <https://biomejs.dev/linter/rules/use-as-const-assertion>
+     * See https://biomejs.dev/linter/rules/use-as-const-assertion
      */
     useAsConstAssertion: useAsConstAssertionConfigurationSchema.optional().nullable(),
     /**
      * Use at() instead of integer index access.
-     * See <https://biomejs.dev/linter/rules/use-at-index>
+     * See https://biomejs.dev/linter/rules/use-at-index
      */
     useAtIndex: useAtIndexConfigurationSchema.optional().nullable(),
     /**
      * Requires following curly brace conventions.
-     * See <https://biomejs.dev/linter/rules/use-block-statements>
+     * See https://biomejs.dev/linter/rules/use-block-statements
      */
     useBlockStatements: useBlockStatementsConfigurationSchema.optional().nullable(),
     /**
      * Enforce using else if instead of nested if in else clauses.
-     * See <https://biomejs.dev/linter/rules/use-collapsed-else-if>
+     * See https://biomejs.dev/linter/rules/use-collapsed-else-if
      */
     useCollapsedElseIf: useCollapsedElseIfConfigurationSchema.optional().nullable(),
     /**
      * Enforce using single if instead of nested if clauses.
-     * See <https://biomejs.dev/linter/rules/use-collapsed-if>
+     * See https://biomejs.dev/linter/rules/use-collapsed-if
      */
     useCollapsedIf: useCollapsedIfConfigurationSchema.optional().nullable(),
     /**
      * Enforce declaring components only within modules that export React Components exclusively.
-     * See <https://biomejs.dev/linter/rules/use-component-export-only-modules>
+     * See https://biomejs.dev/linter/rules/use-component-export-only-modules
      */
     useComponentExportOnlyModules: useComponentExportOnlyModulesConfigurationSchema.optional().nullable(),
     /**
      * Require consistently using either T\[] or Array\<T>.
-     * See <https://biomejs.dev/linter/rules/use-consistent-array-type>
+     * See https://biomejs.dev/linter/rules/use-consistent-array-type
      */
     useConsistentArrayType: useConsistentArrayTypeConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of new for all builtins, except String, Number and Boolean.
-     * See <https://biomejs.dev/linter/rules/use-consistent-builtin-instantiation>
+     * See https://biomejs.dev/linter/rules/use-consistent-builtin-instantiation
      */
     useConsistentBuiltinInstantiation: useConsistentBuiltinInstantiationConfigurationSchema.optional().nullable(),
     /**
      * This rule enforces consistent use of curly braces inside JSX attributes and JSX children.
-     * See <https://biomejs.dev/linter/rules/use-consistent-curly-braces>
+     * See https://biomejs.dev/linter/rules/use-consistent-curly-braces
      */
     useConsistentCurlyBraces: useConsistentCurlyBracesConfigurationSchema.optional().nullable(),
     /**
      * Require consistent accessibility modifiers on class properties and methods.
-     * See <https://biomejs.dev/linter/rules/use-consistent-member-accessibility>
+     * See https://biomejs.dev/linter/rules/use-consistent-member-accessibility
      */
     useConsistentMemberAccessibility: useConsistentMemberAccessibilityConfigurationSchema.optional().nullable(),
     /**
      * Require the consistent declaration of object literals. Defaults to explicit definitions.
-     * See <https://biomejs.dev/linter/rules/use-consistent-object-definitions>
+     * See https://biomejs.dev/linter/rules/use-consistent-object-definitions
      */
     useConsistentObjectDefinitions: useConsistentObjectDefinitionsConfigurationSchema.optional().nullable(),
     /**
      * Enforce type definitions to consistently use either interface or type.
-     * See <https://biomejs.dev/linter/rules/use-consistent-type-definitions>
+     * See https://biomejs.dev/linter/rules/use-consistent-type-definitions
      */
     useConsistentTypeDefinitions: useConsistentTypeDefinitionsConfigurationSchema.optional().nullable(),
     /**
      * Require const declarations for variables that are only assigned once.
-     * See <https://biomejs.dev/linter/rules/use-const>
+     * See https://biomejs.dev/linter/rules/use-const
      */
     useConst: useConstConfigurationSchema.optional().nullable(),
     /**
      * Enforce default function parameters and optional function parameters to be last.
-     * See <https://biomejs.dev/linter/rules/use-default-parameter-last>
+     * See https://biomejs.dev/linter/rules/use-default-parameter-last
      */
     useDefaultParameterLast: useDefaultParameterLastConfigurationSchema.optional().nullable(),
     /**
      * Require the default clause in switch statements.
-     * See <https://biomejs.dev/linter/rules/use-default-switch-clause>
+     * See https://biomejs.dev/linter/rules/use-default-switch-clause
      */
     useDefaultSwitchClause: useDefaultSwitchClauseConfigurationSchema.optional().nullable(),
     /**
      * Require specifying the reason argument when using @deprecated directive.
-     * See <https://biomejs.dev/linter/rules/use-deprecated-reason>
+     * See https://biomejs.dev/linter/rules/use-deprecated-reason
      */
     useDeprecatedReason: useDeprecatedReasonConfigurationSchema.optional().nullable(),
     /**
      * Require that each enum member value be explicitly initialized.
-     * See <https://biomejs.dev/linter/rules/use-enum-initializers>
+     * See https://biomejs.dev/linter/rules/use-enum-initializers
      */
     useEnumInitializers: useEnumInitializersConfigurationSchema.optional().nullable(),
     /**
      * Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value.
-     * See <https://biomejs.dev/linter/rules/use-explicit-length-check>
+     * See https://biomejs.dev/linter/rules/use-explicit-length-check
      */
     useExplicitLengthCheck: useExplicitLengthCheckConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of Math.pow in favor of the ** operator.
-     * See <https://biomejs.dev/linter/rules/use-exponentiation-operator>
+     * See https://biomejs.dev/linter/rules/use-exponentiation-operator
      */
     useExponentiationOperator: useExponentiationOperatorConfigurationSchema.optional().nullable(),
     /**
      * Promotes the use of export type for types.
-     * See <https://biomejs.dev/linter/rules/use-export-type>
+     * See https://biomejs.dev/linter/rules/use-export-type
      */
     useExportType: useExportTypeConfigurationSchema.optional().nullable(),
     /**
      * Require that all exports are declared after all non-export statements.
-     * See <https://biomejs.dev/linter/rules/use-exports-last>
+     * See https://biomejs.dev/linter/rules/use-exports-last
      */
     useExportsLast: useExportsLastConfigurationSchema.optional().nullable(),
     /**
      * Enforce naming conventions for JavaScript and TypeScript filenames.
-     * See <https://biomejs.dev/linter/rules/use-filenaming-convention>
+     * See https://biomejs.dev/linter/rules/use-filenaming-convention
      */
     useFilenamingConvention: useFilenamingConventionConfigurationSchema.optional().nullable(),
     /**
      * Prefer using for...of loops over standard for loops where possible.
-     * See <https://biomejs.dev/linter/rules/use-for-of>
+     * See https://biomejs.dev/linter/rules/use-for-of
      */
     useForOf: useForOfConfigurationSchema.optional().nullable(),
     /**
      * This rule enforces the use of \<>...\</> over \<Fragment>...\</Fragment>.
-     * See <https://biomejs.dev/linter/rules/use-fragment-syntax>
+     * See https://biomejs.dev/linter/rules/use-fragment-syntax
      */
     useFragmentSyntax: useFragmentSyntaxConfigurationSchema.optional().nullable(),
     /**
      * Validates that all enum values are capitalized.
-     * See <https://biomejs.dev/linter/rules/use-graphql-naming-convention>
+     * See https://biomejs.dev/linter/rules/use-graphql-naming-convention
      */
     useGraphqlNamingConvention: useGraphqlNamingConventionConfigurationSchema.optional().nullable(),
     /**
      * Enforce that getters and setters for the same property are adjacent in class and object definitions.
-     * See <https://biomejs.dev/linter/rules/use-grouped-accessor-pairs>
+     * See https://biomejs.dev/linter/rules/use-grouped-accessor-pairs
      */
     useGroupedAccessorPairs: useGroupedAccessorPairsConfigurationSchema.optional().nullable(),
     /**
      * Promotes the use of import type for types.
-     * See <https://biomejs.dev/linter/rules/use-import-type>
+     * See https://biomejs.dev/linter/rules/use-import-type
      */
     useImportType: useImportTypeConfigurationSchema.optional().nullable(),
     /**
      * Require all enum members to be literal values.
-     * See <https://biomejs.dev/linter/rules/use-literal-enum-members>
+     * See https://biomejs.dev/linter/rules/use-literal-enum-members
      */
     useLiteralEnumMembers: useLiteralEnumMembersConfigurationSchema.optional().nullable(),
     /**
      * Enforce naming conventions for everything across a codebase.
-     * See <https://biomejs.dev/linter/rules/use-naming-convention>
+     * See https://biomejs.dev/linter/rules/use-naming-convention
      */
     useNamingConvention: useNamingConventionConfigurationSchema.optional().nullable(),
     /**
      * Promotes the usage of node:assert/strict over node:assert.
-     * See <https://biomejs.dev/linter/rules/use-node-assert-strict>
+     * See https://biomejs.dev/linter/rules/use-node-assert-strict
      */
     useNodeAssertStrict: useNodeAssertStrictConfigurationSchema.optional().nullable(),
     /**
      * Enforces using the node: protocol for Node.js builtin modules.
-     * See <https://biomejs.dev/linter/rules/use-nodejs-import-protocol>
+     * See https://biomejs.dev/linter/rules/use-nodejs-import-protocol
      */
     useNodejsImportProtocol: useNodejsImportProtocolConfigurationSchema.optional().nullable(),
     /**
      * Use the Number properties instead of global ones.
-     * See <https://biomejs.dev/linter/rules/use-number-namespace>
+     * See https://biomejs.dev/linter/rules/use-number-namespace
      */
     useNumberNamespace: useNumberNamespaceConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of numeric separators in numeric literals.
-     * See <https://biomejs.dev/linter/rules/use-numeric-separators>
+     * See https://biomejs.dev/linter/rules/use-numeric-separators
      */
     useNumericSeparators: useNumericSeparatorsConfigurationSchema.optional().nullable(),
     /**
      * Prefer object spread over Object.assign() when constructing new objects.
-     * See <https://biomejs.dev/linter/rules/use-object-spread>
+     * See https://biomejs.dev/linter/rules/use-object-spread
      */
     useObjectSpread: useObjectSpreadConfigurationSchema.optional().nullable(),
     /**
      * Enforce that components are defined as functions and never as classes.
-     * See <https://biomejs.dev/linter/rules/use-react-function-components>
+     * See https://biomejs.dev/linter/rules/use-react-function-components
      */
     useReactFunctionComponents: useReactFunctionComponentsConfigurationSchema.optional().nullable(),
     /**
      * Enforce marking members as readonly if they are never modified outside the constructor.
-     * See <https://biomejs.dev/linter/rules/use-readonly-class-properties>
+     * See https://biomejs.dev/linter/rules/use-readonly-class-properties
      */
     useReadonlyClassProperties: useReadonlyClassPropertiesConfigurationSchema.optional().nullable(),
     /**
      * Prevent extra closing tags for components without children.
-     * See <https://biomejs.dev/linter/rules/use-self-closing-elements>
+     * See https://biomejs.dev/linter/rules/use-self-closing-elements
      */
     useSelfClosingElements: useSelfClosingElementsConfigurationSchema.optional().nullable(),
     /**
      * Require assignment operator shorthand where possible.
-     * See <https://biomejs.dev/linter/rules/use-shorthand-assign>
+     * See https://biomejs.dev/linter/rules/use-shorthand-assign
      */
     useShorthandAssign: useShorthandAssignConfigurationSchema.optional().nullable(),
     /**
      * Enforce using function types instead of object type with call signatures.
-     * See <https://biomejs.dev/linter/rules/use-shorthand-function-type>
+     * See https://biomejs.dev/linter/rules/use-shorthand-function-type
      */
     useShorthandFunctionType: useShorthandFunctionTypeConfigurationSchema.optional().nullable(),
     /**
      * Disallow multiple variable declarations in the same variable statement.
-     * See <https://biomejs.dev/linter/rules/use-single-var-declarator>
+     * See https://biomejs.dev/linter/rules/use-single-var-declarator
      */
     useSingleVarDeclarator: useSingleVarDeclaratorConfigurationSchema.optional().nullable(),
     /**
      * Require a description parameter for the Symbol().
-     * See <https://biomejs.dev/linter/rules/use-symbol-description>
+     * See https://biomejs.dev/linter/rules/use-symbol-description
      */
     useSymbolDescription: useSymbolDescriptionConfigurationSchema.optional().nullable(),
     /**
      * Prefer template literals over string concatenation.
-     * See <https://biomejs.dev/linter/rules/use-template>
+     * See https://biomejs.dev/linter/rules/use-template
      */
     useTemplate: useTemplateConfigurationSchema.optional().nullable(),
     /**
      * Require new when throwing an error.
-     * See <https://biomejs.dev/linter/rules/use-throw-new-error>
+     * See https://biomejs.dev/linter/rules/use-throw-new-error
      */
     useThrowNewError: useThrowNewErrorConfigurationSchema.optional().nullable(),
     /**
      * Disallow throwing non-Error values.
-     * See <https://biomejs.dev/linter/rules/use-throw-only-error>
+     * See https://biomejs.dev/linter/rules/use-throw-only-error
      */
     useThrowOnlyError: useThrowOnlyErrorConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of String.trimStart() and String.trimEnd() over String.trimLeft() and String.trimRight().
-     * See <https://biomejs.dev/linter/rules/use-trim-start-end>
+     * See https://biomejs.dev/linter/rules/use-trim-start-end
      */
     useTrimStartEnd: useTrimStartEndConfigurationSchema.optional().nullable(),
     /**
      * Disallow overload signatures that can be unified into a single signature.
-     * See <https://biomejs.dev/linter/rules/use-unified-type-signatures>
+     * See https://biomejs.dev/linter/rules/use-unified-type-signatures
      */
     useUnifiedTypeSignatures: useUnifiedTypeSignaturesConfigurationSchema.optional().nullable()
 });
@@ -7584,7 +7809,7 @@ export const linterConfigurationSchema = z.object({
 export const sourceSchema = z.object({
     /**
      * Provides a code action to sort the imports and exports in the file using a built-in or custom order.
-     * See <https://biomejs.dev/assist/actions/organize-imports>
+     * See https://biomejs.dev/assist/actions/organize-imports
      */
     organizeImports: organizeImportsConfigurationSchema.optional().nullable(),
     /**
@@ -7593,17 +7818,17 @@ export const sourceSchema = z.object({
     recommended: z.boolean().optional().nullable(),
     /**
      * Enforce attribute sorting in JSX elements.
-     * See <https://biomejs.dev/assist/actions/use-sorted-attributes>
+     * See https://biomejs.dev/assist/actions/use-sorted-attributes
      */
     useSortedAttributes: useSortedAttributesConfigurationSchema.optional().nullable(),
     /**
      * Sort the keys of a JSON object in natural order.
-     * See <https://biomejs.dev/assist/actions/use-sorted-keys>
+     * See https://biomejs.dev/assist/actions/use-sorted-keys
      */
     useSortedKeys: useSortedKeysConfigurationSchema.optional().nullable(),
     /**
      * Enforce ordering of CSS properties and nested rules.
-     * See <https://biomejs.dev/assist/actions/use-sorted-properties>
+     * See https://biomejs.dev/assist/actions/use-sorted-properties
      */
     useSortedProperties: useSortedPropertiesConfigurationSchema.optional().nullable()
 });
