@@ -511,7 +511,7 @@ const nursery = {
 	/**
 	 * GraphQL-only rule.
 	 */
-	useUniqueVariableNames: "off",
+	noDuplicateVariableNames: "off",
 	useVueConsistentDefinePropsDeclaration: "off",
 	useVueConsistentVBindStyle: "off",
 	useVueConsistentVOnStyle: "off",

@@ -44,6 +44,10 @@ const nursery = {
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	noDuplicateInputFieldNames: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateVariableNames: "error",
 
 	noEmptySource: "error",
 	/**
@@ -56,10 +60,6 @@ const nursery = {
 		},
 	},
 	useDeprecatedDate: "warn",
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	useUniqueVariableNames: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
