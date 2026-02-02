@@ -300,6 +300,18 @@ const nursery = {
 	noContinue: "off",
 	noDeprecatedImports: "warn",
 	/**
+	 * Enforces a more readable regular expression.
+	 */
+	noDivRegex: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateArgumentNames: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	noDuplicateAttributes: "off",
+	/**
 	 * NodeJS-only rule.
 	 */
 	noDuplicateDependencies: "off",
@@ -308,6 +320,30 @@ const nursery = {
 	 */
 	noDuplicatedSpreadProps: "off",
 	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	noDuplicateEnumValueNames: "error",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	noDuplicateEnumValues: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateFieldDefinitionNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateGraphqlOperationName: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateInputFieldNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateVariableNames: "off",
+	/**
 	 * GraphQL-only rule.
 	 */
 	noEmptySource: "off",
@@ -315,6 +351,24 @@ const nursery = {
 	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
 	 */
 	noEqualsToNull: "off",
+	/**
+	 * Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
+	 * The configuration is left up at the `warn` level to let maintainers know that a rule like this exists and can be configured differently.
+	 */
+	noExcessiveClassesPerFile: {
+		level: "warn",
+		options: {
+			maxClasses: 2,
+		},
+	},
+	/**
+	 * The rule is left as `off`. If required, it should be enabled on a project level.
+	 */
+	noExcessiveLinesPerFile: "off",
+	/**
+	 * Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
+	 */
+	noFloatingClasses: "error",
 	noFloatingPromises: "error",
 	/**
 	 * `for-in` loops are usually just a typo when trying to remember how `for-of` is written.
@@ -375,6 +429,10 @@ const nursery = {
 	 */
 	noReturnAssign: "error",
 	/**
+	 * GraphQL-only rule.
+	 */
+	noRootType: "off",
+	/**
 	 * Frontend-only rule.
 	 */
 	noScriptUrl: "off",
@@ -415,6 +473,10 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
+	noVueOptionsApi: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	noVueReservedKeys: "off",
 	/**
 	 * Vue-only rule.
@@ -439,6 +501,10 @@ const nursery = {
 	useAwaitThenable: "error",
 	useConsistentArrowReturn: "error",
 	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	useConsistentEnumValueType: "error",
+	/**
 	 * GraphQL-only rule.
 	 */
 	useConsistentGraphqlDescriptions: "off",
@@ -451,6 +517,10 @@ const nursery = {
 	 * The level is left at `info` to at least let the user know that the option exists.
 	 */
 	useDestructuring: "info",
+	/**
+	 * Promotes better error-handling practices.
+	 */
+	useErrorCause: "error",
 	useExhaustiveSwitchCases: "error",
 	/**
 	 * The rule is currently missing the option to make the following usage valid:
@@ -467,6 +537,18 @@ const nursery = {
 	 * Much more readable approach then indexing into a possibly empty array.
 	 */
 	useFind: "error",
+	/**
+	 * NextJS-only rule.
+	 */
+	useInlineScriptId: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useLoneAnonymousOperation: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useLoneExecutableDefinition: "off",
 	useMaxParams: "error",
 	/**
 	 * Qwik-only rule.
@@ -492,26 +574,6 @@ const nursery = {
 	 * Spread syntax is more readable than using `Object.apply`.
 	 */
 	useSpread: "error",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useUniqueArgumentNames: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useUniqueFieldDefinitionNames: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useUniqueGraphqlOperationName: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useUniqueInputFieldNames: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useUniqueVariableNames: "off",
 	useVueConsistentDefinePropsDeclaration: "off",
 	useVueConsistentVBindStyle: "off",
 	useVueConsistentVOnStyle: "off",

@@ -727,6 +727,24 @@ NextJS-only rule.
 
 > `readonly` **noDeprecatedImports**: `"warn"` = `"warn"`
 
+#### nursery.noDivRegex
+
+> `readonly` **noDivRegex**: `"error"` = `"error"`
+
+Enforces a more readable regular expression.
+
+#### nursery.noDuplicateArgumentNames
+
+> `readonly` **noDuplicateArgumentNames**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+#### nursery.noDuplicateAttributes
+
+> `readonly` **noDuplicateAttributes**: `"off"` = `"off"`
+
+Frontend-only rule.
+
 #### nursery.noDuplicateDependencies
 
 > `readonly` **noDuplicateDependencies**: `"error"` = `"error"`
@@ -736,6 +754,42 @@ NextJS-only rule.
 > `readonly` **noDuplicatedSpreadProps**: `"off"` = `"off"`
 
 React & Solid.js only rule.
+
+#### nursery.noDuplicateEnumValueNames
+
+> `readonly` **noDuplicateEnumValueNames**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+
+#### nursery.noDuplicateEnumValues
+
+> `readonly` **noDuplicateEnumValues**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+
+#### nursery.noDuplicateFieldDefinitionNames
+
+> `readonly` **noDuplicateFieldDefinitionNames**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+#### nursery.noDuplicateGraphqlOperationName
+
+> `readonly` **noDuplicateGraphqlOperationName**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+#### nursery.noDuplicateInputFieldNames
+
+> `readonly` **noDuplicateInputFieldNames**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+#### nursery.noDuplicateVariableNames
+
+> `readonly` **noDuplicateVariableNames**: `"off"` = `"off"`
+
+GraphQL-only rule.
 
 #### nursery.noEmptySource
 
@@ -748,6 +802,37 @@ GraphQL-only rule.
 > `readonly` **noEqualsToNull**: `"off"` = `"off"`
 
 Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
+
+#### nursery.noExcessiveClassesPerFile
+
+> `readonly` **noExcessiveClassesPerFile**: `object`
+
+Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
+The configuration is left up at the `warn` level to let maintainers know that a rule like this exists and can be configured differently.
+
+#### nursery.noExcessiveClassesPerFile.level
+
+> `readonly` **level**: `"warn"` = `"warn"`
+
+#### nursery.noExcessiveClassesPerFile.options
+
+> `readonly` **options**: `object`
+
+#### nursery.noExcessiveClassesPerFile.options.maxClasses
+
+> `readonly` **maxClasses**: `2` = `2`
+
+#### nursery.noExcessiveLinesPerFile
+
+> `readonly` **noExcessiveLinesPerFile**: `"off"` = `"off"`
+
+The rule is left as `off`. If required, it should be enabled on a project level.
+
+#### nursery.noFloatingClasses
+
+> `readonly` **noFloatingClasses**: `"error"` = `"error"`
+
+Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
 
 #### nursery.noFloatingPromises
 
@@ -848,6 +933,12 @@ React-only rule.
 
 There is no need to assign anything when returning.
 
+#### nursery.noRootType
+
+> `readonly` **noRootType**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### nursery.noScriptUrl
 
 > `readonly` **noScriptUrl**: `"off"` = `"off"`
@@ -917,6 +1008,12 @@ Vue-only rule.
 
 Vue-only rule.
 
+#### nursery.noVueOptionsApi
+
+> `readonly` **noVueOptionsApi**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### nursery.noVueReservedKeys
 
 > `readonly` **noVueReservedKeys**: `"off"` = `"off"`
@@ -961,6 +1058,12 @@ There is no need to await non-Promise values.
 
 > `readonly` **useConsistentArrowReturn**: `"error"` = `"error"`
 
+#### nursery.useConsistentEnumValueType
+
+> `readonly` **useConsistentEnumValueType**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+
 #### nursery.useConsistentGraphqlDescriptions
 
 > `readonly` **useConsistentGraphqlDescriptions**: `"off"` = `"off"`
@@ -979,6 +1082,12 @@ GraphQL-only rule.
 
 Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
 The level is left at `info` to at least let the user know that the option exists.
+
+#### nursery.useErrorCause
+
+> `readonly` **useErrorCause**: `"error"` = `"error"`
+
+Promotes better error-handling practices.
 
 #### nursery.useExhaustiveSwitchCases
 
@@ -1003,6 +1112,24 @@ const isDefinitelyString = returnsString(); // isDefinitelyString would have to 
 > `readonly` **useFind**: `"error"` = `"error"`
 
 Much more readable approach then indexing into a possibly empty array.
+
+#### nursery.useInlineScriptId
+
+> `readonly` **useInlineScriptId**: `"off"` = `"off"`
+
+NextJS-only rule.
+
+#### nursery.useLoneAnonymousOperation
+
+> `readonly` **useLoneAnonymousOperation**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+#### nursery.useLoneExecutableDefinition
+
+> `readonly` **useLoneExecutableDefinition**: `"off"` = `"off"`
+
+GraphQL-only rule.
 
 #### nursery.useMaxParams
 
@@ -1043,36 +1170,6 @@ Frontend-only rule.
 > `readonly` **useSpread**: `"error"` = `"error"`
 
 Spread syntax is more readable than using `Object.apply`.
-
-#### nursery.useUniqueArgumentNames
-
-> `readonly` **useUniqueArgumentNames**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.useUniqueFieldDefinitionNames
-
-> `readonly` **useUniqueFieldDefinitionNames**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.useUniqueGraphqlOperationName
-
-> `readonly` **useUniqueGraphqlOperationName**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.useUniqueInputFieldNames
-
-> `readonly` **useUniqueInputFieldNames**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.useUniqueVariableNames
-
-> `readonly` **useUniqueVariableNames**: `"off"` = `"off"`
-
-GraphQL-only rule.
 
 #### nursery.useVueConsistentDefinePropsDeclaration
 

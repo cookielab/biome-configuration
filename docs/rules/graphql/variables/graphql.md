@@ -8,7 +8,7 @@
 
 > `const` **graphql**: `object`
 
-Defined in: [rules/graphql.ts:86](https://github.com/cookielab/biome-configuration/blob/main/src/rules/graphql.ts#L86)
+Defined in: [rules/graphql.ts:94](https://github.com/cookielab/biome-configuration/blob/main/src/rules/graphql.ts#L94)
 
 ## Type Declaration
 
@@ -727,6 +727,24 @@ NextJS-only rule.
 
 > `readonly` **noDeprecatedImports**: `"warn"` = `"warn"`
 
+#### nursery.noDivRegex
+
+> `readonly` **noDivRegex**: `"error"` = `"error"`
+
+Enforces a more readable regular expression.
+
+#### nursery.noDuplicateArgumentNames
+
+> `readonly` **noDuplicateArgumentNames**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.noDuplicateAttributes
+
+> `readonly` **noDuplicateAttributes**: `"off"` = `"off"`
+
+Frontend-only rule.
+
 #### nursery.noDuplicateDependencies
 
 > `readonly` **noDuplicateDependencies**: `"off"` = `"off"`
@@ -739,6 +757,42 @@ NodeJS-only rule.
 
 React & Solid.js only rule.
 
+#### nursery.noDuplicateEnumValueNames
+
+> `readonly` **noDuplicateEnumValueNames**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+
+#### nursery.noDuplicateEnumValues
+
+> `readonly` **noDuplicateEnumValues**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+
+#### nursery.noDuplicateFieldDefinitionNames
+
+> `readonly` **noDuplicateFieldDefinitionNames**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.noDuplicateGraphqlOperationName
+
+> `readonly` **noDuplicateGraphqlOperationName**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.noDuplicateInputFieldNames
+
+> `readonly` **noDuplicateInputFieldNames**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
+#### nursery.noDuplicateVariableNames
+
+> `readonly` **noDuplicateVariableNames**: `"error"` = `"error"`
+
+GraphQL should not enable this behavior in the first place.
+
 #### nursery.noEmptySource
 
 > `readonly` **noEmptySource**: `"error"` = `"error"`
@@ -748,6 +802,37 @@ React & Solid.js only rule.
 > `readonly` **noEqualsToNull**: `"off"` = `"off"`
 
 Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
+
+#### nursery.noExcessiveClassesPerFile
+
+> `readonly` **noExcessiveClassesPerFile**: `object`
+
+Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
+The configuration is left up at the `warn` level to let maintainers know that a rule like this exists and can be configured differently.
+
+#### nursery.noExcessiveClassesPerFile.level
+
+> `readonly` **level**: `"warn"` = `"warn"`
+
+#### nursery.noExcessiveClassesPerFile.options
+
+> `readonly` **options**: `object`
+
+#### nursery.noExcessiveClassesPerFile.options.maxClasses
+
+> `readonly` **maxClasses**: `2` = `2`
+
+#### nursery.noExcessiveLinesPerFile
+
+> `readonly` **noExcessiveLinesPerFile**: `"off"` = `"off"`
+
+The rule is left as `off`. If required, it should be enabled on a project level.
+
+#### nursery.noFloatingClasses
+
+> `readonly` **noFloatingClasses**: `"error"` = `"error"`
+
+Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
 
 #### nursery.noFloatingPromises
 
@@ -848,6 +933,12 @@ React-only rule.
 
 There is no need to assign anything when returning.
 
+#### nursery.noRootType
+
+> `readonly` **noRootType**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### nursery.noScriptUrl
 
 > `readonly` **noScriptUrl**: `"off"` = `"off"`
@@ -917,6 +1008,12 @@ Vue-only rule.
 
 Vue-only rule.
 
+#### nursery.noVueOptionsApi
+
+> `readonly` **noVueOptionsApi**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### nursery.noVueReservedKeys
 
 > `readonly` **noVueReservedKeys**: `"off"` = `"off"`
@@ -961,6 +1058,12 @@ There is no need to await non-Promise values.
 
 > `readonly` **useConsistentArrowReturn**: `"error"` = `"error"`
 
+#### nursery.useConsistentEnumValueType
+
+> `readonly` **useConsistentEnumValueType**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+
 #### nursery.useConsistentGraphqlDescriptions
 
 > `readonly` **useConsistentGraphqlDescriptions**: `object`
@@ -990,6 +1093,12 @@ Enforces a consistent style of descriptions.
 Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
 The level is left at `info` to at least let the user know that the option exists.
 
+#### nursery.useErrorCause
+
+> `readonly` **useErrorCause**: `"error"` = `"error"`
+
+Promotes better error-handling practices.
+
 #### nursery.useExhaustiveSwitchCases
 
 > `readonly` **useExhaustiveSwitchCases**: `"error"` = `"error"`
@@ -1013,6 +1122,24 @@ const isDefinitelyString = returnsString(); // isDefinitelyString would have to 
 > `readonly` **useFind**: `"error"` = `"error"`
 
 Much more readable approach then indexing into a possibly empty array.
+
+#### nursery.useInlineScriptId
+
+> `readonly` **useInlineScriptId**: `"off"` = `"off"`
+
+NextJS-only rule.
+
+#### nursery.useLoneAnonymousOperation
+
+> `readonly` **useLoneAnonymousOperation**: `"error"` = `"error"`
+
+This rule helps with writing valid GraphQL queries.
+
+#### nursery.useLoneExecutableDefinition
+
+> `readonly` **useLoneExecutableDefinition**: `"error"` = `"error"`
+
+This rule helps with writing maintainable GraphQL.
 
 #### nursery.useMaxParams
 
@@ -1053,36 +1180,6 @@ Frontend-only rule.
 > `readonly` **useSpread**: `"error"` = `"error"`
 
 Spread syntax is more readable than using `Object.apply`.
-
-#### nursery.useUniqueArgumentNames
-
-> `readonly` **useUniqueArgumentNames**: `"error"` = `"error"`
-
-GraphQL should not enable this behavior in the first place.
-
-#### nursery.useUniqueFieldDefinitionNames
-
-> `readonly` **useUniqueFieldDefinitionNames**: `"error"` = `"error"`
-
-GraphQL should not enable this behavior in the first place.
-
-#### nursery.useUniqueGraphqlOperationName
-
-> `readonly` **useUniqueGraphqlOperationName**: `"error"` = `"error"`
-
-GraphQL should not enable this behavior in the first place.
-
-#### nursery.useUniqueInputFieldNames
-
-> `readonly` **useUniqueInputFieldNames**: `"error"` = `"error"`
-
-GraphQL should not enable this behavior in the first place.
-
-#### nursery.useUniqueVariableNames
-
-> `readonly` **useUniqueVariableNames**: `"error"` = `"error"`
-
-GraphQL should not enable this behavior in the first place.
 
 #### nursery.useVueConsistentDefinePropsDeclaration
 

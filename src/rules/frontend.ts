@@ -82,6 +82,10 @@ const nursery = {
 	...base.nursery,
 
 	/**
+	 * This rule should help with writing valid HTML.
+	 */
+	noDuplicateAttributes: "error",
+	/**
 	 * This rule should help with preventing any XSS vulnerabilities.
 	 */
 	noScriptUrl: "error",

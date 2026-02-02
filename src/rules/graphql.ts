@@ -29,6 +29,26 @@ const correctness = {
 const nursery = {
 	...base.nursery,
 
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateArgumentNames: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateFieldDefinitionNames: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateGraphqlOperationName: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateInputFieldNames: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateVariableNames: "error",
 	noEmptySource: "error",
 	/**
 	 * Enforces a consistent style of descriptions.
@@ -41,25 +61,13 @@ const nursery = {
 	},
 	useDeprecatedDate: "warn",
 	/**
-	 * GraphQL should not enable this behavior in the first place.
+	 * This rule helps with writing valid GraphQL queries.
 	 */
-	useUniqueArgumentNames: "error",
+	useLoneAnonymousOperation: "error",
 	/**
-	 * GraphQL should not enable this behavior in the first place.
+	 * This rule helps with writing maintainable GraphQL.
 	 */
-	useUniqueFieldDefinitionNames: "error",
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	useUniqueGraphqlOperationName: "error",
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	useUniqueInputFieldNames: "error",
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	useUniqueVariableNames: "error",
+	useLoneExecutableDefinition: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
