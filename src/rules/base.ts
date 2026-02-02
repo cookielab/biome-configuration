@@ -549,6 +549,10 @@ const nursery = {
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
 	noDuplicateEnumValueNames: "error",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	noDuplicateEnumValues: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
