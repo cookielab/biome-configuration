@@ -571,6 +571,10 @@ const nursery = {
 	 * Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
 	 */
 	noFloatingClasses: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noRootType: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
