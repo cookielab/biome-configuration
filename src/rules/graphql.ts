@@ -61,6 +61,10 @@ const nursery = {
 	},
 	useDeprecatedDate: "warn",
 	/**
+	 * This rule promotes consistent naming across mutations.
+	 */
+	useInputName: "error",
+	/**
 	 * This rule helps with writing valid GraphQL queries.
 	 */
 	useLoneAnonymousOperation: "error",

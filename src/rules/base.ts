@@ -300,6 +300,10 @@ const nursery = {
 	noContinue: "off",
 	noDeprecatedImports: "warn",
 	/**
+	 * Frontend-only rule.
+	 */
+	noDeprecatedMediaType: "off",
+	/**
 	 * Enforces a more readable regular expression.
 	 */
 	noDivRegex: "error",
@@ -375,6 +379,10 @@ const nursery = {
 	 *  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
 	 */
 	noForIn: "warn",
+	/**
+	 * Frontend-only rule.
+	 */
+	noHexColors: "off",
 	noImportCycles: "error",
 	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
@@ -425,6 +433,10 @@ const nursery = {
 	 */
 	noReactForwardRef: "off",
 	/**
+	 * Prevents re-exporting the same value as a named export and a default export as well.
+	 */
+	noRedundantDefaultExport: "error",
+	/**
 	 * There is no need to assign anything when returning.
 	 */
 	noReturnAssign: "error",
@@ -462,6 +474,10 @@ const nursery = {
 	noUnusedExpressions: "error",
 	noUselessCatchBinding: "error",
 	noUselessUndefined: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueArrowFuncInWatch: "off",
 	/**
 	 * Vue-only rule.
 	 */
@@ -509,6 +525,11 @@ const nursery = {
 	 */
 	useConsistentGraphqlDescriptions: "off",
 	/**
+	 * This rule enforces a consistent method signature in interfaces and types.
+	 * The property style keeps the code definitions consistant between attributes and methods.
+	 */
+	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
+	/**
 	 * GraphQL-only rule.
 	 */
 	useDeprecatedDate: "off",
@@ -538,9 +559,18 @@ const nursery = {
 	 */
 	useFind: "error",
 	/**
+	 * This rule promotes the use of cross-platform compatible global accessors.
+	 * Biome allows for some `window` specific accesses that are not directly available on globalThis.
+	 */
+	useGlobalThis: "warn",
+	/**
 	 * NextJS-only rule.
 	 */
 	useInlineScriptId: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useInputName: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
