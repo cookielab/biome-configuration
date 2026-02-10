@@ -559,6 +559,11 @@ const nursery = {
 	 */
 	useFind: "error",
 	/**
+	 * This rule promotes the use of cross-platform compatible global accessors.
+	 * Biome allows for some `window` specific accesses that are not directly available on globalThis.
+	 */
+	useGlobalThis: "warn",
+	/**
 	 * NextJS-only rule.
 	 */
 	useInlineScriptId: "off",
