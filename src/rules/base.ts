@@ -300,6 +300,10 @@ const nursery = {
 	noContinue: "off",
 	noDeprecatedImports: "warn",
 	/**
+	 * Frontend-only rule.
+	 */
+	noDeprecatedMediaType: "off",
+	/**
 	 * Enforces a more readable regular expression.
 	 */
 	noDivRegex: "error",

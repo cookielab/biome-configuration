@@ -82,6 +82,10 @@ const nursery = {
 	...base.nursery,
 
 	/**
+	 * This rule prevents the usage of deprecated media types in CSS.
+	 */
+	noDeprecatedMediaType: "error",
+	/**
 	 * This rule should help with writing valid HTML.
 	 */
 	noDuplicateAttributes: "error",
