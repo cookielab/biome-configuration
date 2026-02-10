@@ -33,7 +33,7 @@
 		"release": "pnpm types && pnpm build && pnpm lint && commit-and-tag-version"
 	},
 	"peerDependencies": {
-		"@biomejs/biome": ">=2.3.13"
+		"@biomejs/biome": ">=2.3.14"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "20.4.1",
