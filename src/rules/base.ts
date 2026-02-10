@@ -525,6 +525,11 @@ const nursery = {
 	 */
 	useConsistentGraphqlDescriptions: "off",
 	/**
+	 * This rule enforces a consistent method signature in interfaces and types.
+	 * The property style keeps the code definitions consistant between attributes and methods.
+	 */
+	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
+	/**
 	 * GraphQL-only rule.
 	 */
 	useDeprecatedDate: "off",
