@@ -8,7 +8,7 @@
 
 > `const` **graphql**: `object`
 
-Defined in: [rules/graphql.ts:94](https://github.com/cookielab/biome-configuration/blob/main/src/rules/graphql.ts#L94)
+Defined in: [rules/graphql.ts:98](https://github.com/cookielab/biome-configuration/blob/main/src/rules/graphql.ts#L98)
 
 ## Type Declaration
 
@@ -727,6 +727,12 @@ NextJS-only rule.
 
 > `readonly` **noDeprecatedImports**: `"warn"` = `"warn"`
 
+#### nursery.noDeprecatedMediaType
+
+> `readonly` **noDeprecatedMediaType**: `"off"` = `"off"`
+
+Frontend-only rule.
+
 #### nursery.noDivRegex
 
 > `readonly` **noDivRegex**: `"error"` = `"error"`
@@ -845,6 +851,12 @@ Creating a new class without consuming it seems like a code smell - constructors
 `for-in` loops are usually just a typo when trying to remember how `for-of` is written.
  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
 
+#### nursery.noHexColors
+
+> `readonly` **noHexColors**: `"off"` = `"off"`
+
+Frontend-only rule.
+
 #### nursery.noImportCycles
 
 > `readonly` **noImportCycles**: `"error"` = `"error"`
@@ -927,6 +939,12 @@ This approach to accessing object's prototype is deprecated since 2009.
 
 React-only rule.
 
+#### nursery.noRedundantDefaultExport
+
+> `readonly` **noRedundantDefaultExport**: `"error"` = `"error"`
+
+Prevents re-exporting the same value as a named export and a default export as well.
+
 #### nursery.noReturnAssign
 
 > `readonly` **noReturnAssign**: `"error"` = `"error"`
@@ -995,6 +1013,12 @@ Produces too many false-positives for now.
 #### nursery.noUselessUndefined
 
 > `readonly` **noUselessUndefined**: `"error"` = `"error"`
+
+#### nursery.noVueArrowFuncInWatch
+
+> `readonly` **noVueArrowFuncInWatch**: `"off"` = `"off"`
+
+Vue-only rule.
 
 #### nursery.noVueDataObjectDeclaration
 
@@ -1082,6 +1106,25 @@ Enforces a consistent style of descriptions.
 
 > `readonly` **style**: `"block"` = `"block"`
 
+#### nursery.useConsistentMethodSignatures
+
+> `readonly` **useConsistentMethodSignatures**: `object`
+
+This rule enforces a consistent method signature in interfaces and types.
+The property style keeps the code definitions consistant between attributes and methods.
+
+#### nursery.useConsistentMethodSignatures.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### nursery.useConsistentMethodSignatures.options
+
+> `readonly` **options**: `object`
+
+#### nursery.useConsistentMethodSignatures.options.style
+
+> `readonly` **style**: `"property"` = `"property"`
+
 #### nursery.useDeprecatedDate
 
 > `readonly` **useDeprecatedDate**: `"warn"` = `"warn"`
@@ -1123,11 +1166,24 @@ const isDefinitelyString = returnsString(); // isDefinitelyString would have to 
 
 Much more readable approach then indexing into a possibly empty array.
 
+#### nursery.useGlobalThis
+
+> `readonly` **useGlobalThis**: `"warn"` = `"warn"`
+
+This rule promotes the use of cross-platform compatible global accessors.
+Biome allows for some `window` specific accesses that are not directly available on globalThis.
+
 #### nursery.useInlineScriptId
 
 > `readonly` **useInlineScriptId**: `"off"` = `"off"`
 
 NextJS-only rule.
+
+#### nursery.useInputName
+
+> `readonly` **useInputName**: `"error"` = `"error"`
+
+This rule promotes consistent naming across mutations.
 
 #### nursery.useLoneAnonymousOperation
 
