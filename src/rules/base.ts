@@ -433,6 +433,10 @@ const nursery = {
 	 */
 	noReactForwardRef: "off",
 	/**
+	 * Prevents re-exporting the same value as a named export and a default export as well.
+	 */
+	noRedundantDefaultExport: "error",
+	/**
 	 * There is no need to assign anything when returning.
 	 */
 	noReturnAssign: "error",
