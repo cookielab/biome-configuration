@@ -570,6 +570,10 @@ const nursery = {
 	/**
 	 * GraphQL-only rule.
 	 */
+	useInputName: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
 	useLoneAnonymousOperation: "off",
 	/**
 	 * GraphQL-only rule.
