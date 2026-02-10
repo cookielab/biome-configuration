@@ -477,6 +477,10 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
+	noVueArrowFuncInWatch: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	noVueDataObjectDeclaration: "off",
 	/**
 	 * Vue-only rule.
