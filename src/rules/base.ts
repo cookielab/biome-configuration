@@ -379,6 +379,10 @@ const nursery = {
 	 *  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
 	 */
 	noForIn: "warn",
+	/**
+	 * Frontend-only rule.
+	 */
+	noHexColors: "off",
 	noImportCycles: "error",
 	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
