@@ -39,7 +39,7 @@
 		"@commitlint/cli": "20.4.1",
 		"@commitlint/config-conventional": "20.4.1",
 		"@commitlint/types": "20.4.0",
-		"@types/node": "25.2.0",
+		"@types/node": "25.2.3",
 		"commit-and-tag-version": "12.6.1",
 		"conventional-changelog-conventionalcommits": "9.1.0",
 		"json-schema-to-typescript": "15.0.4",
