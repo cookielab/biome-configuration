@@ -100,6 +100,7 @@ const complexity = {
 	noUselessTernary: "error",
 	noUselessThisAlias: "error",
 	noUselessTypeConstraint: "error",
+	noUselessUndefined: "error",
 	noUselessUndefinedInitialization: "error",
 	noVoid: "error",
 	recommended: false,
@@ -473,7 +474,6 @@ const nursery = {
 	 */
 	noUnresolvedImports: "off",
 	noUnusedExpressions: "error",
-	noUselessUndefined: "error",
 	/**
 	 * Vue-only rule.
 	 */
