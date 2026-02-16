@@ -305,6 +305,10 @@ const correctness = {
 	 * Qwik-only rule.
 	 */
 	useQwikClasslist: "off",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikMethodUsage: "off",
 	useSingleJsDocAsterisk: "warn",
 	/**
 	 * React-only rule.
@@ -584,10 +588,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	useLoneExecutableDefinition: "off",
-	/**
-	 * Qwik-only rule.
-	 */
-	useQwikMethodUsage: "off",
 	/**
 	 * Qwik-only rule.
 	 */
