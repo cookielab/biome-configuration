@@ -259,6 +259,10 @@ const correctness = {
 	 * Vue-only rule.
 	 */
 	noVueDuplicateKeys: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueReservedKeys: "off",
 	recommended: false,
 	/**
 	 * React-only rule.
@@ -495,10 +499,6 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	noVueOptionsApi: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueReservedKeys: "off",
 	/**
 	 * Vue-only rule.
 	 */
