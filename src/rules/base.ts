@@ -530,10 +530,6 @@ const nursery = {
 	 */
 	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
 	/**
-	 * GraphQL-only rule.
-	 */
-	useDeprecatedDate: "off",
-	/**
 	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
 	 * The level is left at `info` to at least let the user know that the option exists.
 	 */
@@ -1025,6 +1021,12 @@ const suspicious = {
 	useAwait: "error",
 	useBiomeIgnoreFolder: "error",
 	useDefaultSwitchClauseLast: "error",
+	/**
+	 * GraphQL-only rule.
+	 *
+	 * @deprecated
+	 */
+	useDeprecatedDate: "off",
 	useErrorMessage: "error",
 	useGetterReturn: "error",
 	/**

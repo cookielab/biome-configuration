@@ -58,7 +58,6 @@ const nursery = {
 			style: "block",
 		},
 	},
-	useDeprecatedDate: "warn",
 	/**
 	 * This rule promotes consistent naming across mutations.
 	 */
@@ -93,6 +92,10 @@ const suspicious = {
 
 	noDuplicateFields: "error",
 	noEmptySource: "error",
+	/**
+	 * @deprecated
+	 */
+	useDeprecatedDate: "off",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
 const graphql = {
