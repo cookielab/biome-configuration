@@ -337,7 +337,6 @@ const nursery = {
 	 * `continue` helps to avoid nesting inside loop bodies.
 	 */
 	noContinue: "off",
-	noDeprecatedImports: "warn",
 	/**
 	 * Frontend-only rule.
 	 */
@@ -887,6 +886,10 @@ const suspicious = {
 	noConstEnum: "error",
 	noControlCharactersInRegex: "error",
 	noDebugger: "error",
+	/**
+	 * Deprecated imports should be discouraged. However, with some dependencies, there are no alternatives. Thus keeping this at the `warn` level.
+	 */
+	noDeprecatedImports: "warn",
 	/**
 	 * Frontend-only rule.
 	 */
