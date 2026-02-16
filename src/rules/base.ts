@@ -455,10 +455,6 @@ const nursery = {
 	 */
 	noProto: "error",
 	/**
-	 * React-only rule.
-	 */
-	noReactForwardRef: "off",
-	/**
 	 * Prevents re-exporting the same value as a named export and a default export as well.
 	 */
 	noRedundantDefaultExport: "error",
@@ -981,6 +977,10 @@ const suspicious = {
 	 * Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
 	 */
 	noQuickfixBiome: "off",
+	/**
+	 * React-only rule.
+	 */
+	noReactForwardRef: "off",
 	/**
 	 * Solid and qwik rule only.
 	 */

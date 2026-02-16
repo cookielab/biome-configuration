@@ -85,6 +85,10 @@ const suspicious = {
 	noArrayIndexKey: "error",
 	noCommentText: "error",
 	noDuplicateJsxProps: "error",
+	/**
+	 * Forbids the usage of the deprecated `forwardRef`.
+	 */
+	noReactForwardRef: "error",
 	noSuspiciousSemicolonInJsx: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
