@@ -112,6 +112,7 @@ const complexity = {
 	 * Clashes with index-based access required by a strict Typescript configuration when using records with `string` as the key type.
 	 */
 	useLiteralKeys: "off",
+	useMaxParams: "error",
 	useNumericLiterals: "error",
 	useOptionalChain: "error",
 	useRegexLiterals: "error",
@@ -579,7 +580,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	useLoneExecutableDefinition: "off",
-	useMaxParams: "error",
 	/**
 	 * Qwik-only rule.
 	 */
