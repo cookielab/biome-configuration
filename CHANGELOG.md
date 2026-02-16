@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.0](https://github.com/cookielab/biome-configuration/compare/v1.2.0...v1.3.0) (2026-02-16)
+
+
+### Features
+
+* **base:** add noNestedPromises with level error ([6c80b8d](https://github.com/cookielab/biome-configuration/commit/6c80b8d373bc16b9374b2397d7e6e75355dd273f))
+* **base:** add noUselessReturn with level error ([585e254](https://github.com/cookielab/biome-configuration/commit/585e254ffedbbb061b6b0ba9cede0b40c279bf87))
+* **base:** disable noUselessUndefined ([b648cb5](https://github.com/cookielab/biome-configuration/commit/b648cb50477912430d8c0986fca899efc5bd05af))
+* **base:** disable noUselessUndefined ([#28](https://github.com/cookielab/biome-configuration/issues/28)) ([1cba290](https://github.com/cookielab/biome-configuration/commit/1cba290ef7464be403ed60b1be7fcc14659845ae))
+* **base:** promot noUselessUndefined from nursery ([d03c96f](https://github.com/cookielab/biome-configuration/commit/d03c96fb67bc37008f0d58e4be3e97bb98d531dd))
+* **base:** promot useMaxParams from nursery ([7e92ffa](https://github.com/cookielab/biome-configuration/commit/7e92ffa4cc4064b8b0c954646f9f917fa351b013))
+* **base:** promote noDeprecatedImports from nursery ([d2b6bdb](https://github.com/cookielab/biome-configuration/commit/d2b6bdbe6ac3b0b101768b18d4aed24004cfc981))
+* **base:** promote noImportCycles from nursery ([1b1abff](https://github.com/cookielab/biome-configuration/commit/1b1abff7f3a6987b56a55afd7497e6b36d53c6a3))
+* **base:** promote noQwikValidLexicalScope from nursery ([da9c55a](https://github.com/cookielab/biome-configuration/commit/da9c55a51d142548283a7d32fcd824a9b10e4711))
+* **base:** promote noUnresolvedImport from nursery and enable it with level error ([431aad1](https://github.com/cookielab/biome-configuration/commit/431aad1eccc56f023807504ca3fe9a4b8712cd03))
+* **base:** promote noUselessCatchBinding from nursery ([f0712a9](https://github.com/cookielab/biome-configuration/commit/f0712a90df544de7eb6f420e39126856b1874528))
+* **base:** promote noUsunsedExpression from nursery ([ff14e9a](https://github.com/cookielab/biome-configuration/commit/ff14e9a7adf74959062fdbe2cf97536e31497fac))
+* **base:** promote noVueDataObjectDeclaration from nursery ([6e19aa5](https://github.com/cookielab/biome-configuration/commit/6e19aa5df95f68da6b49c6e3545d7bf7230ebed6))
+* **base:** promote noVueDiplicateKeys from nursery ([15056de](https://github.com/cookielab/biome-configuration/commit/15056dedb3aa4b26a7ca6e5ee36ba84953297387))
+* **base:** promote noVueReservedKeys from nursery ([6f8e305](https://github.com/cookielab/biome-configuration/commit/6f8e3055d94bd9559bd0310dc5112c1c13687097))
+* **base:** promote noVueReservedProps from nursery ([f193139](https://github.com/cookielab/biome-configuration/commit/f193139b60ed39dc5fbb93dc3f45e8a5c474b4e2))
+* **base:** promote noVueSetupPropsReactivityLoss from nursery ([5692b71](https://github.com/cookielab/biome-configuration/commit/5692b71805419417dbc171acdbc0476f879ea2b2))
+* **base:** promote useConsistentArrowReturn from nursery ([373095a](https://github.com/cookielab/biome-configuration/commit/373095a6551c25dcf8bac891a78dfc3674347690))
+* **base:** promote useQwikMethodUsage from nursery ([258c74d](https://github.com/cookielab/biome-configuration/commit/258c74d409e00950f6c081f152a21432541f812f))
+* **graphql:** promote noEmptySource from nursery ([d4fc48e](https://github.com/cookielab/biome-configuration/commit/d4fc48e0148d26083f5d45a556052e250c27cf9f))
+* **graphql:** promote useDeprecatedDate from nursery ([5dddafc](https://github.com/cookielab/biome-configuration/commit/5dddafc85097247803f45de2cbd2f349803e7713))
+* **next:** promote noNextAsyncClientComponent from nursery ([f4414fa](https://github.com/cookielab/biome-configuration/commit/f4414fadcbc67176ca9600b071ffd3ed5d07680c))
+* **node:** promote noDuplicateDependencies from nursery ([328485c](https://github.com/cookielab/biome-configuration/commit/328485ce4a51bd1b596e467ae7b4a7d5439178ce))
+* **nursery:** add noDeprecatedMediaType definition with level error ([166edca](https://github.com/cookielab/biome-configuration/commit/166edca099f79deab8cf53cd03e5c7268b37eb59))
+* **nursery:** add noHexColors definition with level off ([a09adaa](https://github.com/cookielab/biome-configuration/commit/a09adaa552f24f1eea64de00d6382881cc7eaa04))
+* **nursery:** add noRedundantDefaultExport definition with level error ([7da213d](https://github.com/cookielab/biome-configuration/commit/7da213d1bd95b86e9dbcf6ec5074d8630834c070))
+* **nursery:** add noVueArrowFuncInWatch definition with level off ([dcbf422](https://github.com/cookielab/biome-configuration/commit/dcbf422850cc718fd27a15604064a47714b47bbf))
+* **nursery:** add useConsistentMethodSignatures definition with level error ([5b62435](https://github.com/cookielab/biome-configuration/commit/5b62435253f80cf0a40ab2d62427f667783153db))
+* **nursery:** add useGlobalThis definition with level warn ([da5e239](https://github.com/cookielab/biome-configuration/commit/da5e239b15577c46731543ac1d5d50e5173697ec))
+* **nursery:** add useInputName definition with level error ([c6f6f04](https://github.com/cookielab/biome-configuration/commit/c6f6f04b7c83111a4f2d2a096388bd17c332b741))
+* **react:** promote noJsxLiterals from nursery ([f0729a0](https://github.com/cookielab/biome-configuration/commit/f0729a0d5284a33bcb763b3449c5494ca45ec854))
+* **react:** promote noReactForwardRef from nursery ([18570b8](https://github.com/cookielab/biome-configuration/commit/18570b8fe34248657ec01816523d65471d51a631))
+
 ## [1.2.0](https://github.com/cookielab/biome-configuration/compare/v1.1.0...v1.2.0) (2026-02-02)
 
 
