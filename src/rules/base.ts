@@ -491,7 +491,6 @@ const nursery = {
 	noUnnecessaryConditions: "warn",
 	/**
 	 */
-	noUnusedExpressions: "error",
 	/**
 	 * Vue-only rule.
 	 */
@@ -1009,6 +1008,10 @@ const suspicious = {
 	noUnknownAtRules: "off",
 	noUnsafeDeclarationMerging: "error",
 	noUnsafeNegation: "error",
+	/**
+	 * Unused expressions can be safely remove and should not litter the codebase.
+	 */
+	noUnusedExpressions: "error",
 	noUselessEscapeInString: "error",
 	noUselessRegexBackrefs: "error",
 	noVar: "error",
