@@ -82,6 +82,7 @@ const complexity = {
 	noStaticOnlyClass: "error",
 	noThisInStatic: "off",
 	noUselessCatch: "error",
+	noUselessCatchBinding: "error",
 	noUselessConstructor: "error",
 	noUselessContinue: "error",
 	noUselessEmptyExport: "error",
@@ -99,6 +100,7 @@ const complexity = {
 	noUselessTernary: "error",
 	noUselessThisAlias: "error",
 	noUselessTypeConstraint: "error",
+	noUselessUndefined: "error",
 	noUselessUndefinedInitialization: "error",
 	noVoid: "error",
 	recommended: false,
@@ -110,6 +112,7 @@ const complexity = {
 	 * Clashes with index-based access required by a strict Typescript configuration when using records with `string` as the key type.
 	 */
 	useLiteralKeys: "off",
+	useMaxParams: "error",
 	useNumericLiterals: "error",
 	useOptionalChain: "error",
 	useRegexLiterals: "error",
@@ -160,6 +163,10 @@ const correctness = {
 	 * React-only rule.
 	 */
 	noNestedComponentDefinitions: "off",
+	/**
+	 * NextJS-only rule.
+	 */
+	noNextAsyncClientComponent: "off",
 	/**
 	 * Should only be disabled in Node projects.
 	 */
@@ -228,6 +235,10 @@ const correctness = {
 	noUnmatchableAnbSelector: "off",
 	noUnreachable: "error",
 	noUnreachableSuper: "error",
+	/**
+	 * Flags any imports that Biome cannot resolve.
+	 */
+	noUnresolvedImports: "error",
 	noUnsafeFinally: "error",
 	noUnsafeOptionalChaining: "error",
 	noUnusedFunctionParameters: "error",
@@ -240,6 +251,26 @@ const correctness = {
 	 */
 	noVoidElementsWithChildren: "off",
 	noVoidTypeReturn: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueDataObjectDeclaration: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueDuplicateKeys: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueReservedKeys: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueReservedProps: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueSetupPropsReactivityLoss: "off",
 	recommended: false,
 	/**
 	 * React-only rule.
@@ -274,6 +305,14 @@ const correctness = {
 	 * Qwik-only rule.
 	 */
 	useQwikClasslist: "off",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikMethodUsage: "off",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikValidLexicalScope: "off",
 	useSingleJsDocAsterisk: "warn",
 	/**
 	 * React-only rule.
@@ -298,7 +337,6 @@ const nursery = {
 	 * `continue` helps to avoid nesting inside loop bodies.
 	 */
 	noContinue: "off",
-	noDeprecatedImports: "warn",
 	/**
 	 * Frontend-only rule.
 	 */
@@ -315,10 +353,6 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noDuplicateAttributes: "off",
-	/**
-	 * NodeJS-only rule.
-	 */
-	noDuplicateDependencies: "off",
 	/**
 	 * React & Solid.js only rule.
 	 */
@@ -347,10 +381,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	noDuplicateVariableNames: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noEmptySource: "off",
 	/**
 	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
 	 */
@@ -383,7 +413,6 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noHexColors: "off",
-	noImportCycles: "error",
 	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
 	 * Although, the usage in for-loops makes sense and is thus allowed.
@@ -394,10 +423,6 @@ const nursery = {
 			allowForLoopAfterthoughts: true,
 		},
 	},
-	/**
-	 * JSX-dialects only rule.
-	 */
-	noJsxLiterals: "off",
 	/**
 	 * React-only rule.
 	 */
@@ -417,9 +442,10 @@ const nursery = {
 	 */
 	noMultiStr: "error",
 	/**
-	 * NextJS-only rule.
+	 * `async await` has been implemented to replace promise nesting.
+	 * `async await` is now generally available and should be the preferred approach to writing asynchronous code.
 	 */
-	noNextAsyncClientComponent: "off",
+	noNestedPromises: "error",
 	/**
 	 * Just making sure there are no unused parameters in recursive functions.
 	 */
@@ -428,10 +454,6 @@ const nursery = {
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
-	/**
-	 * React-only rule.
-	 */
-	noReactForwardRef: "off",
 	/**
 	 * Prevents re-exporting the same value as a named export and a default export as well.
 	 */
@@ -468,12 +490,11 @@ const nursery = {
 	noUnknownAttribute: "off",
 	noUnnecessaryConditions: "warn",
 	/**
-	 * Produces too many false-positives for now.
+	 * This rule is meant to prevent using a plain `return;` at the end of a function.
+	 *
+	 * Other usage, such as early returns, should not be affected.
 	 */
-	noUnresolvedImports: "off",
-	noUnusedExpressions: "error",
-	noUselessCatchBinding: "error",
-	noUselessUndefined: "error",
+	noUselessReturn: "error",
 	/**
 	 * Vue-only rule.
 	 */
@@ -481,27 +502,7 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
-	noVueDataObjectDeclaration: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueDuplicateKeys: "off",
-	/**
-	 * Vue-only rule.
-	 */
 	noVueOptionsApi: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueReservedKeys: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueReservedProps: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueSetupPropsReactivityLoss: "off",
 	/**
 	 * Vue-only rule.
 	 */
@@ -515,7 +516,6 @@ const nursery = {
 	 * There is no need to await non-Promise values.
 	 */
 	useAwaitThenable: "error",
-	useConsistentArrowReturn: "error",
 	/**
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
@@ -529,10 +529,6 @@ const nursery = {
 	 * The property style keeps the code definitions consistant between attributes and methods.
 	 */
 	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
-	/**
-	 * GraphQL-only rule.
-	 */
-	useDeprecatedDate: "off",
 	/**
 	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
 	 * The level is left at `info` to at least let the user know that the option exists.
@@ -579,15 +575,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	useLoneExecutableDefinition: "off",
-	useMaxParams: "error",
-	/**
-	 * Qwik-only rule.
-	 */
-	useQwikMethodUsage: "off",
-	/**
-	 * Qwik-only rule.
-	 */
-	useQwikValidLexicalScope: "off",
 	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
@@ -706,6 +693,10 @@ const style = {
 	noHeadElement: "off",
 	noImplicitBoolean: "error",
 	noInferrableTypes: "error",
+	/**
+	 * JSX-dialects only rule.
+	 */
+	noJsxLiterals: "off",
 	noMagicNumbers: "warn",
 	noNamespace: "error",
 	noNegationElse: "error",
@@ -755,6 +746,7 @@ const style = {
 			syntax: "shorthand",
 		},
 	},
+	useConsistentArrowReturn: "error",
 	useConsistentBuiltinInstantiation: "error",
 	/**
 	 * React-only rule.
@@ -884,6 +876,10 @@ const suspicious = {
 	noControlCharactersInRegex: "error",
 	noDebugger: "error",
 	/**
+	 * Deprecated imports should be discouraged. However, with some dependencies, there are no alternatives. Thus keeping this at the `warn` level.
+	 */
+	noDeprecatedImports: "warn",
+	/**
 	 * Frontend-only rule.
 	 */
 	noDocumentCookie: "off",
@@ -902,6 +898,10 @@ const suspicious = {
 	 * Frontend-only rule.
 	 */
 	noDuplicateCustomProperties: "off",
+	/**
+	 * NodeJS-only rule.
+	 */
+	noDuplicateDependencies: "off",
 	noDuplicateElseIf: "error",
 	/**
 	 * GraphQL-only rule.
@@ -935,6 +935,10 @@ const suspicious = {
 	 */
 	noEmptyBlockStatements: "off",
 	noEmptyInterface: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noEmptySource: "off",
 	noEvolvingTypes: "error",
 	noExplicitAny: "error",
 	noExportsInTest: "error",
@@ -955,6 +959,10 @@ const suspicious = {
 	 * Frontend-only rule.
 	 */
 	noImportantInKeyframe: "off",
+	/**
+	 * Import cycles are bad for obvious reasons.
+	 */
+	noImportCycles: "error",
 	noIrregularWhitespace: "error",
 	noLabelVar: "error",
 	noMisleadingCharacterClass: "error",
@@ -968,6 +976,10 @@ const suspicious = {
 	 * Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
 	 */
 	noQuickfixBiome: "off",
+	/**
+	 * React-only rule.
+	 */
+	noReactForwardRef: "off",
 	/**
 	 * Solid and qwik rule only.
 	 */
@@ -996,6 +1008,10 @@ const suspicious = {
 	noUnknownAtRules: "off",
 	noUnsafeDeclarationMerging: "error",
 	noUnsafeNegation: "error",
+	/**
+	 * Unused expressions can be safely remove and should not litter the codebase.
+	 */
+	noUnusedExpressions: "error",
 	noUselessEscapeInString: "error",
 	noUselessRegexBackrefs: "error",
 	noVar: "error",
@@ -1005,6 +1021,12 @@ const suspicious = {
 	useAwait: "error",
 	useBiomeIgnoreFolder: "error",
 	useDefaultSwitchClauseLast: "error",
+	/**
+	 * GraphQL-only rule.
+	 *
+	 * @deprecated
+	 */
+	useDeprecatedDate: "off",
 	useErrorMessage: "error",
 	useGetterReturn: "error",
 	/**

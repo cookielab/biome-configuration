@@ -28,8 +28,6 @@ const correctness = {
 
 const nursery = {
 	...base.nursery,
-
-	noDuplicateDependencies: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -49,6 +47,8 @@ const style = {
 
 const suspicious = {
 	...base.suspicious,
+
+	noDuplicateDependencies: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
 const node = {

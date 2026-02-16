@@ -242,6 +242,10 @@ Frontend-only rule.
 
 > `readonly` **noUselessCatch**: `"error"` = `"error"`
 
+#### complexity.noUselessCatchBinding
+
+> `readonly` **noUselessCatchBinding**: `"error"` = `"error"`
+
 #### complexity.noUselessConstructor
 
 > `readonly` **noUselessConstructor**: `"error"` = `"error"`
@@ -300,6 +304,10 @@ React-only rule.
 
 > `readonly` **noUselessTypeConstraint**: `"error"` = `"error"`
 
+#### complexity.noUselessUndefined
+
+> `readonly` **noUselessUndefined**: `"error"` = `"error"`
+
 #### complexity.noUselessUndefinedInitialization
 
 > `readonly` **noUselessUndefinedInitialization**: `"error"` = `"error"`
@@ -333,6 +341,10 @@ React-only rule.
 > `readonly` **useLiteralKeys**: `"off"` = `"off"`
 
 Clashes with index-based access required by a strict Typescript configuration when using records with `string` as the key type.
+
+#### complexity.useMaxParams
+
+> `readonly` **useMaxParams**: `"error"` = `"error"`
 
 #### complexity.useNumericLiterals
 
@@ -449,6 +461,12 @@ Frontend-only rule.
 > `readonly` **noNestedComponentDefinitions**: `"off"` = `"off"`
 
 React-only rule.
+
+#### correctness.noNextAsyncClientComponent
+
+> `readonly` **noNextAsyncClientComponent**: `"off"` = `"off"`
+
+NextJS-only rule.
 
 #### correctness.noNodejsModules
 
@@ -580,6 +598,12 @@ Frontend-only rule.
 
 > `readonly` **noUnreachableSuper**: `"error"` = `"error"`
 
+#### correctness.noUnresolvedImports
+
+> `readonly` **noUnresolvedImports**: `"error"` = `"error"`
+
+Flags any imports that Biome cannot resolve.
+
 #### correctness.noUnsafeFinally
 
 > `readonly` **noUnsafeFinally**: `"error"` = `"error"`
@@ -617,6 +641,36 @@ React-only rule.
 #### correctness.noVoidTypeReturn
 
 > `readonly` **noVoidTypeReturn**: `"error"` = `"error"`
+
+#### correctness.noVueDataObjectDeclaration
+
+> `readonly` **noVueDataObjectDeclaration**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.noVueDuplicateKeys
+
+> `readonly` **noVueDuplicateKeys**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.noVueReservedKeys
+
+> `readonly` **noVueReservedKeys**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.noVueReservedProps
+
+> `readonly` **noVueReservedProps**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.noVueSetupPropsReactivityLoss
+
+> `readonly` **noVueSetupPropsReactivityLoss**: `"off"` = `"off"`
+
+Vue-only rule.
 
 #### correctness.recommended
 
@@ -678,6 +732,18 @@ React-only rule.
 
 Qwik-only rule.
 
+#### correctness.useQwikMethodUsage
+
+> `readonly` **useQwikMethodUsage**: `"off"` = `"off"`
+
+Qwik-only rule.
+
+#### correctness.useQwikValidLexicalScope
+
+> `readonly` **useQwikValidLexicalScope**: `"off"` = `"off"`
+
+Qwik-only rule.
+
 #### correctness.useSingleJsDocAsterisk
 
 > `readonly` **useSingleJsDocAsterisk**: `"warn"` = `"warn"`
@@ -723,10 +789,6 @@ NextJS-only rule.
 
 `continue` helps to avoid nesting inside loop bodies.
 
-#### nursery.noDeprecatedImports
-
-> `readonly` **noDeprecatedImports**: `"warn"` = `"warn"`
-
 #### nursery.noDeprecatedMediaType
 
 > `readonly` **noDeprecatedMediaType**: `"off"` = `"off"`
@@ -750,10 +812,6 @@ GraphQL-only rule.
 > `readonly` **noDuplicateAttributes**: `"off"` = `"off"`
 
 Frontend-only rule.
-
-#### nursery.noDuplicateDependencies
-
-> `readonly` **noDuplicateDependencies**: `"error"` = `"error"`
 
 #### nursery.noDuplicatedSpreadProps
 
@@ -794,12 +852,6 @@ GraphQL-only rule.
 #### nursery.noDuplicateVariableNames
 
 > `readonly` **noDuplicateVariableNames**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.noEmptySource
-
-> `readonly` **noEmptySource**: `"off"` = `"off"`
 
 GraphQL-only rule.
 
@@ -857,10 +909,6 @@ Creating a new class without consuming it seems like a code smell - constructors
 
 Frontend-only rule.
 
-#### nursery.noImportCycles
-
-> `readonly` **noImportCycles**: `"error"` = `"error"`
-
 #### nursery.noIncrementDecrement
 
 > `readonly` **noIncrementDecrement**: `object`
@@ -879,12 +927,6 @@ Although, the usage in for-loops makes sense and is thus allowed.
 #### nursery.noIncrementDecrement.options.allowForLoopAfterthoughts
 
 > `readonly` **allowForLoopAfterthoughts**: `true` = `true`
-
-#### nursery.noJsxLiterals
-
-> `readonly` **noJsxLiterals**: `"off"` = `"off"`
-
-JSX-dialects only rule.
 
 #### nursery.noJsxPropsBind
 
@@ -915,11 +957,12 @@ Keeping the assignments separate makes them more readable.
 
 Using strings with ``` is a better approach.
 
-#### nursery.noNextAsyncClientComponent
+#### nursery.noNestedPromises
 
-> `readonly` **noNextAsyncClientComponent**: `"off"` = `"off"`
+> `readonly` **noNestedPromises**: `"error"` = `"error"`
 
-NextJS-only rule.
+`async await` has been implemented to replace promise nesting.
+`async await` is now generally available and should be the preferred approach to writing asynchronous code.
 
 #### nursery.noParametersOnlyUsedInRecursion
 
@@ -932,12 +975,6 @@ Just making sure there are no unused parameters in recursive functions.
 > `readonly` **noProto**: `"error"` = `"error"`
 
 This approach to accessing object's prototype is deprecated since 2009.
-
-#### nursery.noReactForwardRef
-
-> `readonly` **noReactForwardRef**: `"off"` = `"off"`
-
-React-only rule.
 
 #### nursery.noRedundantDefaultExport
 
@@ -996,23 +1033,13 @@ JSX-only rule.
 
 > `readonly` **noUnnecessaryConditions**: `"warn"` = `"warn"`
 
-#### nursery.noUnresolvedImports
+#### nursery.noUselessReturn
 
-> `readonly` **noUnresolvedImports**: `"off"` = `"off"`
+> `readonly` **noUselessReturn**: `"error"` = `"error"`
 
-Produces too many false-positives for now.
+This rule is meant to prevent using a plain `return;` at the end of a function.
 
-#### nursery.noUnusedExpressions
-
-> `readonly` **noUnusedExpressions**: `"error"` = `"error"`
-
-#### nursery.noUselessCatchBinding
-
-> `readonly` **noUselessCatchBinding**: `"error"` = `"error"`
-
-#### nursery.noUselessUndefined
-
-> `readonly` **noUselessUndefined**: `"error"` = `"error"`
+Other usage, such as early returns, should not be affected.
 
 #### nursery.noVueArrowFuncInWatch
 
@@ -1020,39 +1047,9 @@ Produces too many false-positives for now.
 
 Vue-only rule.
 
-#### nursery.noVueDataObjectDeclaration
-
-> `readonly` **noVueDataObjectDeclaration**: `"off"` = `"off"`
-
-Vue-only rule.
-
-#### nursery.noVueDuplicateKeys
-
-> `readonly` **noVueDuplicateKeys**: `"off"` = `"off"`
-
-Vue-only rule.
-
 #### nursery.noVueOptionsApi
 
 > `readonly` **noVueOptionsApi**: `"off"` = `"off"`
-
-Vue-only rule.
-
-#### nursery.noVueReservedKeys
-
-> `readonly` **noVueReservedKeys**: `"off"` = `"off"`
-
-Vue-only rule.
-
-#### nursery.noVueReservedProps
-
-> `readonly` **noVueReservedProps**: `"off"` = `"off"`
-
-Vue-only rule.
-
-#### nursery.noVueSetupPropsReactivityLoss
-
-> `readonly` **noVueSetupPropsReactivityLoss**: `"off"` = `"off"`
 
 Vue-only rule.
 
@@ -1077,10 +1074,6 @@ Enforces all sorting operations to be explicitly defined.
 > `readonly` **useAwaitThenable**: `"error"` = `"error"`
 
 There is no need to await non-Promise values.
-
-#### nursery.useConsistentArrowReturn
-
-> `readonly` **useConsistentArrowReturn**: `"error"` = `"error"`
 
 #### nursery.useConsistentEnumValueType
 
@@ -1112,12 +1105,6 @@ The property style keeps the code definitions consistant between attributes and 
 #### nursery.useConsistentMethodSignatures.options.style
 
 > `readonly` **style**: `"property"` = `"property"`
-
-#### nursery.useDeprecatedDate
-
-> `readonly` **useDeprecatedDate**: `"off"` = `"off"`
-
-GraphQL-only rule.
 
 #### nursery.useDestructuring
 
@@ -1186,22 +1173,6 @@ GraphQL-only rule.
 > `readonly` **useLoneExecutableDefinition**: `"off"` = `"off"`
 
 GraphQL-only rule.
-
-#### nursery.useMaxParams
-
-> `readonly` **useMaxParams**: `"error"` = `"error"`
-
-#### nursery.useQwikMethodUsage
-
-> `readonly` **useQwikMethodUsage**: `"off"` = `"off"`
-
-Qwik-only rule.
-
-#### nursery.useQwikValidLexicalScope
-
-> `readonly` **useQwikValidLexicalScope**: `"off"` = `"off"`
-
-Qwik-only rule.
 
 #### nursery.useRegexpExec
 
@@ -1463,6 +1434,12 @@ NextJS-only rule.
 
 > `readonly` **noInferrableTypes**: `"error"` = `"error"`
 
+#### style.noJsxLiterals
+
+> `readonly` **noJsxLiterals**: `"off"` = `"off"`
+
+JSX-dialects only rule.
+
 #### style.noMagicNumbers
 
 > `readonly` **noMagicNumbers**: `"warn"` = `"warn"`
@@ -1590,6 +1567,10 @@ React-only rule.
 #### style.useConsistentArrayType.options.syntax
 
 > `readonly` **syntax**: `"shorthand"` = `"shorthand"`
+
+#### style.useConsistentArrowReturn
+
+> `readonly` **useConsistentArrowReturn**: `"error"` = `"error"`
 
 #### style.useConsistentBuiltinInstantiation
 
@@ -1892,6 +1873,12 @@ React-only rule.
 
 > `readonly` **noDebugger**: `"error"` = `"error"`
 
+#### suspicious.noDeprecatedImports
+
+> `readonly` **noDeprecatedImports**: `"warn"` = `"warn"`
+
+Deprecated imports should be discouraged. However, with some dependencies, there are no alternatives. Thus keeping this at the `warn` level.
+
 #### suspicious.noDocumentCookie
 
 > `readonly` **noDocumentCookie**: `"off"` = `"off"`
@@ -1927,6 +1914,10 @@ Frontend-only rule.
 > `readonly` **noDuplicateCustomProperties**: `"off"` = `"off"`
 
 Frontend-only rule.
+
+#### suspicious.noDuplicateDependencies
+
+> `readonly` **noDuplicateDependencies**: `"error"` = `"error"`
 
 #### suspicious.noDuplicateElseIf
 
@@ -1990,6 +1981,12 @@ Frontend-only rule.
 
 > `readonly` **noEmptyInterface**: `"error"` = `"error"`
 
+#### suspicious.noEmptySource
+
+> `readonly` **noEmptySource**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### suspicious.noEvolvingTypes
 
 > `readonly` **noEvolvingTypes**: `"error"` = `"error"`
@@ -2050,6 +2047,12 @@ Frontend-only rule.
 
 > `readonly` **noImportAssign**: `"error"` = `"error"`
 
+#### suspicious.noImportCycles
+
+> `readonly` **noImportCycles**: `"error"` = `"error"`
+
+Import cycles are bad for obvious reasons.
+
 #### suspicious.noIrregularWhitespace
 
 > `readonly` **noIrregularWhitespace**: `"error"` = `"error"`
@@ -2091,6 +2094,12 @@ Frontend-only rule.
 > `readonly` **noQuickfixBiome**: `"off"` = `"off"`
 
 Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
+
+#### suspicious.noReactForwardRef
+
+> `readonly` **noReactForwardRef**: `"off"` = `"off"`
+
+React-only rule.
 
 #### suspicious.noReactSpecificProps
 
@@ -2164,6 +2173,12 @@ Frontend-only rule.
 
 > `readonly` **noUnsafeNegation**: `"error"` = `"error"`
 
+#### suspicious.noUnusedExpressions
+
+> `readonly` **noUnusedExpressions**: `"error"` = `"error"`
+
+Unused expressions can be safely remove and should not litter the codebase.
+
 #### suspicious.noUselessEscapeInString
 
 > `readonly` **noUselessEscapeInString**: `"error"` = `"error"`
@@ -2199,6 +2214,14 @@ Frontend-only rule.
 #### suspicious.useDefaultSwitchClauseLast
 
 > `readonly` **useDefaultSwitchClauseLast**: `"error"` = `"error"`
+
+#### suspicious.useDeprecatedDate
+
+> `readonly` **useDeprecatedDate**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+##### Deprecated
 
 #### suspicious.useErrorMessage
 

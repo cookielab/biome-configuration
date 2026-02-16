@@ -49,7 +49,6 @@ const nursery = {
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	noDuplicateVariableNames: "error",
-	noEmptySource: "error",
 	/**
 	 * Enforces a consistent style of descriptions.
 	 */
@@ -59,7 +58,6 @@ const nursery = {
 			style: "block",
 		},
 	},
-	useDeprecatedDate: "warn",
 	/**
 	 * This rule promotes consistent naming across mutations.
 	 */
@@ -93,6 +91,11 @@ const suspicious = {
 	...base.suspicious,
 
 	noDuplicateFields: "error",
+	noEmptySource: "error",
+	/**
+	 * @deprecated
+	 */
+	useDeprecatedDate: "off",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
 const graphql = {
