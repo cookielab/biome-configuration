@@ -309,6 +309,10 @@ const correctness = {
 	 * Qwik-only rule.
 	 */
 	useQwikMethodUsage: "off",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikValidLexicalScope: "off",
 	useSingleJsDocAsterisk: "warn",
 	/**
 	 * React-only rule.
@@ -588,10 +592,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	useLoneExecutableDefinition: "off",
-	/**
-	 * Qwik-only rule.
-	 */
-	useQwikValidLexicalScope: "off",
 	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
