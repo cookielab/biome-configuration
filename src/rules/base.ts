@@ -267,6 +267,10 @@ const correctness = {
 	 * Vue-only rule.
 	 */
 	noVueReservedProps: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueSetupPropsReactivityLoss: "off",
 	recommended: false,
 	/**
 	 * React-only rule.
@@ -503,10 +507,6 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	noVueOptionsApi: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueSetupPropsReactivityLoss: "off",
 	/**
 	 * Vue-only rule.
 	 */
