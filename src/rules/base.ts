@@ -382,10 +382,6 @@ const nursery = {
 	 */
 	noDuplicateVariableNames: "off",
 	/**
-	 * GraphQL-only rule.
-	 */
-	noEmptySource: "off",
-	/**
 	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
 	 */
 	noEqualsToNull: "off",
@@ -942,6 +938,10 @@ const suspicious = {
 	 */
 	noEmptyBlockStatements: "off",
 	noEmptyInterface: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noEmptySource: "off",
 	noEvolvingTypes: "error",
 	noExplicitAny: "error",
 	noExportsInTest: "error",

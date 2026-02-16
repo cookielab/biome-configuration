@@ -49,7 +49,6 @@ const nursery = {
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	noDuplicateVariableNames: "error",
-	noEmptySource: "error",
 	/**
 	 * Enforces a consistent style of descriptions.
 	 */
@@ -93,6 +92,7 @@ const suspicious = {
 	...base.suspicious,
 
 	noDuplicateFields: "error",
+	noEmptySource: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
 const graphql = {
