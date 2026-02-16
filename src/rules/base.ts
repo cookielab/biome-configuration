@@ -424,10 +424,6 @@ const nursery = {
 		},
 	},
 	/**
-	 * JSX-dialects only rule.
-	 */
-	noJsxLiterals: "off",
-	/**
 	 * React-only rule.
 	 */
 	noJsxPropsBind: "off",
@@ -700,6 +696,10 @@ const style = {
 	noHeadElement: "off",
 	noImplicitBoolean: "error",
 	noInferrableTypes: "error",
+	/**
+	 * JSX-dialects only rule.
+	 */
+	noJsxLiterals: "off",
 	noMagicNumbers: "warn",
 	noNamespace: "error",
 	noNegationElse: "error",
