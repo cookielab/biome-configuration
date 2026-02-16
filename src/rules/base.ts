@@ -413,7 +413,6 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noHexColors: "off",
-	noImportCycles: "error",
 	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
 	 * Although, the usage in for-loops makes sense and is thus allowed.
@@ -962,6 +961,10 @@ const suspicious = {
 	 * Frontend-only rule.
 	 */
 	noImportantInKeyframe: "off",
+	/**
+	 * Import cycles are bad for obvious reasons.
+	 */
+	noImportCycles: "error",
 	noIrregularWhitespace: "error",
 	noLabelVar: "error",
 	noMisleadingCharacterClass: "error",
