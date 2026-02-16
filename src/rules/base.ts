@@ -516,7 +516,6 @@ const nursery = {
 	 * There is no need to await non-Promise values.
 	 */
 	useAwaitThenable: "error",
-	useConsistentArrowReturn: "error",
 	/**
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
@@ -751,6 +750,7 @@ const style = {
 			syntax: "shorthand",
 		},
 	},
+	useConsistentArrowReturn: "error",
 	useConsistentBuiltinInstantiation: "error",
 	/**
 	 * React-only rule.
