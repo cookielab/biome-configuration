@@ -235,6 +235,10 @@ const correctness = {
 	noUnmatchableAnbSelector: "off",
 	noUnreachable: "error",
 	noUnreachableSuper: "error",
+	/**
+	 * Flags any imports that Biome cannot resolve.
+	 */
+	noUnresolvedImports: "error",
 	noUnsafeFinally: "error",
 	noUnsafeOptionalChaining: "error",
 	noUnusedFunctionParameters: "error",
@@ -473,9 +477,7 @@ const nursery = {
 	noUnknownAttribute: "off",
 	noUnnecessaryConditions: "warn",
 	/**
-	 * Produces too many false-positives for now.
 	 */
-	noUnresolvedImports: "off",
 	noUnusedExpressions: "error",
 	/**
 	 * Vue-only rule.
