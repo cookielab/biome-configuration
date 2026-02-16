@@ -490,7 +490,11 @@ const nursery = {
 	noUnknownAttribute: "off",
 	noUnnecessaryConditions: "warn",
 	/**
+	 * This rule is meant to prevent using a plain `return;` at the end of a function.
+	 *
+	 * Other usage, such as early returns, should not be affected.
 	 */
+	noUselessReturn: "error",
 	/**
 	 * Vue-only rule.
 	 */
