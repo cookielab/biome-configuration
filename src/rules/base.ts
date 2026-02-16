@@ -82,6 +82,7 @@ const complexity = {
 	noStaticOnlyClass: "error",
 	noThisInStatic: "off",
 	noUselessCatch: "error",
+	noUselessCatchBinding: "error",
 	noUselessConstructor: "error",
 	noUselessContinue: "error",
 	noUselessEmptyExport: "error",
@@ -472,7 +473,6 @@ const nursery = {
 	 */
 	noUnresolvedImports: "off",
 	noUnusedExpressions: "error",
-	noUselessCatchBinding: "error",
 	noUselessUndefined: "error",
 	/**
 	 * Vue-only rule.
