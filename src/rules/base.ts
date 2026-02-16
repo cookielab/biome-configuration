@@ -354,10 +354,6 @@ const nursery = {
 	 */
 	noDuplicateAttributes: "off",
 	/**
-	 * NodeJS-only rule.
-	 */
-	noDuplicateDependencies: "off",
-	/**
 	 * React & Solid.js only rule.
 	 */
 	noDuplicatedSpreadProps: "off",
@@ -909,6 +905,10 @@ const suspicious = {
 	 * Frontend-only rule.
 	 */
 	noDuplicateCustomProperties: "off",
+	/**
+	 * NodeJS-only rule.
+	 */
+	noDuplicateDependencies: "off",
 	noDuplicateElseIf: "error",
 	/**
 	 * GraphQL-only rule.
