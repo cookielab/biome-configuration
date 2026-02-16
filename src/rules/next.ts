@@ -22,6 +22,11 @@ const complexity = {
 
 const correctness = {
 	...react.correctness,
+
+	/**
+	 * Disallows the usage of async functions for NextJS components.
+	 */
+	noNextAsyncClientComponent: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {

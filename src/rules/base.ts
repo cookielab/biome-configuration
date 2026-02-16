@@ -164,6 +164,10 @@ const correctness = {
 	 */
 	noNestedComponentDefinitions: "off",
 	/**
+	 * NextJS-only rule.
+	 */
+	noNextAsyncClientComponent: "off",
+	/**
 	 * Should only be disabled in Node projects.
 	 */
 	noNodejsModules: "error",
@@ -420,9 +424,7 @@ const nursery = {
 	 */
 	noMultiStr: "error",
 	/**
-	 * NextJS-only rule.
 	 */
-	noNextAsyncClientComponent: "off",
 	/**
 	 * Just making sure there are no unused parameters in recursive functions.
 	 */
