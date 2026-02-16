@@ -100,7 +100,13 @@ const complexity = {
 	noUselessTernary: "error",
 	noUselessThisAlias: "error",
 	noUselessTypeConstraint: "error",
-	noUselessUndefined: "error",
+	/**
+	 * Many cases, where this rule would apply, go against the explicit nature of this configuration.
+	 *
+	 * The most common case is the explicit return of an undefined value, for example when a function may or may not return a value.
+	 * An `Option` or `Maybe` type would be more appropriate pattern for such usage, but not many TS projects use them.
+	 */
+	noUselessUndefined: "off",
 	noUselessUndefinedInitialization: "error",
 	noVoid: "error",
 	recommended: false,

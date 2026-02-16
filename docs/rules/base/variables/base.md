@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: [rules/base.ts:1045](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L1045)
+Defined in: [rules/base.ts:1051](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L1051)
 
 ## Type Declaration
 
@@ -306,7 +306,12 @@ React-only rule.
 
 #### complexity.noUselessUndefined
 
-> `readonly` **noUselessUndefined**: `"error"` = `"error"`
+> `readonly` **noUselessUndefined**: `"off"` = `"off"`
+
+Many cases, where this rule would apply, go against the explicit nature of this configuration.
+
+The most common case is the explicit return of an undefined value, for example when a function may or may not return a value.
+An `Option` or `Maybe` type would be more appropriate pattern for such usage, but not many TS projects use them.
 
 #### complexity.noUselessUndefinedInitialization
 

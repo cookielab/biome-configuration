@@ -302,7 +302,12 @@ Does not really make sense as high line count != high complexity.
 
 #### complexity.noUselessUndefined
 
-> `readonly` **noUselessUndefined**: `"error"` = `"error"`
+> `readonly` **noUselessUndefined**: `"off"` = `"off"`
+
+Many cases, where this rule would apply, go against the explicit nature of this configuration.
+
+The most common case is the explicit return of an undefined value, for example when a function may or may not return a value.
+An `Option` or `Maybe` type would be more appropriate pattern for such usage, but not many TS projects use them.
 
 #### complexity.noUselessUndefinedInitialization
 
