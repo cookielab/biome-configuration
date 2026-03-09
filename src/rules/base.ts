@@ -489,6 +489,10 @@ const nursery = {
 	 */
 	noPlaywrightUselessAwait: "error",
 	/**
+	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
+	 */
+	noPlaywrightWaitForNavigation: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
