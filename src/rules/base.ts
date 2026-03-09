@@ -556,6 +556,10 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
+	noVueRefAsOperand: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	noVueVIfWithVFor: "off",
 	recommended: false,
 	/**
