@@ -473,6 +473,10 @@ const nursery = {
 	 */
 	noPlaywrightForceOption: "error",
 	/**
+	 * Forces the async code of Playwright to be handled.
+	 */
+	noPlaywrightMissingAwait: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
