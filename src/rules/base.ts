@@ -481,6 +481,10 @@ const nursery = {
 	 */
 	noPlaywrightNetworkidle: "error",
 	/**
+	 * `page.pause()` is a debugging utility and should not be committed.
+	 */
+	noPlaywrightPagePause: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
