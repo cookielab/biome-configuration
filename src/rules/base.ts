@@ -340,6 +340,10 @@ const nursery = {
 	 */
 	noBeforeInteractiveScriptOutsideDocument: "off",
 	/**
+	 * Tests should be strictly linear without any branching.
+	 */
+	noConditionalExpect: "error",
+	/**
 	 * `continue` helps to avoid nesting inside loop bodies.
 	 */
 	noContinue: "off",
@@ -457,6 +461,46 @@ const nursery = {
 	 */
 	noParametersOnlyUsedInRecursion: "off",
 	/**
+	 * Usage of locators is preferred as they include auto-wait.
+	 */
+	noPlaywrightElementHandle: "error",
+	/**
+	 * Locators are preferred over `evaluate`.
+	 */
+	noPlaywrightEval: "error",
+	/**
+	 * Force may lead to unreliable tests.
+	 */
+	noPlaywrightForceOption: "error",
+	/**
+	 * Forces the async code of Playwright to be handled.
+	 */
+	noPlaywrightMissingAwait: "error",
+	/**
+	 * Using `networkidle` may lead to unreliable or flaky tests.
+	 */
+	noPlaywrightNetworkidle: "error",
+	/**
+	 * `page.pause()` is a debugging utility and should not be committed.
+	 */
+	noPlaywrightPagePause: "error",
+	/**
+	 * Not all Playwright functions return a Promise. This rule helps avoid unnecessary `await` on such functions.
+	 */
+	noPlaywrightUselessAwait: "error",
+	/**
+	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
+	 */
+	noPlaywrightWaitForNavigation: "error",
+	/**
+	 * Locators are preferred as they are more reliable and auto-awaited.
+	 */
+	noPlaywrightWaitForSelector: "error",
+	/**
+	 * `waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
+	 */
+	noPlaywrightWaitForTimeout: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
@@ -512,8 +556,16 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
+	noVueRefAsOperand: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	noVueVIfWithVFor: "off",
 	recommended: false,
+	/**
+	 * using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
+	 */
+	useArraySome: "error",
 	/**
 	 * Enforces all sorting operations to be explicitly defined.
 	 */
@@ -545,6 +597,10 @@ const nursery = {
 	 */
 	useErrorCause: "error",
 	useExhaustiveSwitchCases: "error",
+	/**
+	 * Each test should include at least one assertion.
+	 */
+	useExpect: "error",
 	/**
 	 * The rule is currently missing the option to make the following usage valid:
 	 *
@@ -582,6 +638,18 @@ const nursery = {
 	 */
 	useLoneExecutableDefinition: "off",
 	/**
+	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
+	 */
+	useNamedCaptureGroup: "warn",
+	/**
+	 * Nullish coalescing is always preferrable to a logic OR.
+	 */
+	useNullishCoalescing: "error",
+	/**
+	 * Describe callback should not have any parameters nor should it be async.
+	 */
+	usePlaywrightValidDescribeCallback: "error",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
@@ -590,6 +658,10 @@ const nursery = {
 	 */
 	useRequiredScripts: "off",
 	/**
+	 * Vue-only rule.
+	 */
+	useScopedStyles: "off",
+	/**
 	 * Frontend-only rule.
 	 */
 	useSortedClasses: "off",
@@ -597,6 +669,10 @@ const nursery = {
 	 * Spread syntax is more readable than using `Object.apply`.
 	 */
 	useSpread: "error",
+	/**
+	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
+	 */
+	useUnicodeRegex: "error",
 	useVueConsistentDefinePropsDeclaration: "off",
 	useVueConsistentVBindStyle: "off",
 	useVueConsistentVOnStyle: "off",

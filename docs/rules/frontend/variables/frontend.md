@@ -764,6 +764,12 @@ Leaving the level to `warn` keeps the balance between being helpful and annoying
 
 NextJS-only rule.
 
+#### nursery.noConditionalExpect
+
+> `readonly` **noConditionalExpect**: `"error"` = `"error"`
+
+Tests should be strictly linear without any branching.
+
 #### nursery.noContinue
 
 > `readonly` **noContinue**: `"off"` = `"off"`
@@ -951,6 +957,66 @@ Using strings with ``` is a better approach.
 
 Just making sure there are no unused parameters in recursive functions.
 
+#### nursery.noPlaywrightElementHandle
+
+> `readonly` **noPlaywrightElementHandle**: `"error"` = `"error"`
+
+Usage of locators is preferred as they include auto-wait.
+
+#### nursery.noPlaywrightEval
+
+> `readonly` **noPlaywrightEval**: `"error"` = `"error"`
+
+Locators are preferred over `evaluate`.
+
+#### nursery.noPlaywrightForceOption
+
+> `readonly` **noPlaywrightForceOption**: `"error"` = `"error"`
+
+Force may lead to unreliable tests.
+
+#### nursery.noPlaywrightMissingAwait
+
+> `readonly` **noPlaywrightMissingAwait**: `"error"` = `"error"`
+
+Forces the async code of Playwright to be handled.
+
+#### nursery.noPlaywrightNetworkidle
+
+> `readonly` **noPlaywrightNetworkidle**: `"error"` = `"error"`
+
+Using `networkidle` may lead to unreliable or flaky tests.
+
+#### nursery.noPlaywrightPagePause
+
+> `readonly` **noPlaywrightPagePause**: `"error"` = `"error"`
+
+`page.pause()` is a debugging utility and should not be committed.
+
+#### nursery.noPlaywrightUselessAwait
+
+> `readonly` **noPlaywrightUselessAwait**: `"error"` = `"error"`
+
+Not all Playwright functions return a Promise. This rule helps avoid unnecessary `await` on such functions.
+
+#### nursery.noPlaywrightWaitForNavigation
+
+> `readonly` **noPlaywrightWaitForNavigation**: `"error"` = `"error"`
+
+`waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
+
+#### nursery.noPlaywrightWaitForSelector
+
+> `readonly` **noPlaywrightWaitForSelector**: `"error"` = `"error"`
+
+Locators are preferred as they are more reliable and auto-awaited.
+
+#### nursery.noPlaywrightWaitForTimeout
+
+> `readonly` **noPlaywrightWaitForTimeout**: `"error"` = `"error"`
+
+`waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
+
 #### nursery.noProto
 
 > `readonly` **noProto**: `"error"` = `"error"`
@@ -1034,6 +1100,12 @@ Vue-only rule.
 
 Vue-only rule.
 
+#### nursery.noVueRefAsOperand
+
+> `readonly` **noVueRefAsOperand**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### nursery.noVueVIfWithVFor
 
 > `readonly` **noVueVIfWithVFor**: `"off"` = `"off"`
@@ -1043,6 +1115,12 @@ Vue-only rule.
 #### nursery.recommended
 
 > `readonly` **recommended**: `false` = `false`
+
+#### nursery.useArraySome
+
+> `readonly` **useArraySome**: `"error"` = `"error"`
+
+using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
 
 #### nursery.useArraySortCompare
 
@@ -1104,6 +1182,12 @@ Promotes better error-handling practices.
 
 > `readonly` **useExhaustiveSwitchCases**: `"error"` = `"error"`
 
+#### nursery.useExpect
+
+> `readonly` **useExpect**: `"error"` = `"error"`
+
+Each test should include at least one assertion.
+
 #### nursery.useExplicitType
 
 > `readonly` **useExplicitType**: `"off"` = `"off"`
@@ -1155,6 +1239,24 @@ GraphQL-only rule.
 
 GraphQL-only rule.
 
+#### nursery.useNamedCaptureGroup
+
+> `readonly` **useNamedCaptureGroup**: `"warn"` = `"warn"`
+
+Capture groups are more reliable and maintainable. However, not every regex must use them.
+
+#### nursery.useNullishCoalescing
+
+> `readonly` **useNullishCoalescing**: `"error"` = `"error"`
+
+Nullish coalescing is always preferrable to a logic OR.
+
+#### nursery.usePlaywrightValidDescribeCallback
+
+> `readonly` **usePlaywrightValidDescribeCallback**: `"error"` = `"error"`
+
+Describe callback should not have any parameters nor should it be async.
+
 #### nursery.useRegexpExec
 
 > `readonly` **useRegexpExec**: `"error"` = `"error"`
@@ -1167,6 +1269,12 @@ GraphQL-only rule.
 
 This rule should only be enabled in a specific project as every project uses different required scripts.
 
+#### nursery.useScopedStyles
+
+> `readonly` **useScopedStyles**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### nursery.useSortedClasses
 
 > `readonly` **useSortedClasses**: `"error"` = `"error"`
@@ -1176,6 +1284,12 @@ This rule should only be enabled in a specific project as every project uses dif
 > `readonly` **useSpread**: `"error"` = `"error"`
 
 Spread syntax is more readable than using `Object.apply`.
+
+#### nursery.useUnicodeRegex
+
+> `readonly` **useUnicodeRegex**: `"error"` = `"error"`
+
+Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 
 #### nursery.useVueConsistentDefinePropsDeclaration
 

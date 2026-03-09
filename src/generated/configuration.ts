@@ -313,9 +313,9 @@ export const formatterConfigurationSchema = z.object({
      * Whether to add a trailing newline at the end of the file.
      *
      * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
-     * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
-     * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
      *
      * Disable the option at your own risk.
      *
@@ -434,9 +434,9 @@ export const cssFormatterConfigurationSchema = z.object({
      * Whether to add a trailing newline at the end of the file.
      *
      * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
-     * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
-     * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
      *
      * Disable the option at your own risk.
      *
@@ -520,9 +520,9 @@ export const graphqlFormatterConfigurationSchema = z.object({
      * Whether to add a trailing newline at the end of the file.
      *
      * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
-     * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
-     * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
      *
      * Disable the option at your own risk.
      *
@@ -573,9 +573,9 @@ export const gritFormatterConfigurationSchema = z.object({
      * Whether to add a trailing newline at the end of the file.
      *
      * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
-     * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
-     * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
      *
      * Disable the option at your own risk.
      *
@@ -645,9 +645,9 @@ export const htmlFormatterConfigurationSchema = z.object({
      * Whether to add a trailing newline at the end of the file.
      *
      * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
-     * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
-     * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
      *
      * Disable the option at your own risk.
      *
@@ -767,9 +767,9 @@ export const jsFormatterConfigurationSchema = z.object({
      * Whether to add a trailing newline at the end of the file.
      *
      * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
-     * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
-     * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
      *
      * Disable the option at your own risk.
      *
@@ -863,9 +863,9 @@ export const jsonFormatterConfigurationSchema = z.object({
      * Whether to add a trailing newline at the end of the file.
      *
      * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
-     * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
-     * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
      *
      * Disable the option at your own risk.
      *
@@ -1405,6 +1405,8 @@ export const noAmbiguousAnchorTextOptionsSchema = z.object({
 
 export const noBeforeInteractiveScriptOutsideDocumentOptionsSchema = z.object({});
 
+export const noConditionalExpectOptionsSchema = z.object({});
+
 export const noContinueOptionsSchema = z.object({});
 
 export const noDeprecatedMediaTypeOptionsSchema = z.object({
@@ -1483,6 +1485,26 @@ export const noNestedPromisesOptionsSchema = z.object({});
 
 export const noParametersOnlyUsedInRecursionOptionsSchema = z.object({});
 
+export const noPlaywrightElementHandleOptionsSchema = z.object({});
+
+export const noPlaywrightEvalOptionsSchema = z.object({});
+
+export const noPlaywrightForceOptionOptionsSchema = z.object({});
+
+export const noPlaywrightMissingAwaitOptionsSchema = z.object({});
+
+export const noPlaywrightNetworkidleOptionsSchema = z.object({});
+
+export const noPlaywrightPagePauseOptionsSchema = z.object({});
+
+export const noPlaywrightUselessAwaitOptionsSchema = z.object({});
+
+export const noPlaywrightWaitForNavigationOptionsSchema = z.object({});
+
+export const noPlaywrightWaitForSelectorOptionsSchema = z.object({});
+
+export const noPlaywrightWaitForTimeoutOptionsSchema = z.object({});
+
 export const noProtoOptionsSchema = z.object({});
 
 export const noRedundantDefaultExportOptionsSchema = z.object({});
@@ -1527,7 +1549,11 @@ export const noVueArrowFuncInWatchOptionsSchema = z.object({});
 
 export const noVueOptionsApiOptionsSchema = z.object({});
 
+export const noVueRefAsOperandOptionsSchema = z.object({});
+
 export const noVueVIfWithVForOptionsSchema = z.object({});
+
+export const useArraySomeOptionsSchema = z.object({});
 
 export const useArraySortCompareOptionsSchema = z.object({});
 
@@ -1568,6 +1594,8 @@ export const useErrorCauseOptionsSchema = z.object({
 
 export const useExhaustiveSwitchCasesOptionsSchema = z.object({});
 
+export const useExpectOptionsSchema = z.object({});
+
 export const useExplicitTypeOptionsSchema = z.object({});
 
 export const useFindOptionsSchema = z.object({});
@@ -1587,6 +1615,23 @@ export const useLoneAnonymousOperationOptionsSchema = z.object({});
 
 export const useLoneExecutableDefinitionOptionsSchema = z.object({});
 
+export const useNamedCaptureGroupOptionsSchema = z.object({});
+
+export const useNullishCoalescingOptionsSchema = z.object({
+    /**
+     * Whether to ignore `||` expressions in conditional test positions
+     * (if/while/for/do-while/ternary conditions).
+     *
+     * When `true` (the default), the rule will not report `||` expressions
+     * that appear in places where the falsy-checking behavior may be intentional.
+     *
+     * Default: `true`
+     */
+    ignoreConditionalTests: z.boolean().optional().nullable()
+});
+
+export const usePlaywrightValidDescribeCallbackOptionsSchema = z.object({});
+
 export const useRegexpExecOptionsSchema = z.object({});
 
 export const useRequiredScriptsOptionsSchema = z.object({
@@ -1595,6 +1640,8 @@ export const useRequiredScriptsOptionsSchema = z.object({
      */
     requiredScripts: z.array(z.string()).optional()
 });
+
+export const useScopedStylesOptionsSchema = z.object({});
 
 export const useSortedClassesOptionsSchema = z.object({
     /**
@@ -1608,6 +1655,8 @@ export const useSortedClassesOptionsSchema = z.object({
 });
 
 export const useSpreadOptionsSchema = z.object({});
+
+export const useUnicodeRegexOptionsSchema = z.object({});
 
 export const useVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
     style: declarationStyleSchema.optional().nullable()
@@ -2339,9 +2388,9 @@ export const overrideFormatterConfigurationSchema = z.object({
      * Whether to add a trailing newline at the end of the file.
      *
      * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - <https://thoughtbot.com/blog/no-newline-at-end-of-file>
-     * - <https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804>
-     * - <https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files>
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
      *
      * Disable the option at your own risk.
      *
@@ -3362,6 +3411,11 @@ export const ruleWithNoBeforeInteractiveScriptOutsideDocumentOptionsSchema = z.o
     options: noBeforeInteractiveScriptOutsideDocumentOptionsSchema.optional()
 });
 
+export const ruleWithNoConditionalExpectOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noConditionalExpectOptionsSchema.optional()
+});
+
 export const ruleWithNoContinueOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noContinueOptionsSchema.optional()
@@ -3502,6 +3556,60 @@ export const ruleWithNoParametersOnlyUsedInRecursionOptionsSchema = z.object({
     options: noParametersOnlyUsedInRecursionOptionsSchema.optional()
 });
 
+export const ruleWithNoPlaywrightElementHandleOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightElementHandleOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightEvalOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightEvalOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightForceOptionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightForceOptionOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightMissingAwaitOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightMissingAwaitOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightNetworkidleOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightNetworkidleOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightPagePauseOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightPagePauseOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightUselessAwaitOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightUselessAwaitOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForNavigationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForNavigationOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForSelectorOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForSelectorOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForTimeoutOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForTimeoutOptionsSchema.optional()
+});
+
 export const ruleWithNoProtoOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noProtoOptionsSchema.optional()
@@ -3574,9 +3682,20 @@ export const ruleWithNoVueOptionsApiOptionsSchema = z.object({
     options: noVueOptionsApiOptionsSchema.optional()
 });
 
+export const ruleWithNoVueRefAsOperandOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueRefAsOperandOptionsSchema.optional()
+});
+
 export const ruleWithNoVueVIfWithVForOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noVueVIfWithVForOptionsSchema.optional()
+});
+
+export const ruleWithUseArraySomeOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useArraySomeOptionsSchema.optional()
 });
 
 export const ruleWithUseArraySortCompareOptionsSchema = z.object({
@@ -3620,6 +3739,11 @@ export const ruleWithUseExhaustiveSwitchCasesOptionsSchema = z.object({
     options: useExhaustiveSwitchCasesOptionsSchema.optional()
 });
 
+export const ruleWithUseExpectOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useExpectOptionsSchema.optional()
+});
+
 export const ruleWithUseExplicitTypeOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useExplicitTypeOptionsSchema.optional()
@@ -3655,6 +3779,22 @@ export const ruleWithUseLoneExecutableDefinitionOptionsSchema = z.object({
     options: useLoneExecutableDefinitionOptionsSchema.optional()
 });
 
+export const ruleWithUseNamedCaptureGroupOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useNamedCaptureGroupOptionsSchema.optional()
+});
+
+export const ruleWithUseNullishCoalescingOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useNullishCoalescingOptionsSchema.optional()
+});
+
+export const ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: usePlaywrightValidDescribeCallbackOptionsSchema.optional()
+});
+
 export const ruleWithUseRegexpExecOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useRegexpExecOptionsSchema.optional()
@@ -3663,6 +3803,12 @@ export const ruleWithUseRegexpExecOptionsSchema = z.object({
 export const ruleWithUseRequiredScriptsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useRequiredScriptsOptionsSchema.optional()
+});
+
+export const ruleWithUseScopedStylesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useScopedStylesOptionsSchema.optional()
 });
 
 export const ruleWithUseSortedClassesOptionsSchema = z.object({
@@ -3675,6 +3821,12 @@ export const ruleWithUseSpreadOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useSpreadOptionsSchema.optional()
+});
+
+export const ruleWithUseUnicodeRegexOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useUnicodeRegexOptionsSchema.optional()
 });
 
 export const ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
@@ -5191,6 +5343,8 @@ export const noAmbiguousAnchorTextConfigurationSchema = z.union([rulePlainConfig
 
 export const noBeforeInteractiveScriptOutsideDocumentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBeforeInteractiveScriptOutsideDocumentOptionsSchema]);
 
+export const noConditionalExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConditionalExpectOptionsSchema]);
+
 export const noContinueConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoContinueOptionsSchema]);
 
 export const noDeprecatedMediaTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDeprecatedMediaTypeOptionsSchema]);
@@ -5245,6 +5399,26 @@ export const noNestedPromisesConfigurationSchema = z.union([rulePlainConfigurati
 
 export const noParametersOnlyUsedInRecursionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoParametersOnlyUsedInRecursionOptionsSchema]);
 
+export const noPlaywrightElementHandleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightElementHandleOptionsSchema]);
+
+export const noPlaywrightEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightEvalOptionsSchema]);
+
+export const noPlaywrightForceOptionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightForceOptionOptionsSchema]);
+
+export const noPlaywrightMissingAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightMissingAwaitOptionsSchema]);
+
+export const noPlaywrightNetworkidleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightNetworkidleOptionsSchema]);
+
+export const noPlaywrightPagePauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightPagePauseOptionsSchema]);
+
+export const noPlaywrightUselessAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightUselessAwaitOptionsSchema]);
+
+export const noPlaywrightWaitForNavigationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForNavigationOptionsSchema]);
+
+export const noPlaywrightWaitForSelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForSelectorOptionsSchema]);
+
+export const noPlaywrightWaitForTimeoutConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForTimeoutOptionsSchema]);
+
 export const noProtoConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoProtoOptionsSchema]);
 
 export const noRedundantDefaultExportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRedundantDefaultExportOptionsSchema]);
@@ -5273,7 +5447,11 @@ export const noVueArrowFuncInWatchConfigurationSchema = z.union([rulePlainConfig
 
 export const noVueOptionsApiConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueOptionsApiOptionsSchema]);
 
+export const noVueRefAsOperandConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueRefAsOperandOptionsSchema]);
+
 export const noVueVIfWithVForConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVIfWithVForOptionsSchema]);
+
+export const useArraySomeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArraySomeOptionsSchema]);
 
 export const useArraySortCompareConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArraySortCompareOptionsSchema]);
 
@@ -5291,6 +5469,8 @@ export const useErrorCauseConfigurationSchema = z.union([rulePlainConfigurationS
 
 export const useExhaustiveSwitchCasesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveSwitchCasesOptionsSchema]);
 
+export const useExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExpectOptionsSchema]);
+
 export const useExplicitTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitTypeOptionsSchema]);
 
 export const useFindConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseFindOptionsSchema]);
@@ -5305,13 +5485,23 @@ export const useLoneAnonymousOperationConfigurationSchema = z.union([rulePlainCo
 
 export const useLoneExecutableDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLoneExecutableDefinitionOptionsSchema]);
 
+export const useNamedCaptureGroupConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNamedCaptureGroupOptionsSchema]);
+
+export const useNullishCoalescingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNullishCoalescingOptionsSchema]);
+
+export const usePlaywrightValidDescribeCallbackConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema]);
+
 export const useRegexpExecConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexpExecOptionsSchema]);
 
 export const useRequiredScriptsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRequiredScriptsOptionsSchema]);
 
+export const useScopedStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseScopedStylesOptionsSchema]);
+
 export const useSortedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSortedClassesOptionsSchema]);
 
 export const useSpreadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSpreadOptionsSchema]);
+
+export const useUnicodeRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnicodeRegexOptionsSchema]);
 
 export const useVueConsistentDefinePropsDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema]);
 
@@ -6213,6 +6403,11 @@ export const nurserySchema = z.object({
      */
     noBeforeInteractiveScriptOutsideDocument: noBeforeInteractiveScriptOutsideDocumentConfigurationSchema.optional().nullable(),
     /**
+     * Disallow conditional expect() calls inside tests.
+     * See https://biomejs.dev/linter/rules/no-conditional-expect
+     */
+    noConditionalExpect: noConditionalExpectConfigurationSchema.optional().nullable(),
+    /**
      * Disallow continue statements.
      * See https://biomejs.dev/linter/rules/no-continue
      */
@@ -6348,6 +6543,56 @@ export const nurserySchema = z.object({
      */
     noParametersOnlyUsedInRecursion: noParametersOnlyUsedInRecursionConfigurationSchema.optional().nullable(),
     /**
+     * Disallow usage of element handles (page.$() and page.$$()).
+     * See https://biomejs.dev/linter/rules/no-playwright-element-handle
+     */
+    noPlaywrightElementHandle: noPlaywrightElementHandleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow usage of page.$eval() and page.$$eval().
+     * See https://biomejs.dev/linter/rules/no-playwright-eval
+     */
+    noPlaywrightEval: noPlaywrightEvalConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow usage of the { force: true } option.
+     * See https://biomejs.dev/linter/rules/no-playwright-force-option
+     */
+    noPlaywrightForceOption: noPlaywrightForceOptionConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce Playwright async APIs to be awaited or returned.
+     * See https://biomejs.dev/linter/rules/no-playwright-missing-await
+     */
+    noPlaywrightMissingAwait: noPlaywrightMissingAwaitConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow usage of the networkidle option.
+     * See https://biomejs.dev/linter/rules/no-playwright-networkidle
+     */
+    noPlaywrightNetworkidle: noPlaywrightNetworkidleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using page.pause().
+     * See https://biomejs.dev/linter/rules/no-playwright-page-pause
+     */
+    noPlaywrightPagePause: noPlaywrightPagePauseConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary await for Playwright methods that don't return promises.
+     * See https://biomejs.dev/linter/rules/no-playwright-useless-await
+     */
+    noPlaywrightUselessAwait: noPlaywrightUselessAwaitConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using page.waitForNavigation().
+     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-navigation
+     */
+    noPlaywrightWaitForNavigation: noPlaywrightWaitForNavigationConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using page.waitForSelector().
+     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-selector
+     */
+    noPlaywrightWaitForSelector: noPlaywrightWaitForSelectorConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using page.waitForTimeout().
+     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-timeout
+     */
+    noPlaywrightWaitForTimeout: noPlaywrightWaitForTimeoutConfigurationSchema.optional().nullable(),
+    /**
      * Disallow the use of the deprecated __proto__ object property.
      * See https://biomejs.dev/linter/rules/no-proto
      */
@@ -6418,6 +6663,11 @@ export const nurserySchema = z.object({
      */
     noVueOptionsApi: noVueOptionsApiConfigurationSchema.optional().nullable(),
     /**
+     * Disallow the use of value wrapped by ref()(Composition API) as operand.
+     * See https://biomejs.dev/linter/rules/no-vue-ref-as-operand
+     */
+    noVueRefAsOperand: noVueRefAsOperandConfigurationSchema.optional().nullable(),
+    /**
      * Disallow using v-if and v-for directives on the same element.
      * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
      */
@@ -6426,6 +6676,11 @@ export const nurserySchema = z.object({
      * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
+    /**
+     * Prefer Array.prototype.some() over verbose existence checks.
+     * See https://biomejs.dev/linter/rules/use-array-some
+     */
+    useArraySome: useArraySomeConfigurationSchema.optional().nullable(),
     /**
      * Require Array#sort and Array#toSorted calls to always provide a compareFunction.
      * See https://biomejs.dev/linter/rules/use-array-sort-compare
@@ -6467,6 +6722,11 @@ export const nurserySchema = z.object({
      */
     useExhaustiveSwitchCases: useExhaustiveSwitchCasesConfigurationSchema.optional().nullable(),
     /**
+     * Ensure that test functions contain at least one expect() or similar assertion.
+     * See https://biomejs.dev/linter/rules/use-expect
+     */
+    useExpect: useExpectConfigurationSchema.optional().nullable(),
+    /**
      * Enforce types in functions, methods, variables, and parameters.
      * See https://biomejs.dev/linter/rules/use-explicit-type
      */
@@ -6502,6 +6762,21 @@ export const nurserySchema = z.object({
      */
     useLoneExecutableDefinition: useLoneExecutableDefinitionConfigurationSchema.optional().nullable(),
     /**
+     * Enforce using named capture groups in regular expression.
+     * See https://biomejs.dev/linter/rules/use-named-capture-group
+     */
+    useNamedCaptureGroup: useNamedCaptureGroupConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using the nullish coalescing operator (??) instead of logical or (||).
+     * See https://biomejs.dev/linter/rules/use-nullish-coalescing
+     */
+    useNullishCoalescing: useNullishCoalescingConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid describe() callback.
+     * See https://biomejs.dev/linter/rules/use-playwright-valid-describe-callback
+     */
+    usePlaywrightValidDescribeCallback: usePlaywrightValidDescribeCallbackConfigurationSchema.optional().nullable(),
+    /**
      * Enforce RegExp#exec over String#match if no global flag is provided.
      * See https://biomejs.dev/linter/rules/use-regexp-exec
      */
@@ -6512,6 +6787,11 @@ export const nurserySchema = z.object({
      */
     useRequiredScripts: useRequiredScriptsConfigurationSchema.optional().nullable(),
     /**
+     * Enforce that \<style> blocks in Vue SFCs have the scoped attribute and that \<style> blocks in Astro components do not have the is:global directive.
+     * See https://biomejs.dev/linter/rules/use-scoped-styles
+     */
+    useScopedStyles: useScopedStylesConfigurationSchema.optional().nullable(),
+    /**
      * Enforce the sorting of CSS utility classes.
      * See https://biomejs.dev/linter/rules/use-sorted-classes
      */
@@ -6521,6 +6801,11 @@ export const nurserySchema = z.object({
      * See https://biomejs.dev/linter/rules/use-spread
      */
     useSpread: useSpreadConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of the u or v flag for regular expressions.
+     * See https://biomejs.dev/linter/rules/use-unicode-regex
+     */
+    useUnicodeRegex: useUnicodeRegexConfigurationSchema.optional().nullable(),
     /**
      * Enforce consistent defineProps declaration style.
      * See https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration
