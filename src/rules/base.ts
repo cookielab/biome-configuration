@@ -642,6 +642,10 @@ const nursery = {
 	 */
 	useNamedCaptureGroup: "warn",
 	/**
+	 * Nullish coalescing is always preferrable to a logic OR.
+	 */
+	useNullishCoalescing: "error",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
