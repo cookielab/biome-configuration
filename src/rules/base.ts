@@ -646,6 +646,10 @@ const nursery = {
 	 */
 	useNullishCoalescing: "error",
 	/**
+	 * Describe callback should not have any parameters nor should it be async.
+	 */
+	usePlaywrightValidDescribeCallback: "error",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
