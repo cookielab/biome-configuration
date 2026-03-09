@@ -669,6 +669,10 @@ const nursery = {
 	 * Spread syntax is more readable than using `Object.apply`.
 	 */
 	useSpread: "error",
+	/**
+	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
+	 */
+	useUnicodeRegex: "error",
 	useVueConsistentDefinePropsDeclaration: "off",
 	useVueConsistentVBindStyle: "off",
 	useVueConsistentVOnStyle: "off",
