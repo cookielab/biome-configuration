@@ -497,6 +497,10 @@ const nursery = {
 	 */
 	noPlaywrightWaitForSelector: "error",
 	/**
+	 * `waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
+	 */
+	noPlaywrightWaitForTimeout: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
