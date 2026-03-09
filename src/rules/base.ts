@@ -477,6 +477,10 @@ const nursery = {
 	 */
 	noPlaywrightMissingAwait: "error",
 	/**
+	 * Using `networkidle` may lead to unreliable or flaky tests.
+	 */
+	noPlaywrightNetworkidle: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
