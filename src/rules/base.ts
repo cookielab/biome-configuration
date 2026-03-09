@@ -485,6 +485,10 @@ const nursery = {
 	 */
 	noPlaywrightPagePause: "error",
 	/**
+	 * Not all Playwright functions return a Promise. This rule helps avoid unnecessary `await` on such functions.
+	 */
+	noPlaywrightUselessAwait: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
