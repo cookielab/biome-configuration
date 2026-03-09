@@ -658,6 +658,10 @@ const nursery = {
 	 */
 	useRequiredScripts: "off",
 	/**
+	 * Vue-only rule.
+	 */
+	useScopedStyles: "off",
+	/**
 	 * Frontend-only rule.
 	 */
 	useSortedClasses: "off",
