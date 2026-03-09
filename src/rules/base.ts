@@ -469,6 +469,10 @@ const nursery = {
 	 */
 	noPlaywrightEval: "error",
 	/**
+	 * Force may lead to unreliable tests.
+	 */
+	noPlaywrightForceOption: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
