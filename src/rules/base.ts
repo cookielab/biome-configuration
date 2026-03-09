@@ -598,6 +598,10 @@ const nursery = {
 	useErrorCause: "error",
 	useExhaustiveSwitchCases: "error",
 	/**
+	 * Each test should include at least one assertion.
+	 */
+	useExpect: "error",
+	/**
 	 * The rule is currently missing the option to make the following usage valid:
 	 *
 	 * @example
