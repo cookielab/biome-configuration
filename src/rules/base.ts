@@ -340,6 +340,10 @@ const nursery = {
 	 */
 	noBeforeInteractiveScriptOutsideDocument: "off",
 	/**
+	 * Tests should be strictly linear without any branching.
+	 */
+	noConditionalExpect: "error",
+	/**
 	 * `continue` helps to avoid nesting inside loop bodies.
 	 */
 	noContinue: "off",
