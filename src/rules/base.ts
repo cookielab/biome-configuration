@@ -461,6 +461,10 @@ const nursery = {
 	 */
 	noParametersOnlyUsedInRecursion: "off",
 	/**
+	 * Usage of locators is preferred as they include auto-wait.
+	 */
+	noPlaywrightElementHandle: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
