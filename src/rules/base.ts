@@ -493,6 +493,10 @@ const nursery = {
 	 */
 	noPlaywrightWaitForNavigation: "error",
 	/**
+	 * Locators are preferred as they are more reliable and auto-awaited.
+	 */
+	noPlaywrightWaitForSelector: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
