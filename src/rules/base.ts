@@ -563,6 +563,10 @@ const nursery = {
 	noVueVIfWithVFor: "off",
 	recommended: false,
 	/**
+	 * using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
+	 */
+	useArraySome: "error",
+	/**
 	 * Enforces all sorting operations to be explicitly defined.
 	 */
 	useArraySortCompare: "error",
