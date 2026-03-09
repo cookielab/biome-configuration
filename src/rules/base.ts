@@ -638,6 +638,10 @@ const nursery = {
 	 */
 	useLoneExecutableDefinition: "off",
 	/**
+	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
+	 */
+	useNamedCaptureGroup: "warn",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
