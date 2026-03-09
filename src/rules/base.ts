@@ -465,6 +465,10 @@ const nursery = {
 	 */
 	noPlaywrightElementHandle: "error",
 	/**
+	 * Locators are preferred over `evaluate`.
+	 */
+	noPlaywrightEval: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
