@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.0](https://github.com/cookielab/biome-configuration/compare/v1.3.0...v1.4.0) (2026-03-09)
+
+
+### Features
+
+* **base:** add definition for noConditionalExpect with level error ([a265546](https://github.com/cookielab/biome-configuration/commit/a265546a6526be07fac0f66002751db0a8b55c6b))
+* **base:** add definition for noPlaywrightElementHandle with level error ([3a80c58](https://github.com/cookielab/biome-configuration/commit/3a80c58290c8087c774c5a909d2d4657f5a47032))
+* **base:** add definition for noPlaywrightEval with level error ([719db1b](https://github.com/cookielab/biome-configuration/commit/719db1b885f182c4ada39330567893aeaa963d29))
+* **base:** add definition for noPlaywrightForceOption with level error ([a0f59e8](https://github.com/cookielab/biome-configuration/commit/a0f59e812dacdd999c8be0cca2bc36e3a01dbfa0))
+* **base:** add definition for noPlaywrightMissingAwait with level error ([90b7462](https://github.com/cookielab/biome-configuration/commit/90b7462d604c68d8f021d7292fa364c14d7905fe))
+* **base:** add definition for noPlaywrightNetworkidle with level error ([c144f54](https://github.com/cookielab/biome-configuration/commit/c144f542100d1c9f91ef8d65d07eb3b20da62b8c))
+* **base:** add definition for noPlaywrightPagePause with level error ([54bd503](https://github.com/cookielab/biome-configuration/commit/54bd503820a974caa71eac2c48fccb5f8662ac9b))
+* **base:** add definition for noPlaywrightUselessAwait with level error ([1eb5c8c](https://github.com/cookielab/biome-configuration/commit/1eb5c8c91f3b1ba688a76e52bbaca8b634112f97))
+* **base:** add definition for noPlaywrightWaitForNavigation with level error ([1ea9e1f](https://github.com/cookielab/biome-configuration/commit/1ea9e1f4ca2ab149cc9c1a4d950b3c10602d7efe))
+* **base:** add definition for noPlaywrightWaitForSelector with level error ([9c43d10](https://github.com/cookielab/biome-configuration/commit/9c43d10becd4ecfa022a556ca468512fa7f04c63))
+* **base:** add definition for noPlaywrightWaitForTimeout with level error ([dc0bdb8](https://github.com/cookielab/biome-configuration/commit/dc0bdb8f5d23b94d125f6b886fe2fde459ece0be))
+* **base:** add definition for noVueVIfWithVFor with level off ([1be83f8](https://github.com/cookielab/biome-configuration/commit/1be83f89709ef37b2cd57398696a341890dcda2f))
+* **base:** add definition for useArraySome with level error ([bd41aae](https://github.com/cookielab/biome-configuration/commit/bd41aae856ab7ff21278ce13e1eada7b3a02fc85))
+* **base:** add definition for useExpect with level error ([60d5dd9](https://github.com/cookielab/biome-configuration/commit/60d5dd91ba8ae700197d900449f06b282a6cb522))
+* **base:** add definition for useNamedCaptureGroup with level warn ([a5dfdc5](https://github.com/cookielab/biome-configuration/commit/a5dfdc547f28b966dc096ca3d3e70d0b8ebf2a1b))
+* **base:** add definition for useNullishCoalescing with level error ([fc61ba8](https://github.com/cookielab/biome-configuration/commit/fc61ba82249ba4335340d3a918fdc202c27542eb))
+* **base:** add definition for usePlaywrightValidDescribeCallback with level error ([da83264](https://github.com/cookielab/biome-configuration/commit/da832647706a8d93e4b472d14bb2de7e1eb624fe))
+* **base:** add definition for useScopedStyles with level off ([872e296](https://github.com/cookielab/biome-configuration/commit/872e2965170f3304a977f5e34b0562ad86702df6))
+* **base:** add definition for useUnicodeRegex with level error ([9be0b35](https://github.com/cookielab/biome-configuration/commit/9be0b35dd35facab8ee083c56324a2fa2f1f7233))
+
 ## [1.3.0](https://github.com/cookielab/biome-configuration/compare/v1.2.0...v1.3.0) (2026-02-16)
 
 
