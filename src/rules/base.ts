@@ -807,6 +807,10 @@ const nursery = {
 	 */
 	useSpread: "error",
 	/**
+	 * Forces the usage of `String.prototype.startsWith` over index-based assertions.
+	 */
+	useStringStartsEndsWith: "error",
+	/**
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
