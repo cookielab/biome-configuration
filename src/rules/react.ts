@@ -39,10 +39,23 @@ const correctness = {
 
 const nursery = {
 	...frontend.nursery,
+
+	/**
+	 * Prevents unnecessary component recreation on each render.
+	 */
+	noComponentHookFactories: "error",
 	/**
 	 * Prevents unnecessary computations as spreading props twice makes React go crazy.
 	 */
 	noDuplicatedSpreadProps: "error",
+	/**
+	 * Using template strings syntax in plain component text is not indended in most cases.
+	 */
+	noJsxLeakedDollar: "error",
+	/**
+	 * XML-like syntax is not supported by React.
+	 */
+	noJsxNamespace: "error",
 	/**
 	 * Using `bind` is treated by React as a new function on each render.
 	 */
@@ -51,7 +64,27 @@ const nursery = {
 	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
 	 */
 	noLeakedRender: "error",
+	/**
+	 * Disallows importing from deeply nested React Native directories.
+	 */
+	noReactNativeDeepImports: "error",
+	/**
+	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
+	 */
+	noReactNativeLiteralColors: "error",
+	/**
+	 * Text should always be wrapped in the React Native `Text` component.
+	 */
+	noReactNativeRawText: "error",
 	noUnknownAttribute: "warn",
+	/**
+	 * Forces any function with `use server` directive to be asynchronous.
+	 */
+	useReactAsyncServerFunction: "error",
+	/**
+	 * Ensures that platform-specific components are only used in platform-specific files.
+	 */
+	useReactNativePlatformComponents: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

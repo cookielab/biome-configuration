@@ -340,6 +340,10 @@ const nursery = {
 	 */
 	noBeforeInteractiveScriptOutsideDocument: "off",
 	/**
+	 * React-only rule.
+	 */
+	noComponentHookFactories: "off",
+	/**
 	 * Tests should be strictly linear without any branching.
 	 */
 	noConditionalExpect: "error",
@@ -355,6 +359,11 @@ const nursery = {
 	 * Enforces a more readable regular expression.
 	 */
 	noDivRegex: "error",
+	/**
+	 * Drizzle-only rule.
+	 */
+	noDrizzleDeleteWithoutWhere: "off",
+	noDrizzleUpdateWithoutWhere: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
@@ -387,10 +396,15 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	noDuplicateInputFieldNames: "off",
+	noDuplicateSelectors: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
 	noDuplicateVariableNames: "off",
+	/**
+	 * Empty object keys are usually just a typo.
+	 */
+	noEmptyObjectKeys: "error",
 	/**
 	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
 	 */
@@ -410,6 +424,10 @@ const nursery = {
 	 */
 	noExcessiveLinesPerFile: "off",
 	/**
+	 * Frontend-only rule.
+	 */
+	noExcessiveSelectorClasses: "off",
+	/**
 	 * Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
 	 */
 	noFloatingClasses: "error",
@@ -424,6 +442,14 @@ const nursery = {
 	 */
 	noHexColors: "off",
 	/**
+	 * Test titles should be unique in their respective groups.
+	 */
+	noIdenticalTestTitle: "error",
+	/**
+	 * Prevents eval()-like behavior of executing arbitrary strings as JavaScript code.
+	 */
+	noImpliedEval: "error",
+	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
 	 * Although, the usage in for-loops makes sense and is thus allowed.
 	 */
@@ -434,6 +460,18 @@ const nursery = {
 		},
 	},
 	/**
+	 * Frontend-only rule.
+	 */
+	noInlineStyles: "off",
+	/**
+	 * JSX-only rule.
+	 */
+	noJsxLeakedDollar: "off",
+	/**
+	 * JSX-only rule.
+	 */
+	noJsxNamespace: "off",
+	/**
 	 * React-only rule.
 	 */
 	noJsxPropsBind: "off",
@@ -441,6 +479,16 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noLeakedRender: "off",
+	/**
+	 * Prevents outer variable capture inside loop-defined functions.
+	 */
+	noLoopFunc: "error",
+	/**
+	 * Ensures that functions do not report the return type as wider than what is actually returned.
+	 *
+	 * In case the widening is expected, using `return value as WiderType` is recommended. Casting makes the intent explicit.
+	 */
+	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
 	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
@@ -505,6 +553,18 @@ const nursery = {
 	 */
 	noProto: "error",
 	/**
+	 * React-only rule.
+	 */
+	noReactNativeDeepImports: "off",
+	/**
+	 * React-only rule.
+	 */
+	noReactNativeLiteralColors: "off",
+	/**
+	 * React-only rule.
+	 */
+	noReactNativeRawText: "off",
+	/**
 	 * Prevents re-exporting the same value as a named export and a default export as well.
 	 */
 	noRedundantDefaultExport: "error",
@@ -531,6 +591,10 @@ const nursery = {
 	 */
 	noTernary: "off",
 	/**
+	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
+	 */
+	noTopLevelLiterals: "error",
+	/**
 	 * Turborepo-only rule.
 	 */
 	noUndeclaredEnvVars: "off",
@@ -540,11 +604,27 @@ const nursery = {
 	noUnknownAttribute: "off",
 	noUnnecessaryConditions: "warn",
 	/**
+	 * Disallows template literals for which a plain string can be used instead.
+	 */
+	noUnnecessaryTemplateExpression: "error",
+	/**
+	 * Disallows the `+` operand on two values that may produce unexpected results.
+	 */
+	noUnsafePlusOperands: "error",
+	/**
+	 * Informational rule that reports when a dependency license may not be compatible with the project.
+	 */
+	noUntrustedLicenses: "info",
+	/**
 	 * This rule is meant to prevent using a plain `return;` at the end of a function.
 	 *
 	 * Other usage, such as early returns, should not be affected.
 	 */
 	noUselessReturn: "error",
+	/**
+	 * Disallows unnecessary type conversions.
+	 */
+	noUselessTypeConversion: "error",
 	/**
 	 * Vue-only rule.
 	 */
@@ -575,6 +655,10 @@ const nursery = {
 	 */
 	useAwaitThenable: "error",
 	/**
+	 * Frontend-only rule.
+	 */
+	useBaseline: "off",
+	/**
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
 	useConsistentEnumValueType: "error",
@@ -588,10 +672,26 @@ const nursery = {
 	 */
 	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
 	/**
+	 * Forces consistent usage of `test` over `it` in test definitions.
+	 */
+	useConsistentTestIt: { level: "error", options: { function: "test" } },
+	/**
 	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
 	 * The level is left at `info` to at least let the user know that the option exists.
 	 */
 	useDestructuring: "info",
+	/**
+	 * Detects when a disposable object is not disposed off with the `using` keyword.
+	 */
+	useDisposables: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	useDomNodeTextContent: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	useDomQuerySelector: "off",
 	/**
 	 * Promotes better error-handling practices.
 	 */
@@ -601,6 +701,15 @@ const nursery = {
 	 * Each test should include at least one assertion.
 	 */
 	useExpect: "error",
+	/**
+	 * Forces functions to report their return types.
+	 */
+	useExplicitReturnType: {
+		level: "error",
+		options: {
+			allowExpressions: true,
+		},
+	},
 	/**
 	 * The rule is currently missing the option to make the following usage valid:
 	 *
@@ -621,6 +730,14 @@ const nursery = {
 	 * Biome allows for some `window` specific accesses that are not directly available on globalThis.
 	 */
 	useGlobalThis: "warn",
+	/**
+	 * Frontend-only rule.
+	 */
+	useIframeSandbox: "off",
+	/**
+	 * Forces all imports to be at the top of the source code file.
+	 */
+	useImportsFirst: "error",
 	/**
 	 * NextJS-only rule.
 	 */
@@ -650,9 +767,29 @@ const nursery = {
 	 */
 	usePlaywrightValidDescribeCallback: "error",
 	/**
+	 * Qwik-only rule.
+	 */
+	useQwikLoaderLocation: "off",
+	/**
+	 * React-only rule.
+	 */
+	useReactAsyncServerFunction: "off",
+	/**
+	 * React-only rule.
+	 */
+	useReactNativePlatformComponents: "off",
+	/**
+	 * Forces that any usage of `Array.prototype.reduce` is correctly typed via a generic argument rather than a type assertion.
+	 */
+	useReduceTypeParameter: "error",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
+	/**
+	 * Promotes the usage of `Regex.prototype.test` over `String.prototype.match`.
+	 */
+	useRegexpTest: "error",
 	/**
 	 * This rule should only be enabled in a specific project as every project uses different required scripts.
 	 */
@@ -670,9 +807,19 @@ const nursery = {
 	 */
 	useSpread: "error",
 	/**
+	 * Forces the usage of `String.prototype.startsWith` over index-based assertions.
+	 */
+	useStringStartsEndsWith: "error",
+	/**
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
+	/**
+	 * `var` declarations are automatically hoisted to the tope of their scope. This rule enforces that even in code, the `var` declaration is placed at the top of the scope to match the behavior.
+	 *
+	 * Even though `var` is not used anymore, it is better to have this rule enabled. Just in case.
+	 */
+	useVarsOnTop: "error",
 	useVueConsistentDefinePropsDeclaration: "off",
 	useVueConsistentVBindStyle: "off",
 	useVueConsistentVOnStyle: "off",

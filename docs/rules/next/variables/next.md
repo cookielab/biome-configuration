@@ -742,6 +742,12 @@ Leaving the level to `warn` keeps the balance between being helpful and annoying
 
 Enforces the correct usage of `beforeInteractive` scripts.
 
+#### nursery.noComponentHookFactories
+
+> `readonly` **noComponentHookFactories**: `"error"` = `"error"`
+
+Prevents unnecessary component recreation on each render.
+
 #### nursery.noConditionalExpect
 
 > `readonly` **noConditionalExpect**: `"error"` = `"error"`
@@ -765,6 +771,16 @@ This rule prevents the usage of deprecated media types in CSS.
 > `readonly` **noDivRegex**: `"error"` = `"error"`
 
 Enforces a more readable regular expression.
+
+#### nursery.noDrizzleDeleteWithoutWhere
+
+> `readonly` **noDrizzleDeleteWithoutWhere**: `"off"` = `"off"`
+
+Drizzle-only rule.
+
+#### nursery.noDrizzleUpdateWithoutWhere
+
+> `readonly` **noDrizzleUpdateWithoutWhere**: `"off"` = `"off"`
 
 #### nursery.noDuplicateArgumentNames
 
@@ -814,11 +830,23 @@ GraphQL-only rule.
 
 GraphQL-only rule.
 
+#### nursery.noDuplicateSelectors
+
+> `readonly` **noDuplicateSelectors**: `"error"` = `"error"`
+
+Prevents selector duplication.
+
 #### nursery.noDuplicateVariableNames
 
 > `readonly` **noDuplicateVariableNames**: `"off"` = `"off"`
 
 GraphQL-only rule.
+
+#### nursery.noEmptyObjectKeys
+
+> `readonly` **noEmptyObjectKeys**: `"error"` = `"error"`
+
+Empty object keys are usually just a typo.
 
 #### nursery.noEqualsToNull
 
@@ -851,6 +879,12 @@ The configuration is left up at the `warn` level to let maintainers know that a 
 
 The rule is left as `off`. If required, it should be enabled on a project level.
 
+#### nursery.noExcessiveSelectorClasses
+
+> `readonly` **noExcessiveSelectorClasses**: `"warn"` = `"warn"`
+
+Excessive class selectors are not necessarily an error but they make the CSS harder to read.
+
 #### nursery.noFloatingClasses
 
 > `readonly` **noFloatingClasses**: `"error"` = `"error"`
@@ -874,6 +908,18 @@ Creating a new class without consuming it seems like a code smell - constructors
 
 This rule is disabled as HEX colors are pretty widely used.
 
+#### nursery.noIdenticalTestTitle
+
+> `readonly` **noIdenticalTestTitle**: `"error"` = `"error"`
+
+Test titles should be unique in their respective groups.
+
+#### nursery.noImpliedEval
+
+> `readonly` **noImpliedEval**: `"error"` = `"error"`
+
+Prevents eval()-like behavior of executing arbitrary strings as JavaScript code.
+
 #### nursery.noIncrementDecrement
 
 > `readonly` **noIncrementDecrement**: `object`
@@ -893,6 +939,24 @@ Although, the usage in for-loops makes sense and is thus allowed.
 
 > `readonly` **allowForLoopAfterthoughts**: `true` = `true`
 
+#### nursery.noInlineStyles
+
+> `readonly` **noInlineStyles**: `"warn"` = `"warn"`
+
+Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
+
+#### nursery.noJsxLeakedDollar
+
+> `readonly` **noJsxLeakedDollar**: `"error"` = `"error"`
+
+Using template strings syntax in plain component text is not indended in most cases.
+
+#### nursery.noJsxNamespace
+
+> `readonly` **noJsxNamespace**: `"error"` = `"error"`
+
+XML-like syntax is not supported by React.
+
 #### nursery.noJsxPropsBind
 
 > `readonly` **noJsxPropsBind**: `"error"` = `"error"`
@@ -904,6 +968,20 @@ Using `bind` is treated by React as a new function on each render.
 > `readonly` **noLeakedRender**: `"error"` = `"error"`
 
 Prevents unintended values from being rendered. For example the `false` case when using `&&`.
+
+#### nursery.noLoopFunc
+
+> `readonly` **noLoopFunc**: `"error"` = `"error"`
+
+Prevents outer variable capture inside loop-defined functions.
+
+#### nursery.noMisleadingReturnType
+
+> `readonly` **noMisleadingReturnType**: `"error"` = `"error"`
+
+Ensures that functions do not report the return type as wider than what is actually returned.
+
+In case the widening is expected, using `return value as WiderType` is recommended. Casting makes the intent explicit.
 
 #### nursery.noMisusedPromises
 
@@ -1001,6 +1079,24 @@ Locators are preferred as they are more reliable and auto-awaited.
 
 This approach to accessing object's prototype is deprecated since 2009.
 
+#### nursery.noReactNativeDeepImports
+
+> `readonly` **noReactNativeDeepImports**: `"error"` = `"error"`
+
+Disallows importing from deeply nested React Native directories.
+
+#### nursery.noReactNativeLiteralColors
+
+> `readonly` **noReactNativeLiteralColors**: `"error"` = `"error"`
+
+Disallows hardcoding colors in React Native components for better reusability inside the application.
+
+#### nursery.noReactNativeRawText
+
+> `readonly` **noReactNativeRawText**: `"error"` = `"error"`
+
+Text should always be wrapped in the React Native `Text` component.
+
 #### nursery.noRedundantDefaultExport
 
 > `readonly` **noRedundantDefaultExport**: `"error"` = `"error"`
@@ -1042,6 +1138,12 @@ Synchronous scripts by themselves impact the performance.
 Ternaries are a superior way of assigning to variables.
 They only become hard to read once they become nested or use long conditions.
 
+#### nursery.noTopLevelLiterals
+
+> `readonly` **noTopLevelLiterals**: `"error"` = `"error"`
+
+Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
+
 #### nursery.noUndeclaredEnvVars
 
 > `readonly` **noUndeclaredEnvVars**: `"off"` = `"off"`
@@ -1056,6 +1158,24 @@ Turborepo-only rule.
 
 > `readonly` **noUnnecessaryConditions**: `"warn"` = `"warn"`
 
+#### nursery.noUnnecessaryTemplateExpression
+
+> `readonly` **noUnnecessaryTemplateExpression**: `"error"` = `"error"`
+
+Disallows template literals for which a plain string can be used instead.
+
+#### nursery.noUnsafePlusOperands
+
+> `readonly` **noUnsafePlusOperands**: `"error"` = `"error"`
+
+Disallows the `+` operand on two values that may produce unexpected results.
+
+#### nursery.noUntrustedLicenses
+
+> `readonly` **noUntrustedLicenses**: `"info"` = `"info"`
+
+Informational rule that reports when a dependency license may not be compatible with the project.
+
 #### nursery.noUselessReturn
 
 > `readonly` **noUselessReturn**: `"error"` = `"error"`
@@ -1063,6 +1183,12 @@ Turborepo-only rule.
 This rule is meant to prevent using a plain `return;` at the end of a function.
 
 Other usage, such as early returns, should not be affected.
+
+#### nursery.noUselessTypeConversion
+
+> `readonly` **noUselessTypeConversion**: `"error"` = `"error"`
+
+Disallows unnecessary type conversions.
 
 #### nursery.noVueArrowFuncInWatch
 
@@ -1110,6 +1236,24 @@ Enforces all sorting operations to be explicitly defined.
 
 There is no need to await non-Promise values.
 
+#### nursery.useBaseline
+
+> `readonly` **useBaseline**: `object`
+
+Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
+
+#### nursery.useBaseline.level
+
+> `readonly` **level**: `"warn"` = `"warn"`
+
+#### nursery.useBaseline.options
+
+> `readonly` **options**: `object`
+
+#### nursery.useBaseline.options.available
+
+> `readonly` **available**: `"widely"` = `"widely"`
+
 #### nursery.useConsistentEnumValueType
 
 > `readonly` **useConsistentEnumValueType**: `"error"` = `"error"`
@@ -1141,12 +1285,48 @@ The property style keeps the code definitions consistant between attributes and 
 
 > `readonly` **style**: `"property"` = `"property"`
 
+#### nursery.useConsistentTestIt
+
+> `readonly` **useConsistentTestIt**: `object`
+
+Forces consistent usage of `test` over `it` in test definitions.
+
+#### nursery.useConsistentTestIt.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### nursery.useConsistentTestIt.options
+
+> `readonly` **options**: `object`
+
+#### nursery.useConsistentTestIt.options.function
+
+> `readonly` **function**: `"test"` = `"test"`
+
 #### nursery.useDestructuring
 
 > `readonly` **useDestructuring**: `"info"` = `"info"`
 
 Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
 The level is left at `info` to at least let the user know that the option exists.
+
+#### nursery.useDisposables
+
+> `readonly` **useDisposables**: `"error"` = `"error"`
+
+Detects when a disposable object is not disposed off with the `using` keyword.
+
+#### nursery.useDomNodeTextContent
+
+> `readonly` **useDomNodeTextContent**: `"error"` = `"error"`
+
+`innerText` and `textContent` do not always return the same value, which may lead to unexpected issues.
+
+#### nursery.useDomQuerySelector
+
+> `readonly` **useDomQuerySelector**: `"error"` = `"error"`
+
+Enforces `querySelector` usage over the old DOM APIs.
 
 #### nursery.useErrorCause
 
@@ -1163,6 +1343,24 @@ Promotes better error-handling practices.
 > `readonly` **useExpect**: `"error"` = `"error"`
 
 Each test should include at least one assertion.
+
+#### nursery.useExplicitReturnType
+
+> `readonly` **useExplicitReturnType**: `object`
+
+Forces functions to report their return types.
+
+#### nursery.useExplicitReturnType.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### nursery.useExplicitReturnType.options
+
+> `readonly` **options**: `object`
+
+#### nursery.useExplicitReturnType.options.allowExpressions
+
+> `readonly` **allowExpressions**: `true` = `true`
 
 #### nursery.useExplicitType
 
@@ -1190,6 +1388,18 @@ Much more readable approach then indexing into a possibly empty array.
 
 This rule promotes the use of cross-platform compatible global accessors.
 Biome allows for some `window` specific accesses that are not directly available on globalThis.
+
+#### nursery.useIframeSandbox
+
+> `readonly` **useIframeSandbox**: `"error"` = `"error"`
+
+Forces `iframe` elements to have a sandbox attribute.
+
+#### nursery.useImportsFirst
+
+> `readonly` **useImportsFirst**: `"error"` = `"error"`
+
+Forces all imports to be at the top of the source code file.
 
 #### nursery.useInlineScriptId
 
@@ -1233,11 +1443,41 @@ Nullish coalescing is always preferrable to a logic OR.
 
 Describe callback should not have any parameters nor should it be async.
 
+#### nursery.useQwikLoaderLocation
+
+> `readonly` **useQwikLoaderLocation**: `"off"` = `"off"`
+
+Qwik-only rule.
+
+#### nursery.useReactAsyncServerFunction
+
+> `readonly` **useReactAsyncServerFunction**: `"error"` = `"error"`
+
+Forces any function with `use server` directive to be asynchronous.
+
+#### nursery.useReactNativePlatformComponents
+
+> `readonly` **useReactNativePlatformComponents**: `"error"` = `"error"`
+
+Ensures that platform-specific components are only used in platform-specific files.
+
+#### nursery.useReduceTypeParameter
+
+> `readonly` **useReduceTypeParameter**: `"error"` = `"error"`
+
+Forces that any usage of `Array.prototype.reduce` is correctly typed via a generic argument rather than a type assertion.
+
 #### nursery.useRegexpExec
 
 > `readonly` **useRegexpExec**: `"error"` = `"error"`
 
 `RegExp.exec` is slightly faster than `String.match`.
+
+#### nursery.useRegexpTest
+
+> `readonly` **useRegexpTest**: `"error"` = `"error"`
+
+Promotes the usage of `Regex.prototype.test` over `String.prototype.match`.
 
 #### nursery.useRequiredScripts
 
@@ -1261,11 +1501,25 @@ Vue-only rule.
 
 Spread syntax is more readable than using `Object.apply`.
 
+#### nursery.useStringStartsEndsWith
+
+> `readonly` **useStringStartsEndsWith**: `"error"` = `"error"`
+
+Forces the usage of `String.prototype.startsWith` over index-based assertions.
+
 #### nursery.useUnicodeRegex
 
 > `readonly` **useUnicodeRegex**: `"error"` = `"error"`
 
 Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
+
+#### nursery.useVarsOnTop
+
+> `readonly` **useVarsOnTop**: `"error"` = `"error"`
+
+`var` declarations are automatically hoisted to the tope of their scope. This rule enforces that even in code, the `var` declaration is placed at the top of the scope to match the behavior.
+
+Even though `var` is not used anymore, it is better to have this rule enabled. Just in case.
 
 #### nursery.useVueConsistentDefinePropsDeclaration
 

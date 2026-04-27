@@ -90,13 +90,46 @@ const nursery = {
 	 */
 	noDuplicateAttributes: "error",
 	/**
+	 * Prevents selector duplication.
+	 */
+	noDuplicateSelectors: "error",
+	/**
+	 * Excessive class selectors are not necessarily an error but they make the CSS harder to read.
+	 */
+	noExcessiveSelectorClasses: "warn",
+	/**
 	 * This rule is disabled as HEX colors are pretty widely used.
 	 */
 	noHexColors: "off",
 	/**
+	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
+	 */
+	noInlineStyles: "warn",
+	/**
 	 * This rule should help with preventing any XSS vulnerabilities.
 	 */
 	noScriptUrl: "error",
+	/**
+	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
+	 */
+	useBaseline: {
+		level: "warn",
+		options: {
+			available: "widely",
+		},
+	},
+	/**
+	 * `innerText` and `textContent` do not always return the same value, which may lead to unexpected issues.
+	 */
+	useDomNodeTextContent: "error",
+	/**
+	 * Enforces `querySelector` usage over the old DOM APIs.
+	 */
+	useDomQuerySelector: "error",
+	/**
+	 * Forces `iframe` elements to have a sandbox attribute.
+	 */
+	useIframeSandbox: "error",
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
