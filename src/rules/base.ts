@@ -360,6 +360,10 @@ const nursery = {
 	 */
 	noDivRegex: "error",
 	/**
+	 * Drizzle-only rule.
+	 */
+	noDrizzleDeleteWithoutWhere: "off",
+	/**
 	 * GraphQL-only rule.
 	 */
 	noDuplicateArgumentNames: "off",
