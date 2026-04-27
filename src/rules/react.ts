@@ -77,6 +77,10 @@ const nursery = {
 	 */
 	noReactNativeRawText: "error",
 	noUnknownAttribute: "warn",
+	/**
+	 * Forces any function with `use server` directive to be asynchronous.
+	 */
+	useReactAsyncServerFunction: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

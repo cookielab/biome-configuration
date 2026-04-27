@@ -771,6 +771,10 @@ const nursery = {
 	 */
 	useQwikLoaderLocation: "off",
 	/**
+	 * React-only rule.
+	 */
+	useReactAsyncServerFunction: "off",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
