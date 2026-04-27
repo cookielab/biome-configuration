@@ -612,6 +612,10 @@ const nursery = {
 	 */
 	noUnsafePlusOperands: "error",
 	/**
+	 * Informational rule that reports when a dependency license may not be compatible with the project.
+	 */
+	noUntrustedLicenses: "info",
+	/**
 	 * This rule is meant to prevent using a plain `return;` at the end of a function.
 	 *
 	 * Other usage, such as early returns, should not be affected.
