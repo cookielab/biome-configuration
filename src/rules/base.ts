@@ -604,6 +604,10 @@ const nursery = {
 	noUnknownAttribute: "off",
 	noUnnecessaryConditions: "warn",
 	/**
+	 * Disallows template literals for which a plain string can be used instead.
+	 */
+	noUnnecessaryTemplateExpression: "error",
+	/**
 	 * This rule is meant to prevent using a plain `return;` at the end of a function.
 	 *
 	 * Other usage, such as early returns, should not be affected.
