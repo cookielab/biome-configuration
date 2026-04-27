@@ -446,6 +446,10 @@ const nursery = {
 	 */
 	noIdenticalTestTitle: "error",
 	/**
+	 * Prevents eval()-like behavior of executing arbitrary strings as JavaScript code.
+	 */
+	noImpliedEval: "error",
+	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
 	 * Although, the usage in for-loops makes sense and is thus allowed.
 	 */
