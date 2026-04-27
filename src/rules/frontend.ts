@@ -109,6 +109,15 @@ const nursery = {
 	 * This rule should help with preventing any XSS vulnerabilities.
 	 */
 	noScriptUrl: "error",
+	/**
+	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
+	 */
+	useBaseline: {
+		level: "warn",
+		options: {
+			available: "widely",
+		},
+	},
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

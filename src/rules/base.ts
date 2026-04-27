@@ -655,6 +655,10 @@ const nursery = {
 	 */
 	useAwaitThenable: "error",
 	/**
+	 * Frontend-only rule.
+	 */
+	useBaseline: "off",
+	/**
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
 	useConsistentEnumValueType: "error",
