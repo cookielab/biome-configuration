@@ -102,6 +102,10 @@ const nursery = {
 	 */
 	noHexColors: "off",
 	/**
+	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
+	 */
+	noInlineStyles: "warn",
+	/**
 	 * This rule should help with preventing any XSS vulnerabilities.
 	 */
 	noScriptUrl: "error",

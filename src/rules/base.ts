@@ -460,6 +460,10 @@ const nursery = {
 		},
 	},
 	/**
+	 * Frontend-only rule.
+	 */
+	noInlineStyles: "off",
+	/**
 	 * React-only rule.
 	 */
 	noJsxPropsBind: "off",
