@@ -672,6 +672,10 @@ const nursery = {
 	 */
 	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
 	/**
+	 * Forces consistent usage of `test` over `it` in test definitions.
+	 */
+	useConsistentTestIt: { level: "error", options: { function: "test" } },
+	/**
 	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
 	 * The level is left at `info` to at least let the user know that the option exists.
 	 */
