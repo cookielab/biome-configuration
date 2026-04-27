@@ -608,6 +608,10 @@ const nursery = {
 	 */
 	noUnnecessaryTemplateExpression: "error",
 	/**
+	 * Disallows the `+` operand on two values that may produce unexpected results.
+	 */
+	noUnsafePlusOperands: "error",
+	/**
 	 * This rule is meant to prevent using a plain `return;` at the end of a function.
 	 *
 	 * Other usage, such as early returns, should not be affected.
