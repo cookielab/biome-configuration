@@ -775,6 +775,10 @@ const nursery = {
 	 */
 	useReactAsyncServerFunction: "off",
 	/**
+	 * React-only rule.
+	 */
+	useReactNativePlatformComponents: "off",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
