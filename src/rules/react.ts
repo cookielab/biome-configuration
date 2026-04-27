@@ -53,6 +53,10 @@ const nursery = {
 	 */
 	noJsxLeakedDollar: "error",
 	/**
+	 * XML-like syntax is not supported by React.
+	 */
+	noJsxNamespace: "error",
+	/**
 	 * Using `bind` is treated by React as a new function on each render.
 	 */
 	noJsxPropsBind: "error",

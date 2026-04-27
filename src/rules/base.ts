@@ -468,6 +468,10 @@ const nursery = {
 	 */
 	noJsxLeakedDollar: "off",
 	/**
+	 * JSX-only rule.
+	 */
+	noJsxNamespace: "off",
+	/**
 	 * React-only rule.
 	 */
 	noJsxPropsBind: "off",
