@@ -814,6 +814,12 @@ const nursery = {
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
+	/**
+	 * `var` declarations are automatically hoisted to the tope of their scope. This rule enforces that even in code, the `var` declaration is placed at the top of the scope to match the behavior.
+	 *
+	 * Even though `var` is not used anymore, it is better to have this rule enabled. Just in case.
+	 */
+	useVarsOnTop: "error",
 	useVueConsistentDefinePropsDeclaration: "off",
 	useVueConsistentVBindStyle: "off",
 	useVueConsistentVOnStyle: "off",
