@@ -424,6 +424,10 @@ const nursery = {
 	 */
 	noExcessiveLinesPerFile: "off",
 	/**
+	 * Frontend-only rule.
+	 */
+	noExcessiveSelectorClasses: "off",
+	/**
 	 * Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
 	 */
 	noFloatingClasses: "error",

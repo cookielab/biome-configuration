@@ -94,6 +94,10 @@ const nursery = {
 	 */
 	noDuplicateSelectors: "error",
 	/**
+	 * Excessive class selectors are not necessarily an error but they make the CSS harder to read.
+	 */
+	noExcessiveSelectorClasses: "warn",
+	/**
 	 * This rule is disabled as HEX colors are pretty widely used.
 	 */
 	noHexColors: "off",
