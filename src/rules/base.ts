@@ -779,6 +779,10 @@ const nursery = {
 	 */
 	useReactNativePlatformComponents: "off",
 	/**
+	 * Forces that any usage of `Array.prototype.reduce` is correctly typed via a generic argument rather than a type assertion.
+	 */
+	useReduceTypeParameter: "error",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
