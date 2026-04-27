@@ -68,6 +68,10 @@ const nursery = {
 	 * Disallows importing from deeply nested React Native directories.
 	 */
 	noReactNativeDeepImports: "error",
+	/**
+	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
+	 */
+	noReactNativeLiteralColors: "error",
 	noUnknownAttribute: "warn",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

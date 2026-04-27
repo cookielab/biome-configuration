@@ -557,6 +557,10 @@ const nursery = {
 	 */
 	noReactNativeDeepImports: "off",
 	/**
+	 * React-only rule.
+	 */
+	noReactNativeLiteralColors: "off",
+	/**
 	 * Prevents re-exporting the same value as a named export and a default export as well.
 	 */
 	noRedundantDefaultExport: "error",
