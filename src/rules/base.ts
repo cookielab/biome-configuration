@@ -464,6 +464,10 @@ const nursery = {
 	 */
 	noInlineStyles: "off",
 	/**
+	 * JSX-only rule.
+	 */
+	noJsxLeakedDollar: "off",
+	/**
 	 * React-only rule.
 	 */
 	noJsxPropsBind: "off",

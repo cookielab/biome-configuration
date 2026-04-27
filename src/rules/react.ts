@@ -49,6 +49,10 @@ const nursery = {
 	 */
 	noDuplicatedSpreadProps: "error",
 	/**
+	 * Using template strings syntax in plain component text is not indended in most cases.
+	 */
+	noJsxLeakedDollar: "error",
+	/**
 	 * Using `bind` is treated by React as a new function on each render.
 	 */
 	noJsxPropsBind: "error",
