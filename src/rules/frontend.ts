@@ -126,6 +126,10 @@ const nursery = {
 	 * Enforces `querySelector` usage over the old DOM APIs.
 	 */
 	useDomQuerySelector: "error",
+	/**
+	 * Forces `iframe` elements to have a sandbox attribute.
+	 */
+	useIframeSandbox: "error",
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

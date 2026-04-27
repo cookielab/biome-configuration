@@ -731,6 +731,10 @@ const nursery = {
 	 */
 	useGlobalThis: "warn",
 	/**
+	 * Frontend-only rule.
+	 */
+	useIframeSandbox: "off",
+	/**
 	 * NextJS-only rule.
 	 */
 	useInlineScriptId: "off",
