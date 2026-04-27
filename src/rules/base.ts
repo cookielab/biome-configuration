@@ -483,6 +483,12 @@ const nursery = {
 	 * Prevents outer variable capture inside loop-defined functions.
 	 */
 	noLoopFunc: "error",
+	/**
+	 * Ensures that functions do not report the return type as wider than what is actually returned.
+	 *
+	 * In case the widening is expected, using `return value as WiderType` is recommended. Casting makes the intent explicit.
+	 */
+	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
 	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
