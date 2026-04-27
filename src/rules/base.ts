@@ -363,6 +363,7 @@ const nursery = {
 	 * Drizzle-only rule.
 	 */
 	noDrizzleDeleteWithoutWhere: "off",
+	noDrizzleUpdateWithoutWhere: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
