@@ -767,6 +767,10 @@ const nursery = {
 	 */
 	usePlaywrightValidDescribeCallback: "error",
 	/**
+	 * Qwik-only rule.
+	 */
+	useQwikLoaderLocation: "off",
+	/**
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
