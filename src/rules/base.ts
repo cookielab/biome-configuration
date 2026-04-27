@@ -787,6 +787,10 @@ const nursery = {
 	 */
 	useRegexpExec: "error",
 	/**
+	 * Promotes the usage of `Regex.prototype.test` over `String.prototype.match`.
+	 */
+	useRegexpTest: "error",
+	/**
 	 * This rule should only be enabled in a specific project as every project uses different required scripts.
 	 */
 	useRequiredScripts: "off",
