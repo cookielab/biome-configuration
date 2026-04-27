@@ -442,6 +442,10 @@ const nursery = {
 	 */
 	noHexColors: "off",
 	/**
+	 * Test titles should be unique in their respective groups.
+	 */
+	noIdenticalTestTitle: "error",
+	/**
 	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
 	 * Although, the usage in for-loops makes sense and is thus allowed.
 	 */
