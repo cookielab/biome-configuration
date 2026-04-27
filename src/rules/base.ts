@@ -479,6 +479,10 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noLeakedRender: "off",
+	/**
+	 * Prevents outer variable capture inside loop-defined functions.
+	 */
+	noLoopFunc: "error",
 	noMisusedPromises: "error",
 	/**
 	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
