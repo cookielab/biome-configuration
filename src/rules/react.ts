@@ -64,6 +64,10 @@ const nursery = {
 	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
 	 */
 	noLeakedRender: "error",
+	/**
+	 * Disallows importing from deeply nested React Native directories.
+	 */
+	noReactNativeDeepImports: "error",
 	noUnknownAttribute: "warn",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
