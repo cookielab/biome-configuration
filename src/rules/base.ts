@@ -735,6 +735,10 @@ const nursery = {
 	 */
 	useIframeSandbox: "off",
 	/**
+	 * Forces all imports to be at the top of the source code file.
+	 */
+	useImportsFirst: "error",
+	/**
 	 * NextJS-only rule.
 	 */
 	useInlineScriptId: "off",
