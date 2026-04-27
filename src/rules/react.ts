@@ -39,6 +39,11 @@ const correctness = {
 
 const nursery = {
 	...frontend.nursery,
+
+	/**
+	 * Prevents unnecessary component recreation on each render.
+	 */
+	noComponentHookFactories: "error",
 	/**
 	 * Prevents unnecessary computations as spreading props twice makes React go crazy.
 	 */

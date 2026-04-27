@@ -340,6 +340,10 @@ const nursery = {
 	 */
 	noBeforeInteractiveScriptOutsideDocument: "off",
 	/**
+	 * React-only rule.
+	 */
+	noComponentHookFactories: "off",
+	/**
 	 * Tests should be strictly linear without any branching.
 	 */
 	noConditionalExpect: "error",
