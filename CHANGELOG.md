@@ -2,6 +2,55 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0](https://github.com/cookielab/biome-configuration/compare/v1.4.0...v2.0.0) (2026-04-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* **biome:** update Biome to 2.4.13 (#30)
+* **biome:** update Biome to 2.4.13
+
+### Features
+
+* **base:** add definition for 'noDrizzleDeleteWithoutWhere' with level 'off' ([c89717d](https://github.com/cookielab/biome-configuration/commit/c89717d2ce3e871835dc76b5b165c5e5839ec3ed))
+* **base:** add definition for 'noDrizzleUpdateWithoutWhere' with level 'off' ([66e1261](https://github.com/cookielab/biome-configuration/commit/66e1261832b663d65df7bbd301b3ac360447d75a))
+* **base:** add definition for 'noEmptyObjectKeys' with level 'error' ([df7ebb0](https://github.com/cookielab/biome-configuration/commit/df7ebb024fb0bc4536641a86cb5961631da7c1d6))
+* **base:** add definition for 'noIdenticalTestTitle' with level 'error' ([2a9935b](https://github.com/cookielab/biome-configuration/commit/2a9935bc1d4fe5f7192d5ec3013c67e5e7bfbbf2))
+* **base:** add definition for 'noImpliedEval' with level 'error' ([b92ae57](https://github.com/cookielab/biome-configuration/commit/b92ae57270874f2101642f3f19b8aae5fa0ae787))
+* **base:** add definition for 'noLoopFunc' with level 'error' ([3db5d0e](https://github.com/cookielab/biome-configuration/commit/3db5d0ed449b1e5604ba42df33e9091d4b0d730a))
+* **base:** add definition for 'noMisleadingReturnType' with level 'error' ([80b7a86](https://github.com/cookielab/biome-configuration/commit/80b7a864cc4737c730c15ddd302bc653b6c3e7b3))
+* **base:** add definition for 'noTopLevelLiterals' with level 'error' ([ff98301](https://github.com/cookielab/biome-configuration/commit/ff98301792b670a35e4e389625e99b0c879dcef9))
+* **base:** add definition for 'noUnnecessaryTemplateExpression' with level 'error' ([d8eb16c](https://github.com/cookielab/biome-configuration/commit/d8eb16ca49eb76e8e45972a88295023bb3e96b37))
+* **base:** add definition for 'noUnsafePlusOperands' with level 'error' ([a1e0539](https://github.com/cookielab/biome-configuration/commit/a1e05396a71196329132a3275a030eba1bd09735))
+* **base:** add definition for 'noUntrustedLicenses' with level 'info' ([08f7358](https://github.com/cookielab/biome-configuration/commit/08f73584d15da19116535291aa879d6af31711aa))
+* **base:** add definition for 'noUselessTypeConversion' with level 'error' ([927f1d0](https://github.com/cookielab/biome-configuration/commit/927f1d0c03b858ca734b407486e27b2285a5de17))
+* **base:** add definition for 'useConsistentTestIt' with level 'error' ([0bbdaca](https://github.com/cookielab/biome-configuration/commit/0bbdacac18a24e5707f1c9e5874c742c7d44ce0a))
+* **base:** add definition for 'useDisposables' with level 'error' ([f50eea7](https://github.com/cookielab/biome-configuration/commit/f50eea781475f888f27860789db5d2dc59d7df1f))
+* **base:** add definition for 'useExplicitReturnType' with level 'error' ([1256195](https://github.com/cookielab/biome-configuration/commit/12561959c6d34924e181a4b61772c5643c30008e))
+* **base:** add definition for 'useImportsFirst' with level 'error' ([70bf295](https://github.com/cookielab/biome-configuration/commit/70bf295966c1469328012d15ccf75b20006938c9))
+* **base:** add definition for 'useQwikLoaderLocation' with level 'off' ([41ab77a](https://github.com/cookielab/biome-configuration/commit/41ab77a32f9da1749f04ad9e5c55f7678af10ef5))
+* **base:** add definition for 'useReduceTypeParameter' with level 'error' ([af8bd12](https://github.com/cookielab/biome-configuration/commit/af8bd1229f81d2ab1b7c7a4604de1635ecf690ee))
+* **base:** add definition for 'useRegexpTest' with level 'error' ([b7b519f](https://github.com/cookielab/biome-configuration/commit/b7b519f5a0dc291faf53fa0bb760ee9ef5332e6d))
+* **base:** add definition for 'useStringStartsEndsWith' with level 'error' ([0e50449](https://github.com/cookielab/biome-configuration/commit/0e504490881e1f91825d8ad5d863653faa352d4f))
+* **base:** add definition for 'useVarsOnTop' with level 'error' ([4b3682d](https://github.com/cookielab/biome-configuration/commit/4b3682dcbb235de4be63e9f025711dce6b9073ee))
+* **biome:** update Biome to 2.4.13 ([c48e6c0](https://github.com/cookielab/biome-configuration/commit/c48e6c0706f093309beb34007f8718442ca0917c))
+* **biome:** update Biome to 2.4.13 ([#30](https://github.com/cookielab/biome-configuration/issues/30)) ([dd5e371](https://github.com/cookielab/biome-configuration/commit/dd5e371a58ee0c7807bc823838a1d5000facaf19))
+* **frontend:** add definition for 'noDuplicateSelectors' with level 'error' ([b7c2412](https://github.com/cookielab/biome-configuration/commit/b7c2412d1cd022059d7d247e6a6e7e2ce67e9abd))
+* **frontend:** add definition for 'noExcessiveSelectorClasses' with level 'warn' ([94be5e6](https://github.com/cookielab/biome-configuration/commit/94be5e61e9d694a61e3527db7c22b38bab143309))
+* **frontend:** add definition for 'noInlineStyles' with level 'warn' ([c65a6e4](https://github.com/cookielab/biome-configuration/commit/c65a6e4cf9a2e26093ed64d9ec414836c2f1803f))
+* **frontend:** add definition for 'useBaseline' with level 'warn' ([36ce209](https://github.com/cookielab/biome-configuration/commit/36ce209a2fc9fecb4656676ef481f015d01958f8))
+* **frontend:** add definition for 'useDomNodeTextContent' with level 'error' ([01dd7a0](https://github.com/cookielab/biome-configuration/commit/01dd7a0491c1cde75dfd55266029be1fde9d36b5))
+* **frontend:** add definition for 'useDomQuerySelector' with level 'error' ([6a6cba7](https://github.com/cookielab/biome-configuration/commit/6a6cba7cd0cbc6a65770c6ea14b66d1913515930))
+* **frontend:** add definition for 'useIframeSandbox' with level 'error' ([cc0be2b](https://github.com/cookielab/biome-configuration/commit/cc0be2b0b919b8807e54afa5110a3feaf62d29c2))
+* **react:** add definition for 'noComponentHookFactories' with level 'error' ([616a6bf](https://github.com/cookielab/biome-configuration/commit/616a6bf58ad79077b9d248a031f234b9c7edeb6e))
+* **react:** add definition for 'noJsxLeakedDollar' with level 'error' ([18f312c](https://github.com/cookielab/biome-configuration/commit/18f312cdc8290c12d80313833d71b4d78b9cc5c0))
+* **react:** add definition for 'noJsxNamespace' with level 'error' ([818f69b](https://github.com/cookielab/biome-configuration/commit/818f69bdb97074b1734f4528844caa4dc4c7f497))
+* **react:** add definition for 'noReactNativeDeepImports' with level 'error' ([9a2a108](https://github.com/cookielab/biome-configuration/commit/9a2a108b3254363cdc49d9c21e70cfafcd2c7b78))
+* **react:** add definition for 'noReactNativeLiteralColors' with level 'error' ([c2c02e1](https://github.com/cookielab/biome-configuration/commit/c2c02e16d79ea65e0bd67d1adc7584738638d500))
+* **react:** add definition for 'noReactNativeRawText' with level 'error' ([b6fc08b](https://github.com/cookielab/biome-configuration/commit/b6fc08b94a9b1695757202f7a934b28378014696))
+* **react:** add definition for 'useReactAsyncServerFunction' with level 'error' ([a29c952](https://github.com/cookielab/biome-configuration/commit/a29c95279c229d2f172a3a9661442ce437ee690b))
+* **react:** add definition for 'useReactNativePlatformComponents' with level 'error' ([becea6b](https://github.com/cookielab/biome-configuration/commit/becea6b93f4d45a8ff8eb316734699f203b5d456))
+
 ## [1.4.0](https://github.com/cookielab/biome-configuration/compare/v1.3.0...v1.4.0) (2026-03-09)
 
 
