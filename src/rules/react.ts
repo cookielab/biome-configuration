@@ -72,6 +72,10 @@ const nursery = {
 	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
 	 */
 	noReactNativeLiteralColors: "error",
+	/**
+	 * Text should always be wrapped in the React Native `Text` component.
+	 */
+	noReactNativeRawText: "error",
 	noUnknownAttribute: "warn",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
