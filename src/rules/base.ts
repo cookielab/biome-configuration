@@ -622,6 +622,10 @@ const nursery = {
 	 */
 	noUselessReturn: "error",
 	/**
+	 * Disallows unnecessary type conversions.
+	 */
+	noUselessTypeConversion: "error",
+	/**
 	 * Vue-only rule.
 	 */
 	noVueArrowFuncInWatch: "off",
