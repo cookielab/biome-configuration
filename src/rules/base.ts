@@ -402,6 +402,10 @@ const nursery = {
 	 */
 	noDuplicateVariableNames: "off",
 	/**
+	 * Empty object keys are usually just a typo.
+	 */
+	noEmptyObjectKeys: "error",
+	/**
 	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
 	 */
 	noEqualsToNull: "off",
