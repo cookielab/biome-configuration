@@ -681,6 +681,10 @@ const nursery = {
 	 */
 	useDestructuring: "info",
 	/**
+	 * Detects when a disposable object is not disposed off with the `using` keyword.
+	 */
+	useDisposables: "error",
+	/**
 	 * Promotes better error-handling practices.
 	 */
 	useErrorCause: "error",
