@@ -90,6 +90,10 @@ const nursery = {
 	 */
 	noDuplicateAttributes: "error",
 	/**
+	 * Prevents selector duplication.
+	 */
+	noDuplicateSelectors: "error",
+	/**
 	 * This rule is disabled as HEX colors are pretty widely used.
 	 */
 	noHexColors: "off",

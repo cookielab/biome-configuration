@@ -396,6 +396,7 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	noDuplicateInputFieldNames: "off",
+	noDuplicateSelectors: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
