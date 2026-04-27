@@ -122,6 +122,10 @@ const nursery = {
 	 * `innerText` and `textContent` do not always return the same value, which may lead to unexpected issues.
 	 */
 	useDomNodeTextContent: "error",
+	/**
+	 * Enforces `querySelector` usage over the old DOM APIs.
+	 */
+	useDomQuerySelector: "error",
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 

@@ -689,6 +689,10 @@ const nursery = {
 	 */
 	useDomNodeTextContent: "off",
 	/**
+	 * Frontend-only rule.
+	 */
+	useDomQuerySelector: "off",
+	/**
 	 * Promotes better error-handling practices.
 	 */
 	useErrorCause: "error",
