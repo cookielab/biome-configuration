@@ -702,6 +702,15 @@ const nursery = {
 	 */
 	useExpect: "error",
 	/**
+	 * Forces functions to report their return types.
+	 */
+	useExplicitReturnType: {
+		level: "error",
+		options: {
+			allowExpressions: true,
+		},
+	},
+	/**
 	 * The rule is currently missing the option to make the following usage valid:
 	 *
 	 * @example
