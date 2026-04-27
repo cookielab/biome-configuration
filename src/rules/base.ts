@@ -591,6 +591,10 @@ const nursery = {
 	 */
 	noTernary: "off",
 	/**
+	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
+	 */
+	noTopLevelLiterals: "error",
+	/**
 	 * Turborepo-only rule.
 	 */
 	noUndeclaredEnvVars: "off",
