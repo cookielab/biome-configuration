@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: [rules/base.ts:1274](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L1274)
+Defined in: [rules/base.ts:1277](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L1277)
 
 ## Type Declaration
 
@@ -2034,7 +2034,9 @@ Enums are forbidden.
 
 #### style.useExportsLast
 
-> `readonly` **useExportsLast**: `"error"` = `"error"`
+> `readonly` **useExportsLast**: `"off"` = `"off"`
+
+Declaration-before-use for exports hurts readability.
 
 #### style.useExportType
 
