@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: [rules/base.ts:1274](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L1274)
+Defined in: [rules/base.ts:1277](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L1277)
 
 ## Type Declaration
 
@@ -319,7 +319,9 @@ An `Option` or `Maybe` type would be more appropriate pattern for such usage, bu
 
 #### complexity.noVoid
 
-> `readonly` **noVoid**: `"error"` = `"error"`
+> `readonly` **noVoid**: `"off"` = `"off"`
+
+Using `void` to intentionally ignore callback return values is a useful shorthand.
 
 #### complexity.recommended
 

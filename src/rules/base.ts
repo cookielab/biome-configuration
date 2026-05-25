@@ -108,7 +108,10 @@ const complexity = {
 	 */
 	noUselessUndefined: "off",
 	noUselessUndefinedInitialization: "error",
-	noVoid: "error",
+	/**
+	 * Using `void` to intentionally ignore callback return values is a useful shorthand.
+	 */
+	noVoid: "off",
 	recommended: false,
 	useArrowFunction: "error",
 	useDateNow: "error",

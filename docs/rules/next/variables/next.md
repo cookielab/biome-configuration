@@ -315,7 +315,9 @@ An `Option` or `Maybe` type would be more appropriate pattern for such usage, bu
 
 #### complexity.noVoid
 
-> `readonly` **noVoid**: `"error"` = `"error"`
+> `readonly` **noVoid**: `"off"` = `"off"`
+
+Using `void` to intentionally ignore callback return values is a useful shorthand.
 
 #### complexity.recommended
 
