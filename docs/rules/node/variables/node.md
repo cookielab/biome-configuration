@@ -8,7 +8,7 @@
 
 > `const` **node**: `object`
 
-Defined in: [rules/node.ts:54](https://github.com/cookielab/biome-configuration/blob/main/src/rules/node.ts#L54)
+Defined in: [rules/node.ts:56](https://github.com/cookielab/biome-configuration/blob/main/src/rules/node.ts#L56)
 
 ## Type Declaration
 
@@ -1647,7 +1647,7 @@ Vue-only rule.
 
 #### performance.noAwaitInLoops
 
-> `readonly` **noAwaitInLoops**: `"warn"` = `"warn"`
+> `readonly` **noAwaitInLoops**: `"off"` = `"off"`
 
 #### performance.noBarrelFile
 

@@ -8,7 +8,7 @@
 
 > `const` **next**: `object`
 
-Defined in: [rules/next.ts:72](https://github.com/cookielab/biome-configuration/blob/main/src/rules/next.ts#L72)
+Defined in: [rules/next.ts:73](https://github.com/cookielab/biome-configuration/blob/main/src/rules/next.ts#L73)
 
 ## Type Declaration
 

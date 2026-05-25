@@ -8,7 +8,7 @@
 
 > `const` **base**: `object`
 
-Defined in: [rules/base.ts:1274](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L1274)
+Defined in: [rules/base.ts:1277](https://github.com/cookielab/biome-configuration/blob/main/src/rules/base.ts#L1277)
 
 ## Type Declaration
 
@@ -1649,7 +1649,9 @@ Vue-only rule.
 
 #### performance.noAwaitInLoops
 
-> `readonly` **noAwaitInLoops**: `"warn"` = `"warn"`
+> `readonly` **noAwaitInLoops**: `"off"` = `"off"`
+
+Sequential awaits in loops are sometimes the clearest and safest option.
 
 #### performance.noBarrelFile
 

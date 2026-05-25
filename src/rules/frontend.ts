@@ -136,6 +136,7 @@ const nursery = {
 const performance = {
 	...base.performance,
 
+	noAwaitInLoops: "warn",
 	useGoogleFontPreconnect: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
