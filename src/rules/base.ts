@@ -467,9 +467,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	noDuplicateFieldDefinitionNames: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
 	noDuplicateSelectors: "off",
 	/**
 	 * Empty object keys are usually just a typo.
@@ -1214,6 +1211,10 @@ const suspicious = {
 	 * Frontend-only rule.
 	 */
 	noDuplicateFontNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateGraphqlOperationName: "off",
 	/**
 	 * React-only rule.
 	 */
