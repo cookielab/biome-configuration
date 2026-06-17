@@ -577,6 +577,10 @@ const nursery = {
 	 */
 	noTopLevelLiterals: "error",
 	/**
+	 * Frontend-only rule.
+	 */
+	noUndeclaredClasses: "off",
+	/**
 	 * Disallows template literals for which a plain string can be used instead.
 	 */
 	noUnnecessaryTemplateExpression: "error",

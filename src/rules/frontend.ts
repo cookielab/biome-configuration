@@ -102,6 +102,10 @@ const nursery = {
 	 */
 	noInlineStyles: "warn",
 	/**
+	 * Disabled to prevent issues with false-positives.
+	 */
+	noUndeclaredClasses: "off",
+	/**
 	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
 	 */
 	useBaseline: {
