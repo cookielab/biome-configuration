@@ -671,11 +671,6 @@ const nursery = {
 	 */
 	useConsistentTestIt: { level: "error", options: { function: "test" } },
 	/**
-	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
-	 * The level is left at `info` to at least let the user know that the option exists.
-	 */
-	useDestructuring: "info",
-	/**
 	 * Detects when a disposable object is not disposed off with the `using` keyword.
 	 */
 	useDisposables: "error",
@@ -1078,6 +1073,11 @@ const style = {
 	 * GraphQL-only rule.
 	 */
 	useDeprecatedReason: "off",
+	/**
+	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
+	 * The level is left at `off` to at least let the user know that the option exists.
+	 */
+	useDestructuring: "off",
 	/**
 	 * Enums are forbidden.
 	 */
