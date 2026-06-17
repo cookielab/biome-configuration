@@ -69,6 +69,10 @@ const complexity = {
 	 */
 	noBannedTypes: "off",
 	noCommaOperator: "error",
+	/**
+	 * Enforces a more readable regular expression.
+	 */
+	noDivRegex: "error",
 	noEmptyTypeParameters: "error",
 	noExcessiveCognitiveComplexity: "warn",
 	/**
@@ -358,10 +362,6 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noDeprecatedMediaType: "off",
-	/**
-	 * Enforces a more readable regular expression.
-	 */
-	noDivRegex: "error",
 	/**
 	 * Drizzle-only rule.
 	 */
