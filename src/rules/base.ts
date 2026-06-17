@@ -736,6 +736,10 @@ const nursery = {
 	 */
 	useStringStartsEndsWith: "error",
 	/**
+	 * Svelte-only rule.
+	 */
+	useSvelteRequireEachKey: "off",
+	/**
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
