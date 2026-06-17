@@ -603,6 +603,10 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
+	noVueImportCompilerMacros: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	noVueRefAsOperand: "off",
 	recommended: false,
 	/**
