@@ -755,6 +755,12 @@ const nursery = {
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
+	/**
+	 * Forces `var` declarations to be placed at the top of the scope to avoid hoisting issues.
+	 *
+	 * `var` declarations should not be used. However, this rule is enabled just in case.
+	 */
+	useVarsOnTop: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
