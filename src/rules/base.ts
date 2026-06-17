@@ -513,11 +513,6 @@ const nursery = {
 	 */
 	noMultiStr: "error",
 	/**
-	 * `async await` has been implemented to replace promise nesting.
-	 * `async await` is now generally available and should be the preferred approach to writing asynchronous code.
-	 */
-	noNestedPromises: "error",
-	/**
 	 * Just making sure there are no unused parameters in recursive functions.
 	 */
 	noParametersOnlyUsedInRecursion: "off",
@@ -1270,6 +1265,10 @@ const suspicious = {
 	noMisleadingInstantiator: "error",
 	noMisplacedAssertion: "error",
 	noMisrefactoredShorthandAssign: "error",
+	/**
+	 * `async await` is now generally available and should be the preferred approach to writing asynchronous code.
+	 */
+	noNestedPromises: "error",
 	noNonNullAssertedOptionalChain: "error",
 	noOctalEscape: "error",
 	noPrototypeBuiltins: "error",
