@@ -487,10 +487,6 @@ const nursery = {
 	 */
 	noEqualsToNull: "off",
 	/**
-	 * The rule is left as `off`. If required, it should be enabled on a project level.
-	 */
-	noExcessiveLinesPerFile: "off",
-	/**
 	 * Frontend-only rule.
 	 */
 	noExcessiveSelectorClasses: "off",
@@ -972,6 +968,10 @@ const style = {
 			maxClasses: 2,
 		},
 	},
+	/**
+	 * The rule is left as `off`. If required, it should be enabled on a project level.
+	 */
+	noExcessiveLinesPerFile: "off",
 	noExportedImports: "error",
 	/**
 	 * NextJS-only rule.
