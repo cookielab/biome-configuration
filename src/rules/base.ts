@@ -761,6 +761,10 @@ const nursery = {
 	 * `var` declarations should not be used. However, this rule is enabled just in case.
 	 */
 	useVarsOnTop: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueConsistentDefinePropsDeclaration: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
