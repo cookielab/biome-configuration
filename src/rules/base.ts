@@ -469,10 +469,6 @@ const nursery = {
 	 */
 	noEmptyObjectKeys: "error",
 	/**
-	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
-	 */
-	noEqualsToNull: "off",
-	/**
 	 * Frontend-only rule.
 	 */
 	noExcessiveSelectorClasses: "off",
@@ -1243,6 +1239,10 @@ const suspicious = {
 	 * GraphQL-only rule.
 	 */
 	noEmptySource: "off",
+	/**
+	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
+	 */
+	noEqualsToNull: "off",
 	noEvolvingTypes: "error",
 	noExplicitAny: "error",
 	noExportsInTest: "error",
