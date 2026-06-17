@@ -472,10 +472,6 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noExcessiveSelectorClasses: "off",
-	/**
-	 * Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
-	 */
-	noFloatingClasses: "error",
 	noFloatingPromises: "error",
 	/**
 	 * Test titles should be unique in their respective groups.
@@ -508,10 +504,6 @@ const nursery = {
 	 */
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
-	/**
-	 * Using strings with ``` is a better approach.
-	 */
-	noMultiStr: "error",
 	/**
 	 * Usage of locators is preferred as they include auto-wait.
 	 */
@@ -643,10 +635,6 @@ const nursery = {
 	 */
 	useExplicitType: "off",
 	/**
-	 * Much more readable approach then indexing into a possibly empty array.
-	 */
-	useFind: "error",
-	/**
 	 * Frontend-only rule.
 	 */
 	useIframeSandbox: "off",
@@ -699,10 +687,6 @@ const nursery = {
 	 */
 	useSortedClasses: "off",
 	/**
-	 * Spread syntax is more readable than using `Object.apply`.
-	 */
-	useSpread: "error",
-	/**
 	 * Forces the usage of `String.prototype.startsWith` over index-based assertions.
 	 */
 	useStringStartsEndsWith: "error",
@@ -710,13 +694,6 @@ const nursery = {
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
-	/**
-	 * `var` declarations are automatically hoisted to the tope of their scope. This rule enforces that even in code, the `var` declaration is placed at the top of the scope to match the behavior.
-	 *
-	 * Even though `var` is not used anymore, it is better to have this rule enabled. Just in case.
-	 */
-	useVarsOnTop: "error",
-	useVueConsistentDefinePropsDeclaration: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
