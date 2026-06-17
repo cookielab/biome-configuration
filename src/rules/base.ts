@@ -553,10 +553,6 @@ const nursery = {
 	 */
 	noPlaywrightWaitForTimeout: "error",
 	/**
-	 * This approach to accessing object's prototype is deprecated since 2009.
-	 */
-	noProto: "error",
-	/**
 	 * React-only rule.
 	 */
 	noReactNativeDeepImports: "off",
@@ -1271,6 +1267,10 @@ const suspicious = {
 	 * Just making sure there are no unused parameters in recursive functions.
 	 */
 	noParametersOnlyUsedInRecursion: "error",
+	/**
+	 * This approach to accessing object's prototype is deprecated since 2009.
+	 */
+	noProto: "error",
 	noPrototypeBuiltins: "error",
 	/**
 	 * Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
