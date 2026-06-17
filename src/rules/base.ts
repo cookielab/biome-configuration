@@ -613,11 +613,6 @@ const nursery = {
 	noReturnAssign: "error",
 	noShadow: "error",
 	/**
-	 * Ternaries are a superior way of assigning to variables.
-	 * They only become hard to read once they become nested or use long conditions.
-	 */
-	noTernary: "off",
-	/**
 	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
 	 */
 	noTopLevelLiterals: "error",
@@ -1011,6 +1006,11 @@ const style = {
 	 */
 	noShoutyConstants: "off",
 	noSubstr: "error",
+	/**
+	 * Ternaries are a superior way of assigning to variables.
+	 * They only become hard to read once they become nested or use long conditions.
+	 */
+	noTernary: "off",
 	noUnusedTemplateLiteral: "error",
 	noUselessElse: "error",
 	/**
