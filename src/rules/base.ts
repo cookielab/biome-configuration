@@ -1018,6 +1018,7 @@ const style = {
 	 */
 	noVueOptionsApi: "off",
 	noYodaExpression: "error",
+	preset: "none",
 	recommended: false,
 	useArrayLiterals: "error",
 	useAsConstAssertion: "error",
