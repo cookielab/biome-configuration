@@ -593,6 +593,10 @@ const nursery = {
 	 */
 	noUntrustedLicenses: "info",
 	/**
+	 * Frontend-only rule.
+	 */
+	noUnusedClasses: "off",
+	/**
 	 * Disallows unnecessary type conversions.
 	 */
 	noUselessTypeConversion: "error",

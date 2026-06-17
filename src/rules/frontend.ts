@@ -106,6 +106,10 @@ const nursery = {
 	 */
 	noUndeclaredClasses: "off",
 	/**
+	 * Disabled to prevent issues with false-positives.
+	 */
+	noUnusedClasses: "off",
+	/**
 	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
 	 */
 	useBaseline: {
