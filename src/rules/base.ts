@@ -955,6 +955,7 @@ const security = {
 	 * Produces too many false-positives.
 	 */
 	noSecrets: "off",
+	preset: "none",
 	recommended: false,
 } as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
 
