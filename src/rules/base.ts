@@ -425,6 +425,10 @@ const correctness = {
 	/**
 	 * Vue-only rule.
 	 */
+	useVueValidVOn: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	useVueVForKey: "off",
 	useYield: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
@@ -878,7 +882,6 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	useVueMultiWordComponentNames: "off",
-	useVueValidVOn: "off",
 	useVueValidVOnce: "off",
 	useVueValidVPre: "off",
 	useVueValidVText: "off",
