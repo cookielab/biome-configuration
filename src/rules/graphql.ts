@@ -36,6 +36,10 @@ const correctness = {
 	 */
 	noDuplicateVariableNames: "error",
 	useGraphqlNamedOperations: "error",
+	/**
+	 * This rule helps with writing valid GraphQL queries.
+	 */
+	useLoneAnonymousOperation: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
@@ -62,10 +66,6 @@ const nursery = {
 	 * This rule promotes consistent naming across mutations.
 	 */
 	useInputName: "error",
-	/**
-	 * This rule helps with writing valid GraphQL queries.
-	 */
-	useLoneAnonymousOperation: "error",
 	/**
 	 * This rule helps with writing maintainable GraphQL.
 	 */

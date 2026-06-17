@@ -370,6 +370,10 @@ const correctness = {
 	 * React-only rule.
 	 */
 	useJsxKeyInIterable: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useLoneAnonymousOperation: "off",
 	useParseIntRadix: "error",
 	/**
 	 * Qwik-only rule.
@@ -760,10 +764,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	useInputName: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useLoneAnonymousOperation: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
