@@ -744,6 +744,10 @@ const nursery = {
 	 */
 	useTestHooksInOrder: "error",
 	/**
+	 * Forces the test hooks to be defined at the top of the scope.
+	 */
+	useTestHooksOnTop: "error",
+	/**
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
