@@ -667,11 +667,6 @@ const nursery = {
 	 */
 	useBaseline: "off",
 	/**
-	 * This rule enforces a consistent method signature in interfaces and types.
-	 * The property style keeps the code definitions consistant between attributes and methods.
-	 */
-	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
-	/**
 	 * Forces consistent usage of `test` over `it` in test definitions.
 	 */
 	useConsistentTestIt: { level: "error", options: { function: "test" } },
@@ -1048,6 +1043,11 @@ const style = {
 			accessibility: "explicit",
 		},
 	},
+	/**
+	 * This rule enforces a consistent method signature in interfaces and types.
+	 * The property style keeps the code definitions consistant between attributes and methods.
+	 */
+	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
 	useConsistentObjectDefinitions: {
 		level: "error",
 		options: {
