@@ -1322,6 +1322,7 @@ const suspicious = {
 	 */
 	noVueArrowFuncInWatch: "off",
 	noWith: "error",
+	preset: "none",
 	recommended: false,
 	useAdjacentOverloadSignatures: "error",
 	useAwait: "error",
