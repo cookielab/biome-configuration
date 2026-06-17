@@ -587,10 +587,6 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
-	noVueArrowFuncInWatch: "off",
-	/**
-	 * Vue-only rule.
-	 */
 	noVueRefAsOperand: "off",
 	recommended: false,
 	/**
@@ -1321,6 +1317,10 @@ const suspicious = {
 	noUselessEscapeInString: "error",
 	noUselessRegexBackrefs: "error",
 	noVar: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueArrowFuncInWatch: "off",
 	noWith: "error",
 	recommended: false,
 	useAdjacentOverloadSignatures: "error",
