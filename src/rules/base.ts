@@ -786,13 +786,6 @@ const nursery = {
 	 */
 	useVarsOnTop: "error",
 	useVueConsistentDefinePropsDeclaration: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	/**
-	 * Vue-only rule.
-	 */
-	useVueMultiWordComponentNames: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -1150,6 +1143,10 @@ const style = {
 	 * Vue-only rule.
 	 */
 	useVueHyphenatedAttributes: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueMultiWordComponentNames: "off",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
