@@ -594,10 +594,6 @@ const nursery = {
 	 */
 	useArraySome: "error",
 	/**
-	 * Enforces all sorting operations to be explicitly defined.
-	 */
-	useArraySortCompare: "error",
-	/**
 	 * There is no need to await non-Promise values.
 	 */
 	useAwaitThenable: "error",
@@ -1325,6 +1321,10 @@ const suspicious = {
 	preset: "none",
 	recommended: false,
 	useAdjacentOverloadSignatures: "error",
+	/**
+	 * Enforces all sorting operations to be explicitly defined.
+	 */
+	useArraySortCompare: "error",
 	useAwait: "error",
 	useBiomeIgnoreFolder: "error",
 	useDefaultSwitchClauseLast: "error",
