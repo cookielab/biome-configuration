@@ -564,7 +564,6 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noReactNativeRawText: "off",
-	noShadow: "error",
 	/**
 	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
 	 */
@@ -1287,6 +1286,10 @@ const suspicious = {
 	 */
 	noReturnAssign: "error",
 	noSelfCompare: "error",
+	/**
+	 * Forbids name-shadowing.
+	 */
+	noShadow: "error",
 	noShadowRestrictedNames: "error",
 	/**
 	 * Frontend-only rule.
