@@ -569,10 +569,6 @@ const nursery = {
 	 */
 	noTopLevelLiterals: "error",
 	/**
-	 * Turborepo-only rule.
-	 */
-	noUndeclaredEnvVars: "off",
-	/**
 	 * JSX-only rule.
 	 */
 	noUnknownAttribute: "off",
@@ -1305,6 +1301,10 @@ const suspicious = {
 	noThenProperty: "error",
 	noTsIgnore: "error",
 	noUnassignedVariables: "error",
+	/**
+	 * Turborepo-only rule.
+	 */
+	noUndeclaredEnvVars: "off",
 	/**
 	 * Frontend-only rule.
 	 */
