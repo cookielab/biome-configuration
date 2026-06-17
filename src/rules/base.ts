@@ -447,6 +447,10 @@ const correctness = {
 
 const nursery = {
 	/**
+	 * Helps prevent stringification to `[object Object]`.
+	 */
+	noBaseToString: "error",
+	/**
 	 * React-only rule.
 	 */
 	noComponentHookFactories: "off",
