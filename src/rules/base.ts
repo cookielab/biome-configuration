@@ -509,16 +509,6 @@ const nursery = {
 	 */
 	noImpliedEval: "error",
 	/**
-	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
-	 * Although, the usage in for-loops makes sense and is thus allowed.
-	 */
-	noIncrementDecrement: {
-		level: "error",
-		options: {
-			allowForLoopAfterthoughts: true,
-		},
-	},
-	/**
 	 * Frontend-only rule.
 	 */
 	noInlineStyles: "off",
@@ -978,6 +968,16 @@ const style = {
 	 */
 	noHexColors: "off",
 	noImplicitBoolean: "error",
+	/**
+	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
+	 * Although, the usage in for-loops makes sense and is thus allowed.
+	 */
+	noIncrementDecrement: {
+		level: "error",
+		options: {
+			allowForLoopAfterthoughts: true,
+		},
+	},
 	noInferrableTypes: "error",
 	/**
 	 * JSX-dialects only rule.
