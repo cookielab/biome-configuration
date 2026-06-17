@@ -983,6 +983,10 @@ const style = {
 	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
 	 */
 	noMultiAssign: "error",
+	/**
+	 * Enforces that strings are either multiline via template string literals or with explicit line breaks.
+	 */
+	noMultilineString: "error",
 	noNamespace: "error",
 	noNegationElse: "error",
 	noNestedTernary: "error",
