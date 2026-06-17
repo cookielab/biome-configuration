@@ -487,16 +487,6 @@ const nursery = {
 	 */
 	noEqualsToNull: "off",
 	/**
-	 * Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
-	 * The configuration is left up at the `warn` level to let maintainers know that a rule like this exists and can be configured differently.
-	 */
-	noExcessiveClassesPerFile: {
-		level: "warn",
-		options: {
-			maxClasses: 2,
-		},
-	},
-	/**
 	 * The rule is left as `off`. If required, it should be enabled on a project level.
 	 */
 	noExcessiveLinesPerFile: "off",
@@ -973,6 +963,15 @@ const style = {
 	noDescendingSpecificity: "off",
 	noDoneCallback: "error",
 	noEnum: "error",
+	/**
+	 * Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
+	 */
+	noExcessiveClassesPerFile: {
+		level: "error",
+		options: {
+			maxClasses: 2,
+		},
+	},
 	noExportedImports: "error",
 	/**
 	 * NextJS-only rule.
