@@ -68,6 +68,10 @@ const complexity = {
 const correctness = {
 	...base.correctness,
 
+	/**
+	 * This rule should help with writing valid HTML.
+	 */
+	noDuplicateAttributes: "error",
 	noInvalidDirectionInLinearGradient: "error",
 	noInvalidGridAreas: "error",
 	noInvalidPositionAtImportRule: "error",
@@ -89,10 +93,6 @@ const nursery = {
 	 * This rule prevents the usage of deprecated media types in CSS.
 	 */
 	noDeprecatedMediaType: "error",
-	/**
-	 * This rule should help with writing valid HTML.
-	 */
-	noDuplicateAttributes: "error",
 	/**
 	 * Prevents selector duplication.
 	 */

@@ -170,6 +170,10 @@ const correctness = {
 	 * GraphQL-only rule.
 	 */
 	noDuplicateArgumentNames: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	noDuplicateAttributes: "off",
 	noEmptyCharacterClassInRegex: "error",
 	noEmptyPattern: "error",
 	/**
@@ -385,10 +389,6 @@ const nursery = {
 	 */
 	noDrizzleDeleteWithoutWhere: "off",
 	noDrizzleUpdateWithoutWhere: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	noDuplicateAttributes: "off",
 	/**
 	 * React & Solid.js only rule.
 	 */
