@@ -740,6 +740,10 @@ const nursery = {
 	 */
 	useSvelteRequireEachKey: "off",
 	/**
+	 * Forces test hook definition to follow the order of execution.
+	 */
+	useTestHooksInOrder: "error",
+	/**
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
