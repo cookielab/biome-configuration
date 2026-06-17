@@ -53,10 +53,6 @@ const nursery = {
 	 */
 	noJsxNamespace: "error",
 	/**
-	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
-	 */
-	noLeakedRender: "error",
-	/**
 	 * Disallows importing from deeply nested React Native directories.
 	 */
 	noReactNativeDeepImports: "error",
@@ -119,6 +115,10 @@ const suspicious = {
 	 */
 	noDuplicatedSpreadProps: "error",
 	noDuplicateJsxProps: "error",
+	/**
+	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
+	 */
+	noLeakedRender: "error",
 	/**
 	 * Forbids the usage of the deprecated `forwardRef`.
 	 */

@@ -498,13 +498,6 @@ const nursery = {
 	 */
 	noJsxNamespace: "off",
 	/**
-	 * React-only rule.
-	 */
-	/**
-	 * React-only rule.
-	 */
-	noLeakedRender: "off",
-	/**
 	 * Prevents outer variable capture inside loop-defined functions.
 	 */
 	noLoopFunc: "error",
@@ -1269,6 +1262,10 @@ const suspicious = {
 	noImportCycles: "error",
 	noIrregularWhitespace: "error",
 	noLabelVar: "error",
+	/**
+	 * React-only rule.
+	 */
+	noLeakedRender: "off",
 	noMisleadingCharacterClass: "error",
 	noMisleadingInstantiator: "error",
 	noMisplacedAssertion: "error",
