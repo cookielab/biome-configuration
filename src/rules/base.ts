@@ -155,6 +155,10 @@ const complexity = {
 
 const correctness = {
 	/**
+	 * NextJS-only rule.
+	 */
+	noBeforeInteractiveScriptOutsideDocument: "off",
+	/**
 	 * React-only rule.
 	 */
 	noChildrenProp: "off",
@@ -356,10 +360,6 @@ const correctness = {
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
-	/**
-	 * NextJS-only rule.
-	 */
-	noBeforeInteractiveScriptOutsideDocument: "off",
 	/**
 	 * React-only rule.
 	 */

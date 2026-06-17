@@ -24,6 +24,10 @@ const correctness = {
 	...react.correctness,
 
 	/**
+	 * Enforces the correct usage of `beforeInteractive` scripts.
+	 */
+	noBeforeInteractiveScriptOutsideDocument: "error",
+	/**
 	 * Disallows the usage of async functions for NextJS components.
 	 */
 	noNextAsyncClientComponent: "error",
@@ -32,10 +36,6 @@ const correctness = {
 const nursery = {
 	...react.nursery,
 
-	/**
-	 * Enforces the correct usage of `beforeInteractive` scripts.
-	 */
-	noBeforeInteractiveScriptOutsideDocument: "error",
 	/**
 	 * Synchronous scripts by themselves impact the performance.
 	 */
