@@ -667,10 +667,6 @@ const nursery = {
 	 */
 	useBaseline: "off",
 	/**
-	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-	 */
-	useConsistentEnumValueType: "error",
-	/**
 	 * GraphQL-only rule.
 	 */
 	useConsistentGraphqlDescriptions: "off",
@@ -1042,6 +1038,10 @@ const style = {
 	 * React-only rule.
 	 */
 	useConsistentCurlyBraces: "off",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	useConsistentEnumValueType: "error",
 	useConsistentMemberAccessibility: {
 		level: "error",
 		options: {
