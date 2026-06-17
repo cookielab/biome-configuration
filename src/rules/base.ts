@@ -680,6 +680,10 @@ const nursery = {
 	 */
 	useIncludes: "error",
 	/**
+	 * Forces the usage of `Math.min` or `Math.max` over ternaries.
+	 */
+	useMathMinMax: "error",
+	/**
 	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
 	 */
 	useNamedCaptureGroup: "warn",
