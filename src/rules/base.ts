@@ -712,11 +712,6 @@ const nursery = {
 	 */
 	useFind: "error",
 	/**
-	 * This rule promotes the use of cross-platform compatible global accessors.
-	 * Biome allows for some `window` specific accesses that are not directly available on globalThis.
-	 */
-	useGlobalThis: "warn",
-	/**
 	 * Frontend-only rule.
 	 */
 	useIframeSandbox: "off",
@@ -1095,6 +1090,11 @@ const style = {
 	 * React-only rule.
 	 */
 	useFragmentSyntax: "off",
+	/**
+	 * This rule promotes the use of cross-platform compatible global accessors.
+	 * Biome allows for some `window` specific accesses that are not directly available on globalThis.
+	 */
+	useGlobalThis: "error",
 	/**
 	 * GraphQL-only rule.
 	 */
