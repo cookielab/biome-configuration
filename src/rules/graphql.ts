@@ -54,15 +54,6 @@ const nursery = {
 	 */
 	noDuplicateGraphqlOperationName: "error",
 	/**
-	 * Enforces a consistent style of descriptions.
-	 */
-	useConsistentGraphqlDescriptions: {
-		level: "error",
-		options: {
-			style: "block",
-		},
-	},
-	/**
 	 * This rule promotes consistent naming across mutations.
 	 */
 	useInputName: "error",
@@ -87,6 +78,15 @@ const style = {
 	 * Disabling specific types at the root level is left up to the user project.
 	 */
 	noRootType: "off",
+	/**
+	 * Enforces a consistent style of descriptions.
+	 */
+	useConsistentGraphqlDescriptions: {
+		level: "error",
+		options: {
+			style: "block",
+		},
+	},
 	useDeprecatedReason: "error",
 	useGraphqlNamingConvention: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;

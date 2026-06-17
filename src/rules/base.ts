@@ -667,10 +667,6 @@ const nursery = {
 	 */
 	useBaseline: "off",
 	/**
-	 * GraphQL-only rule.
-	 */
-	useConsistentGraphqlDescriptions: "off",
-	/**
 	 * This rule enforces a consistent method signature in interfaces and types.
 	 * The property style keeps the code definitions consistant between attributes and methods.
 	 */
@@ -1042,6 +1038,10 @@ const style = {
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
 	useConsistentEnumValueType: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useConsistentGraphqlDescriptions: "off",
 	useConsistentMemberAccessibility: {
 		level: "error",
 		options: {
