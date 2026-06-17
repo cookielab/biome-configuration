@@ -676,6 +676,10 @@ const nursery = {
 	 */
 	useImportsFirst: "error",
 	/**
+	 * Forces the usage of a more idiomatic `Array.prototype.includes` over `Array.prototype.indexOf`.
+	 */
+	useIncludes: "error",
+	/**
 	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
 	 */
 	useNamedCaptureGroup: "warn",
