@@ -360,6 +360,10 @@ const correctness = {
 	 * Recommended level would be `error`.
 	 */
 	useImportExtensions: "off",
+	/**
+	 * NextJS-only rule.
+	 */
+	useInlineScriptId: "off",
 	useIsNan: "error",
 	useJsonImportAttributes: "error",
 	/**
@@ -752,7 +756,6 @@ const nursery = {
 	/**
 	 * NextJS-only rule.
 	 */
-	useInlineScriptId: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
