@@ -789,7 +789,6 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
-	useVueDefineMacrosOrder: "off",
 	useVueHyphenatedAttributes: "off",
 	/**
 	 * Vue-only rule.
@@ -1144,6 +1143,10 @@ const style = {
 	 * Vue-only rule.
 	 */
 	useVueConsistentVOnStyle: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueDefineMacrosOrder: "off",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
