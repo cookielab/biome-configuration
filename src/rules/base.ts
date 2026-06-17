@@ -331,6 +331,10 @@ const correctness = {
 	 * Vue-only rule.
 	 */
 	noVueSetupPropsReactivityLoss: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueVIfWithVFor: "off",
 	recommended: false,
 	/**
 	 * React-only rule.
@@ -646,10 +650,6 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	noVueRefAsOperand: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueVIfWithVFor: "off",
 	recommended: false,
 	/**
 	 * using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
