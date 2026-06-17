@@ -921,6 +921,7 @@ const performance = {
 	 * NextJS-only rule.
 	 */
 	noUnwantedPolyfillio: "off",
+	preset: "none",
 	recommended: false,
 	/**
 	 * Frontend-only rule.
