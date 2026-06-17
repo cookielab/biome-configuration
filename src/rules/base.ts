@@ -555,7 +555,6 @@ const nursery = {
 	/**
 	 * React-only rule.
 	 */
-	noJsxPropsBind: "off",
 	/**
 	 * React-only rule.
 	 */
@@ -912,6 +911,10 @@ const performance = {
 	 * NextJS-only rule.
 	 */
 	noImgElement: "off",
+	/**
+	 * React-only rule.
+	 */
+	noJsxPropsBind: "off",
 	noNamespaceImport: "error",
 	noReExportAll: "error",
 	/**

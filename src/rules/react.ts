@@ -57,10 +57,6 @@ const nursery = {
 	 */
 	noJsxNamespace: "error",
 	/**
-	 * Using `bind` is treated by React as a new function on each render.
-	 */
-	noJsxPropsBind: "error",
-	/**
 	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
 	 */
 	noLeakedRender: "error",
@@ -89,6 +85,11 @@ const nursery = {
 
 const performance = {
 	...frontend.performance,
+
+	/**
+	 * Using `bind` is treated by React as a new function on each render.
+	 */
+	noJsxPropsBind: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
 const security = {
