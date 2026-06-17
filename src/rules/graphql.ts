@@ -83,6 +83,10 @@ const security = {
 const style = {
 	...base.style,
 
+	/**
+	 * Disabling specific types at the root level is left up to the user project.
+	 */
+	noRootType: "off",
 	useDeprecatedReason: "error",
 	useGraphqlNamingConvention: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;

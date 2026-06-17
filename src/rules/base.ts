@@ -611,10 +611,6 @@ const nursery = {
 	 * There is no need to assign anything when returning.
 	 */
 	noReturnAssign: "error",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noRootType: "off",
 	noShadow: "error",
 	/**
 	 * Ternaries are a superior way of assigning to variables.
@@ -1006,6 +1002,10 @@ const style = {
 	 * No point in banning any types globally. Should be done per-project, if at all.
 	 */
 	noRestrictedTypes: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noRootType: "off",
 	/**
 	 * Shouting is not a crime.
 	 */
