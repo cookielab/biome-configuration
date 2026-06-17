@@ -464,9 +464,6 @@ const nursery = {
 	 */
 	noDuplicatedSpreadProps: "off",
 	/**
-	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-	 */
-	/**
 	 * GraphQL-only rule.
 	 */
 	noDuplicateFieldDefinitionNames: "off",
@@ -1205,6 +1202,10 @@ const suspicious = {
 	 */
 	noDuplicateDependencies: "off",
 	noDuplicateElseIf: "error",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	noDuplicateEnumValues: "error",
 	/**
 	 * GraphQL-only rule.
 	 */
