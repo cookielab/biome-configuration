@@ -299,6 +299,10 @@ const correctness = {
 	noUnsafeOptionalChaining: "error",
 	noUnusedFunctionParameters: "error",
 	noUnusedImports: "error",
+	/**
+	 * Prevents instantiation of classes that never get used.
+	 */
+	noUnusedInstantiation: "error",
 	noUnusedLabels: "error",
 	noUnusedPrivateClassMembers: "error",
 	noUnusedVariables: "error",
