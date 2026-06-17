@@ -691,10 +691,6 @@ const nursery = {
 	 */
 	useRegexpTest: "error",
 	/**
-	 * This rule should only be enabled in a specific project as every project uses different required scripts.
-	 */
-	useRequiredScripts: "off",
-	/**
 	 * Vue-only rule.
 	 */
 	useScopedStyles: "off",
@@ -1345,6 +1341,10 @@ const suspicious = {
 	useIterableCallbackReturn: "error",
 	useNamespaceKeyword: "error",
 	useNumberToFixedDigitsArgument: "error",
+	/**
+	 * This rule should only be enabled in a specific project as every project uses different required scripts.
+	 */
+	useRequiredScripts: "off",
 	useStaticResponseMethods: "warn",
 	useStrictMode: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
