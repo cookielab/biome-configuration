@@ -569,6 +569,10 @@ const nursery = {
 	 */
 	noReactStringRefs: "off",
 	/**
+	 * Prevents usage of superseeded dependencies as checked by [e18e](https://e18e.dev/).
+	 */
+	noRestrictedDependencies: "error",
+	/**
 	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
 	 */
 	noTopLevelLiterals: "error",
