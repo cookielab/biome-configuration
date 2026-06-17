@@ -16,6 +16,10 @@ const a11y = {
 	...base.a11y,
 
 	noAccessKey: "error",
+	/**
+	 * This rule promotes  more accessible interfaces.
+	 */
+	noAmbiguousAnchorText: "error",
 	noAriaHiddenOnFocusable: "error",
 	noAriaUnsupportedElements: "error",
 	noAutofocus: "error",

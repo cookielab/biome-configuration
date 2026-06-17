@@ -17,6 +17,10 @@ import type {
  */
 const a11y = {
 	noAccessKey: "off",
+	/**
+	 * HTML-only rule.
+	 */
+	noAmbiguousAnchorText: "off",
 	noAriaHiddenOnFocusable: "off",
 	noAriaUnsupportedElements: "off",
 	noAutofocus: "off",
@@ -333,11 +337,6 @@ const correctness = {
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
-	/**
-	 * This rule promotes  more accessible interfaces. However, turning this into an error would be too harsh as a lot of links would not meet the necessary criteria to pass.
-	 * Leaving the level to `warn` keeps the balance between being helpful and annoying/fighting with designers.
-	 */
-	noAmbiguousAnchorText: "warn",
 	/**
 	 * NextJS-only rule.
 	 */
