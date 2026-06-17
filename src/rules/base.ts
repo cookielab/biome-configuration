@@ -748,6 +748,10 @@ const nursery = {
 	 */
 	useTestHooksOnTop: "error",
 	/**
+	 * Ensures that class methods actually utilize `this`. If `this` is not used, the methods can be declared static or moved outside of the class.
+	 */
+	useThisInClassMethods: "error",
+	/**
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
