@@ -501,10 +501,6 @@ const nursery = {
 	 */
 	noForIn: "warn",
 	/**
-	 * Frontend-only rule.
-	 */
-	noHexColors: "off",
-	/**
 	 * Test titles should be unique in their respective groups.
 	 */
 	noIdenticalTestTitle: "error",
@@ -977,6 +973,10 @@ const style = {
 	 * NextJS-only rule.
 	 */
 	noHeadElement: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	noHexColors: "off",
 	noImplicitBoolean: "error",
 	noInferrableTypes: "error",
 	/**

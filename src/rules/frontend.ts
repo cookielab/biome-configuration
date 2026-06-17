@@ -102,10 +102,6 @@ const nursery = {
 	 */
 	noExcessiveSelectorClasses: "warn",
 	/**
-	 * This rule is disabled as HEX colors are pretty widely used.
-	 */
-	noHexColors: "off",
-	/**
 	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
 	 */
 	noInlineStyles: "warn",
@@ -153,6 +149,10 @@ const style = {
 	...base.style,
 
 	noDescendingSpecificity: "error",
+	/**
+	 * This rule is disabled as HEX colors are pretty widely used.
+	 */
+	noHexColors: "off",
 	noValueAtRule: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
