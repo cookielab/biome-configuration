@@ -394,6 +394,10 @@ const correctness = {
 	useUniqueElementIds: "off",
 	useValidForDirection: "error",
 	useValidTypeof: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueVForKey: "off",
 	useYield: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
@@ -858,7 +862,6 @@ const nursery = {
 	useVueValidVPre: "off",
 	useVueValidVText: "off",
 	useVueVapor: "off",
-	useVueVForKey: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
