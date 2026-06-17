@@ -174,6 +174,10 @@ const correctness = {
 	 * Frontend-only rule.
 	 */
 	noDuplicateAttributes: "off",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	noDuplicateEnumValueNames: "error",
 	noEmptyCharacterClassInRegex: "error",
 	noEmptyPattern: "error",
 	/**
@@ -396,11 +400,6 @@ const nursery = {
 	/**
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
-	noDuplicateEnumValueNames: "error",
-	/**
-	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-	 */
-	noDuplicateEnumValues: "error",
 	/**
 	 * GraphQL-only rule.
 	 */
