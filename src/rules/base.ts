@@ -612,6 +612,7 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	noVueVOnNumberValues: "off",
+	preset: "none",
 	recommended: false,
 	/**
 	 * using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
