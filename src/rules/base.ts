@@ -36,6 +36,7 @@ const a11y = {
 	noRedundantRoles: "off",
 	noStaticElementInteractions: "off",
 	noSvgWithoutTitle: "off",
+	preset: "none",
 	recommended: false,
 	useAltText: "off",
 	useAnchorContent: "off",
