@@ -478,11 +478,6 @@ const nursery = {
 	noFloatingClasses: "error",
 	noFloatingPromises: "error",
 	/**
-	 * `for-in` loops are usually just a typo when trying to remember how `for-of` is written.
-	 *  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
-	 */
-	noForIn: "warn",
-	/**
 	 * Test titles should be unique in their respective groups.
 	 */
 	noIdenticalTestTitle: "error",
@@ -1249,6 +1244,11 @@ const suspicious = {
 	noExtraNonNullAssertion: "error",
 	noFallthroughSwitchClause: "error",
 	noFocusedTests: "error",
+	/**
+	 * `for-in` loops are usually just a typo when trying to remember how `for-of` is written.
+	 *  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
+	 */
+	noForIn: "error",
 	noFunctionAssign: "error",
 	noGlobalAssign: "error",
 	noGlobalIsFinite: "error",
