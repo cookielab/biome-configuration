@@ -132,6 +132,10 @@ const complexity = {
 	 */
 	noVoid: "off",
 	recommended: false,
+	/**
+	 * Enforces the usage of `Array.prototype.find` over `Array.prototype.filter` with index access.
+	 */
+	useArrayFind: "error",
 	useArrowFunction: "error",
 	useDateNow: "error",
 	useFlatMap: "error",
