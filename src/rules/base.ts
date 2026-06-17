@@ -473,6 +473,10 @@ const nursery = {
 	 */
 	noEmptyObjectKeys: "error",
 	/**
+	 * Keeps the code from nesting too deep.
+	 */
+	noExcessiveNestedCallbacks: "error",
+	/**
 	 * Frontend-only rule.
 	 */
 	noExcessiveSelectorClasses: "off",
