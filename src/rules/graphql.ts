@@ -23,16 +23,16 @@ const complexity = {
 const correctness = {
 	...base.correctness,
 
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateArgumentNames: "error",
 	useGraphqlNamedOperations: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
 	...base.nursery,
 
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	noDuplicateArgumentNames: "error",
 	/**
 	 * GraphQL should not enable this behavior in the first place.
 	 */

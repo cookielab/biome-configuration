@@ -166,6 +166,10 @@ const correctness = {
 	noConstantCondition: "error",
 	noConstantMathMinMaxClamp: "error",
 	noConstructorReturn: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateArgumentNames: "off",
 	noEmptyCharacterClassInRegex: "error",
 	noEmptyPattern: "error",
 	/**
@@ -381,10 +385,6 @@ const nursery = {
 	 */
 	noDrizzleDeleteWithoutWhere: "off",
 	noDrizzleUpdateWithoutWhere: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noDuplicateArgumentNames: "off",
 	/**
 	 * Frontend-only rule.
 	 */
