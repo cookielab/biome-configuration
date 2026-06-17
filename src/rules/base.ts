@@ -786,7 +786,6 @@ const nursery = {
 	 */
 	useVarsOnTop: "error",
 	useVueConsistentDefinePropsDeclaration: "off",
-	useVueConsistentVOnStyle: "off",
 	/**
 	 * Vue-only rule.
 	 */
@@ -1141,6 +1140,10 @@ const style = {
 	 * Vue-only rule.
 	 */
 	useVueConsistentVBindStyle: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueConsistentVOnStyle: "off",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
