@@ -39,17 +39,16 @@ const correctness = {
 
 const nursery = {
 	...react.nursery,
-
-	/**
-	 * Synchronous scripts by themselves impact the performance.
-	 */
-	noSyncScripts: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
 	...react.performance,
 
 	noImgElement: "error",
+	/**
+	 * Synchronous scripts by themselves impact the performance.
+	 */
+	noSyncScripts: "error",
 	noUnwantedPolyfillio: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 

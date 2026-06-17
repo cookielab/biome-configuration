@@ -658,10 +658,6 @@ const nursery = {
 	noScriptUrl: "off",
 	noShadow: "error",
 	/**
-	 * NextJS-only rule.
-	 */
-	noSyncScripts: "off",
-	/**
 	 * Ternaries are a superior way of assigning to variables.
 	 * They only become hard to read once they become nested or use long conditions.
 	 */
@@ -917,6 +913,10 @@ const performance = {
 	noJsxPropsBind: "off",
 	noNamespaceImport: "error",
 	noReExportAll: "error",
+	/**
+	 * NextJS-only rule.
+	 */
+	noSyncScripts: "off",
 	/**
 	 * NextJS-only rule.
 	 */
