@@ -652,10 +652,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	noRootType: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	noScriptUrl: "off",
 	noShadow: "error",
 	/**
 	 * Ternaries are a superior way of assigning to variables.
@@ -951,6 +947,10 @@ const security = {
 	 */
 	noDangerouslySetInnerHtmlWithChildren: "off",
 	noGlobalEval: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	noScriptUrl: "off",
 	/**
 	 * Produces too many false-positives.
 	 */

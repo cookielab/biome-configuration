@@ -110,10 +110,6 @@ const nursery = {
 	 */
 	noInlineStyles: "warn",
 	/**
-	 * This rule should help with preventing any XSS vulnerabilities.
-	 */
-	noScriptUrl: "error",
-	/**
 	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
 	 */
 	useBaseline: {
@@ -147,6 +143,10 @@ const security = {
 	...base.security,
 
 	noBlankTarget: "error",
+	/**
+	 * This rule should help with preventing any XSS vulnerabilities.
+	 */
+	noScriptUrl: "error",
 } as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
 
 const style = {
