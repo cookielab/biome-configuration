@@ -182,6 +182,10 @@ const correctness = {
 	 * GraphQL-only rule.
 	 */
 	noDuplicateInputFieldNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateVariableNames: "off",
 	noEmptyCharacterClassInRegex: "error",
 	noEmptyPattern: "error",
 	/**
@@ -412,10 +416,6 @@ const nursery = {
 	 * GraphQL-only rule.
 	 */
 	noDuplicateSelectors: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noDuplicateVariableNames: "off",
 	/**
 	 * Empty object keys are usually just a typo.
 	 */
