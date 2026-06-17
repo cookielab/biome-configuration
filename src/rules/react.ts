@@ -65,6 +65,10 @@ const nursery = {
 	 */
 	noReactNativeRawText: "error",
 	/**
+	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
+	 */
+	noReactStringRefs: "error",
+	/**
 	 * Forces any function with `use server` directive to be asynchronous.
 	 */
 	useReactAsyncServerFunction: "error",

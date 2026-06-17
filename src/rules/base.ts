@@ -565,6 +565,10 @@ const nursery = {
 	 */
 	noReactNativeRawText: "off",
 	/**
+	 * React-only rule.
+	 */
+	noReactStringRefs: "off",
+	/**
 	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
 	 */
 	noTopLevelLiterals: "error",
