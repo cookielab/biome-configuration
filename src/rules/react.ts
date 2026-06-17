@@ -45,10 +45,6 @@ const nursery = {
 	 */
 	noComponentHookFactories: "error",
 	/**
-	 * Prevents unnecessary computations as spreading props twice makes React go crazy.
-	 */
-	noDuplicatedSpreadProps: "error",
-	/**
 	 * Using template strings syntax in plain component text is not indended in most cases.
 	 */
 	noJsxLeakedDollar: "error",
@@ -118,6 +114,10 @@ const suspicious = {
 
 	noArrayIndexKey: "error",
 	noCommentText: "error",
+	/**
+	 * Prevents unnecessary computations as spreading props twice makes React go crazy.
+	 */
+	noDuplicatedSpreadProps: "error",
 	noDuplicateJsxProps: "error",
 	/**
 	 * Forbids the usage of the deprecated `forwardRef`.

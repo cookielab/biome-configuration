@@ -460,10 +460,6 @@ const nursery = {
 	noDrizzleDeleteWithoutWhere: "off",
 	noDrizzleUpdateWithoutWhere: "off",
 	/**
-	 * React & Solid.js only rule.
-	 */
-	noDuplicatedSpreadProps: "off",
-	/**
 	 * GraphQL-only rule.
 	 */
 	noDuplicateFieldDefinitionNames: "off",
@@ -1198,6 +1194,10 @@ const suspicious = {
 	 * NodeJS-only rule.
 	 */
 	noDuplicateDependencies: "off",
+	/**
+	 * React & Solid.js only rule.
+	 */
+	noDuplicatedSpreadProps: "off",
 	noDuplicateElseIf: "error",
 	/**
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
