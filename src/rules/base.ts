@@ -131,6 +131,7 @@ const complexity = {
 	 * Using `void` to intentionally ignore callback return values is a useful shorthand.
 	 */
 	noVoid: "off",
+	preset: "none",
 	recommended: false,
 	/**
 	 * Enforces the usage of `Array.prototype.find` over `Array.prototype.filter` with index access.
@@ -335,6 +336,7 @@ const correctness = {
 	 * Vue-only rule.
 	 */
 	noVueVIfWithVFor: "off",
+	preset: "none",
 	recommended: false,
 	/**
 	 * React-only rule.
