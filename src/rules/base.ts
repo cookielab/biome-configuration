@@ -178,6 +178,10 @@ const correctness = {
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
 	noDuplicateEnumValueNames: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateInputFieldNames: "off",
 	noEmptyCharacterClassInRegex: "error",
 	noEmptyPattern: "error",
 	/**
@@ -407,11 +411,6 @@ const nursery = {
 	/**
 	 * GraphQL-only rule.
 	 */
-	noDuplicateGraphqlOperationName: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noDuplicateInputFieldNames: "off",
 	noDuplicateSelectors: "off",
 	/**
 	 * GraphQL-only rule.
