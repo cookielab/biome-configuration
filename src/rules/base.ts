@@ -725,10 +725,6 @@ const nursery = {
 	/**
 	 * GraphQL-only rule.
 	 */
-	useInputName: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
 	useLoneExecutableDefinition: "off",
 	/**
 	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
@@ -1101,6 +1097,10 @@ const style = {
 	useGraphqlNamingConvention: "off",
 	useGroupedAccessorPairs: "error",
 	useImportType: "error",
+	/**
+	 * GraphQL-only rule
+	 */
+	useInputName: "off",
 	/**
 	 * Enums are forbidden.
 	 */

@@ -54,10 +54,6 @@ const nursery = {
 	 */
 	noDuplicateGraphqlOperationName: "error",
 	/**
-	 * This rule promotes consistent naming across mutations.
-	 */
-	useInputName: "error",
-	/**
 	 * This rule helps with writing maintainable GraphQL.
 	 */
 	useLoneExecutableDefinition: "error",
@@ -89,6 +85,10 @@ const style = {
 	},
 	useDeprecatedReason: "error",
 	useGraphqlNamingConvention: "error",
+	/**
+	 * This rule promotes consistent naming across mutations.
+	 */
+	useInputName: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
