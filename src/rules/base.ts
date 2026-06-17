@@ -539,11 +539,6 @@ const nursery = {
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
-	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
-	 * Keeping the assignments separate makes them more readable.
-	 */
-	noMultiAssign: "error",
-	/**
 	 * Using strings with ``` is a better approach.
 	 */
 	noMultiStr: "error",
@@ -984,6 +979,10 @@ const style = {
 	 */
 	noJsxLiterals: "off",
 	noMagicNumbers: "warn",
+	/**
+	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
+	 */
+	noMultiAssign: "error",
 	noNamespace: "error",
 	noNegationElse: "error",
 	noNestedTernary: "error",
