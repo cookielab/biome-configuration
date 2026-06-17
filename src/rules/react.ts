@@ -73,6 +73,10 @@ const nursery = {
 	 */
 	useReactAsyncServerFunction: "error",
 	/**
+	 * Forces a consistent React component declaration.
+	 */
+	useReactFunctionComponentDefinition: { level: "error", options: { namedComponents: "arrowFunction" } },
+	/**
 	 * Ensures that platform-specific components are only used in platform-specific files.
 	 */
 	useReactNativePlatformComponents: "error",
