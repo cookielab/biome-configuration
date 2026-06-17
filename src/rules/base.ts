@@ -648,10 +648,6 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
-	noVueOptionsApi: "off",
-	/**
-	 * Vue-only rule.
-	 */
 	noVueRefAsOperand: "off",
 	recommended: false,
 	/**
@@ -1017,6 +1013,10 @@ const style = {
 	 * Frontend-only rule.
 	 */
 	noValueAtRule: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueOptionsApi: "off",
 	noYodaExpression: "error",
 	recommended: false,
 	useArrayLiterals: "error",
