@@ -88,6 +88,10 @@ const complexity = {
 	 * Frontend-only rule.
 	 */
 	noImportantStyles: "off",
+	/**
+	 * Prevents re-exporting the same value as a named export and a default export as well.
+	 */
+	noRedundantDefaultExport: "error",
 	noStaticOnlyClass: "error",
 	noThisInStatic: "off",
 	noUselessCatch: "error",
@@ -567,10 +571,6 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noReactNativeRawText: "off",
-	/**
-	 * Prevents re-exporting the same value as a named export and a default export as well.
-	 */
-	noRedundantDefaultExport: "error",
 	/**
 	 * There is no need to assign anything when returning.
 	 */
