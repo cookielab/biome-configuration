@@ -90,10 +90,6 @@ const nursery = {
 	...base.nursery,
 
 	/**
-	 * This rule prevents the usage of deprecated media types in CSS.
-	 */
-	noDeprecatedMediaType: "error",
-	/**
 	 * Prevents selector duplication.
 	 */
 	noDuplicateSelectors: "error",
@@ -160,6 +156,10 @@ const suspicious = {
 	...base.suspicious,
 
 	noAlert: "error",
+	/**
+	 * This rule prevents the usage of deprecated media types in CSS.
+	 */
+	noDeprecatedMediaType: "error",
 	noDocumentCookie: "error",
 	noDocumentImportInPage: "error",
 	noDuplicateAtImportRules: "error",

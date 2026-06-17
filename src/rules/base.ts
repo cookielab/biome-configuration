@@ -455,10 +455,6 @@ const nursery = {
 	 */
 	noConditionalExpect: "error",
 	/**
-	 * Frontend-only rule.
-	 */
-	noDeprecatedMediaType: "off",
-	/**
 	 * Drizzle-only rule.
 	 */
 	noDrizzleDeleteWithoutWhere: "off",
@@ -1181,6 +1177,10 @@ const suspicious = {
 	 * Deprecated imports should be discouraged. However, with some dependencies, there are no alternatives. Thus keeping this at the `warn` level.
 	 */
 	noDeprecatedImports: "warn",
+	/**
+	 * Frontend-only rule.
+	 */
+	noDeprecatedMediaType: "off",
 	/**
 	 * Frontend-only rule.
 	 */
