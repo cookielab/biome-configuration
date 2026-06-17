@@ -889,7 +889,6 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	useVueMultiWordComponentNames: "off",
-	useVueVapor: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -932,6 +931,10 @@ const performance = {
 	 */
 	useSolidForComponent: "off",
 	useTopLevelRegex: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueVapor: "off",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
 const security = {
