@@ -720,13 +720,6 @@ const nursery = {
 	 */
 	useImportsFirst: "error",
 	/**
-	 * NextJS-only rule.
-	 */
-	/**
-	 * GraphQL-only rule.
-	 */
-	useLoneExecutableDefinition: "off",
-	/**
 	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
 	 */
 	useNamedCaptureGroup: "warn",
@@ -1105,6 +1098,10 @@ const style = {
 	 * Enums are forbidden.
 	 */
 	useLiteralEnumMembers: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useLoneExecutableDefinition: "off",
 	useNamingConvention: "warn",
 	/**
 	 * Node-only rule.

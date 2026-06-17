@@ -53,10 +53,6 @@ const nursery = {
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	noDuplicateGraphqlOperationName: "error",
-	/**
-	 * This rule helps with writing maintainable GraphQL.
-	 */
-	useLoneExecutableDefinition: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -89,6 +85,10 @@ const style = {
 	 * This rule promotes consistent naming across mutations.
 	 */
 	useInputName: "error",
+	/**
+	 * This rule helps with writing maintainable GraphQL.
+	 */
+	useLoneExecutableDefinition: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
