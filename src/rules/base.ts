@@ -1126,6 +1126,12 @@ const style = {
 	useShorthandAssign: "error",
 	useShorthandFunctionType: "error",
 	useSingleVarDeclarator: "error",
+	/**
+	 * Enforces the spread syntax usage over a plain `apply`.
+	 *
+	 * `apply` is still accepted in cases where there is a custom `this` value supplied.
+	 */
+	useSpreadOverApply: "error",
 	useSymbolDescription: "error",
 	useTemplate: "error",
 	useThrowNewError: "error",
