@@ -568,10 +568,6 @@ const nursery = {
 	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
 	 */
 	noTopLevelLiterals: "error",
-	/**
-	 * JSX-only rule.
-	 */
-	noUnknownAttribute: "off",
 	noUnnecessaryConditions: "warn",
 	/**
 	 * Disallows template literals for which a plain string can be used instead.
@@ -1309,6 +1305,10 @@ const suspicious = {
 	 * Frontend-only rule.
 	 */
 	noUnknownAtRules: "off",
+	/**
+	 * JSX-only rule.
+	 */
+	noUnknownAttribute: "off",
 	noUnsafeDeclarationMerging: "error",
 	noUnsafeNegation: "error",
 	/**

@@ -64,7 +64,6 @@ const nursery = {
 	 * Text should always be wrapped in the React Native `Text` component.
 	 */
 	noReactNativeRawText: "error",
-	noUnknownAttribute: "warn",
 	/**
 	 * Forces any function with `use server` directive to be asynchronous.
 	 */
@@ -124,6 +123,10 @@ const suspicious = {
 	 */
 	noReactForwardRef: "error",
 	noSuspiciousSemicolonInJsx: "error",
+	/**
+	 * Prevents the usage of unknown attributes.
+	 */
+	noUnknownAttribute: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
 const react = {
