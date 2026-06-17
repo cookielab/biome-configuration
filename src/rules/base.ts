@@ -513,10 +513,6 @@ const nursery = {
 	 */
 	noMultiStr: "error",
 	/**
-	 * Just making sure there are no unused parameters in recursive functions.
-	 */
-	noParametersOnlyUsedInRecursion: "off",
-	/**
 	 * Usage of locators is preferred as they include auto-wait.
 	 */
 	noPlaywrightElementHandle: "error",
@@ -1271,6 +1267,10 @@ const suspicious = {
 	noNestedPromises: "error",
 	noNonNullAssertedOptionalChain: "error",
 	noOctalEscape: "error",
+	/**
+	 * Just making sure there are no unused parameters in recursive functions.
+	 */
+	noParametersOnlyUsedInRecursion: "error",
 	noPrototypeBuiltins: "error",
 	/**
 	 * Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
