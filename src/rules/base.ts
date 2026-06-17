@@ -564,10 +564,6 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noReactNativeRawText: "off",
-	/**
-	 * There is no need to assign anything when returning.
-	 */
-	noReturnAssign: "error",
 	noShadow: "error",
 	/**
 	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
@@ -1286,6 +1282,10 @@ const suspicious = {
 	noReactSpecificProps: "off",
 	noRedeclare: "error",
 	noRedundantUseStrict: "error",
+	/**
+	 * There is no need to assign anything when returning.
+	 */
+	noReturnAssign: "error",
 	noSelfCompare: "error",
 	noShadowRestrictedNames: "error",
 	/**
