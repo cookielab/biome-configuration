@@ -455,10 +455,6 @@ const nursery = {
 	 */
 	noConditionalExpect: "error",
 	/**
-	 * `continue` helps to avoid nesting inside loop bodies.
-	 */
-	noContinue: "off",
-	/**
 	 * Frontend-only rule.
 	 */
 	noDeprecatedMediaType: "off",
@@ -966,6 +962,10 @@ const style = {
 	 * Recommended level would be `error`.
 	 */
 	noCommonJs: "off",
+	/**
+	 * `continue` helps to avoid nesting inside loop bodies.
+	 */
+	noContinue: "off",
 	noDefaultExport: "error",
 	/**
 	 * Frontend-only rule.
