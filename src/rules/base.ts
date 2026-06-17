@@ -682,10 +682,6 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	useDomQuerySelector: "off",
-	/**
-	 * Promotes better error-handling practices.
-	 */
-	useErrorCause: "error",
 	useExhaustiveSwitchCases: "error",
 	/**
 	 * Each test should include at least one assertion.
@@ -1082,6 +1078,10 @@ const style = {
 	 * Enums are forbidden.
 	 */
 	useEnumInitializers: "off",
+	/**
+	 * Promotes better error-handling practices.
+	 */
+	useErrorCause: "error",
 	useExplicitLengthCheck: "error",
 	useExponentiationOperator: "error",
 	useExportsLast: "error",
