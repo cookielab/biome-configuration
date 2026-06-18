@@ -74,6 +74,7 @@ const next = {
 	correctness: correctness,
 	nursery: nursery,
 	performance: performance,
+	preset: "none",
 	recommended: false,
 	security: security,
 	style: style,
