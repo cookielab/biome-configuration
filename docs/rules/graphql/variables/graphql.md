@@ -8,7 +8,7 @@
 
 > `const` **graphql**: `object`
 
-Defined in: [rules/graphql.ts:101](https://github.com/cookielab/biome-configuration/blob/main/src/rules/graphql.ts#L101)
+Defined in: [rules/graphql.ts:103](https://github.com/cookielab/biome-configuration/blob/main/src/rules/graphql.ts#L103)
 
 ## Type Declaration
 

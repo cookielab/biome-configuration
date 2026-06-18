@@ -49,6 +49,7 @@ const nursery = {
 const performance = {
 	...react.performance,
 
+	noAwaitInLoops: "warn",
 	noImgElement: "error",
 	noUnwantedPolyfillio: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;

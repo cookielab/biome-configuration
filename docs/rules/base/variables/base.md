@@ -1651,7 +1651,9 @@ Vue-only rule.
 
 #### performance.noAwaitInLoops
 
-> `readonly` **noAwaitInLoops**: `"warn"` = `"warn"`
+> `readonly` **noAwaitInLoops**: `"off"` = `"off"`
+
+Sequential awaits in loops are sometimes the clearest and safest option.
 
 #### performance.noBarrelFile
 

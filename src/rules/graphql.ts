@@ -74,6 +74,8 @@ const nursery = {
 
 const performance = {
 	...base.performance,
+
+	noAwaitInLoops: "warn",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
 const security = {

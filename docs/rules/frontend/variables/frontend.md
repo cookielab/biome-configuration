@@ -8,7 +8,7 @@
 
 > `const` **frontend**: `object`
 
-Defined in: [rules/frontend.ts:173](https://github.com/cookielab/biome-configuration/blob/main/src/rules/frontend.ts#L173)
+Defined in: [rules/frontend.ts:174](https://github.com/cookielab/biome-configuration/blob/main/src/rules/frontend.ts#L174)
 
 ## Type Declaration
 

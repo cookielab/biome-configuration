@@ -852,7 +852,10 @@ const nursery = {
 
 const performance = {
 	noAccumulatingSpread: "error",
-	noAwaitInLoops: "warn",
+	/**
+	 * Sequential awaits in loops are sometimes the clearest and safest option.
+	 */
+	noAwaitInLoops: "off",
 	/**
 	 * Should only be enabled per-project.
 	 *
