@@ -1026,7 +1026,10 @@ const style = {
 	useEnumInitializers: "off",
 	useExplicitLengthCheck: "error",
 	useExponentiationOperator: "error",
-	useExportsLast: "error",
+	/**
+	 * Declaration-before-use for exports hurts readability.
+	 */
+	useExportsLast: "off",
 	useExportType: "error",
 	/**
 	 * Should only be enabled per-project.

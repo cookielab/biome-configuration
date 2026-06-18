@@ -1982,7 +1982,9 @@ Enums are forbidden.
 
 #### style.useExportsLast
 
-> `readonly` **useExportsLast**: `"error"` = `"error"`
+> `readonly` **useExportsLast**: `"off"` = `"off"`
+
+Declaration-before-use for exports hurts readability.
 
 #### style.useExportType
 
