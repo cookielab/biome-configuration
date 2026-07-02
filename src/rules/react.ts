@@ -45,10 +45,6 @@ const nursery = {
 	 */
 	noComponentHookFactories: "error",
 	/**
-	 * Prevents unnecessary computations as spreading props twice makes React go crazy.
-	 */
-	noDuplicatedSpreadProps: "error",
-	/**
 	 * Using template strings syntax in plain component text is not indended in most cases.
 	 */
 	noJsxLeakedDollar: "error",
@@ -56,14 +52,6 @@ const nursery = {
 	 * XML-like syntax is not supported by React.
 	 */
 	noJsxNamespace: "error",
-	/**
-	 * Using `bind` is treated by React as a new function on each render.
-	 */
-	noJsxPropsBind: "error",
-	/**
-	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
-	 */
-	noLeakedRender: "error",
 	/**
 	 * Disallows importing from deeply nested React Native directories.
 	 */
@@ -76,11 +64,18 @@ const nursery = {
 	 * Text should always be wrapped in the React Native `Text` component.
 	 */
 	noReactNativeRawText: "error",
-	noUnknownAttribute: "warn",
+	/**
+	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
+	 */
+	noReactStringRefs: "error",
 	/**
 	 * Forces any function with `use server` directive to be asynchronous.
 	 */
 	useReactAsyncServerFunction: "error",
+	/**
+	 * Forces a consistent React component declaration.
+	 */
+	useReactFunctionComponentDefinition: { level: "error", options: { namedComponents: "arrowFunction" } },
 	/**
 	 * Ensures that platform-specific components are only used in platform-specific files.
 	 */
@@ -89,6 +84,11 @@ const nursery = {
 
 const performance = {
 	...frontend.performance,
+
+	/**
+	 * Using `bind` is treated by React as a new function on each render.
+	 */
+	noJsxPropsBind: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
 const security = {
@@ -117,12 +117,24 @@ const suspicious = {
 
 	noArrayIndexKey: "error",
 	noCommentText: "error",
+	/**
+	 * Prevents unnecessary computations as spreading props twice makes React go crazy.
+	 */
+	noDuplicatedSpreadProps: "error",
 	noDuplicateJsxProps: "error",
+	/**
+	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
+	 */
+	noLeakedRender: "error",
 	/**
 	 * Forbids the usage of the deprecated `forwardRef`.
 	 */
 	noReactForwardRef: "error",
 	noSuspiciousSemicolonInJsx: "error",
+	/**
+	 * Prevents the usage of unknown attributes.
+	 */
+	noUnknownAttribute: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 
 const react = {
@@ -131,6 +143,7 @@ const react = {
 	correctness: correctness,
 	nursery: nursery,
 	performance: performance,
+	preset: "none",
 	recommended: false,
 	security: security,
 	style: style,

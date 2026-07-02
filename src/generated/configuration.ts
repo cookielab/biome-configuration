@@ -9,9 +9,16 @@ import { z } from "zod";
  */
 export const schemaSchema = z.string();
 
+/**
+ * A preset configuration for enabling a set of rules.
+ */
+export const presetConfigSchema = z.union([z.literal("recommended"), z.literal("all"), z.literal("none")]);
+
 export const ruleAssistPlainConfigurationSchema = z.union([z.literal("off"), z.literal("on")]);
 
-export const negatablePredefinedSourceMatcherSchema = z.union([z.literal(":ALIAS:"), z.literal(":BUN:"), z.literal(":NODE:"), z.literal(":PACKAGE:"), z.literal(":PACKAGE_WITH_PROTOCOL:"), z.literal(":PATH:"), z.literal(":URL:"), z.literal("!:ALIAS:"), z.literal("!:BUN:"), z.literal("!:NODE:"), z.literal("!:PACKAGE:"), z.literal("!:PACKAGE_WITH_PROTOCOL:"), z.literal("!:PATH:"), z.literal("!:URL:")]);
+export const negatableImportKindMatcherSchema = z.union([z.literal("bare"), z.literal("!bare")]);
+
+export const negatablePredefinedSourceMatcherSchema = z.union([z.literal(":ALIAS:"), z.literal(":BUN:"), z.literal(":NODE:"), z.literal(":PACKAGE:"), z.literal(":PACKAGE_WITH_PROTOCOL:"), z.literal(":PATH:"), z.literal(":STYLE:"), z.literal(":URL:"), z.literal("!:ALIAS:"), z.literal("!:BUN:"), z.literal("!:NODE:"), z.literal("!:PACKAGE:"), z.literal("!:PACKAGE_WITH_PROTOCOL:"), z.literal("!:PATH:"), z.literal("!:STYLE:"), z.literal("!:URL:")]);
 
 export const sortOrderSchema = z.union([z.literal("natural"), z.literal("lexicographic")]);
 
@@ -21,6 +28,15 @@ export const boolSchema = z.boolean();
  * Normalized Biome glob pattern that strips `./` from the pattern.
  */
 export const normalizedGlobSchema = z.string();
+
+/**
+ * Whether to insert spaces inside delimiters (after the opening delimiter and before the closing
+ * delimiter), such as parentheses, brackets, angle brackets, and template literal interpolations.
+ * Spaces are not added before the opening delimiter, and empty delimiters are not affected.
+ * Only applies when the content fits on a single line; when content breaks across multiple lines,
+ * no extra spaces are added. The specific delimiters affected depend on the language.
+ */
+export const delimiterSpacingSchema = z.boolean();
 
 export const indentStyleSchema = z.union([z.literal("tab"), z.literal("space")]);
 
@@ -135,27 +151,19 @@ export const stableHookResultSchema = z.union([z.boolean(), z.tuple([z.number()]
 
 export const useImageSizeOptionsSchema = z.null();
 
-export const regexSchema = z.string();
-
-/**
- * The GraphQL description style to enforce.
- */
-export const useConsistentGraphqlDescriptionsStyleSchema = z.union([z.literal("block"), z.literal("inline")]);
-
-export const methodSignatureStyleSchema = z.union([z.literal("property"), z.literal("method")]);
-
 /**
  * The function to use for tests
  */
 export const testFunctionKindSchema = z.union([z.literal("it"), z.literal("test")]);
 
-export const checkInputTypeSchema = z.union([z.literal("off"), z.literal("loose"), z.literal("strict")]);
+export const componentDefinitionStyleSchema = z.union([z.literal("functionDeclaration"), z.literal("functionExpression"), z.literal("arrowFunction")]);
+
+/**
+ * Controls how `useThisInClassMethods` treats classes that implement interfaces.
+ */
+export const ignoreClassesWithImplementsSchema = z.union([z.literal("none"), z.literal("all"), z.literal("public-fields")]);
 
 export const declarationStyleSchema = z.union([z.literal("type"), z.literal("runtime")]);
-
-export const vueDirectiveStyleSchema = z.union([z.literal("shorthand"), z.literal("longhand")]);
-
-export const vueDirectiveStyle2Schema = z.union([z.literal("shorthand"), z.literal("longhand")]);
 
 /**
  * Specifies whether property assignments on function parameters are allowed or denied.
@@ -180,6 +188,8 @@ export const pathOptionsSchema = z.object({
     message: z.string().optional()
 });
 
+export const regexSchema = z.string();
+
 export const customRestrictedTypeOptionsSchema = z.object({
     message: z.string().optional(),
     use: z.string().optional().nullable()
@@ -189,11 +199,23 @@ export const consistentArrayTypeSchema = z.union([z.literal("shorthand"), z.lite
 
 export const useConsistentArrowReturnStyleSchema = z.union([z.literal("asNeeded"), z.literal("always"), z.literal("never")]);
 
+/**
+ * The GraphQL description style to enforce.
+ */
+export const useConsistentGraphqlDescriptionsStyleSchema = z.union([z.literal("block"), z.literal("inline")]);
+
 export const accessibilitySchema = z.union([z.literal("noPublic"), z.literal("explicit"), z.literal("none")]);
+
+export const methodSignatureStyleSchema = z.union([z.literal("property"), z.literal("method")]);
 
 export const objectPropertySyntaxSchema = z.union([z.literal("explicit"), z.literal("shorthand")]);
 
 export const consistentTypeDefinitionSchema = z.union([z.literal("interface"), z.literal("type")]);
+
+/**
+ * The style to apply when exporting types.
+ */
+export const useExportTypeStyleSchema = z.union([z.literal("auto"), z.literal("inlineType"), z.literal("separatedType")]);
 
 /**
  * Supported cases for file names.
@@ -206,6 +228,8 @@ export const filenameCasesSchema = z.array(filenameCaseSchema);
  * The style to apply when importing types.
  */
 export const useImportTypeStyleSchema = z.union([z.literal("auto"), z.literal("inlineType"), z.literal("separatedType")]);
+
+export const checkInputTypeSchema = z.union([z.literal("off"), z.literal("loose"), z.literal("strict")]);
 
 /**
  * Supported cases.
@@ -224,13 +248,44 @@ export const restrictedModifierSchema = z.union([z.literal("abstract"), z.litera
  */
 export const modifiersSchema = z.array(restrictedModifierSchema);
 
+export const vueDirectiveStyleSchema = z.union([z.literal("shorthand"), z.literal("longhand")]);
+
+export const vueDirectiveStyle2Schema = z.union([z.literal("shorthand"), z.literal("longhand")]);
+
 export const globSchema = z.string();
 
 export const overrideGlobsSchema = z.array(globSchema);
 
-export const pluginConfigurationSchema = z.string();
+/**
+ * A path with additional options.
+ */
+export const pluginWithOptionsSchema = z.object({
+    /**
+     * A list of glob patterns. The plugin will only run on files matching
+     * these patterns. Use negated globs (e.g., `!** /*.test.ts`) for exclusions.
+     */
+    includes: z.array(normalizedGlobSchema).optional().nullable(),
+    /**
+     * The path to the plugin.
+     */
+    path: z.string()
+});
 
-export const pluginsSchema = z.array(pluginConfigurationSchema);
+/**
+ * Configuration for a single plugin entry.
+ *
+ * Can be either a plain path string or an object with path and options:
+ *
+ * ```json
+ * {
+ *   "plugins": [
+ *     "simple-plugin.grit",
+ *     { "path": "scoped-plugin.grit", "includes": ["src/** /*.ts"] }
+ *   ]
+ * }
+ * ```
+ */
+export const pluginConfigurationSchema = z.union([z.string(), pluginWithOptionsSchema]);
 
 export const vcsClientKindSchema = z.literal("git");
 
@@ -278,6 +333,14 @@ export const formatterConfigurationSchema = z.object({
      * Whether to insert spaces around brackets in object literals. Defaults to true.
      */
     bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+     * closing delimiter), such as parentheses, brackets, angle brackets, and template literal
+     * interpolations. Spaces are not added before the opening delimiter, and empty delimiters
+     * are not affected. Only applies when the content fits on a single line. The specific
+     * delimiters affected depend on the language. Defaults to false.
+     */
+    delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     enabled: boolSchema.optional().nullable(),
     /**
      * Whether to expand arrays and objects on multiple lines.
@@ -336,6 +399,8 @@ export const formatterConfigurationSchema = z.object({
     useEditorconfig: boolSchema.optional().nullable()
 });
 
+export const pluginsSchema = z.array(pluginConfigurationSchema);
+
 /**
  * Set of properties to integrate Biome with a VCS software.
  */
@@ -362,8 +427,8 @@ export const vcsConfigurationSchema = z.object({
      */
     root: z.string().optional().nullable(),
     /**
-     * Whether Biome should use the VCS ignore file. When [true], Biome will ignore the files
-     * specified in the ignore file.
+     * Whether Biome should use VCS ignore files. When [true], Biome will ignore files
+     * specified in `.gitignore`, `.ignore`, and Git's local exclude file.
      */
     useIgnoreFile: boolSchema.optional().nullable()
 });
@@ -383,6 +448,8 @@ export const useSortedAttributesOptionsSchema = z.object({
     sortOrder: sortOrderSchema.optional().nullable()
 });
 
+export const useSortedEnumMembersOptionsSchema = z.object({});
+
 export const useSortedInterfaceMembersOptionsSchema = z.object({});
 
 export const useSortedKeysOptionsSchema = z.object({
@@ -395,7 +462,13 @@ export const useSortedKeysOptionsSchema = z.object({
     sortOrder: sortOrderSchema.optional().nullable()
 });
 
+export const useSortedPackageJsonOptionsSchema = z.object({});
+
 export const useSortedPropertiesOptionsSchema = z.object({});
+
+export const useSortedSelectionSetOptionsSchema = z.object({});
+
+export const useSortedTypeFieldsOptionsSchema = z.object({});
 
 /**
  * Options that changes how the CSS assist behaves
@@ -411,6 +484,13 @@ export const cssAssistConfigurationSchema = z.object({
  * Options that changes how the CSS formatter behaves
  */
 export const cssFormatterConfigurationSchema = z.object({
+    /**
+     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+     * closing delimiter). Only applies when the content fits on a single line, and empty
+     * delimiters are not affected. For CSS, affects parentheses (e.g., `rgb( 0, 0, 0 )`) and
+     * square brackets (e.g., `[ data-attr ]`). Defaults to false.
+     */
+    delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     /**
      * Control the formatter for CSS (and its super languages) files.
      */
@@ -682,7 +762,15 @@ export const htmlParserConfigurationSchema = z.object({
     /**
      * Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files
      */
-    interpolation: boolSchema.optional().nullable()
+    interpolation: boolSchema.optional().nullable(),
+    /**
+     * Enables parsing of Vue syntax (v-if, v-bind, etc.) in `.html` files. If this option is enabled, it also enables `interpolation` implicitly.
+     *
+     * Biome will already automatically enable Vue parsing in `.vue` files, so you probably don't need
+     * to enable this option. This only affects `.html` files, and does not change how `.vue`, `.svelte`,
+     * or `.astro` files are parsed.
+     */
+    vue: boolSchema.optional().nullable()
 });
 
 /**
@@ -715,6 +803,18 @@ export const jsFormatterConfigurationSchema = z.object({
      * Whether to insert spaces around brackets in object literals. Defaults to true.
      */
     bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+     * closing delimiter). Only applies when the content fits on a single line. Spaces are not
+     * added before the opening delimiter (e.g., `function f()` stays `function f()`, not
+     * `function f ()`), and empty delimiters are not affected (e.g., `fn()` stays `fn()`).
+     * For JavaScript and TypeScript, affects parentheses (e.g., `foo( a, b )`), square brackets
+     * (e.g., `[ a, b ]`), template literal interpolations (e.g., `${ expr }`), TypeScript angle
+     * brackets (e.g., `foo< T >()`), JSX expression braces (e.g., `{ value }`), and the logical
+     * NOT operator (e.g., `! x`, but in chains only after the last one: `!! x`). Defaults to
+     * false.
+     */
+    delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     /**
      * Control the formatter for JavaScript (and its super languages) files.
      */
@@ -817,6 +917,38 @@ export const jsParserConfigurationSchema = z.object({
 });
 
 /**
+ * Resolver options specific to JavaScript files
+ */
+export const jsResolverConfigurationSchema = z.object({
+    /**
+     * Enables pnpm workspace catalog resolution for JavaScript package manifests.
+     *
+     * Opt-in:
+     * - Set `javascript.resolver.experimentalPnpmCatalogs` to `true`.
+     *
+     * Scope:
+     * - Resolves `catalog:` and `catalog:<name>` dependency versions from
+     *   `package.json`.
+     * - Applies to `dependencies`, `devDependencies`, and `peerDependencies`.
+     *
+     * Fail-safe behavior:
+     * - If `pnpm-workspace.yaml` is missing, unreadable, or cannot be parsed,
+     *   Biome silently falls back to the default behavior (as if this option
+     *   were disabled).
+     * - Unknown keys and unsupported value shapes in `pnpm-workspace.yaml` are
+     *   ignored.
+     *
+     * Limitations:
+     * - Only `pnpm-workspace.yaml` is read.
+     * - Biome only reads top-level `catalog` / `catalogs` mappings and scalar
+     *   string entries.
+     *
+     * Default: `false`.
+     */
+    experimentalPnpmCatalogs: boolSchema.optional().nullable()
+});
+
+/**
  * Assist options specific to the JSON linter
  */
 export const jsonAssistConfigurationSchema = z.object({
@@ -831,6 +963,13 @@ export const jsonFormatterConfigurationSchema = z.object({
      * Whether to insert spaces around brackets in object literals. Defaults to true.
      */
     bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+     * closing delimiter). Only applies when the content fits on a single line, and empty
+     * brackets are not affected. For JSON, affects square brackets (e.g., `[ 1, 2, 3 ]`).
+     * Defaults to false.
+     */
+    delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     /**
      * Control the formatter for JSON (and its super languages) files.
      */
@@ -906,6 +1045,13 @@ export const jsonParserConfigurationSchema = z.object({
 export const ruleDomainsSchema = z.record(z.string(), ruleDomainValueSchema);
 
 export const noAccessKeyOptionsSchema = z.object({});
+
+export const noAmbiguousAnchorTextOptionsSchema = z.object({
+    /**
+     * It allows users to modify the strings that can be checked for in the anchor text. Useful for specifying other words in other languages
+     */
+    words: z.array(z.string()).optional().nullable()
+});
 
 export const noAriaHiddenOnFocusableOptionsSchema = z.object({});
 
@@ -1014,6 +1160,8 @@ export const noBannedTypesOptionsSchema = z.object({});
 
 export const noCommaOperatorOptionsSchema = z.object({});
 
+export const noDivRegexOptionsSchema = z.object({});
+
 export const noEmptyTypeParametersOptionsSchema = z.object({});
 
 export const noExcessiveCognitiveComplexityOptionsSchema = z.object({
@@ -1051,9 +1199,16 @@ export const noForEachOptionsSchema = z.object({
     allowedIdentifiers: z.array(z.string()).optional().nullable()
 });
 
-export const noImplicitCoercionsOptionsSchema = z.object({});
+export const noImplicitCoercionsOptionsSchema = z.object({
+    /**
+     * Whether to allow implicitly coercing values to booleans via `!!value`.
+     */
+    allowDoubleNegation: z.boolean().optional().nullable()
+});
 
 export const noImportantStylesOptionsSchema = z.object({});
+
+export const noRedundantDefaultExportOptionsSchema = z.object({});
 
 export const noStaticOnlyClassOptionsSchema = z.object({});
 
@@ -1083,6 +1238,8 @@ export const noUselessLoneBlockStatementsOptionsSchema = z.object({});
 
 export const noUselessRenameOptionsSchema = z.object({});
 
+export const noUselessReturnOptionsSchema = z.object({});
+
 export const noUselessStringConcatOptionsSchema = z.object({});
 
 export const noUselessStringRawOptionsSchema = z.object({});
@@ -1100,6 +1257,8 @@ export const noUselessUndefinedOptionsSchema = z.object({});
 export const noUselessUndefinedInitializationOptionsSchema = z.object({});
 
 export const noVoidOptionsSchema = z.object({});
+
+export const useArrayFindOptionsSchema = z.object({});
 
 export const useArrowFunctionOptionsSchema = z.object({});
 
@@ -1130,6 +1289,8 @@ export const useSimplifiedLogicExpressionOptionsSchema = z.object({});
 
 export const useWhileOptionsSchema = z.object({});
 
+export const noBeforeInteractiveScriptOutsideDocumentOptionsSchema = z.object({});
+
 export const noChildrenPropOptionsSchema = z.object({});
 
 export const noConstAssignOptionsSchema = z.object({});
@@ -1139,6 +1300,16 @@ export const noConstantConditionOptionsSchema = z.object({});
 export const noConstantMathMinMaxClampOptionsSchema = z.object({});
 
 export const noConstructorReturnOptionsSchema = z.object({});
+
+export const noDuplicateArgumentNamesOptionsSchema = z.object({});
+
+export const noDuplicateAttributesOptionsSchema = z.object({});
+
+export const noDuplicateEnumValueNamesOptionsSchema = z.object({});
+
+export const noDuplicateInputFieldNamesOptionsSchema = z.object({});
+
+export const noDuplicateVariableNamesOptionsSchema = z.object({});
 
 export const noEmptyCharacterClassInRegexOptionsSchema = z.object({});
 
@@ -1207,6 +1378,10 @@ export const noStringCaseMismatchOptionsSchema = z.object({});
 export const noSwitchDeclarationsOptionsSchema = z.object({});
 
 export const noUndeclaredDependenciesOptionsSchema = z.object({
+    /**
+     * If set to `false`, then the rule will show an error when `bundleDependencies` are imported. Defaults to `true`.
+     */
+    bundleDependencies: dependencyAvailabilitySchema.optional().nullable(),
     /**
      * If set to `false`, then the rule will show an error when `devDependencies` are imported. Defaults to `true`.
      */
@@ -1283,15 +1458,41 @@ export const noUnusedFunctionParametersOptionsSchema = z.object({
 
 export const noUnusedImportsOptionsSchema = z.object({});
 
+export const noUnusedInstantiationOptionsSchema = z.object({});
+
 export const noUnusedLabelsOptionsSchema = z.object({});
 
 export const noUnusedPrivateClassMembersOptionsSchema = z.object({});
 
-export const noUnusedVariablesOptionsSchema = z.object({
+export const noUnusedVariablesOptionsIgnoreSchema = z.object({
     /**
-     * Whether to ignore unused variables from an object destructuring with a spread.
+     * An array of identifiers to ignore. Use "*" to ignore all identifiers.
      */
-    ignoreRestSiblings: z.boolean().optional().nullable()
+    "*": z.array(z.string()).optional().nullable(),
+    /**
+     * An array of class names to ignore. Use "*" to ignore all identifiers.
+     */
+    class: z.array(z.string()).optional().nullable(),
+    /**
+     * An array of function names to ignore. Use "*" to ignore all identifiers.
+     */
+    function: z.array(z.string()).optional().nullable(),
+    /**
+     * An array of interface names to ignore. Use "*" to ignore all identifiers.
+     */
+    interface: z.array(z.string()).optional().nullable(),
+    /**
+     * An array of type aliases to ignore. Use "*" to ignore all identifiers.
+     */
+    typeAlias: z.array(z.string()).optional().nullable(),
+    /**
+     * An array of type parameters to ignore. Use "*" to ignore all identifiers.
+     */
+    typeParameter: z.array(z.string()).optional().nullable(),
+    /**
+     * An array of variable names to ignore. Use "*" to ignore all identifiers.
+     */
+    variable: z.array(z.string()).optional().nullable()
 });
 
 export const noVoidElementsWithChildrenOptionsSchema = z.object({});
@@ -1307,6 +1508,8 @@ export const noVueReservedKeysOptionsSchema = z.object({});
 export const noVueReservedPropsOptionsSchema = z.object({});
 
 export const noVueSetupPropsReactivityLossOptionsSchema = z.object({});
+
+export const noVueVIfWithVForOptionsSchema = z.object({});
 
 export const hookSchema = z.object({
     /**
@@ -1366,6 +1569,8 @@ export const useImportExtensionsOptionsSchema = z.object({
     forceJsExtensions: z.boolean().optional().nullable()
 });
 
+export const useInlineScriptIdOptionsSchema = z.object({});
+
 export const useIsNanOptionsSchema = z.object({});
 
 export const useJsonImportAttributesOptionsSchema = z.object({});
@@ -1376,6 +1581,8 @@ export const useJsxKeyInIterableOptionsSchema = z.object({
      */
     checkShorthandFragments: z.boolean().optional().nullable()
 });
+
+export const useLoneAnonymousOperationOptionsSchema = z.object({});
 
 export const useParseIntRadixOptionsSchema = z.object({});
 
@@ -1399,31 +1606,44 @@ export const useValidForDirectionOptionsSchema = z.object({});
 
 export const useValidTypeofOptionsSchema = z.object({});
 
-export const useYieldOptionsSchema = z.object({});
+export const useVueVForKeyOptionsSchema = z.object({});
 
-export const noAmbiguousAnchorTextOptionsSchema = z.object({
+export const useVueValidTemplateRootOptionsSchema = z.object({});
+
+export const useVueValidVBindOptionsSchema = z.object({});
+
+export const useVueValidVCloakOptionsSchema = z.object({});
+
+export const useVueValidVElseOptionsSchema = z.object({});
+
+export const useVueValidVElseIfOptionsSchema = z.object({});
+
+export const useVueValidVHtmlOptionsSchema = z.object({});
+
+export const useVueValidVIfOptionsSchema = z.object({});
+
+export const useVueValidVOnOptionsSchema = z.object({
     /**
-     * It allows users to modify the strings that can be checked for in the anchor text. Useful for specifying other words in other languages
+     * Additional modifiers that should be considered valid
      */
-    words: z.array(z.string()).optional().nullable()
+    modifiers: z.array(z.string()).optional().nullable()
 });
 
-export const noBeforeInteractiveScriptOutsideDocumentOptionsSchema = z.object({});
+export const useVueValidVOnceOptionsSchema = z.object({});
+
+export const useVueValidVPreOptionsSchema = z.object({});
+
+export const useVueValidVTextOptionsSchema = z.object({});
+
+export const useYieldOptionsSchema = z.object({});
+
+export const noBaseToStringOptionsSchema = z.object({
+    ignoredTypeNames: z.array(z.string()).optional().nullable()
+});
 
 export const noComponentHookFactoriesOptionsSchema = z.object({});
 
 export const noConditionalExpectOptionsSchema = z.object({});
-
-export const noContinueOptionsSchema = z.object({});
-
-export const noDeprecatedMediaTypeOptionsSchema = z.object({
-    /**
-     * Media types to allow (case-insensitive).
-     */
-    allow: z.array(z.string()).optional().nullable()
-});
-
-export const noDivRegexOptionsSchema = z.object({});
 
 export const noDrizzleDeleteWithoutWhereOptionsSchema = z.object({
     /**
@@ -1439,46 +1659,17 @@ export const noDrizzleUpdateWithoutWhereOptionsSchema = z.object({
     drizzleObjectName: z.array(z.string()).optional().nullable()
 });
 
-export const noDuplicateArgumentNamesOptionsSchema = z.object({});
-
-export const noDuplicateAttributesOptionsSchema = z.object({});
-
-export const noDuplicateEnumValueNamesOptionsSchema = z.object({});
-
-export const noDuplicateEnumValuesOptionsSchema = z.object({});
-
 export const noDuplicateFieldDefinitionNamesOptionsSchema = z.object({});
-
-export const noDuplicateGraphqlOperationNameOptionsSchema = z.object({});
-
-export const noDuplicateInputFieldNamesOptionsSchema = z.object({});
 
 export const noDuplicateSelectorsOptionsSchema = z.object({});
 
-export const noDuplicateVariableNamesOptionsSchema = z.object({});
-
-export const noDuplicatedSpreadPropsOptionsSchema = z.object({});
-
 export const noEmptyObjectKeysOptionsSchema = z.object({});
 
-export const noEqualsToNullOptionsSchema = z.object({});
-
-export const noExcessiveClassesPerFileOptionsSchema = z.object({
+export const noExcessiveNestedCallbacksOptionsSchema = z.object({
     /**
-     * The maximum number of classes allowed in a file.
+     * Maximum callback nesting depth allowed (default: 5)
      */
-    maxClasses: z.number().optional().nullable()
-});
-
-export const noExcessiveLinesPerFileOptionsSchema = z.object({
-    /**
-     * The maximum number of lines allowed in a file.
-     */
-    maxLines: z.number().optional().nullable(),
-    /**
-     * When this option is set to `true`, blank lines are not counted towards the maximum line limit.
-     */
-    skipBlankLines: z.boolean().optional().nullable()
+    max: z.number().optional().nullable()
 });
 
 export const noExcessiveSelectorClassesOptionsSchema = z.object({
@@ -1491,24 +1682,11 @@ export const noExcessiveSelectorClassesOptionsSchema = z.object({
     maxClasses: z.number().optional().nullable()
 });
 
-export const noFloatingClassesOptionsSchema = z.object({});
-
 export const noFloatingPromisesOptionsSchema = z.object({});
-
-export const noForInOptionsSchema = z.object({});
-
-export const noHexColorsOptionsSchema = z.object({});
 
 export const noIdenticalTestTitleOptionsSchema = z.object({});
 
 export const noImpliedEvalOptionsSchema = z.object({});
-
-export const noIncrementDecrementOptionsSchema = z.object({
-    /**
-     * Allows unary operators ++ and -- in the afterthought (final expression) of a for loop.
-     */
-    allowForLoopAfterthoughts: z.boolean().optional().nullable()
-});
 
 export const noInlineStylesOptionsSchema = z.object({});
 
@@ -1516,23 +1694,11 @@ export const noJsxLeakedDollarOptionsSchema = z.object({});
 
 export const noJsxNamespaceOptionsSchema = z.object({});
 
-export const noJsxPropsBindOptionsSchema = z.object({});
-
-export const noLeakedRenderOptionsSchema = z.record(z.string(), z.unknown());
-
 export const noLoopFuncOptionsSchema = z.object({});
 
 export const noMisleadingReturnTypeOptionsSchema = z.object({});
 
 export const noMisusedPromisesOptionsSchema = z.object({});
-
-export const noMultiAssignOptionsSchema = z.object({});
-
-export const noMultiStrOptionsSchema = z.object({});
-
-export const noNestedPromisesOptionsSchema = z.object({});
-
-export const noParametersOnlyUsedInRecursionOptionsSchema = z.object({});
 
 export const noPlaywrightElementHandleOptionsSchema = z.object({});
 
@@ -1554,8 +1720,6 @@ export const noPlaywrightWaitForSelectorOptionsSchema = z.object({});
 
 export const noPlaywrightWaitForTimeoutOptionsSchema = z.object({});
 
-export const noProtoOptionsSchema = z.object({});
-
 export const noReactNativeDeepImportsOptionsSchema = z.object({});
 
 export const noReactNativeLiteralColorsOptionsSchema = z.object({});
@@ -1567,43 +1731,16 @@ export const noReactNativeRawTextOptionsSchema = z.object({
     skip: z.array(z.string()).optional().nullable()
 });
 
-export const noRedundantDefaultExportOptionsSchema = z.object({});
+export const noReactStringRefsOptionsSchema = z.object({});
 
-export const noReturnAssignOptionsSchema = z.object({});
-
-export const noRootTypeOptionsSchema = z.object({
-    /**
-     * A list of disallowed root types (e.g. "mutation" and/or "subscription").
-     * The values of the list are case-insensitive.
-     */
-    disallow: z.array(z.string()).optional()
-});
-
-export const noScriptUrlOptionsSchema = z.object({});
-
-export const noShadowOptionsSchema = z.object({});
-
-export const noSyncScriptsOptionsSchema = z.object({});
-
-export const noTernaryOptionsSchema = z.object({});
+export const noRestrictedDependenciesOptionsSchema = z.object({});
 
 export const noTopLevelLiteralsOptionsSchema = z.object({});
 
-export const noUndeclaredEnvVarsOptionsSchema = z.object({
-    /**
-     * Environment variables that should always be allowed.
-     * Use this to specify environment variables that are always available
-     * in your environment, even when not declared in turbo.json.
-     * Supports regular expressions, e.g. `["MY_ENV_.*"]`.
-     */
-    allowedEnvVars: z.array(regexSchema).optional().nullable()
-});
-
-export const noUnknownAttributeOptionsSchema = z.object({
-    ignore: z.array(z.string()).optional().nullable()
-});
-
-export const noUnnecessaryConditionsOptionsSchema = z.object({});
+/**
+ * Options for the `noUndeclaredClasses` rule.
+ */
+export const noUndeclaredClassesOptionsSchema = z.object({});
 
 export const noUnnecessaryTemplateExpressionOptionsSchema = z.object({});
 
@@ -1644,21 +1781,17 @@ export const noUntrustedLicensesOptionsSchema = z.object({
     requireOsiApproved: z.boolean().optional().nullable()
 });
 
-export const noUselessReturnOptionsSchema = z.object({});
+export const noUnusedClassesOptionsSchema = z.object({});
 
 export const noUselessTypeConversionOptionsSchema = z.object({});
 
-export const noVueArrowFuncInWatchOptionsSchema = z.object({});
-
-export const noVueOptionsApiOptionsSchema = z.object({});
+export const noVueImportCompilerMacrosOptionsSchema = z.object({});
 
 export const noVueRefAsOperandOptionsSchema = z.object({});
 
-export const noVueVIfWithVForOptionsSchema = z.object({});
+export const noVueVOnNumberValuesOptionsSchema = z.object({});
 
 export const useArraySomeOptionsSchema = z.object({});
-
-export const useArraySortCompareOptionsSchema = z.object({});
 
 export const useAwaitThenableOptionsSchema = z.object({});
 
@@ -1696,27 +1829,6 @@ export const useBaselineOptionsSchema = z.object({
     available: z.union([z.union([z.literal("widely"), z.literal("newly")]), z.number()]).optional()
 });
 
-export const useConsistentEnumValueTypeOptionsSchema = z.object({});
-
-export const useConsistentGraphqlDescriptionsOptionsSchema = z.object({
-    /**
-     * The description style to enforce. Defaults to "block"
-     */
-    style: useConsistentGraphqlDescriptionsStyleSchema.optional().nullable()
-});
-
-/**
- * Options type for `useConsistentMethodSignatures`.
- */
-export const useConsistentMethodSignaturesOptionsSchema = z.object({
-    /**
-     * The style of method signatures whose usage will be enforced.
-     *
-     * Default: "property"
-     */
-    style: methodSignatureStyleSchema.optional().nullable()
-});
-
 /**
  * Options for the `useConsistentTestIt` rule
  */
@@ -1733,23 +1845,11 @@ export const useConsistentTestItOptionsSchema = z.object({
     withinDescribe: testFunctionKindSchema.optional().nullable()
 });
 
-export const useDestructuringOptionsSchema = z.object({});
-
 export const useDisposablesOptionsSchema = z.object({});
 
 export const useDomNodeTextContentOptionsSchema = z.object({});
 
 export const useDomQuerySelectorOptionsSchema = z.object({});
-
-/**
- * Options for the `useErrorCause` rule.
- */
-export const useErrorCauseOptionsSchema = z.object({
-    /**
-     * When set to `true`, the rule requires that `catch` clauses have a parameter.
-     */
-    requireCatchParameter: z.boolean().optional()
-});
 
 export const useExhaustiveSwitchCasesOptionsSchema = z.object({});
 
@@ -1776,45 +1876,33 @@ export const useExplicitReturnTypeOptionsSchema = z.object({
 
 export const useExplicitTypeOptionsSchema = z.object({});
 
-export const useFindOptionsSchema = z.object({});
-
-export const useGlobalThisOptionsSchema = z.object({});
-
 export const useIframeSandboxOptionsSchema = z.object({});
 
 export const useImportsFirstOptionsSchema = z.object({});
 
-export const useInlineScriptIdOptionsSchema = z.object({});
+/**
+ * Options for the `useIncludes` rule.
+ */
+export const useIncludesOptionsSchema = z.object({});
 
-export const useInputNameOptionsSchema = z.object({
-    /**
-     * Check that the input type name follows the convention <mutationName>Input
-     */
-    checkInputType: checkInputTypeSchema.optional().nullable()
-});
-
-export const useLoneAnonymousOperationOptionsSchema = z.object({});
-
-export const useLoneExecutableDefinitionOptionsSchema = z.object({});
+export const useMathMinMaxOptionsSchema = z.object({});
 
 export const useNamedCaptureGroupOptionsSchema = z.object({});
 
+/**
+ * Options for the `useNullishCoalescing` rule.
+ */
 export const useNullishCoalescingOptionsSchema = z.object({
     /**
-     * Whether to ignore `||` expressions in conditional test positions
-     * (if/while/for/do-while/ternary conditions).
-     *
-     * When `true` (the default), the rule will not report `||` expressions
-     * that appear in places where the falsy-checking behavior may be intentional.
-     *
-     * Default: `true`
+     * Ignore `||` expressions in conditional test positions (default: `true`).
      */
     ignoreConditionalTests: z.boolean().optional().nullable(),
     /**
-     * Whether to ignore ternary expressions that could be simplified
-     * using the nullish coalescing operator.
-     *
-     * Default: `false`
+     * Whether to ignore `||` and `||=` binary operations that are part of a mixed logical expression with `&&` (default: `false`).
+     */
+    ignoreMixedLogicalExpressions: z.boolean().optional().nullable(),
+    /**
+     * Ignore ternary expressions that check for `null` or `undefined` (default: `false`).
      */
     ignoreTernaryTests: z.boolean().optional().nullable()
 });
@@ -1824,6 +1912,13 @@ export const usePlaywrightValidDescribeCallbackOptionsSchema = z.object({});
 export const useQwikLoaderLocationOptionsSchema = z.object({});
 
 export const useReactAsyncServerFunctionOptionsSchema = z.object({});
+
+export const useReactFunctionComponentDefinitionOptionsSchema = z.object({
+    /**
+     * The function style to enforce for named React components.
+     */
+    namedComponents: componentDefinitionStyleSchema.optional().nullable()
+});
 
 export const useReactNativePlatformComponentsOptionsSchema = z.object({
     /**
@@ -1844,13 +1939,6 @@ export const useRegexpExecOptionsSchema = z.object({});
 
 export const useRegexpTestOptionsSchema = z.object({});
 
-export const useRequiredScriptsOptionsSchema = z.object({
-    /**
-     * List of script names that must be present in package.json
-     */
-    requiredScripts: z.array(z.string()).optional()
-});
-
 export const useScopedStylesOptionsSchema = z.object({});
 
 export const useSortedClassesOptionsSchema = z.object({
@@ -1864,9 +1952,39 @@ export const useSortedClassesOptionsSchema = z.object({
     functions: z.array(z.string()).optional().nullable()
 });
 
-export const useSpreadOptionsSchema = z.object({});
-
 export const useStringStartsEndsWithOptionsSchema = z.object({});
+
+export const useSvelteRequireEachKeyOptionsSchema = z.object({});
+
+export const useTestHooksInOrderOptionsSchema = z.object({});
+
+export const useTestHooksOnTopOptionsSchema = z.object({});
+
+/**
+ * Options for the `useThisInClassMethods` rule.
+ */
+export const useThisInClassMethodsOptionsSchema = z.object({
+    /**
+     * Whether members of classes with an `implements` clause should be ignored.
+     *
+     * Defaults to `"none"`, which means implemented classes are checked like any other class.
+     * Use `"all"` to ignore every eligible member in such classes, or `"public-fields"`
+     * to ignore only public members in them.
+     */
+    ignoreClassesWithImplements: ignoreClassesWithImplementsSchema.optional().nullable(),
+    /**
+     * Method names that should be ignored by the rule.
+     *
+     * Defaults to `[]`.
+     */
+    ignoreMethods: z.array(z.string()).optional().nullable(),
+    /**
+     * Whether methods marked with `override` should be ignored.
+     *
+     * Defaults to `false`.
+     */
+    ignoreOverrideMethods: z.boolean().optional().nullable()
+});
 
 export const useUnicodeRegexOptionsSchema = z.object({});
 
@@ -1876,77 +1994,9 @@ export const useVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
     style: declarationStyleSchema.optional().nullable()
 });
 
-export const useVueConsistentVBindStyleOptionsSchema = z.object({
-    /**
-     * Preferred style for `v-bind` usage: "shorthand" or "longhand".
-     * If omitted, shorthand is preferred.
-     */
-    style: vueDirectiveStyleSchema.optional().nullable()
-});
+export const useVueNextTickPromiseOptionsSchema = z.object({});
 
-export const useVueConsistentVOnStyleOptionsSchema = z.object({
-    /**
-     * Preferred style for `v-on` usage: "shorthand" or "longhand".
-     * If omitted, shorthand is preferred.
-     */
-    style: vueDirectiveStyle2Schema.optional().nullable()
-});
-
-export const useVueDefineMacrosOrderOptionsSchema = z.object({
-    /**
-     * The order of the Vue define macros.
-     */
-    order: z.array(z.string()).optional().nullable()
-});
-
-export const useVueHyphenatedAttributesOptionsSchema = z.object({
-    /**
-     * List of attribute names to ignore when checking for hyphenated attributes.
-     */
-    ignore: z.array(z.string()).optional().nullable(),
-    /**
-     * List of HTML tags to ignore when checking for hyphenated attributes.
-     */
-    ignoreTags: z.array(z.string()).optional().nullable()
-});
-
-export const useVueMultiWordComponentNamesOptionsSchema = z.object({
-    /**
-     * Component names to ignore (allowed to be single-word).
-     */
-    ignores: z.array(z.string()).optional()
-});
-
-export const useVueVForKeyOptionsSchema = z.object({});
-
-export const useVueValidTemplateRootOptionsSchema = z.object({});
-
-export const useVueValidVBindOptionsSchema = z.object({});
-
-export const useVueValidVCloakOptionsSchema = z.object({});
-
-export const useVueValidVElseOptionsSchema = z.object({});
-
-export const useVueValidVElseIfOptionsSchema = z.object({});
-
-export const useVueValidVHtmlOptionsSchema = z.object({});
-
-export const useVueValidVIfOptionsSchema = z.object({});
-
-export const useVueValidVOnOptionsSchema = z.object({
-    /**
-     * Additional modifiers that should be considered valid
-     */
-    modifiers: z.array(z.string()).optional().nullable()
-});
-
-export const useVueValidVOnceOptionsSchema = z.object({});
-
-export const useVueValidVPreOptionsSchema = z.object({});
-
-export const useVueValidVTextOptionsSchema = z.object({});
-
-export const useVueVaporOptionsSchema = z.object({});
+export const useVueValidVForOptionsSchema = z.object({});
 
 export const noAccumulatingSpreadOptionsSchema = z.object({});
 
@@ -1960,9 +2010,13 @@ export const noDynamicNamespaceImportAccessOptionsSchema = z.object({});
 
 export const noImgElementOptionsSchema = z.object({});
 
+export const noJsxPropsBindOptionsSchema = z.object({});
+
 export const noNamespaceImportOptionsSchema = z.object({});
 
 export const noReExportAllOptionsSchema = z.object({});
+
+export const noSyncScriptsOptionsSchema = z.object({});
 
 export const noUnwantedPolyfillioOptionsSchema = z.object({});
 
@@ -1971,6 +2025,8 @@ export const useGoogleFontPreconnectOptionsSchema = z.object({});
 export const useSolidForComponentOptionsSchema = z.object({});
 
 export const useTopLevelRegexOptionsSchema = z.object({});
+
+export const useVueVaporOptionsSchema = z.object({});
 
 export const noBlankTargetOptionsSchema = z.object({
     /**
@@ -1990,6 +2046,8 @@ export const noDangerouslySetInnerHtmlWithChildrenOptionsSchema = z.object({});
 
 export const noGlobalEvalOptionsSchema = z.object({});
 
+export const noScriptUrlOptionsSchema = z.object({});
+
 export const noSecretsOptionsSchema = z.object({
     /**
      * Set entropy threshold (default is 41).
@@ -1999,6 +2057,8 @@ export const noSecretsOptionsSchema = z.object({
 
 export const noCommonJsOptionsSchema = z.object({});
 
+export const noContinueOptionsSchema = z.object({});
+
 export const noDefaultExportOptionsSchema = z.object({});
 
 export const noDescendingSpecificityOptionsSchema = z.object({});
@@ -2007,11 +2067,38 @@ export const noDoneCallbackOptionsSchema = z.object({});
 
 export const noEnumOptionsSchema = z.object({});
 
+export const noExcessiveClassesPerFileOptionsSchema = z.object({
+    /**
+     * The maximum number of classes allowed in a file.
+     */
+    maxClasses: z.number().optional().nullable()
+});
+
+export const noExcessiveLinesPerFileOptionsSchema = z.object({
+    /**
+     * The maximum number of lines allowed in a file.
+     */
+    maxLines: z.number().optional().nullable(),
+    /**
+     * When this option is set to `true`, blank lines are not counted towards the maximum line limit.
+     */
+    skipBlankLines: z.boolean().optional().nullable()
+});
+
 export const noExportedImportsOptionsSchema = z.object({});
 
 export const noHeadElementOptionsSchema = z.object({});
 
+export const noHexColorsOptionsSchema = z.object({});
+
 export const noImplicitBooleanOptionsSchema = z.object({});
+
+export const noIncrementDecrementOptionsSchema = z.object({
+    /**
+     * Allows unary operators ++ and -- in the afterthought (final expression) of a for loop.
+     */
+    allowForLoopAfterthoughts: z.boolean().optional().nullable()
+});
 
 export const noInferrableTypesOptionsSchema = z.object({});
 
@@ -2031,6 +2118,10 @@ export const noJsxLiteralsOptionsSchema = z.object({
 });
 
 export const noMagicNumbersOptionsSchema = z.object({});
+
+export const noMultiAssignOptionsSchema = z.object({});
+
+export const noMultilineStringOptionsSchema = z.object({});
 
 export const noNamespaceOptionsSchema = z.object({});
 
@@ -2062,15 +2153,27 @@ export const pathsSchema = z.union([z.string(), pathOptionsSchema]);
 
 export const customRestrictedTypeSchema = z.union([z.string(), customRestrictedTypeOptionsSchema]);
 
+export const noRootTypeOptionsSchema = z.object({
+    /**
+     * A list of disallowed root types (e.g. "mutation" and/or "subscription").
+     * The values of the list are case-insensitive.
+     */
+    disallow: z.array(z.string()).optional()
+});
+
 export const noShoutyConstantsOptionsSchema = z.object({});
 
 export const noSubstrOptionsSchema = z.object({});
+
+export const noTernaryOptionsSchema = z.object({});
 
 export const noUnusedTemplateLiteralOptionsSchema = z.object({});
 
 export const noUselessElseOptionsSchema = z.object({});
 
 export const noValueAtRuleOptionsSchema = z.object({});
+
+export const noVueOptionsApiOptionsSchema = z.object({});
 
 export const noYodaExpressionOptionsSchema = z.object({});
 
@@ -2121,11 +2224,32 @@ export const useConsistentBuiltinInstantiationOptionsSchema = z.object({});
 
 export const useConsistentCurlyBracesOptionsSchema = z.object({});
 
+export const useConsistentEnumValueTypeOptionsSchema = z.object({});
+
+export const useConsistentGraphqlDescriptionsOptionsSchema = z.object({
+    /**
+     * The description style to enforce. Defaults to "block"
+     */
+    style: useConsistentGraphqlDescriptionsStyleSchema.optional().nullable()
+});
+
 export const useConsistentMemberAccessibilityOptionsSchema = z.object({
     /**
      * The kind of accessibility you want to enforce. Default to "noPublic"
      */
     accessibility: accessibilitySchema.optional().nullable()
+});
+
+/**
+ * Options type for `useConsistentMethodSignatures`.
+ */
+export const useConsistentMethodSignaturesOptionsSchema = z.object({
+    /**
+     * The style of method signatures whose usage will be enforced.
+     *
+     * Default: "property"
+     */
+    style: methodSignatureStyleSchema.optional().nullable()
 });
 
 export const useConsistentObjectDefinitionsOptionsSchema = z.object({
@@ -2147,13 +2271,33 @@ export const useDefaultSwitchClauseOptionsSchema = z.object({});
 
 export const useDeprecatedReasonOptionsSchema = z.object({});
 
+export const destructuringConfigSchema = z.object({
+    array: z.boolean().optional().nullable(),
+    object: z.boolean().optional().nullable()
+});
+
 export const useEnumInitializersOptionsSchema = z.object({});
+
+/**
+ * Options for the `useErrorCause` rule.
+ */
+export const useErrorCauseOptionsSchema = z.object({
+    /**
+     * When set to `true`, the rule requires that `catch` clauses have a parameter.
+     */
+    requireCatchParameter: z.boolean().optional()
+});
 
 export const useExplicitLengthCheckOptionsSchema = z.object({});
 
 export const useExponentiationOperatorOptionsSchema = z.object({});
 
-export const useExportTypeOptionsSchema = z.object({});
+export const useExportTypeOptionsSchema = z.object({
+    /**
+     * The style to apply when exporting types. Default to "auto".
+     */
+    style: useExportTypeStyleSchema.optional().nullable()
+});
 
 export const useExportsLastOptionsSchema = z.object({});
 
@@ -2181,18 +2325,29 @@ export const useForOfOptionsSchema = z.object({});
 
 export const useFragmentSyntaxOptionsSchema = z.object({});
 
+export const useGlobalThisOptionsSchema = z.object({});
+
 export const useGraphqlNamingConventionOptionsSchema = z.object({});
 
 export const useGroupedAccessorPairsOptionsSchema = z.object({});
 
 export const useImportTypeOptionsSchema = z.object({
     /**
-     * The style to apply when import types. Default to "auto"
+     * The style to apply when importing types. Default to "auto".
      */
     style: useImportTypeStyleSchema.optional().nullable()
 });
 
+export const useInputNameOptionsSchema = z.object({
+    /**
+     * Check that the input type name follows the convention <mutationName>Input
+     */
+    checkInputType: checkInputTypeSchema.optional().nullable()
+});
+
 export const useLiteralEnumMembersOptionsSchema = z.object({});
+
+export const useLoneExecutableDefinitionOptionsSchema = z.object({});
 
 /**
  * Declarations concerned by this convention
@@ -2215,7 +2370,16 @@ export const useNodejsImportProtocolOptionsSchema = z.object({});
 
 export const useNumberNamespaceOptionsSchema = z.object({});
 
-export const useNumericSeparatorsOptionsSchema = z.object({});
+export const numericLiteralSeparatorOptionsSchema = z.object({
+    /**
+     * Number of digits between separators.
+     */
+    groupLength: z.number().optional().nullable(),
+    /**
+     * Minimum number of digits required before adding separators.
+     */
+    minimumDigits: z.number().optional().nullable()
+});
 
 export const useObjectSpreadOptionsSchema = z.object({});
 
@@ -2238,6 +2402,8 @@ export const useShorthandFunctionTypeOptionsSchema = z.object({});
 
 export const useSingleVarDeclaratorOptionsSchema = z.object({});
 
+export const useSpreadOverApplyOptionsSchema = z.object({});
+
 export const useSymbolDescriptionOptionsSchema = z.object({});
 
 export const useTemplateOptionsSchema = z.object({});
@@ -2257,6 +2423,47 @@ export const useUnifiedTypeSignaturesOptionsSchema = z.object({
      * Whether to ignore overloads with differently named parameters.
      */
     ignoreDifferentlyNamedParameters: z.boolean().optional().nullable()
+});
+
+export const useVueConsistentVBindStyleOptionsSchema = z.object({
+    /**
+     * Preferred style for `v-bind` usage: "shorthand" or "longhand".
+     * If omitted, shorthand is preferred.
+     */
+    style: vueDirectiveStyleSchema.optional().nullable()
+});
+
+export const useVueConsistentVOnStyleOptionsSchema = z.object({
+    /**
+     * Preferred style for `v-on` usage: "shorthand" or "longhand".
+     * If omitted, shorthand is preferred.
+     */
+    style: vueDirectiveStyle2Schema.optional().nullable()
+});
+
+export const useVueDefineMacrosOrderOptionsSchema = z.object({
+    /**
+     * The order of the Vue define macros.
+     */
+    order: z.array(z.string()).optional().nullable()
+});
+
+export const useVueHyphenatedAttributesOptionsSchema = z.object({
+    /**
+     * List of attribute names to ignore when checking for hyphenated attributes.
+     */
+    ignore: z.array(z.string()).optional().nullable(),
+    /**
+     * List of HTML tags to ignore when checking for hyphenated attributes.
+     */
+    ignoreTags: z.array(z.string()).optional().nullable()
+});
+
+export const useVueMultiWordComponentNamesOptionsSchema = z.object({
+    /**
+     * Component names to ignore (allowed to be single-word).
+     */
+    ignores: z.array(z.string()).optional()
 });
 
 export const noAlertOptionsSchema = z.object({});
@@ -2312,6 +2519,13 @@ export const noDebuggerOptionsSchema = z.object({});
 
 export const noDeprecatedImportsOptionsSchema = z.object({});
 
+export const noDeprecatedMediaTypeOptionsSchema = z.object({
+    /**
+     * Media types to allow (case-insensitive).
+     */
+    allow: z.array(z.string()).optional().nullable()
+});
+
 export const noDocumentCookieOptionsSchema = z.object({});
 
 export const noDocumentImportInPageOptionsSchema = z.object({});
@@ -2338,9 +2552,13 @@ export const noDuplicateDependenciesOptionsSchema = z.object({});
 
 export const noDuplicateElseIfOptionsSchema = z.object({});
 
+export const noDuplicateEnumValuesOptionsSchema = z.object({});
+
 export const noDuplicateFieldsOptionsSchema = z.object({});
 
 export const noDuplicateFontNamesOptionsSchema = z.object({});
+
+export const noDuplicateGraphqlOperationNameOptionsSchema = z.object({});
 
 export const noDuplicateJsxPropsOptionsSchema = z.object({});
 
@@ -2353,6 +2571,8 @@ export const noDuplicatePropertiesOptionsSchema = z.object({});
 export const noDuplicateSelectorsKeyframeBlockOptionsSchema = z.object({});
 
 export const noDuplicateTestHooksOptionsSchema = z.object({});
+
+export const noDuplicatedSpreadPropsOptionsSchema = z.object({});
 
 export const noEmptyBlockOptionsSchema = z.object({});
 
@@ -2367,6 +2587,8 @@ export const noEmptySourceOptionsSchema = z.object({
     allowComments: z.boolean().optional().nullable()
 });
 
+export const noEqualsToNullOptionsSchema = z.object({});
+
 export const noEvolvingTypesOptionsSchema = z.object({});
 
 export const noExplicitAnyOptionsSchema = z.object({});
@@ -2378,6 +2600,8 @@ export const noExtraNonNullAssertionOptionsSchema = z.object({});
 export const noFallthroughSwitchClauseOptionsSchema = z.object({});
 
 export const noFocusedTestsOptionsSchema = z.object({});
+
+export const noForInOptionsSchema = z.object({});
 
 export const noFunctionAssignOptionsSchema = z.object({});
 
@@ -2409,6 +2633,8 @@ export const noIrregularWhitespaceOptionsSchema = z.object({});
 
 export const noLabelVarOptionsSchema = z.object({});
 
+export const noLeakedRenderOptionsSchema = z.record(z.string(), z.unknown());
+
 export const noMisleadingCharacterClassOptionsSchema = z.object({});
 
 export const noMisleadingInstantiatorOptionsSchema = z.object({});
@@ -2417,9 +2643,15 @@ export const noMisplacedAssertionOptionsSchema = z.object({});
 
 export const noMisrefactoredShorthandAssignOptionsSchema = z.object({});
 
+export const noNestedPromisesOptionsSchema = z.object({});
+
 export const noNonNullAssertedOptionalChainOptionsSchema = z.object({});
 
 export const noOctalEscapeOptionsSchema = z.object({});
+
+export const noParametersOnlyUsedInRecursionOptionsSchema = z.object({});
+
+export const noProtoOptionsSchema = z.object({});
 
 export const noPrototypeBuiltinsOptionsSchema = z.object({});
 
@@ -2438,7 +2670,30 @@ export const noRedeclareOptionsSchema = z.object({});
 
 export const noRedundantUseStrictOptionsSchema = z.object({});
 
+export const noReturnAssignOptionsSchema = z.object({});
+
 export const noSelfCompareOptionsSchema = z.object({});
+
+export const noShadowOptionsSchema = z.object({
+    /**
+     * Ignore parameter names in function type annotations.
+     *
+     * Function type parameters (e.g. `(x: string) => void`) only create
+     * bindings within the type scope and rarely cause confusion.
+     *
+     * Defaults to `true`.
+     */
+    ignoreFunctionTypeParameterNameValueShadow: z.boolean().optional().nullable(),
+    /**
+     * Ignore cases where a type and a value share the same name.
+     *
+     * Types and values live in separate namespaces in TypeScript, so a
+     * variable named `Foo` and a `type Foo` cannot collide at runtime.
+     *
+     * Defaults to `true`.
+     */
+    ignoreTypeValueShadow: z.boolean().optional().nullable()
+});
 
 export const noShadowRestrictedNamesOptionsSchema = z.object({});
 
@@ -2458,12 +2713,28 @@ export const noTsIgnoreOptionsSchema = z.object({});
 
 export const noUnassignedVariablesOptionsSchema = z.object({});
 
+export const noUndeclaredEnvVarsOptionsSchema = z.object({
+    /**
+     * Environment variables that should always be allowed.
+     * Use this to specify environment variables that are always available
+     * in your environment, even when not declared in turbo.json.
+     * Supports regular expressions, e.g. `["MY_ENV_.*"]`.
+     */
+    allowedEnvVars: z.array(regexSchema).optional().nullable()
+});
+
 export const noUnknownAtRulesOptionsSchema = z.object({
     /**
      * A list of unknown at-rule names to ignore (case-insensitive).
      */
     ignore: z.array(z.string()).optional()
 });
+
+export const noUnknownAttributeOptionsSchema = z.object({
+    ignore: z.array(z.string()).optional().nullable()
+});
+
+export const noUnnecessaryConditionsOptionsSchema = z.object({});
 
 export const noUnsafeDeclarationMergingOptionsSchema = z.object({});
 
@@ -2477,9 +2748,13 @@ export const noUselessRegexBackrefsOptionsSchema = z.object({});
 
 export const noVarOptionsSchema = z.object({});
 
+export const noVueArrowFuncInWatchOptionsSchema = z.object({});
+
 export const noWithOptionsSchema = z.object({});
 
 export const useAdjacentOverloadSignaturesOptionsSchema = z.object({});
+
+export const useArraySortCompareOptionsSchema = z.object({});
 
 export const useAwaitOptionsSchema = z.object({});
 
@@ -2503,6 +2778,11 @@ export const useIsArrayOptionsSchema = z.object({});
 
 export const useIterableCallbackReturnOptionsSchema = z.object({
     /**
+     * When `true`, allows callbacks in methods that require a return value
+     * (e.g. `map`, `filter`) to implicitly return `undefined` via `return;`.
+     */
+    allowImplicit: z.boolean().optional().nullable(),
+    /**
      * When `true`, the rule reports `forEach` callbacks that return a value (default behaviour).
      * When `false` or unset, such callbacks are ignored.
      */
@@ -2512,6 +2792,13 @@ export const useIterableCallbackReturnOptionsSchema = z.object({
 export const useNamespaceKeywordOptionsSchema = z.object({});
 
 export const useNumberToFixedDigitsArgumentOptionsSchema = z.object({});
+
+export const useRequiredScriptsOptionsSchema = z.object({
+    /**
+     * List of script names that must be present in package.json
+     */
+    requiredScripts: z.array(z.string()).optional()
+});
 
 export const useStaticResponseMethodsOptionsSchema = z.object({});
 
@@ -2563,6 +2850,14 @@ export const overrideFormatterConfigurationSchema = z.object({
      * Whether to insert spaces around brackets in object literals. Defaults to true.
      */
     bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
+     * closing delimiter), such as parentheses, brackets, angle brackets, and template literal
+     * interpolations. Spaces are not added before the opening delimiter, and empty delimiters
+     * are not affected. Only applies when the content fits on a single line. The specific
+     * delimiters affected depend on the language. Defaults to false.
+     */
+    delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     enabled: boolSchema.optional().nullable(),
     /**
      * Whether to expand arrays and objects on multiple lines.
@@ -2598,6 +2893,10 @@ export const overrideFormatterConfigurationSchema = z.object({
      * What's the max width of a line. Defaults to 80.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+     */
+    trailingCommas: jsTrailingCommasSchema.optional().nullable(),
     /**
      * Whether to add a trailing newline at the end of the file.
      *
@@ -2702,7 +3001,11 @@ export const jsConfigurationSchema = z.object({
     /**
      * Parsing options
      */
-    parser: jsParserConfigurationSchema.optional().nullable()
+    parser: jsParserConfigurationSchema.optional().nullable(),
+    /**
+     * Module/dependency resolver options
+     */
+    resolver: jsResolverConfigurationSchema.optional().nullable()
 });
 
 /**
@@ -2741,6 +3044,11 @@ export const ruleAssistWithUseSortedAttributesOptionsSchema = z.record(z.string(
     options: useSortedAttributesOptionsSchema
 }));
 
+export const ruleAssistWithUseSortedEnumMembersOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+    level: ruleAssistPlainConfigurationSchema,
+    options: useSortedEnumMembersOptionsSchema
+}));
+
 export const ruleAssistWithUseSortedInterfaceMembersOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedInterfaceMembersOptionsSchema
@@ -2751,15 +3059,35 @@ export const ruleAssistWithUseSortedKeysOptionsSchema = z.record(z.string(), z.u
     options: useSortedKeysOptionsSchema
 }));
 
+export const ruleAssistWithUseSortedPackageJsonOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+    level: ruleAssistPlainConfigurationSchema,
+    options: useSortedPackageJsonOptionsSchema
+}));
+
 export const ruleAssistWithUseSortedPropertiesOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedPropertiesOptionsSchema
+}));
+
+export const ruleAssistWithUseSortedSelectionSetOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+    level: ruleAssistPlainConfigurationSchema,
+    options: useSortedSelectionSetOptionsSchema
+}));
+
+export const ruleAssistWithUseSortedTypeFieldsOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+    level: ruleAssistPlainConfigurationSchema,
+    options: useSortedTypeFieldsOptionsSchema
 }));
 
 export const ruleWithNoAccessKeyOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noAccessKeyOptionsSchema.optional()
+});
+
+export const ruleWithNoAmbiguousAnchorTextOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noAmbiguousAnchorTextOptionsSchema.optional()
 });
 
 export const ruleWithNoAriaHiddenOnFocusableOptionsSchema = z.object({
@@ -2859,7 +3187,6 @@ export const ruleWithUseAnchorContentOptionsSchema = z.object({
 });
 
 export const ruleWithUseAriaActivedescendantWithTabindexOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useAriaActivedescendantWithTabindexOptionsSchema.optional()
 });
@@ -2978,6 +3305,12 @@ export const ruleWithNoCommaOperatorOptionsSchema = z.object({
     options: noCommaOperatorOptionsSchema.optional()
 });
 
+export const ruleWithNoDivRegexOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noDivRegexOptionsSchema.optional()
+});
+
 export const ruleWithNoEmptyTypeParametersOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noEmptyTypeParametersOptionsSchema.optional()
@@ -3025,6 +3358,11 @@ export const ruleWithNoImportantStylesOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noImportantStylesOptionsSchema.optional()
+});
+
+export const ruleWithNoRedundantDefaultExportOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noRedundantDefaultExportOptionsSchema.optional()
 });
 
 export const ruleWithNoStaticOnlyClassOptionsSchema = z.object({
@@ -3098,6 +3436,12 @@ export const ruleWithNoUselessRenameOptionsSchema = z.object({
     options: noUselessRenameOptionsSchema.optional()
 });
 
+export const ruleWithNoUselessReturnOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noUselessReturnOptionsSchema.optional()
+});
+
 export const ruleWithNoUselessStringConcatOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -3148,6 +3492,11 @@ export const ruleWithNoUselessUndefinedInitializationOptionsSchema = z.object({
 export const ruleWithNoVoidOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noVoidOptionsSchema.optional()
+});
+
+export const ruleWithUseArrayFindOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useArrayFindOptionsSchema.optional()
 });
 
 export const ruleWithUseArrowFunctionOptionsSchema = z.object({
@@ -3221,6 +3570,11 @@ export const ruleWithUseWhileOptionsSchema = z.object({
     options: useWhileOptionsSchema.optional()
 });
 
+export const ruleWithNoBeforeInteractiveScriptOutsideDocumentOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noBeforeInteractiveScriptOutsideDocumentOptionsSchema.optional()
+});
+
 export const ruleWithNoChildrenPropOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noChildrenPropOptionsSchema.optional()
@@ -3246,6 +3600,31 @@ export const ruleWithNoConstantMathMinMaxClampOptionsSchema = z.object({
 export const ruleWithNoConstructorReturnOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noConstructorReturnOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateArgumentNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateArgumentNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateAttributesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateAttributesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateEnumValueNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateEnumValueNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateInputFieldNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateInputFieldNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateVariableNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateVariableNamesOptionsSchema.optional()
 });
 
 export const ruleWithNoEmptyCharacterClassInRegexOptionsSchema = z.object({
@@ -3476,6 +3855,11 @@ export const ruleWithNoUnusedImportsOptionsSchema = z.object({
     options: noUnusedImportsOptionsSchema.optional()
 });
 
+export const ruleWithNoUnusedInstantiationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnusedInstantiationOptionsSchema.optional()
+});
+
 export const ruleWithNoUnusedLabelsOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -3486,12 +3870,6 @@ export const ruleWithNoUnusedPrivateClassMembersOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUnusedPrivateClassMembersOptionsSchema.optional()
-});
-
-export const ruleWithNoUnusedVariablesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noUnusedVariablesOptionsSchema.optional()
 });
 
 export const ruleWithNoVoidElementsWithChildrenOptionsSchema = z.object({
@@ -3531,6 +3909,11 @@ export const ruleWithNoVueSetupPropsReactivityLossOptionsSchema = z.object({
     options: noVueSetupPropsReactivityLossOptionsSchema.optional()
 });
 
+export const ruleWithNoVueVIfWithVForOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueVIfWithVForOptionsSchema.optional()
+});
+
 export const ruleWithUseGraphqlNamedOperationsOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -3550,6 +3933,11 @@ export const ruleWithUseImportExtensionsOptionsSchema = z.object({
     options: useImportExtensionsOptionsSchema.optional()
 });
 
+export const ruleWithUseInlineScriptIdOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useInlineScriptIdOptionsSchema.optional()
+});
+
 export const ruleWithUseIsNanOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -3565,6 +3953,11 @@ export const ruleWithUseJsonImportAttributesOptionsSchema = z.object({
 export const ruleWithUseJsxKeyInIterableOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useJsxKeyInIterableOptionsSchema.optional()
+});
+
+export const ruleWithUseLoneAnonymousOperationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useLoneAnonymousOperationOptionsSchema.optional()
 });
 
 export const ruleWithUseParseIntRadixOptionsSchema = z.object({
@@ -3608,665 +4001,6 @@ export const ruleWithUseValidTypeofOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useValidTypeofOptionsSchema.optional()
-});
-
-export const ruleWithUseYieldOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useYieldOptionsSchema.optional()
-});
-
-export const ruleWithNoAmbiguousAnchorTextOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noAmbiguousAnchorTextOptionsSchema.optional()
-});
-
-export const ruleWithNoBeforeInteractiveScriptOutsideDocumentOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noBeforeInteractiveScriptOutsideDocumentOptionsSchema.optional()
-});
-
-export const ruleWithNoComponentHookFactoriesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noComponentHookFactoriesOptionsSchema.optional()
-});
-
-export const ruleWithNoConditionalExpectOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noConditionalExpectOptionsSchema.optional()
-});
-
-export const ruleWithNoContinueOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noContinueOptionsSchema.optional()
-});
-
-export const ruleWithNoDeprecatedMediaTypeOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDeprecatedMediaTypeOptionsSchema.optional()
-});
-
-export const ruleWithNoDivRegexOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noDivRegexOptionsSchema.optional()
-});
-
-export const ruleWithNoDrizzleDeleteWithoutWhereOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDrizzleDeleteWithoutWhereOptionsSchema.optional()
-});
-
-export const ruleWithNoDrizzleUpdateWithoutWhereOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDrizzleUpdateWithoutWhereOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateArgumentNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateArgumentNamesOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateAttributesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateAttributesOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateEnumValueNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateEnumValueNamesOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateEnumValuesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateEnumValuesOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateFieldDefinitionNamesOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateGraphqlOperationNameOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateGraphqlOperationNameOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateInputFieldNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateInputFieldNamesOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateSelectorsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateSelectorsOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicateVariableNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicateVariableNamesOptionsSchema.optional()
-});
-
-export const ruleWithNoDuplicatedSpreadPropsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noDuplicatedSpreadPropsOptionsSchema.optional()
-});
-
-export const ruleWithNoEmptyObjectKeysOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noEmptyObjectKeysOptionsSchema.optional()
-});
-
-export const ruleWithNoEqualsToNullOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noEqualsToNullOptionsSchema.optional()
-});
-
-export const ruleWithNoExcessiveClassesPerFileOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noExcessiveClassesPerFileOptionsSchema.optional()
-});
-
-export const ruleWithNoExcessiveLinesPerFileOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noExcessiveLinesPerFileOptionsSchema.optional()
-});
-
-export const ruleWithNoExcessiveSelectorClassesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noExcessiveSelectorClassesOptionsSchema.optional()
-});
-
-export const ruleWithNoFloatingClassesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noFloatingClassesOptionsSchema.optional()
-});
-
-export const ruleWithNoFloatingPromisesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noFloatingPromisesOptionsSchema.optional()
-});
-
-export const ruleWithNoForInOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noForInOptionsSchema.optional()
-});
-
-export const ruleWithNoHexColorsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noHexColorsOptionsSchema.optional()
-});
-
-export const ruleWithNoIdenticalTestTitleOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noIdenticalTestTitleOptionsSchema.optional()
-});
-
-export const ruleWithNoImpliedEvalOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noImpliedEvalOptionsSchema.optional()
-});
-
-export const ruleWithNoIncrementDecrementOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noIncrementDecrementOptionsSchema.optional()
-});
-
-export const ruleWithNoInlineStylesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noInlineStylesOptionsSchema.optional()
-});
-
-export const ruleWithNoJsxLeakedDollarOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noJsxLeakedDollarOptionsSchema.optional()
-});
-
-export const ruleWithNoJsxNamespaceOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noJsxNamespaceOptionsSchema.optional()
-});
-
-export const ruleWithNoJsxPropsBindOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noJsxPropsBindOptionsSchema.optional()
-});
-
-export const ruleWithNoLeakedRenderOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noLeakedRenderOptionsSchema.optional()
-});
-
-export const ruleWithNoLoopFuncOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noLoopFuncOptionsSchema.optional()
-});
-
-export const ruleWithNoMisleadingReturnTypeOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noMisleadingReturnTypeOptionsSchema.optional()
-});
-
-export const ruleWithNoMisusedPromisesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noMisusedPromisesOptionsSchema.optional()
-});
-
-export const ruleWithNoMultiAssignOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noMultiAssignOptionsSchema.optional()
-});
-
-export const ruleWithNoMultiStrOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noMultiStrOptionsSchema.optional()
-});
-
-export const ruleWithNoNestedPromisesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noNestedPromisesOptionsSchema.optional()
-});
-
-export const ruleWithNoParametersOnlyUsedInRecursionOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noParametersOnlyUsedInRecursionOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightElementHandleOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightElementHandleOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightEvalOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightEvalOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightForceOptionOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightForceOptionOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightMissingAwaitOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightMissingAwaitOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightNetworkidleOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightNetworkidleOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightPagePauseOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightPagePauseOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightUselessAwaitOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightUselessAwaitOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightWaitForNavigationOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightWaitForNavigationOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightWaitForSelectorOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightWaitForSelectorOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightWaitForTimeoutOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightWaitForTimeoutOptionsSchema.optional()
-});
-
-export const ruleWithNoProtoOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noProtoOptionsSchema.optional()
-});
-
-export const ruleWithNoReactNativeDeepImportsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noReactNativeDeepImportsOptionsSchema.optional()
-});
-
-export const ruleWithNoReactNativeLiteralColorsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noReactNativeLiteralColorsOptionsSchema.optional()
-});
-
-export const ruleWithNoReactNativeRawTextOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noReactNativeRawTextOptionsSchema.optional()
-});
-
-export const ruleWithNoRedundantDefaultExportOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noRedundantDefaultExportOptionsSchema.optional()
-});
-
-export const ruleWithNoReturnAssignOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noReturnAssignOptionsSchema.optional()
-});
-
-export const ruleWithNoRootTypeOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noRootTypeOptionsSchema.optional()
-});
-
-export const ruleWithNoScriptUrlOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noScriptUrlOptionsSchema.optional()
-});
-
-export const ruleWithNoShadowOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noShadowOptionsSchema.optional()
-});
-
-export const ruleWithNoSyncScriptsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noSyncScriptsOptionsSchema.optional()
-});
-
-export const ruleWithNoTernaryOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noTernaryOptionsSchema.optional()
-});
-
-export const ruleWithNoTopLevelLiteralsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noTopLevelLiteralsOptionsSchema.optional()
-});
-
-export const ruleWithNoUndeclaredEnvVarsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noUndeclaredEnvVarsOptionsSchema.optional()
-});
-
-export const ruleWithNoUnknownAttributeOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noUnknownAttributeOptionsSchema.optional()
-});
-
-export const ruleWithNoUnnecessaryConditionsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noUnnecessaryConditionsOptionsSchema.optional()
-});
-
-export const ruleWithNoUnnecessaryTemplateExpressionOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noUnnecessaryTemplateExpressionOptionsSchema.optional()
-});
-
-export const ruleWithNoUnsafePlusOperandsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noUnsafePlusOperandsOptionsSchema.optional()
-});
-
-export const ruleWithNoUntrustedLicensesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noUntrustedLicensesOptionsSchema.optional()
-});
-
-export const ruleWithNoUselessReturnOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noUselessReturnOptionsSchema.optional()
-});
-
-export const ruleWithNoUselessTypeConversionOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noUselessTypeConversionOptionsSchema.optional()
-});
-
-export const ruleWithNoVueArrowFuncInWatchOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: noVueArrowFuncInWatchOptionsSchema.optional()
-});
-
-export const ruleWithNoVueOptionsApiOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noVueOptionsApiOptionsSchema.optional()
-});
-
-export const ruleWithNoVueRefAsOperandOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noVueRefAsOperandOptionsSchema.optional()
-});
-
-export const ruleWithNoVueVIfWithVForOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noVueVIfWithVForOptionsSchema.optional()
-});
-
-export const ruleWithUseArraySomeOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useArraySomeOptionsSchema.optional()
-});
-
-export const ruleWithUseArraySortCompareOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useArraySortCompareOptionsSchema.optional()
-});
-
-export const ruleWithUseAwaitThenableOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useAwaitThenableOptionsSchema.optional()
-});
-
-export const ruleWithUseBaselineOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useBaselineOptionsSchema.optional()
-});
-
-export const ruleWithUseConsistentEnumValueTypeOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useConsistentEnumValueTypeOptionsSchema.optional()
-});
-
-export const ruleWithUseConsistentGraphqlDescriptionsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useConsistentGraphqlDescriptionsOptionsSchema.optional()
-});
-
-export const ruleWithUseConsistentMethodSignaturesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useConsistentMethodSignaturesOptionsSchema.optional()
-});
-
-export const ruleWithUseConsistentTestItOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useConsistentTestItOptionsSchema.optional()
-});
-
-export const ruleWithUseDestructuringOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useDestructuringOptionsSchema.optional()
-});
-
-export const ruleWithUseDisposablesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useDisposablesOptionsSchema.optional()
-});
-
-export const ruleWithUseDomNodeTextContentOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useDomNodeTextContentOptionsSchema.optional()
-});
-
-export const ruleWithUseDomQuerySelectorOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useDomQuerySelectorOptionsSchema.optional()
-});
-
-export const ruleWithUseErrorCauseOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useErrorCauseOptionsSchema.optional()
-});
-
-export const ruleWithUseExhaustiveSwitchCasesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useExhaustiveSwitchCasesOptionsSchema.optional()
-});
-
-export const ruleWithUseExpectOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useExpectOptionsSchema.optional()
-});
-
-export const ruleWithUseExplicitReturnTypeOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useExplicitReturnTypeOptionsSchema.optional()
-});
-
-export const ruleWithUseExplicitTypeOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useExplicitTypeOptionsSchema.optional()
-});
-
-export const ruleWithUseFindOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useFindOptionsSchema.optional()
-});
-
-export const ruleWithUseGlobalThisOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useGlobalThisOptionsSchema.optional()
-});
-
-export const ruleWithUseIframeSandboxOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useIframeSandboxOptionsSchema.optional()
-});
-
-export const ruleWithUseImportsFirstOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useImportsFirstOptionsSchema.optional()
-});
-
-export const ruleWithUseInlineScriptIdOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useInlineScriptIdOptionsSchema.optional()
-});
-
-export const ruleWithUseInputNameOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useInputNameOptionsSchema.optional()
-});
-
-export const ruleWithUseLoneAnonymousOperationOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useLoneAnonymousOperationOptionsSchema.optional()
-});
-
-export const ruleWithUseLoneExecutableDefinitionOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useLoneExecutableDefinitionOptionsSchema.optional()
-});
-
-export const ruleWithUseNamedCaptureGroupOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useNamedCaptureGroupOptionsSchema.optional()
-});
-
-export const ruleWithUseNullishCoalescingOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useNullishCoalescingOptionsSchema.optional()
-});
-
-export const ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: usePlaywrightValidDescribeCallbackOptionsSchema.optional()
-});
-
-export const ruleWithUseQwikLoaderLocationOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useQwikLoaderLocationOptionsSchema.optional()
-});
-
-export const ruleWithUseReactAsyncServerFunctionOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useReactAsyncServerFunctionOptionsSchema.optional()
-});
-
-export const ruleWithUseReactNativePlatformComponentsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useReactNativePlatformComponentsOptionsSchema.optional()
-});
-
-export const ruleWithUseReduceTypeParameterOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useReduceTypeParameterOptionsSchema.optional()
-});
-
-export const ruleWithUseRegexpExecOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useRegexpExecOptionsSchema.optional()
-});
-
-export const ruleWithUseRegexpTestOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useRegexpTestOptionsSchema.optional()
-});
-
-export const ruleWithUseRequiredScriptsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useRequiredScriptsOptionsSchema.optional()
-});
-
-export const ruleWithUseScopedStylesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useScopedStylesOptionsSchema.optional()
-});
-
-export const ruleWithUseSortedClassesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useSortedClassesOptionsSchema.optional()
-});
-
-export const ruleWithUseSpreadOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useSpreadOptionsSchema.optional()
-});
-
-export const ruleWithUseStringStartsEndsWithOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useStringStartsEndsWithOptionsSchema.optional()
-});
-
-export const ruleWithUseUnicodeRegexOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useUnicodeRegexOptionsSchema.optional()
-});
-
-export const ruleWithUseVarsOnTopOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useVarsOnTopOptionsSchema.optional()
-});
-
-export const ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useVueConsistentDefinePropsDeclarationOptionsSchema.optional()
-});
-
-export const ruleWithUseVueConsistentVBindStyleOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useVueConsistentVBindStyleOptionsSchema.optional()
-});
-
-export const ruleWithUseVueConsistentVOnStyleOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useVueConsistentVOnStyleOptionsSchema.optional()
-});
-
-export const ruleWithUseVueDefineMacrosOrderOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useVueDefineMacrosOrderOptionsSchema.optional()
-});
-
-export const ruleWithUseVueHyphenatedAttributesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useVueHyphenatedAttributesOptionsSchema.optional()
-});
-
-export const ruleWithUseVueMultiWordComponentNamesOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useVueMultiWordComponentNamesOptionsSchema.optional()
 });
 
 export const ruleWithUseVueVForKeyOptionsSchema = z.object({
@@ -4333,10 +4067,440 @@ export const ruleWithUseVueValidVTextOptionsSchema = z.object({
     options: useVueValidVTextOptionsSchema.optional()
 });
 
-export const ruleWithUseVueVaporOptionsSchema = z.object({
+export const ruleWithUseYieldOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useYieldOptionsSchema.optional()
+});
+
+export const ruleWithNoBaseToStringOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noBaseToStringOptionsSchema.optional()
+});
+
+export const ruleWithNoComponentHookFactoriesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noComponentHookFactoriesOptionsSchema.optional()
+});
+
+export const ruleWithNoConditionalExpectOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noConditionalExpectOptionsSchema.optional()
+});
+
+export const ruleWithNoDrizzleDeleteWithoutWhereOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDrizzleDeleteWithoutWhereOptionsSchema.optional()
+});
+
+export const ruleWithNoDrizzleUpdateWithoutWhereOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDrizzleUpdateWithoutWhereOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateFieldDefinitionNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateSelectorsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateSelectorsOptionsSchema.optional()
+});
+
+export const ruleWithNoEmptyObjectKeysOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noEmptyObjectKeysOptionsSchema.optional()
+});
+
+export const ruleWithNoExcessiveNestedCallbacksOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noExcessiveNestedCallbacksOptionsSchema.optional()
+});
+
+export const ruleWithNoExcessiveSelectorClassesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noExcessiveSelectorClassesOptionsSchema.optional()
+});
+
+export const ruleWithNoFloatingPromisesOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useVueVaporOptionsSchema.optional()
+    options: noFloatingPromisesOptionsSchema.optional()
+});
+
+export const ruleWithNoIdenticalTestTitleOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noIdenticalTestTitleOptionsSchema.optional()
+});
+
+export const ruleWithNoImpliedEvalOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noImpliedEvalOptionsSchema.optional()
+});
+
+export const ruleWithNoInlineStylesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noInlineStylesOptionsSchema.optional()
+});
+
+export const ruleWithNoJsxLeakedDollarOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noJsxLeakedDollarOptionsSchema.optional()
+});
+
+export const ruleWithNoJsxNamespaceOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noJsxNamespaceOptionsSchema.optional()
+});
+
+export const ruleWithNoLoopFuncOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noLoopFuncOptionsSchema.optional()
+});
+
+export const ruleWithNoMisleadingReturnTypeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noMisleadingReturnTypeOptionsSchema.optional()
+});
+
+export const ruleWithNoMisusedPromisesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noMisusedPromisesOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightElementHandleOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightElementHandleOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightEvalOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightEvalOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightForceOptionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightForceOptionOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightMissingAwaitOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightMissingAwaitOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightNetworkidleOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightNetworkidleOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightPagePauseOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightPagePauseOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightUselessAwaitOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightUselessAwaitOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForNavigationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForNavigationOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForSelectorOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForSelectorOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForTimeoutOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForTimeoutOptionsSchema.optional()
+});
+
+export const ruleWithNoReactNativeDeepImportsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReactNativeDeepImportsOptionsSchema.optional()
+});
+
+export const ruleWithNoReactNativeLiteralColorsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReactNativeLiteralColorsOptionsSchema.optional()
+});
+
+export const ruleWithNoReactNativeRawTextOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReactNativeRawTextOptionsSchema.optional()
+});
+
+export const ruleWithNoReactStringRefsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReactStringRefsOptionsSchema.optional()
+});
+
+export const ruleWithNoRestrictedDependenciesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noRestrictedDependenciesOptionsSchema.optional()
+});
+
+export const ruleWithNoTopLevelLiteralsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noTopLevelLiteralsOptionsSchema.optional()
+});
+
+export const ruleWithNoUndeclaredClassesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUndeclaredClassesOptionsSchema.optional()
+});
+
+export const ruleWithNoUnnecessaryTemplateExpressionOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noUnnecessaryTemplateExpressionOptionsSchema.optional()
+});
+
+export const ruleWithNoUnsafePlusOperandsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnsafePlusOperandsOptionsSchema.optional()
+});
+
+export const ruleWithNoUntrustedLicensesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUntrustedLicensesOptionsSchema.optional()
+});
+
+export const ruleWithNoUnusedClassesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnusedClassesOptionsSchema.optional()
+});
+
+export const ruleWithNoUselessTypeConversionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUselessTypeConversionOptionsSchema.optional()
+});
+
+export const ruleWithNoVueImportCompilerMacrosOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueImportCompilerMacrosOptionsSchema.optional()
+});
+
+export const ruleWithNoVueRefAsOperandOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueRefAsOperandOptionsSchema.optional()
+});
+
+export const ruleWithNoVueVOnNumberValuesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueVOnNumberValuesOptionsSchema.optional()
+});
+
+export const ruleWithUseArraySomeOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useArraySomeOptionsSchema.optional()
+});
+
+export const ruleWithUseAwaitThenableOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useAwaitThenableOptionsSchema.optional()
+});
+
+export const ruleWithUseBaselineOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useBaselineOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentTestItOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useConsistentTestItOptionsSchema.optional()
+});
+
+export const ruleWithUseDisposablesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useDisposablesOptionsSchema.optional()
+});
+
+export const ruleWithUseDomNodeTextContentOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useDomNodeTextContentOptionsSchema.optional()
+});
+
+export const ruleWithUseDomQuerySelectorOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useDomQuerySelectorOptionsSchema.optional()
+});
+
+export const ruleWithUseExhaustiveSwitchCasesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useExhaustiveSwitchCasesOptionsSchema.optional()
+});
+
+export const ruleWithUseExpectOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useExpectOptionsSchema.optional()
+});
+
+export const ruleWithUseExplicitReturnTypeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useExplicitReturnTypeOptionsSchema.optional()
+});
+
+export const ruleWithUseExplicitTypeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useExplicitTypeOptionsSchema.optional()
+});
+
+export const ruleWithUseIframeSandboxOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useIframeSandboxOptionsSchema.optional()
+});
+
+export const ruleWithUseImportsFirstOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useImportsFirstOptionsSchema.optional()
+});
+
+export const ruleWithUseIncludesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useIncludesOptionsSchema.optional()
+});
+
+export const ruleWithUseMathMinMaxOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useMathMinMaxOptionsSchema.optional()
+});
+
+export const ruleWithUseNamedCaptureGroupOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useNamedCaptureGroupOptionsSchema.optional()
+});
+
+export const ruleWithUseNullishCoalescingOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useNullishCoalescingOptionsSchema.optional()
+});
+
+export const ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: usePlaywrightValidDescribeCallbackOptionsSchema.optional()
+});
+
+export const ruleWithUseQwikLoaderLocationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useQwikLoaderLocationOptionsSchema.optional()
+});
+
+export const ruleWithUseReactAsyncServerFunctionOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useReactAsyncServerFunctionOptionsSchema.optional()
+});
+
+export const ruleWithUseReactFunctionComponentDefinitionOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useReactFunctionComponentDefinitionOptionsSchema.optional()
+});
+
+export const ruleWithUseReactNativePlatformComponentsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useReactNativePlatformComponentsOptionsSchema.optional()
+});
+
+export const ruleWithUseReduceTypeParameterOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useReduceTypeParameterOptionsSchema.optional()
+});
+
+export const ruleWithUseRegexpExecOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useRegexpExecOptionsSchema.optional()
+});
+
+export const ruleWithUseRegexpTestOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useRegexpTestOptionsSchema.optional()
+});
+
+export const ruleWithUseScopedStylesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useScopedStylesOptionsSchema.optional()
+});
+
+export const ruleWithUseSortedClassesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useSortedClassesOptionsSchema.optional()
+});
+
+export const ruleWithUseStringStartsEndsWithOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useStringStartsEndsWithOptionsSchema.optional()
+});
+
+export const ruleWithUseSvelteRequireEachKeyOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useSvelteRequireEachKeyOptionsSchema.optional()
+});
+
+export const ruleWithUseTestHooksInOrderOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useTestHooksInOrderOptionsSchema.optional()
+});
+
+export const ruleWithUseTestHooksOnTopOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useTestHooksOnTopOptionsSchema.optional()
+});
+
+export const ruleWithUseThisInClassMethodsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useThisInClassMethodsOptionsSchema.optional()
+});
+
+export const ruleWithUseUnicodeRegexOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useUnicodeRegexOptionsSchema.optional()
+});
+
+export const ruleWithUseVarsOnTopOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVarsOnTopOptionsSchema.optional()
+});
+
+export const ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueConsistentDefinePropsDeclarationOptionsSchema.optional()
+});
+
+export const ruleWithUseVueNextTickPromiseOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueNextTickPromiseOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidVForOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidVForOptionsSchema.optional()
 });
 
 export const ruleWithNoAccumulatingSpreadOptionsSchema = z.object({
@@ -4370,6 +4534,11 @@ export const ruleWithNoImgElementOptionsSchema = z.object({
     options: noImgElementOptionsSchema.optional()
 });
 
+export const ruleWithNoJsxPropsBindOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noJsxPropsBindOptionsSchema.optional()
+});
+
 export const ruleWithNoNamespaceImportOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noNamespaceImportOptionsSchema.optional()
@@ -4378,6 +4547,11 @@ export const ruleWithNoNamespaceImportOptionsSchema = z.object({
 export const ruleWithNoReExportAllOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noReExportAllOptionsSchema.optional()
+});
+
+export const ruleWithNoSyncScriptsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSyncScriptsOptionsSchema.optional()
 });
 
 export const ruleWithNoUnwantedPolyfillioOptionsSchema = z.object({
@@ -4401,6 +4575,12 @@ export const ruleWithUseTopLevelRegexOptionsSchema = z.object({
     options: useTopLevelRegexOptionsSchema.optional()
 });
 
+export const ruleWithUseVueVaporOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueVaporOptionsSchema.optional()
+});
+
 export const ruleWithNoBlankTargetOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -4422,6 +4602,11 @@ export const ruleWithNoGlobalEvalOptionsSchema = z.object({
     options: noGlobalEvalOptionsSchema.optional()
 });
 
+export const ruleWithNoScriptUrlOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noScriptUrlOptionsSchema.optional()
+});
+
 export const ruleWithNoSecretsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noSecretsOptionsSchema.optional()
@@ -4430,6 +4615,11 @@ export const ruleWithNoSecretsOptionsSchema = z.object({
 export const ruleWithNoCommonJsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noCommonJsOptionsSchema.optional()
+});
+
+export const ruleWithNoContinueOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noContinueOptionsSchema.optional()
 });
 
 export const ruleWithNoDefaultExportOptionsSchema = z.object({
@@ -4452,6 +4642,16 @@ export const ruleWithNoEnumOptionsSchema = z.object({
     options: noEnumOptionsSchema.optional()
 });
 
+export const ruleWithNoExcessiveClassesPerFileOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noExcessiveClassesPerFileOptionsSchema.optional()
+});
+
+export const ruleWithNoExcessiveLinesPerFileOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noExcessiveLinesPerFileOptionsSchema.optional()
+});
+
 export const ruleWithNoExportedImportsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noExportedImportsOptionsSchema.optional()
@@ -4462,10 +4662,20 @@ export const ruleWithNoHeadElementOptionsSchema = z.object({
     options: noHeadElementOptionsSchema.optional()
 });
 
+export const ruleWithNoHexColorsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noHexColorsOptionsSchema.optional()
+});
+
 export const ruleWithNoImplicitBooleanOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noImplicitBooleanOptionsSchema.optional()
+});
+
+export const ruleWithNoIncrementDecrementOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noIncrementDecrementOptionsSchema.optional()
 });
 
 export const ruleWithNoInferrableTypesOptionsSchema = z.object({
@@ -4482,6 +4692,16 @@ export const ruleWithNoJsxLiteralsOptionsSchema = z.object({
 export const ruleWithNoMagicNumbersOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noMagicNumbersOptionsSchema.optional()
+});
+
+export const ruleWithNoMultiAssignOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noMultiAssignOptionsSchema.optional()
+});
+
+export const ruleWithNoMultilineStringOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noMultilineStringOptionsSchema.optional()
 });
 
 export const ruleWithNoNamespaceOptionsSchema = z.object({
@@ -4545,6 +4765,11 @@ export const patternOptionsSchema = z.object({
     message: z.string().optional().nullable()
 });
 
+export const ruleWithNoRootTypeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noRootTypeOptionsSchema.optional()
+});
+
 export const ruleWithNoShoutyConstantsOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -4555,6 +4780,11 @@ export const ruleWithNoSubstrOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noSubstrOptionsSchema.optional()
+});
+
+export const ruleWithNoTernaryOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noTernaryOptionsSchema.optional()
 });
 
 export const ruleWithNoUnusedTemplateLiteralOptionsSchema = z.object({
@@ -4572,6 +4802,11 @@ export const ruleWithNoUselessElseOptionsSchema = z.object({
 export const ruleWithNoValueAtRuleOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noValueAtRuleOptionsSchema.optional()
+});
+
+export const ruleWithNoVueOptionsApiOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueOptionsApiOptionsSchema.optional()
 });
 
 export const ruleWithNoYodaExpressionOptionsSchema = z.object({
@@ -4645,9 +4880,25 @@ export const ruleWithUseConsistentCurlyBracesOptionsSchema = z.object({
     options: useConsistentCurlyBracesOptionsSchema.optional()
 });
 
+export const ruleWithUseConsistentEnumValueTypeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useConsistentEnumValueTypeOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentGraphqlDescriptionsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useConsistentGraphqlDescriptionsOptionsSchema.optional()
+});
+
 export const ruleWithUseConsistentMemberAccessibilityOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useConsistentMemberAccessibilityOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentMethodSignaturesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useConsistentMethodSignaturesOptionsSchema.optional()
 });
 
 export const ruleWithUseConsistentObjectDefinitionsOptionsSchema = z.object({
@@ -4690,6 +4941,11 @@ export const ruleWithUseEnumInitializersOptionsSchema = z.object({
     options: useEnumInitializersOptionsSchema.optional()
 });
 
+export const ruleWithUseErrorCauseOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useErrorCauseOptionsSchema.optional()
+});
+
 export const ruleWithUseExplicitLengthCheckOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -4729,6 +4985,11 @@ export const ruleWithUseFragmentSyntaxOptionsSchema = z.object({
     options: useFragmentSyntaxOptionsSchema.optional()
 });
 
+export const ruleWithUseGlobalThisOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useGlobalThisOptionsSchema.optional()
+});
+
 export const ruleWithUseGraphqlNamingConventionOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useGraphqlNamingConventionOptionsSchema.optional()
@@ -4745,9 +5006,19 @@ export const ruleWithUseImportTypeOptionsSchema = z.object({
     options: useImportTypeOptionsSchema.optional()
 });
 
+export const ruleWithUseInputNameOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useInputNameOptionsSchema.optional()
+});
+
 export const ruleWithUseLiteralEnumMembersOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useLiteralEnumMembersOptionsSchema.optional()
+});
+
+export const ruleWithUseLoneExecutableDefinitionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useLoneExecutableDefinitionOptionsSchema.optional()
 });
 
 export const ruleWithUseNodeAssertStrictOptionsSchema = z.object({
@@ -4766,12 +5037,6 @@ export const ruleWithUseNumberNamespaceOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNumberNamespaceOptionsSchema.optional()
-});
-
-export const ruleWithUseNumericSeparatorsOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useNumericSeparatorsOptionsSchema.optional()
 });
 
 export const ruleWithUseObjectSpreadOptionsSchema = z.object({
@@ -4815,6 +5080,12 @@ export const ruleWithUseSingleVarDeclaratorOptionsSchema = z.object({
     options: useSingleVarDeclaratorOptionsSchema.optional()
 });
 
+export const ruleWithUseSpreadOverApplyOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useSpreadOverApplyOptionsSchema.optional()
+});
+
 export const ruleWithUseSymbolDescriptionOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useSymbolDescriptionOptionsSchema.optional()
@@ -4847,6 +5118,35 @@ export const ruleWithUseUnifiedTypeSignaturesOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useUnifiedTypeSignaturesOptionsSchema.optional()
+});
+
+export const ruleWithUseVueConsistentVBindStyleOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueConsistentVBindStyleOptionsSchema.optional()
+});
+
+export const ruleWithUseVueConsistentVOnStyleOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueConsistentVOnStyleOptionsSchema.optional()
+});
+
+export const ruleWithUseVueDefineMacrosOrderOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueDefineMacrosOrderOptionsSchema.optional()
+});
+
+export const ruleWithUseVueHyphenatedAttributesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueHyphenatedAttributesOptionsSchema.optional()
+});
+
+export const ruleWithUseVueMultiWordComponentNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueMultiWordComponentNamesOptionsSchema.optional()
 });
 
 export const ruleWithNoAlertOptionsSchema = z.object({
@@ -4952,6 +5252,11 @@ export const ruleWithNoDeprecatedImportsOptionsSchema = z.object({
     options: noDeprecatedImportsOptionsSchema.optional()
 });
 
+export const ruleWithNoDeprecatedMediaTypeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDeprecatedMediaTypeOptionsSchema.optional()
+});
+
 export const ruleWithNoDocumentCookieOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noDocumentCookieOptionsSchema.optional()
@@ -4998,6 +5303,11 @@ export const ruleWithNoDuplicateElseIfOptionsSchema = z.object({
     options: noDuplicateElseIfOptionsSchema.optional()
 });
 
+export const ruleWithNoDuplicateEnumValuesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateEnumValuesOptionsSchema.optional()
+});
+
 export const ruleWithNoDuplicateFieldsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noDuplicateFieldsOptionsSchema.optional()
@@ -5006,6 +5316,11 @@ export const ruleWithNoDuplicateFieldsOptionsSchema = z.object({
 export const ruleWithNoDuplicateFontNamesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noDuplicateFontNamesOptionsSchema.optional()
+});
+
+export const ruleWithNoDuplicateGraphqlOperationNameOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateGraphqlOperationNameOptionsSchema.optional()
 });
 
 export const ruleWithNoDuplicateJsxPropsOptionsSchema = z.object({
@@ -5038,6 +5353,11 @@ export const ruleWithNoDuplicateTestHooksOptionsSchema = z.object({
     options: noDuplicateTestHooksOptionsSchema.optional()
 });
 
+export const ruleWithNoDuplicatedSpreadPropsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicatedSpreadPropsOptionsSchema.optional()
+});
+
 export const ruleWithNoEmptyBlockOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noEmptyBlockOptionsSchema.optional()
@@ -5057,6 +5377,12 @@ export const ruleWithNoEmptyInterfaceOptionsSchema = z.object({
 export const ruleWithNoEmptySourceOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noEmptySourceOptionsSchema.optional()
+});
+
+export const ruleWithNoEqualsToNullOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noEqualsToNullOptionsSchema.optional()
 });
 
 export const ruleWithNoEvolvingTypesOptionsSchema = z.object({
@@ -5089,6 +5415,11 @@ export const ruleWithNoFocusedTestsOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noFocusedTestsOptionsSchema.optional()
+});
+
+export const ruleWithNoForInOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noForInOptionsSchema.optional()
 });
 
 export const ruleWithNoFunctionAssignOptionsSchema = z.object({
@@ -5148,6 +5479,11 @@ export const ruleWithNoLabelVarOptionsSchema = z.object({
     options: noLabelVarOptionsSchema.optional()
 });
 
+export const ruleWithNoLeakedRenderOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noLeakedRenderOptionsSchema.optional()
+});
+
 export const ruleWithNoMisleadingCharacterClassOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -5170,6 +5506,11 @@ export const ruleWithNoMisrefactoredShorthandAssignOptionsSchema = z.object({
     options: noMisrefactoredShorthandAssignOptionsSchema.optional()
 });
 
+export const ruleWithNoNestedPromisesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noNestedPromisesOptionsSchema.optional()
+});
+
 export const ruleWithNoNonNullAssertedOptionalChainOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noNonNullAssertedOptionalChainOptionsSchema.optional()
@@ -5179,6 +5520,17 @@ export const ruleWithNoOctalEscapeOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noOctalEscapeOptionsSchema.optional()
+});
+
+export const ruleWithNoParametersOnlyUsedInRecursionOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noParametersOnlyUsedInRecursionOptionsSchema.optional()
+});
+
+export const ruleWithNoProtoOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noProtoOptionsSchema.optional()
 });
 
 export const ruleWithNoPrototypeBuiltinsOptionsSchema = z.object({
@@ -5216,9 +5568,19 @@ export const ruleWithNoRedundantUseStrictOptionsSchema = z.object({
     options: noRedundantUseStrictOptionsSchema.optional()
 });
 
+export const ruleWithNoReturnAssignOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReturnAssignOptionsSchema.optional()
+});
+
 export const ruleWithNoSelfCompareOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noSelfCompareOptionsSchema.optional()
+});
+
+export const ruleWithNoShadowOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noShadowOptionsSchema.optional()
 });
 
 export const ruleWithNoShadowRestrictedNamesOptionsSchema = z.object({
@@ -5269,9 +5631,24 @@ export const ruleWithNoUnassignedVariablesOptionsSchema = z.object({
     options: noUnassignedVariablesOptionsSchema.optional()
 });
 
+export const ruleWithNoUndeclaredEnvVarsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUndeclaredEnvVarsOptionsSchema.optional()
+});
+
 export const ruleWithNoUnknownAtRulesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noUnknownAtRulesOptionsSchema.optional()
+});
+
+export const ruleWithNoUnknownAttributeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnknownAttributeOptionsSchema.optional()
+});
+
+export const ruleWithNoUnnecessaryConditionsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnnecessaryConditionsOptionsSchema.optional()
 });
 
 export const ruleWithNoUnsafeDeclarationMergingOptionsSchema = z.object({
@@ -5307,6 +5684,12 @@ export const ruleWithNoVarOptionsSchema = z.object({
     options: noVarOptionsSchema.optional()
 });
 
+export const ruleWithNoVueArrowFuncInWatchOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noVueArrowFuncInWatchOptionsSchema.optional()
+});
+
 export const ruleWithNoWithOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noWithOptionsSchema.optional()
@@ -5315,6 +5698,11 @@ export const ruleWithNoWithOptionsSchema = z.object({
 export const ruleWithUseAdjacentOverloadSignaturesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useAdjacentOverloadSignaturesOptionsSchema.optional()
+});
+
+export const ruleWithUseArraySortCompareOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useArraySortCompareOptionsSchema.optional()
 });
 
 export const ruleWithUseAwaitOptionsSchema = z.object({
@@ -5381,6 +5769,11 @@ export const ruleWithUseNumberToFixedDigitsArgumentOptionsSchema = z.object({
     options: useNumberToFixedDigitsArgumentOptionsSchema.optional()
 });
 
+export const ruleWithUseRequiredScriptsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useRequiredScriptsOptionsSchema.optional()
+});
+
 export const ruleWithUseStaticResponseMethodsOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -5397,18 +5790,29 @@ export const noDuplicateClassesConfigurationSchema = z.union([ruleAssistPlainCon
 
 export const useSortedAttributesConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedAttributesOptionsSchema]);
 
+export const useSortedEnumMembersConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedEnumMembersOptionsSchema]);
+
 export const useSortedInterfaceMembersConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedInterfaceMembersOptionsSchema]);
 
 export const useSortedKeysConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedKeysOptionsSchema]);
 
+export const useSortedPackageJsonConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedPackageJsonOptionsSchema]);
+
 export const useSortedPropertiesConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedPropertiesOptionsSchema]);
 
+export const useSortedSelectionSetConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedSelectionSetOptionsSchema]);
+
+export const useSortedTypeFieldsConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedTypeFieldsOptionsSchema]);
+
 export const importMatcherSchema = z.record(z.string(), z.unknown()).and(z.object({
+    kind: negatableImportKindMatcherSchema.optional().nullable(),
     source: sourcesMatcherSchema.optional().nullable(),
     type: z.boolean().optional().nullable()
 }));
 
 export const noAccessKeyConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAccessKeyOptionsSchema]);
+
+export const noAmbiguousAnchorTextConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAmbiguousAnchorTextOptionsSchema]);
 
 export const noAriaHiddenOnFocusableConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAriaHiddenOnFocusableOptionsSchema]);
 
@@ -5490,6 +5894,8 @@ export const noBannedTypesConfigurationSchema = z.union([rulePlainConfigurationS
 
 export const noCommaOperatorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoCommaOperatorOptionsSchema]);
 
+export const noDivRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDivRegexOptionsSchema]);
+
 export const noEmptyTypeParametersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyTypeParametersOptionsSchema]);
 
 export const noExcessiveCognitiveComplexityConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveCognitiveComplexityOptionsSchema]);
@@ -5507,6 +5913,8 @@ export const noForEachConfigurationSchema = z.union([rulePlainConfigurationSchem
 export const noImplicitCoercionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImplicitCoercionsOptionsSchema]);
 
 export const noImportantStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImportantStylesOptionsSchema]);
+
+export const noRedundantDefaultExportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRedundantDefaultExportOptionsSchema]);
 
 export const noStaticOnlyClassConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoStaticOnlyClassOptionsSchema]);
 
@@ -5532,6 +5940,8 @@ export const noUselessLoneBlockStatementsConfigurationSchema = z.union([rulePlai
 
 export const noUselessRenameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessRenameOptionsSchema]);
 
+export const noUselessReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessReturnOptionsSchema]);
+
 export const noUselessStringConcatConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessStringConcatOptionsSchema]);
 
 export const noUselessStringRawConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessStringRawOptionsSchema]);
@@ -5549,6 +5959,8 @@ export const noUselessUndefinedConfigurationSchema = z.union([rulePlainConfigura
 export const noUselessUndefinedInitializationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessUndefinedInitializationOptionsSchema]);
 
 export const noVoidConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVoidOptionsSchema]);
+
+export const useArrayFindConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArrayFindOptionsSchema]);
 
 export const useArrowFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArrowFunctionOptionsSchema]);
 
@@ -5574,6 +5986,8 @@ export const useSimplifiedLogicExpressionConfigurationSchema = z.union([rulePlai
 
 export const useWhileConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseWhileOptionsSchema]);
 
+export const noBeforeInteractiveScriptOutsideDocumentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBeforeInteractiveScriptOutsideDocumentOptionsSchema]);
+
 export const noChildrenPropConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoChildrenPropOptionsSchema]);
 
 export const noConstAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConstAssignOptionsSchema]);
@@ -5583,6 +5997,16 @@ export const noConstantConditionConfigurationSchema = z.union([rulePlainConfigur
 export const noConstantMathMinMaxClampConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConstantMathMinMaxClampOptionsSchema]);
 
 export const noConstructorReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConstructorReturnOptionsSchema]);
+
+export const noDuplicateArgumentNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateArgumentNamesOptionsSchema]);
+
+export const noDuplicateAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateAttributesOptionsSchema]);
+
+export const noDuplicateEnumValueNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateEnumValueNamesOptionsSchema]);
+
+export const noDuplicateInputFieldNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateInputFieldNamesOptionsSchema]);
+
+export const noDuplicateVariableNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateVariableNamesOptionsSchema]);
 
 export const noEmptyCharacterClassInRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyCharacterClassInRegexOptionsSchema]);
 
@@ -5672,11 +6096,11 @@ export const noUnusedFunctionParametersConfigurationSchema = z.union([rulePlainC
 
 export const noUnusedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedImportsOptionsSchema]);
 
+export const noUnusedInstantiationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedInstantiationOptionsSchema]);
+
 export const noUnusedLabelsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedLabelsOptionsSchema]);
 
 export const noUnusedPrivateClassMembersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedPrivateClassMembersOptionsSchema]);
-
-export const noUnusedVariablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedVariablesOptionsSchema]);
 
 export const noVoidElementsWithChildrenConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVoidElementsWithChildrenOptionsSchema]);
 
@@ -5692,17 +6116,23 @@ export const noVueReservedPropsConfigurationSchema = z.union([rulePlainConfigura
 
 export const noVueSetupPropsReactivityLossConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueSetupPropsReactivityLossOptionsSchema]);
 
+export const noVueVIfWithVForConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVIfWithVForOptionsSchema]);
+
 export const useGraphqlNamedOperationsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseGraphqlNamedOperationsOptionsSchema]);
 
 export const useHookAtTopLevelConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseHookAtTopLevelOptionsSchema]);
 
 export const useImportExtensionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImportExtensionsOptionsSchema]);
 
+export const useInlineScriptIdConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseInlineScriptIdOptionsSchema]);
+
 export const useIsNanConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseIsNanOptionsSchema]);
 
 export const useJsonImportAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseJsonImportAttributesOptionsSchema]);
 
 export const useJsxKeyInIterableConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseJsxKeyInIterableOptionsSchema]);
+
+export const useLoneAnonymousOperationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLoneAnonymousOperationOptionsSchema]);
 
 export const useParseIntRadixConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseParseIntRadixOptionsSchema]);
 
@@ -5719,279 +6149,6 @@ export const useUniqueElementIdsConfigurationSchema = z.union([rulePlainConfigur
 export const useValidForDirectionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseValidForDirectionOptionsSchema]);
 
 export const useValidTypeofConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseValidTypeofOptionsSchema]);
-
-export const useYieldConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseYieldOptionsSchema]);
-
-export const noRestrictedElementsOptionsSchema = z.object({
-    /**
-     * Elements to restrict.
-     * Each key is the element name, and the value is the message to show when the element is used.
-     */
-    elements: customRestrictedElementsSchema.optional().nullable()
-});
-
-export const useExhaustiveDependenciesOptionsSchema = z.object({
-    /**
-     * List of hooks of which the dependencies should be validated.
-     */
-    hooks: z.array(hookSchema).optional().nullable(),
-    /**
-     * Whether to report an error when a hook has no dependencies array.
-     */
-    reportMissingDependenciesArray: z.boolean().optional().nullable(),
-    /**
-     * Whether to report an error when a dependency is listed in the dependencies array but isn't used. Defaults to true.
-     */
-    reportUnnecessaryDependencies: z.boolean().optional().nullable()
-});
-
-export const noAmbiguousAnchorTextConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAmbiguousAnchorTextOptionsSchema]);
-
-export const noBeforeInteractiveScriptOutsideDocumentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBeforeInteractiveScriptOutsideDocumentOptionsSchema]);
-
-export const noComponentHookFactoriesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoComponentHookFactoriesOptionsSchema]);
-
-export const noConditionalExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConditionalExpectOptionsSchema]);
-
-export const noContinueConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoContinueOptionsSchema]);
-
-export const noDeprecatedMediaTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDeprecatedMediaTypeOptionsSchema]);
-
-export const noDivRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDivRegexOptionsSchema]);
-
-export const noDrizzleDeleteWithoutWhereConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDrizzleDeleteWithoutWhereOptionsSchema]);
-
-export const noDrizzleUpdateWithoutWhereConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDrizzleUpdateWithoutWhereOptionsSchema]);
-
-export const noDuplicateArgumentNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateArgumentNamesOptionsSchema]);
-
-export const noDuplicateAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateAttributesOptionsSchema]);
-
-export const noDuplicateEnumValueNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateEnumValueNamesOptionsSchema]);
-
-export const noDuplicateEnumValuesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateEnumValuesOptionsSchema]);
-
-export const noDuplicateFieldDefinitionNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema]);
-
-export const noDuplicateGraphqlOperationNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateGraphqlOperationNameOptionsSchema]);
-
-export const noDuplicateInputFieldNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateInputFieldNamesOptionsSchema]);
-
-export const noDuplicateSelectorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateSelectorsOptionsSchema]);
-
-export const noDuplicateVariableNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateVariableNamesOptionsSchema]);
-
-export const noDuplicatedSpreadPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicatedSpreadPropsOptionsSchema]);
-
-export const noEmptyObjectKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyObjectKeysOptionsSchema]);
-
-export const noEqualsToNullConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEqualsToNullOptionsSchema]);
-
-export const noExcessiveClassesPerFileConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveClassesPerFileOptionsSchema]);
-
-export const noExcessiveLinesPerFileConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveLinesPerFileOptionsSchema]);
-
-export const noExcessiveSelectorClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveSelectorClassesOptionsSchema]);
-
-export const noFloatingClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFloatingClassesOptionsSchema]);
-
-export const noFloatingPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFloatingPromisesOptionsSchema]);
-
-export const noForInConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoForInOptionsSchema]);
-
-export const noHexColorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoHexColorsOptionsSchema]);
-
-export const noIdenticalTestTitleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoIdenticalTestTitleOptionsSchema]);
-
-export const noImpliedEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImpliedEvalOptionsSchema]);
-
-export const noIncrementDecrementConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoIncrementDecrementOptionsSchema]);
-
-export const noInlineStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInlineStylesOptionsSchema]);
-
-export const noJsxLeakedDollarConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxLeakedDollarOptionsSchema]);
-
-export const noJsxNamespaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxNamespaceOptionsSchema]);
-
-export const noJsxPropsBindConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxPropsBindOptionsSchema]);
-
-export const noLeakedRenderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLeakedRenderOptionsSchema]);
-
-export const noLoopFuncConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLoopFuncOptionsSchema]);
-
-export const noMisleadingReturnTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisleadingReturnTypeOptionsSchema]);
-
-export const noMisusedPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisusedPromisesOptionsSchema]);
-
-export const noMultiAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMultiAssignOptionsSchema]);
-
-export const noMultiStrConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMultiStrOptionsSchema]);
-
-export const noNestedPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNestedPromisesOptionsSchema]);
-
-export const noParametersOnlyUsedInRecursionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoParametersOnlyUsedInRecursionOptionsSchema]);
-
-export const noPlaywrightElementHandleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightElementHandleOptionsSchema]);
-
-export const noPlaywrightEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightEvalOptionsSchema]);
-
-export const noPlaywrightForceOptionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightForceOptionOptionsSchema]);
-
-export const noPlaywrightMissingAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightMissingAwaitOptionsSchema]);
-
-export const noPlaywrightNetworkidleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightNetworkidleOptionsSchema]);
-
-export const noPlaywrightPagePauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightPagePauseOptionsSchema]);
-
-export const noPlaywrightUselessAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightUselessAwaitOptionsSchema]);
-
-export const noPlaywrightWaitForNavigationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForNavigationOptionsSchema]);
-
-export const noPlaywrightWaitForSelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForSelectorOptionsSchema]);
-
-export const noPlaywrightWaitForTimeoutConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForTimeoutOptionsSchema]);
-
-export const noProtoConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoProtoOptionsSchema]);
-
-export const noReactNativeDeepImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeDeepImportsOptionsSchema]);
-
-export const noReactNativeLiteralColorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeLiteralColorsOptionsSchema]);
-
-export const noReactNativeRawTextConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeRawTextOptionsSchema]);
-
-export const noRedundantDefaultExportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRedundantDefaultExportOptionsSchema]);
-
-export const noReturnAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReturnAssignOptionsSchema]);
-
-export const noRootTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRootTypeOptionsSchema]);
-
-export const noScriptUrlConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoScriptUrlOptionsSchema]);
-
-export const noShadowConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoShadowOptionsSchema]);
-
-export const noSyncScriptsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSyncScriptsOptionsSchema]);
-
-export const noTernaryConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTernaryOptionsSchema]);
-
-export const noTopLevelLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTopLevelLiteralsOptionsSchema]);
-
-export const noUndeclaredEnvVarsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUndeclaredEnvVarsOptionsSchema]);
-
-export const noUnknownAttributeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnknownAttributeOptionsSchema]);
-
-export const noUnnecessaryConditionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnnecessaryConditionsOptionsSchema]);
-
-export const noUnnecessaryTemplateExpressionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnnecessaryTemplateExpressionOptionsSchema]);
-
-export const noUnsafePlusOperandsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafePlusOperandsOptionsSchema]);
-
-export const noUntrustedLicensesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUntrustedLicensesOptionsSchema]);
-
-export const noUselessReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessReturnOptionsSchema]);
-
-export const noUselessTypeConversionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessTypeConversionOptionsSchema]);
-
-export const noVueArrowFuncInWatchConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueArrowFuncInWatchOptionsSchema]);
-
-export const noVueOptionsApiConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueOptionsApiOptionsSchema]);
-
-export const noVueRefAsOperandConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueRefAsOperandOptionsSchema]);
-
-export const noVueVIfWithVForConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVIfWithVForOptionsSchema]);
-
-export const useArraySomeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArraySomeOptionsSchema]);
-
-export const useArraySortCompareConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArraySortCompareOptionsSchema]);
-
-export const useAwaitThenableConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAwaitThenableOptionsSchema]);
-
-export const useBaselineConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseBaselineOptionsSchema]);
-
-export const useConsistentEnumValueTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentEnumValueTypeOptionsSchema]);
-
-export const useConsistentGraphqlDescriptionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentGraphqlDescriptionsOptionsSchema]);
-
-export const useConsistentMethodSignaturesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentMethodSignaturesOptionsSchema]);
-
-export const useConsistentTestItConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentTestItOptionsSchema]);
-
-export const useDestructuringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDestructuringOptionsSchema]);
-
-export const useDisposablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDisposablesOptionsSchema]);
-
-export const useDomNodeTextContentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDomNodeTextContentOptionsSchema]);
-
-export const useDomQuerySelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDomQuerySelectorOptionsSchema]);
-
-export const useErrorCauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseErrorCauseOptionsSchema]);
-
-export const useExhaustiveSwitchCasesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveSwitchCasesOptionsSchema]);
-
-export const useExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExpectOptionsSchema]);
-
-export const useExplicitReturnTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitReturnTypeOptionsSchema]);
-
-export const useExplicitTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitTypeOptionsSchema]);
-
-export const useFindConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseFindOptionsSchema]);
-
-export const useGlobalThisConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseGlobalThisOptionsSchema]);
-
-export const useIframeSandboxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseIframeSandboxOptionsSchema]);
-
-export const useImportsFirstConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImportsFirstOptionsSchema]);
-
-export const useInlineScriptIdConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseInlineScriptIdOptionsSchema]);
-
-export const useInputNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseInputNameOptionsSchema]);
-
-export const useLoneAnonymousOperationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLoneAnonymousOperationOptionsSchema]);
-
-export const useLoneExecutableDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLoneExecutableDefinitionOptionsSchema]);
-
-export const useNamedCaptureGroupConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNamedCaptureGroupOptionsSchema]);
-
-export const useNullishCoalescingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNullishCoalescingOptionsSchema]);
-
-export const usePlaywrightValidDescribeCallbackConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema]);
-
-export const useQwikLoaderLocationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikLoaderLocationOptionsSchema]);
-
-export const useReactAsyncServerFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactAsyncServerFunctionOptionsSchema]);
-
-export const useReactNativePlatformComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactNativePlatformComponentsOptionsSchema]);
-
-export const useReduceTypeParameterConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReduceTypeParameterOptionsSchema]);
-
-export const useRegexpExecConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexpExecOptionsSchema]);
-
-export const useRegexpTestConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexpTestOptionsSchema]);
-
-export const useRequiredScriptsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRequiredScriptsOptionsSchema]);
-
-export const useScopedStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseScopedStylesOptionsSchema]);
-
-export const useSortedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSortedClassesOptionsSchema]);
-
-export const useSpreadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSpreadOptionsSchema]);
-
-export const useStringStartsEndsWithConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseStringStartsEndsWithOptionsSchema]);
-
-export const useUnicodeRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnicodeRegexOptionsSchema]);
-
-export const useVarsOnTopConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVarsOnTopOptionsSchema]);
-
-export const useVueConsistentDefinePropsDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema]);
-
-export const useVueConsistentVBindStyleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentVBindStyleOptionsSchema]);
-
-export const useVueConsistentVOnStyleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentVOnStyleOptionsSchema]);
-
-export const useVueDefineMacrosOrderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueDefineMacrosOrderOptionsSchema]);
-
-export const useVueHyphenatedAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueHyphenatedAttributesOptionsSchema]);
-
-export const useVueMultiWordComponentNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueMultiWordComponentNamesOptionsSchema]);
 
 export const useVueVForKeyConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueVForKeyOptionsSchema]);
 
@@ -6017,7 +6174,203 @@ export const useVueValidVPreConfigurationSchema = z.union([rulePlainConfiguratio
 
 export const useVueValidVTextConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVTextOptionsSchema]);
 
-export const useVueVaporConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueVaporOptionsSchema]);
+export const useYieldConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseYieldOptionsSchema]);
+
+export const noRestrictedElementsOptionsSchema = z.object({
+    /**
+     * Elements to restrict.
+     * Each key is the element name, and the value is the message to show when the element is used.
+     */
+    elements: customRestrictedElementsSchema.optional().nullable()
+});
+
+export const noUnusedVariablesOptionsSchema = z.object({
+    /**
+     * An object defining ignored identifiers for different language constructs.
+     */
+    ignore: noUnusedVariablesOptionsIgnoreSchema.optional().nullable(),
+    /**
+     * Whether to ignore unused variables from an object destructuring with a spread.
+     */
+    ignoreRestSiblings: z.boolean().optional().nullable()
+});
+
+export const useExhaustiveDependenciesOptionsSchema = z.object({
+    /**
+     * List of hooks of which the dependencies should be validated.
+     */
+    hooks: z.array(hookSchema).optional().nullable(),
+    /**
+     * Whether to report an error when a hook has no dependencies array.
+     */
+    reportMissingDependenciesArray: z.boolean().optional().nullable(),
+    /**
+     * Whether to report an error when a dependency is listed in the dependencies array but isn't used. Defaults to true.
+     */
+    reportUnnecessaryDependencies: z.boolean().optional().nullable()
+});
+
+export const noBaseToStringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBaseToStringOptionsSchema]);
+
+export const noComponentHookFactoriesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoComponentHookFactoriesOptionsSchema]);
+
+export const noConditionalExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConditionalExpectOptionsSchema]);
+
+export const noDrizzleDeleteWithoutWhereConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDrizzleDeleteWithoutWhereOptionsSchema]);
+
+export const noDrizzleUpdateWithoutWhereConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDrizzleUpdateWithoutWhereOptionsSchema]);
+
+export const noDuplicateFieldDefinitionNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema]);
+
+export const noDuplicateSelectorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateSelectorsOptionsSchema]);
+
+export const noEmptyObjectKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyObjectKeysOptionsSchema]);
+
+export const noExcessiveNestedCallbacksConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveNestedCallbacksOptionsSchema]);
+
+export const noExcessiveSelectorClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveSelectorClassesOptionsSchema]);
+
+export const noFloatingPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFloatingPromisesOptionsSchema]);
+
+export const noIdenticalTestTitleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoIdenticalTestTitleOptionsSchema]);
+
+export const noImpliedEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImpliedEvalOptionsSchema]);
+
+export const noInlineStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInlineStylesOptionsSchema]);
+
+export const noJsxLeakedDollarConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxLeakedDollarOptionsSchema]);
+
+export const noJsxNamespaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxNamespaceOptionsSchema]);
+
+export const noLoopFuncConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLoopFuncOptionsSchema]);
+
+export const noMisleadingReturnTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisleadingReturnTypeOptionsSchema]);
+
+export const noMisusedPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisusedPromisesOptionsSchema]);
+
+export const noPlaywrightElementHandleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightElementHandleOptionsSchema]);
+
+export const noPlaywrightEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightEvalOptionsSchema]);
+
+export const noPlaywrightForceOptionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightForceOptionOptionsSchema]);
+
+export const noPlaywrightMissingAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightMissingAwaitOptionsSchema]);
+
+export const noPlaywrightNetworkidleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightNetworkidleOptionsSchema]);
+
+export const noPlaywrightPagePauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightPagePauseOptionsSchema]);
+
+export const noPlaywrightUselessAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightUselessAwaitOptionsSchema]);
+
+export const noPlaywrightWaitForNavigationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForNavigationOptionsSchema]);
+
+export const noPlaywrightWaitForSelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForSelectorOptionsSchema]);
+
+export const noPlaywrightWaitForTimeoutConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForTimeoutOptionsSchema]);
+
+export const noReactNativeDeepImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeDeepImportsOptionsSchema]);
+
+export const noReactNativeLiteralColorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeLiteralColorsOptionsSchema]);
+
+export const noReactNativeRawTextConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeRawTextOptionsSchema]);
+
+export const noReactStringRefsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactStringRefsOptionsSchema]);
+
+export const noRestrictedDependenciesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedDependenciesOptionsSchema]);
+
+export const noTopLevelLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTopLevelLiteralsOptionsSchema]);
+
+export const noUndeclaredClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUndeclaredClassesOptionsSchema]);
+
+export const noUnnecessaryTemplateExpressionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnnecessaryTemplateExpressionOptionsSchema]);
+
+export const noUnsafePlusOperandsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafePlusOperandsOptionsSchema]);
+
+export const noUntrustedLicensesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUntrustedLicensesOptionsSchema]);
+
+export const noUnusedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedClassesOptionsSchema]);
+
+export const noUselessTypeConversionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessTypeConversionOptionsSchema]);
+
+export const noVueImportCompilerMacrosConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueImportCompilerMacrosOptionsSchema]);
+
+export const noVueRefAsOperandConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueRefAsOperandOptionsSchema]);
+
+export const noVueVOnNumberValuesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVOnNumberValuesOptionsSchema]);
+
+export const useArraySomeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArraySomeOptionsSchema]);
+
+export const useAwaitThenableConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAwaitThenableOptionsSchema]);
+
+export const useBaselineConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseBaselineOptionsSchema]);
+
+export const useConsistentTestItConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentTestItOptionsSchema]);
+
+export const useDisposablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDisposablesOptionsSchema]);
+
+export const useDomNodeTextContentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDomNodeTextContentOptionsSchema]);
+
+export const useDomQuerySelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDomQuerySelectorOptionsSchema]);
+
+export const useExhaustiveSwitchCasesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveSwitchCasesOptionsSchema]);
+
+export const useExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExpectOptionsSchema]);
+
+export const useExplicitReturnTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitReturnTypeOptionsSchema]);
+
+export const useExplicitTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitTypeOptionsSchema]);
+
+export const useIframeSandboxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseIframeSandboxOptionsSchema]);
+
+export const useImportsFirstConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImportsFirstOptionsSchema]);
+
+export const useIncludesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseIncludesOptionsSchema]);
+
+export const useMathMinMaxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMathMinMaxOptionsSchema]);
+
+export const useNamedCaptureGroupConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNamedCaptureGroupOptionsSchema]);
+
+export const useNullishCoalescingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNullishCoalescingOptionsSchema]);
+
+export const usePlaywrightValidDescribeCallbackConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema]);
+
+export const useQwikLoaderLocationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikLoaderLocationOptionsSchema]);
+
+export const useReactAsyncServerFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactAsyncServerFunctionOptionsSchema]);
+
+export const useReactFunctionComponentDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactFunctionComponentDefinitionOptionsSchema]);
+
+export const useReactNativePlatformComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactNativePlatformComponentsOptionsSchema]);
+
+export const useReduceTypeParameterConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReduceTypeParameterOptionsSchema]);
+
+export const useRegexpExecConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexpExecOptionsSchema]);
+
+export const useRegexpTestConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexpTestOptionsSchema]);
+
+export const useScopedStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseScopedStylesOptionsSchema]);
+
+export const useSortedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSortedClassesOptionsSchema]);
+
+export const useStringStartsEndsWithConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseStringStartsEndsWithOptionsSchema]);
+
+export const useSvelteRequireEachKeyConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSvelteRequireEachKeyOptionsSchema]);
+
+export const useTestHooksInOrderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTestHooksInOrderOptionsSchema]);
+
+export const useTestHooksOnTopConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTestHooksOnTopOptionsSchema]);
+
+export const useThisInClassMethodsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseThisInClassMethodsOptionsSchema]);
+
+export const useUnicodeRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnicodeRegexOptionsSchema]);
+
+export const useVarsOnTopConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVarsOnTopOptionsSchema]);
+
+export const useVueConsistentDefinePropsDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema]);
+
+export const useVueNextTickPromiseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueNextTickPromiseOptionsSchema]);
+
+export const useVueValidVForConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVForOptionsSchema]);
 
 export const noAccumulatingSpreadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAccumulatingSpreadOptionsSchema]);
 
@@ -6031,9 +6384,13 @@ export const noDynamicNamespaceImportAccessConfigurationSchema = z.union([rulePl
 
 export const noImgElementConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImgElementOptionsSchema]);
 
+export const noJsxPropsBindConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxPropsBindOptionsSchema]);
+
 export const noNamespaceImportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNamespaceImportOptionsSchema]);
 
 export const noReExportAllConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReExportAllOptionsSchema]);
+
+export const noSyncScriptsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSyncScriptsOptionsSchema]);
 
 export const noUnwantedPolyfillioConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnwantedPolyfillioOptionsSchema]);
 
@@ -6043,6 +6400,8 @@ export const useSolidForComponentConfigurationSchema = z.union([rulePlainConfigu
 
 export const useTopLevelRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTopLevelRegexOptionsSchema]);
 
+export const useVueVaporConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueVaporOptionsSchema]);
+
 export const noBlankTargetConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBlankTargetOptionsSchema]);
 
 export const noDangerouslySetInnerHtmlConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDangerouslySetInnerHtmlOptionsSchema]);
@@ -6051,9 +6410,13 @@ export const noDangerouslySetInnerHtmlWithChildrenConfigurationSchema = z.union(
 
 export const noGlobalEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoGlobalEvalOptionsSchema]);
 
+export const noScriptUrlConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoScriptUrlOptionsSchema]);
+
 export const noSecretsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSecretsOptionsSchema]);
 
 export const noCommonJsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoCommonJsOptionsSchema]);
+
+export const noContinueConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoContinueOptionsSchema]);
 
 export const noDefaultExportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDefaultExportOptionsSchema]);
 
@@ -6063,17 +6426,29 @@ export const noDoneCallbackConfigurationSchema = z.union([rulePlainConfiguration
 
 export const noEnumConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEnumOptionsSchema]);
 
+export const noExcessiveClassesPerFileConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveClassesPerFileOptionsSchema]);
+
+export const noExcessiveLinesPerFileConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveLinesPerFileOptionsSchema]);
+
 export const noExportedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExportedImportsOptionsSchema]);
 
 export const noHeadElementConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoHeadElementOptionsSchema]);
 
+export const noHexColorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoHexColorsOptionsSchema]);
+
 export const noImplicitBooleanConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImplicitBooleanOptionsSchema]);
+
+export const noIncrementDecrementConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoIncrementDecrementOptionsSchema]);
 
 export const noInferrableTypesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInferrableTypesOptionsSchema]);
 
 export const noJsxLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxLiteralsOptionsSchema]);
 
 export const noMagicNumbersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMagicNumbersOptionsSchema]);
+
+export const noMultiAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMultiAssignOptionsSchema]);
+
+export const noMultilineStringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMultilineStringOptionsSchema]);
 
 export const noNamespaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNamespaceOptionsSchema]);
 
@@ -6091,15 +6466,21 @@ export const noProcessEnvConfigurationSchema = z.union([rulePlainConfigurationSc
 
 export const noRestrictedGlobalsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedGlobalsOptionsSchema]);
 
+export const noRootTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRootTypeOptionsSchema]);
+
 export const noShoutyConstantsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoShoutyConstantsOptionsSchema]);
 
 export const noSubstrConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSubstrOptionsSchema]);
+
+export const noTernaryConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTernaryOptionsSchema]);
 
 export const noUnusedTemplateLiteralConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedTemplateLiteralOptionsSchema]);
 
 export const noUselessElseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessElseOptionsSchema]);
 
 export const noValueAtRuleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoValueAtRuleOptionsSchema]);
+
+export const noVueOptionsApiConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueOptionsApiOptionsSchema]);
 
 export const noYodaExpressionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoYodaExpressionOptionsSchema]);
 
@@ -6125,7 +6506,13 @@ export const useConsistentBuiltinInstantiationConfigurationSchema = z.union([rul
 
 export const useConsistentCurlyBracesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentCurlyBracesOptionsSchema]);
 
+export const useConsistentEnumValueTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentEnumValueTypeOptionsSchema]);
+
+export const useConsistentGraphqlDescriptionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentGraphqlDescriptionsOptionsSchema]);
+
 export const useConsistentMemberAccessibilityConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentMemberAccessibilityOptionsSchema]);
+
+export const useConsistentMethodSignaturesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentMethodSignaturesOptionsSchema]);
 
 export const useConsistentObjectDefinitionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentObjectDefinitionsOptionsSchema]);
 
@@ -6141,6 +6528,8 @@ export const useDeprecatedReasonConfigurationSchema = z.union([rulePlainConfigur
 
 export const useEnumInitializersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseEnumInitializersOptionsSchema]);
 
+export const useErrorCauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseErrorCauseOptionsSchema]);
+
 export const useExplicitLengthCheckConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitLengthCheckOptionsSchema]);
 
 export const useExponentiationOperatorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExponentiationOperatorOptionsSchema]);
@@ -6155,21 +6544,25 @@ export const useForOfConfigurationSchema = z.union([rulePlainConfigurationSchema
 
 export const useFragmentSyntaxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseFragmentSyntaxOptionsSchema]);
 
+export const useGlobalThisConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseGlobalThisOptionsSchema]);
+
 export const useGraphqlNamingConventionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseGraphqlNamingConventionOptionsSchema]);
 
 export const useGroupedAccessorPairsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseGroupedAccessorPairsOptionsSchema]);
 
 export const useImportTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImportTypeOptionsSchema]);
 
+export const useInputNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseInputNameOptionsSchema]);
+
 export const useLiteralEnumMembersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLiteralEnumMembersOptionsSchema]);
+
+export const useLoneExecutableDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLoneExecutableDefinitionOptionsSchema]);
 
 export const useNodeAssertStrictConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNodeAssertStrictOptionsSchema]);
 
 export const useNodejsImportProtocolConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNodejsImportProtocolOptionsSchema]);
 
 export const useNumberNamespaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNumberNamespaceOptionsSchema]);
-
-export const useNumericSeparatorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNumericSeparatorsOptionsSchema]);
 
 export const useObjectSpreadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseObjectSpreadOptionsSchema]);
 
@@ -6185,6 +6578,8 @@ export const useShorthandFunctionTypeConfigurationSchema = z.union([rulePlainCon
 
 export const useSingleVarDeclaratorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSingleVarDeclaratorOptionsSchema]);
 
+export const useSpreadOverApplyConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSpreadOverApplyOptionsSchema]);
+
 export const useSymbolDescriptionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSymbolDescriptionOptionsSchema]);
 
 export const useTemplateConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTemplateOptionsSchema]);
@@ -6197,10 +6592,25 @@ export const useTrimStartEndConfigurationSchema = z.union([rulePlainConfiguratio
 
 export const useUnifiedTypeSignaturesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnifiedTypeSignaturesOptionsSchema]);
 
+export const useVueConsistentVBindStyleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentVBindStyleOptionsSchema]);
+
+export const useVueConsistentVOnStyleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentVOnStyleOptionsSchema]);
+
+export const useVueDefineMacrosOrderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueDefineMacrosOrderOptionsSchema]);
+
+export const useVueHyphenatedAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueHyphenatedAttributesOptionsSchema]);
+
+export const useVueMultiWordComponentNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueMultiWordComponentNamesOptionsSchema]);
+
 export const patternsSchema = patternOptionsSchema;
 
 export const noRestrictedTypesOptionsSchema = z.object({
     types: z.record(z.string(), customRestrictedTypeSchema).optional().nullable()
+});
+
+export const useDestructuringOptionsSchema = z.object({
+    assignmentExpression: destructuringConfigSchema.optional().nullable(),
+    variableDeclarator: destructuringConfigSchema.optional().nullable()
 });
 
 export const conventionSchema = z.object({
@@ -6210,6 +6620,25 @@ export const conventionSchema = z.object({
      */
     match: regexSchema.optional().nullable(),
     selector: selectorSchema.optional()
+});
+
+export const useNumericSeparatorsOptionsSchema = z.object({
+    /**
+     * Options for binary literals (e.g., `0b1010_0001`).
+     */
+    binary: numericLiteralSeparatorOptionsSchema.optional().nullable(),
+    /**
+     * Options for decimal literals (e.g., `1_234_567`).
+     */
+    decimal: numericLiteralSeparatorOptionsSchema.optional().nullable(),
+    /**
+     * Options for hexadecimal literals (e.g., `0xAB_CD`).
+     */
+    hexadecimal: numericLiteralSeparatorOptionsSchema.optional().nullable(),
+    /**
+     * Options for octal literals (e.g., `0o1234_5670`).
+     */
+    octal: numericLiteralSeparatorOptionsSchema.optional().nullable()
 });
 
 export const noAlertConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAlertOptionsSchema]);
@@ -6250,6 +6679,8 @@ export const noDebuggerConfigurationSchema = z.union([rulePlainConfigurationSche
 
 export const noDeprecatedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDeprecatedImportsOptionsSchema]);
 
+export const noDeprecatedMediaTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDeprecatedMediaTypeOptionsSchema]);
+
 export const noDocumentCookieConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDocumentCookieOptionsSchema]);
 
 export const noDocumentImportInPageConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDocumentImportInPageOptionsSchema]);
@@ -6268,9 +6699,13 @@ export const noDuplicateDependenciesConfigurationSchema = z.union([rulePlainConf
 
 export const noDuplicateElseIfConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateElseIfOptionsSchema]);
 
+export const noDuplicateEnumValuesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateEnumValuesOptionsSchema]);
+
 export const noDuplicateFieldsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateFieldsOptionsSchema]);
 
 export const noDuplicateFontNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateFontNamesOptionsSchema]);
+
+export const noDuplicateGraphqlOperationNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateGraphqlOperationNameOptionsSchema]);
 
 export const noDuplicateJsxPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateJsxPropsOptionsSchema]);
 
@@ -6284,6 +6719,8 @@ export const noDuplicateSelectorsKeyframeBlockConfigurationSchema = z.union([rul
 
 export const noDuplicateTestHooksConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateTestHooksOptionsSchema]);
 
+export const noDuplicatedSpreadPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicatedSpreadPropsOptionsSchema]);
+
 export const noEmptyBlockConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyBlockOptionsSchema]);
 
 export const noEmptyBlockStatementsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyBlockStatementsOptionsSchema]);
@@ -6291,6 +6728,8 @@ export const noEmptyBlockStatementsConfigurationSchema = z.union([rulePlainConfi
 export const noEmptyInterfaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyInterfaceOptionsSchema]);
 
 export const noEmptySourceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptySourceOptionsSchema]);
+
+export const noEqualsToNullConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEqualsToNullOptionsSchema]);
 
 export const noEvolvingTypesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEvolvingTypesOptionsSchema]);
 
@@ -6303,6 +6742,8 @@ export const noExtraNonNullAssertionConfigurationSchema = z.union([rulePlainConf
 export const noFallthroughSwitchClauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFallthroughSwitchClauseOptionsSchema]);
 
 export const noFocusedTestsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFocusedTestsOptionsSchema]);
+
+export const noForInConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoForInOptionsSchema]);
 
 export const noFunctionAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFunctionAssignOptionsSchema]);
 
@@ -6326,6 +6767,8 @@ export const noIrregularWhitespaceConfigurationSchema = z.union([rulePlainConfig
 
 export const noLabelVarConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLabelVarOptionsSchema]);
 
+export const noLeakedRenderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLeakedRenderOptionsSchema]);
+
 export const noMisleadingCharacterClassConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisleadingCharacterClassOptionsSchema]);
 
 export const noMisleadingInstantiatorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisleadingInstantiatorOptionsSchema]);
@@ -6334,9 +6777,15 @@ export const noMisplacedAssertionConfigurationSchema = z.union([rulePlainConfigu
 
 export const noMisrefactoredShorthandAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisrefactoredShorthandAssignOptionsSchema]);
 
+export const noNestedPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNestedPromisesOptionsSchema]);
+
 export const noNonNullAssertedOptionalChainConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNonNullAssertedOptionalChainOptionsSchema]);
 
 export const noOctalEscapeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoOctalEscapeOptionsSchema]);
+
+export const noParametersOnlyUsedInRecursionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoParametersOnlyUsedInRecursionOptionsSchema]);
+
+export const noProtoConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoProtoOptionsSchema]);
 
 export const noPrototypeBuiltinsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPrototypeBuiltinsOptionsSchema]);
 
@@ -6350,7 +6799,11 @@ export const noRedeclareConfigurationSchema = z.union([rulePlainConfigurationSch
 
 export const noRedundantUseStrictConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRedundantUseStrictOptionsSchema]);
 
+export const noReturnAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReturnAssignOptionsSchema]);
+
 export const noSelfCompareConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSelfCompareOptionsSchema]);
+
+export const noShadowConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoShadowOptionsSchema]);
 
 export const noShadowRestrictedNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoShadowRestrictedNamesOptionsSchema]);
 
@@ -6370,7 +6823,13 @@ export const noTsIgnoreConfigurationSchema = z.union([rulePlainConfigurationSche
 
 export const noUnassignedVariablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnassignedVariablesOptionsSchema]);
 
+export const noUndeclaredEnvVarsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUndeclaredEnvVarsOptionsSchema]);
+
 export const noUnknownAtRulesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnknownAtRulesOptionsSchema]);
+
+export const noUnknownAttributeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnknownAttributeOptionsSchema]);
+
+export const noUnnecessaryConditionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnnecessaryConditionsOptionsSchema]);
 
 export const noUnsafeDeclarationMergingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafeDeclarationMergingOptionsSchema]);
 
@@ -6384,9 +6843,13 @@ export const noUselessRegexBackrefsConfigurationSchema = z.union([rulePlainConfi
 
 export const noVarConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVarOptionsSchema]);
 
+export const noVueArrowFuncInWatchConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueArrowFuncInWatchOptionsSchema]);
+
 export const noWithConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoWithOptionsSchema]);
 
 export const useAdjacentOverloadSignaturesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAdjacentOverloadSignaturesOptionsSchema]);
+
+export const useArraySortCompareConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArraySortCompareOptionsSchema]);
 
 export const useAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAwaitOptionsSchema]);
 
@@ -6412,6 +6875,8 @@ export const useNamespaceKeywordConfigurationSchema = z.union([rulePlainConfigur
 
 export const useNumberToFixedDigitsArgumentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNumberToFixedDigitsArgumentOptionsSchema]);
 
+export const useRequiredScriptsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRequiredScriptsOptionsSchema]);
+
 export const useStaticResponseMethodsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseStaticResponseMethodsOptionsSchema]);
 
 export const useStrictModeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseStrictModeOptionsSchema]);
@@ -6429,6 +6894,11 @@ export const a11YSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-access-key
      */
     noAccessKey: noAccessKeyConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow ambiguous anchor descriptions.
+     * See https://biomejs.dev/linter/rules/no-ambiguous-anchor-text
+     */
+    noAmbiguousAnchorText: noAmbiguousAnchorTextConfigurationSchema.optional().nullable(),
     /**
      * Enforce that aria-hidden="true" is not set on focusable elements.
      * See https://biomejs.dev/linter/rules/no-aria-hidden-on-focusable
@@ -6475,7 +6945,7 @@ export const a11YSchema = z.object({
      */
     noNoninteractiveElementToInteractiveRole: noNoninteractiveElementToInteractiveRoleConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that tabIndex is not assigned to non-interactive HTML elements.
+     * Enforce that tabindex is not assigned to non-interactive HTML elements.
      * See https://biomejs.dev/linter/rules/no-noninteractive-tabindex
      */
     noNoninteractiveTabindex: noNoninteractiveTabindexConfigurationSchema.optional().nullable(),
@@ -6505,6 +6975,10 @@ export const a11YSchema = z.object({
      */
     noSvgWithoutTitle: noSvgWithoutTitleConfigurationSchema.optional().nullable(),
     /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
+    /**
      * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
@@ -6519,7 +6993,7 @@ export const a11YSchema = z.object({
      */
     useAnchorContent: useAnchorContentConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that tabIndex is assigned to non-interactive HTML elements with aria-activedescendant.
+     * Enforce that tabindex is assigned to non-interactive HTML elements with aria-activedescendant.
      * See https://biomejs.dev/linter/rules/use-aria-activedescendant-with-tabindex
      */
     useAriaActivedescendantWithTabindex: useAriaActivedescendantWithTabindexConfigurationSchema.optional().nullable(),
@@ -6549,7 +7023,7 @@ export const a11YSchema = z.object({
      */
     useGenericFontNames: useGenericFontNamesConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers. Accessible means that it is not hidden using the aria-hidden prop.
+     * Enforce that heading elements (h1, h2, etc.) have content and that the content is accessible to screen readers.
      * See https://biomejs.dev/linter/rules/use-heading-content
      */
     useHeadingContent: useHeadingContentConfigurationSchema.optional().nullable(),
@@ -6564,12 +7038,12 @@ export const a11YSchema = z.object({
      */
     useIframeTitle: useIframeTitleConfigurationSchema.optional().nullable(),
     /**
-     * Enforce onClick is accompanied by at least one of the following: onKeyUp, onKeyDown, onKeyPress.
+     * Enforce elements with a click event handler to also have at least one keyboard event handler.
      * See https://biomejs.dev/linter/rules/use-key-with-click-events
      */
     useKeyWithClickEvents: useKeyWithClickEventsConfigurationSchema.optional().nullable(),
     /**
-     * Enforce onMouseOver / onMouseOut are accompanied by onFocus / onBlur.
+     * Enforce that onmouseover is accompanied by onfocus and onmouseout by onblur.
      * See https://biomejs.dev/linter/rules/use-key-with-mouse-events
      */
     useKeyWithMouseEvents: useKeyWithMouseEventsConfigurationSchema.optional().nullable(),
@@ -6579,7 +7053,7 @@ export const a11YSchema = z.object({
      */
     useMediaCaption: useMediaCaptionConfigurationSchema.optional().nullable(),
     /**
-     * It detects the use of role attributes in JSX elements and suggests using semantic elements instead.
+     * Enforces using semantic DOM elements over the ARIA role property.
      * See https://biomejs.dev/linter/rules/use-semantic-elements
      */
     useSemanticElements: useSemanticElementsConfigurationSchema.optional().nullable(),
@@ -6640,6 +7114,11 @@ export const complexitySchema = z.object({
      */
     noCommaOperator: noCommaOperatorConfigurationSchema.optional().nullable(),
     /**
+     * Disallow equal signs explicitly at the beginning of regular expressions.
+     * See https://biomejs.dev/linter/rules/no-div-regex
+     */
+    noDivRegex: noDivRegexConfigurationSchema.optional().nullable(),
+    /**
      * Disallow empty type parameters in type aliases and interfaces.
      * See https://biomejs.dev/linter/rules/no-empty-type-parameters
      */
@@ -6675,7 +7154,7 @@ export const complexitySchema = z.object({
      */
     noForEach: noForEachConfigurationSchema.optional().nullable(),
     /**
-     * Disallow shorthand type conversions.
+     * Encourage use of explicit type conversion functions over their shorthand counterparts.
      * See https://biomejs.dev/linter/rules/no-implicit-coercions
      */
     noImplicitCoercions: noImplicitCoercionsConfigurationSchema.optional().nullable(),
@@ -6684,6 +7163,11 @@ export const complexitySchema = z.object({
      * See https://biomejs.dev/linter/rules/no-important-styles
      */
     noImportantStyles: noImportantStylesConfigurationSchema.optional().nullable(),
+    /**
+     * Checks if a default export exports the same symbol as a named export.
+     * See https://biomejs.dev/linter/rules/no-redundant-default-export
+     */
+    noRedundantDefaultExport: noRedundantDefaultExportConfigurationSchema.optional().nullable(),
     /**
      * This rule reports when a class has no non-static members, such as for a class used exclusively as a static namespace.
      * See https://biomejs.dev/linter/rules/no-static-only-class
@@ -6745,6 +7229,11 @@ export const complexitySchema = z.object({
      */
     noUselessRename: noUselessRenameConfigurationSchema.optional().nullable(),
     /**
+     * Disallow redundant return statements.
+     * See https://biomejs.dev/linter/rules/no-useless-return
+     */
+    noUselessReturn: noUselessReturnConfigurationSchema.optional().nullable(),
+    /**
      * Disallow unnecessary concatenation of string or template literals.
      * See https://biomejs.dev/linter/rules/no-useless-string-concat
      */
@@ -6790,9 +7279,18 @@ export const complexitySchema = z.object({
      */
     noVoid: noVoidConfigurationSchema.optional().nullable(),
     /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
+    /**
      * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
+    /**
+     * Enforce the use of Array.prototype.find() over Array.prototype.filter() followed by [0] when looking for a single result.
+     * See https://biomejs.dev/linter/rules/use-array-find
+     */
+    useArrayFind: useArrayFindConfigurationSchema.optional().nullable(),
     /**
      * Use arrow functions over function expressions.
      * See https://biomejs.dev/linter/rules/use-arrow-function
@@ -6860,6 +7358,12 @@ export const ruleWithNoRestrictedElementsOptionsSchema = z.object({
     options: noRestrictedElementsOptionsSchema.optional()
 });
 
+export const ruleWithNoUnusedVariablesOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noUnusedVariablesOptionsSchema.optional()
+});
+
 export const ruleWithUseExhaustiveDependenciesOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
@@ -6871,15 +7375,10 @@ export const ruleWithUseExhaustiveDependenciesOptionsSchema = z.object({
  */
 export const nurserySchema = z.object({
     /**
-     * Disallow ambiguous anchor descriptions.
-     * See https://biomejs.dev/linter/rules/no-ambiguous-anchor-text
+     * Require stringification to avoid values that only use the default object representation.
+     * See https://biomejs.dev/linter/rules/no-base-to-string
      */
-    noAmbiguousAnchorText: noAmbiguousAnchorTextConfigurationSchema.optional().nullable(),
-    /**
-     * Prevent usage of next/script's beforeInteractive strategy outside of pages/_document.js in a Next.js project.
-     * See https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document
-     */
-    noBeforeInteractiveScriptOutsideDocument: noBeforeInteractiveScriptOutsideDocumentConfigurationSchema.optional().nullable(),
+    noBaseToString: noBaseToStringConfigurationSchema.optional().nullable(),
     /**
      * Disallows defining React components or custom hooks inside other functions.
      * See https://biomejs.dev/linter/rules/no-component-hook-factories
@@ -6891,21 +7390,6 @@ export const nurserySchema = z.object({
      */
     noConditionalExpect: noConditionalExpectConfigurationSchema.optional().nullable(),
     /**
-     * Disallow continue statements.
-     * See https://biomejs.dev/linter/rules/no-continue
-     */
-    noContinue: noContinueConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow deprecated media types.
-     * See https://biomejs.dev/linter/rules/no-deprecated-media-type
-     */
-    noDeprecatedMediaType: noDeprecatedMediaTypeConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow equal signs explicitly at the beginning of regular expressions.
-     * See https://biomejs.dev/linter/rules/no-div-regex
-     */
-    noDivRegex: noDivRegexConfigurationSchema.optional().nullable(),
-    /**
      * Require .where() to be called when using .delete() with Drizzle ORM.
      * See https://biomejs.dev/linter/rules/no-drizzle-delete-without-where
      */
@@ -6916,100 +7400,35 @@ export const nurserySchema = z.object({
      */
     noDrizzleUpdateWithoutWhere: noDrizzleUpdateWithoutWhereConfigurationSchema.optional().nullable(),
     /**
-     * Require all argument names for fields & directives to be unique.
-     * See https://biomejs.dev/linter/rules/no-duplicate-argument-names
-     */
-    noDuplicateArgumentNames: noDuplicateArgumentNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow duplication of attributes.
-     * See https://biomejs.dev/linter/rules/no-duplicate-attributes
-     */
-    noDuplicateAttributes: noDuplicateAttributesConfigurationSchema.optional().nullable(),
-    /**
-     * Require all enum value names to be unique.
-     * See https://biomejs.dev/linter/rules/no-duplicate-enum-value-names
-     */
-    noDuplicateEnumValueNames: noDuplicateEnumValueNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow duplicate enum member values.
-     * See https://biomejs.dev/linter/rules/no-duplicate-enum-values
-     */
-    noDuplicateEnumValues: noDuplicateEnumValuesConfigurationSchema.optional().nullable(),
-    /**
      * Require all fields of a type to be unique.
      * See https://biomejs.dev/linter/rules/no-duplicate-field-definition-names
      */
     noDuplicateFieldDefinitionNames: noDuplicateFieldDefinitionNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce unique operation names across a GraphQL document.
-     * See https://biomejs.dev/linter/rules/no-duplicate-graphql-operation-name
-     */
-    noDuplicateGraphqlOperationName: noDuplicateGraphqlOperationNameConfigurationSchema.optional().nullable(),
-    /**
-     * Require fields within an input object to be unique.
-     * See https://biomejs.dev/linter/rules/no-duplicate-input-field-names
-     */
-    noDuplicateInputFieldNames: noDuplicateInputFieldNamesConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate selectors.
      * See https://biomejs.dev/linter/rules/no-duplicate-selectors
      */
     noDuplicateSelectors: noDuplicateSelectorsConfigurationSchema.optional().nullable(),
     /**
-     * Require all variable definitions to be unique.
-     * See https://biomejs.dev/linter/rules/no-duplicate-variable-names
-     */
-    noDuplicateVariableNames: noDuplicateVariableNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow JSX prop spreading the same identifier multiple times.
-     * See https://biomejs.dev/linter/rules/no-duplicated-spread-props
-     */
-    noDuplicatedSpreadProps: noDuplicatedSpreadPropsConfigurationSchema.optional().nullable(),
-    /**
      * Disallow empty keys in JSON objects.
      * See https://biomejs.dev/linter/rules/no-empty-object-keys
      */
     noEmptyObjectKeys: noEmptyObjectKeysConfigurationSchema.optional().nullable(),
     /**
-     * Require the use of === or !== for comparison with null.
-     * See https://biomejs.dev/linter/rules/no-equals-to-null
+     * Enforce a maximum depth that callbacks can be nested.
+     * See https://biomejs.dev/linter/rules/no-excessive-nested-callbacks
      */
-    noEqualsToNull: noEqualsToNullConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce a maximum number of classes per file.
-     * See https://biomejs.dev/linter/rules/no-excessive-classes-per-file
-     */
-    noExcessiveClassesPerFile: noExcessiveClassesPerFileConfigurationSchema.optional().nullable(),
-    /**
-     * Restrict the number of lines in a file.
-     * See https://biomejs.dev/linter/rules/no-excessive-lines-per-file
-     */
-    noExcessiveLinesPerFile: noExcessiveLinesPerFileConfigurationSchema.optional().nullable(),
+    noExcessiveNestedCallbacks: noExcessiveNestedCallbacksConfigurationSchema.optional().nullable(),
     /**
      * Limit the number of classes in a selector.
      * See https://biomejs.dev/linter/rules/no-excessive-selector-classes
      */
     noExcessiveSelectorClasses: noExcessiveSelectorClassesConfigurationSchema.optional().nullable(),
     /**
-     * Disallow new operators outside of assignments or comparisons.
-     * See https://biomejs.dev/linter/rules/no-floating-classes
-     */
-    noFloatingClasses: noFloatingClassesConfigurationSchema.optional().nullable(),
-    /**
      * Require Promise-like statements to be handled appropriately.
      * See https://biomejs.dev/linter/rules/no-floating-promises
      */
     noFloatingPromises: noFloatingPromisesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow iterating using a for-in loop.
-     * See https://biomejs.dev/linter/rules/no-for-in
-     */
-    noForIn: noForInConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow hex colors.
-     * See https://biomejs.dev/linter/rules/no-hex-colors
-     */
-    noHexColors: noHexColorsConfigurationSchema.optional().nullable(),
     /**
      * Disallow identical titles in test suites and test cases.
      * See https://biomejs.dev/linter/rules/no-identical-test-title
@@ -7020,11 +7439,6 @@ export const nurserySchema = z.object({
      * See https://biomejs.dev/linter/rules/no-implied-eval
      */
     noImpliedEval: noImpliedEvalConfigurationSchema.optional().nullable(),
-    /**
-     * Disallows the usage of the unary operators ++ and --.
-     * See https://biomejs.dev/linter/rules/no-increment-decrement
-     */
-    noIncrementDecrement: noIncrementDecrementConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of inline styles.
      * See https://biomejs.dev/linter/rules/no-inline-styles
@@ -7041,16 +7455,6 @@ export const nurserySchema = z.object({
      */
     noJsxNamespace: noJsxNamespaceConfigurationSchema.optional().nullable(),
     /**
-     * Disallow .bind(), arrow functions, or function expressions in JSX props.
-     * See https://biomejs.dev/linter/rules/no-jsx-props-bind
-     */
-    noJsxPropsBind: noJsxPropsBindConfigurationSchema.optional().nullable(),
-    /**
-     * Prevent problematic leaked values from being rendered.
-     * See https://biomejs.dev/linter/rules/no-leaked-render
-     */
-    noLeakedRender: noLeakedRenderConfigurationSchema.optional().nullable(),
-    /**
      * Disallow functions declared inside loops that capture unsafe outer variables.
      * See https://biomejs.dev/linter/rules/no-loop-func
      */
@@ -7065,26 +7469,6 @@ export const nurserySchema = z.object({
      * See https://biomejs.dev/linter/rules/no-misused-promises
      */
     noMisusedPromises: noMisusedPromisesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow use of chained assignment expressions.
-     * See https://biomejs.dev/linter/rules/no-multi-assign
-     */
-    noMultiAssign: noMultiAssignConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow creating multiline strings by escaping newlines.
-     * See https://biomejs.dev/linter/rules/no-multi-str
-     */
-    noMultiStr: noMultiStrConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow nested .then() or .catch() promise calls.
-     * See https://biomejs.dev/linter/rules/no-nested-promises
-     */
-    noNestedPromises: noNestedPromisesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow function parameters that are only used in recursive calls.
-     * See https://biomejs.dev/linter/rules/no-parameters-only-used-in-recursion
-     */
-    noParametersOnlyUsedInRecursion: noParametersOnlyUsedInRecursionConfigurationSchema.optional().nullable(),
     /**
      * Disallow usage of element handles (page.$() and page.$$()).
      * See https://biomejs.dev/linter/rules/no-playwright-element-handle
@@ -7136,11 +7520,6 @@ export const nurserySchema = z.object({
      */
     noPlaywrightWaitForTimeout: noPlaywrightWaitForTimeoutConfigurationSchema.optional().nullable(),
     /**
-     * Disallow the use of the deprecated __proto__ object property.
-     * See https://biomejs.dev/linter/rules/no-proto
-     */
-    noProto: noProtoConfigurationSchema.optional().nullable(),
-    /**
      * Disallow deep imports from the react-native package.
      * See https://biomejs.dev/linter/rules/no-react-native-deep-imports
      */
@@ -7156,60 +7535,25 @@ export const nurserySchema = z.object({
      */
     noReactNativeRawText: noReactNativeRawTextConfigurationSchema.optional().nullable(),
     /**
-     * Checks if a default export exports the same symbol as a named export.
-     * See https://biomejs.dev/linter/rules/no-redundant-default-export
+     * Disallow string refs in React components.
+     * See https://biomejs.dev/linter/rules/no-react-string-refs
      */
-    noRedundantDefaultExport: noRedundantDefaultExportConfigurationSchema.optional().nullable(),
+    noReactStringRefs: noReactStringRefsConfigurationSchema.optional().nullable(),
     /**
-     * Disallow assignments in return statements.
-     * See https://biomejs.dev/linter/rules/no-return-assign
+     * Disallow dependencies that are known to have better alternatives.
+     * See https://biomejs.dev/linter/rules/no-restricted-dependencies
      */
-    noReturnAssign: noReturnAssignConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow the usage of specified root types.
-     * See https://biomejs.dev/linter/rules/no-root-type
-     */
-    noRootType: noRootTypeConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow javascript: URLs in HTML.
-     * See https://biomejs.dev/linter/rules/no-script-url
-     */
-    noScriptUrl: noScriptUrlConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow variable declarations from shadowing variables declared in the outer scope.
-     * See https://biomejs.dev/linter/rules/no-shadow
-     */
-    noShadow: noShadowConfigurationSchema.optional().nullable(),
-    /**
-     * Prevent the usage of synchronous scripts.
-     * See https://biomejs.dev/linter/rules/no-sync-scripts
-     */
-    noSyncScripts: noSyncScriptsConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow ternary operators.
-     * See https://biomejs.dev/linter/rules/no-ternary
-     */
-    noTernary: noTernaryConfigurationSchema.optional().nullable(),
+    noRestrictedDependencies: noRestrictedDependenciesConfigurationSchema.optional().nullable(),
     /**
      * Require the JSON top-level value to be an array or object.
      * See https://biomejs.dev/linter/rules/no-top-level-literals
      */
     noTopLevelLiterals: noTopLevelLiteralsConfigurationSchema.optional().nullable(),
     /**
-     * Disallow the use of undeclared environment variables.
-     * See https://biomejs.dev/linter/rules/no-undeclared-env-vars
+     * Reports CSS class names in HTML class attributes that are not defined in any \<style> block or linked stylesheet available to the file.
+     * See https://biomejs.dev/linter/rules/no-undeclared-classes
      */
-    noUndeclaredEnvVars: noUndeclaredEnvVarsConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow unknown DOM properties.
-     * See https://biomejs.dev/linter/rules/no-unknown-attribute
-     */
-    noUnknownAttribute: noUnknownAttributeConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow unnecessary type-based conditions that can be statically determined as redundant.
-     * See https://biomejs.dev/linter/rules/no-unnecessary-conditions
-     */
-    noUnnecessaryConditions: noUnnecessaryConditionsConfigurationSchema.optional().nullable(),
+    noUndeclaredClasses: noUndeclaredClassesConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary template expressions.
      * See https://biomejs.dev/linter/rules/no-unnecessary-template-expression
@@ -7226,35 +7570,34 @@ export const nurserySchema = z.object({
      */
     noUntrustedLicenses: noUntrustedLicensesConfigurationSchema.optional().nullable(),
     /**
-     * Disallow redundant return statements.
-     * See https://biomejs.dev/linter/rules/no-useless-return
+     * Reports CSS class selectors that are never referenced in any JSX or HTML file.
+     * See https://biomejs.dev/linter/rules/no-unused-classes
      */
-    noUselessReturn: noUselessReturnConfigurationSchema.optional().nullable(),
+    noUnusedClasses: noUnusedClassesConfigurationSchema.optional().nullable(),
     /**
      * Disallow type conversions that do not change the type of an expression.
      * See https://biomejs.dev/linter/rules/no-useless-type-conversion
      */
     noUselessTypeConversion: noUselessTypeConversionConfigurationSchema.optional().nullable(),
     /**
-     * Disallows using arrow functions when defining a watcher.
-     * See https://biomejs.dev/linter/rules/no-vue-arrow-func-in-watch
+     * Disallow importing Vue compiler macros.
+     * See https://biomejs.dev/linter/rules/no-vue-import-compiler-macros
      */
-    noVueArrowFuncInWatch: noVueArrowFuncInWatchConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow the use of Vue Options API.
-     * See https://biomejs.dev/linter/rules/no-vue-options-api
-     */
-    noVueOptionsApi: noVueOptionsApiConfigurationSchema.optional().nullable(),
+    noVueImportCompilerMacros: noVueImportCompilerMacrosConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of value wrapped by ref()(Composition API) as operand.
      * See https://biomejs.dev/linter/rules/no-vue-ref-as-operand
      */
     noVueRefAsOperand: noVueRefAsOperandConfigurationSchema.optional().nullable(),
     /**
-     * Disallow using v-if and v-for directives on the same element.
-     * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
+     * Disallow deprecated number modifiers on Vue v-on directives.
+     * See https://biomejs.dev/linter/rules/no-vue-v-on-number-values
      */
-    noVueVIfWithVFor: noVueVIfWithVForConfigurationSchema.optional().nullable(),
+    noVueVOnNumberValues: noVueVOnNumberValuesConfigurationSchema.optional().nullable(),
+    /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
     /**
      * Enables the recommended rules for this group
      */
@@ -7264,11 +7607,6 @@ export const nurserySchema = z.object({
      * See https://biomejs.dev/linter/rules/use-array-some
      */
     useArraySome: useArraySomeConfigurationSchema.optional().nullable(),
-    /**
-     * Require Array#sort and Array#toSorted calls to always provide a compareFunction.
-     * See https://biomejs.dev/linter/rules/use-array-sort-compare
-     */
-    useArraySortCompare: useArraySortCompareConfigurationSchema.optional().nullable(),
     /**
      * Enforce that await is only used on Promise values.
      * See https://biomejs.dev/linter/rules/use-await-thenable
@@ -7280,30 +7618,10 @@ export const nurserySchema = z.object({
      */
     useBaseline: useBaselineConfigurationSchema.optional().nullable(),
     /**
-     * Disallow enums from having both number and string members.
-     * See https://biomejs.dev/linter/rules/use-consistent-enum-value-type
-     */
-    useConsistentEnumValueType: useConsistentEnumValueTypeConfigurationSchema.optional().nullable(),
-    /**
-     * Require all descriptions to follow the same style (either block or inline) to  maintain consistency and improve readability across the schema.
-     * See https://biomejs.dev/linter/rules/use-consistent-graphql-descriptions
-     */
-    useConsistentGraphqlDescriptions: useConsistentGraphqlDescriptionsConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce consistent use of either method signatures or function properties within interfaces and type aliases.
-     * See https://biomejs.dev/linter/rules/use-consistent-method-signatures
-     */
-    useConsistentMethodSignatures: useConsistentMethodSignaturesConfigurationSchema.optional().nullable(),
-    /**
      * Enforce consistent use of it or test for test functions.
      * See https://biomejs.dev/linter/rules/use-consistent-test-it
      */
     useConsistentTestIt: useConsistentTestItConfigurationSchema.optional().nullable(),
-    /**
-     * Require destructuring from arrays and/or objects.
-     * See https://biomejs.dev/linter/rules/use-destructuring
-     */
-    useDestructuring: useDestructuringConfigurationSchema.optional().nullable(),
     /**
      * Detects a disposable object assigned to a variable without using or await using syntax.
      * See https://biomejs.dev/linter/rules/use-disposables
@@ -7319,11 +7637,6 @@ export const nurserySchema = z.object({
      * See https://biomejs.dev/linter/rules/use-dom-query-selector
      */
     useDomQuerySelector: useDomQuerySelectorConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that new Error() is thrown with the original error as cause.
-     * See https://biomejs.dev/linter/rules/use-error-cause
-     */
-    useErrorCause: useErrorCauseConfigurationSchema.optional().nullable(),
     /**
      * Require switch-case statements to be exhaustive.
      * See https://biomejs.dev/linter/rules/use-exhaustive-switch-cases
@@ -7345,16 +7658,6 @@ export const nurserySchema = z.object({
      */
     useExplicitType: useExplicitTypeConfigurationSchema.optional().nullable(),
     /**
-     * Enforce the use of Array.prototype.find() over Array.prototype.filter() followed by [0] when looking for a single result.
-     * See https://biomejs.dev/linter/rules/use-find
-     */
-    useFind: useFindConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce the use of globalThis over window, self, and global.
-     * See https://biomejs.dev/linter/rules/use-global-this
-     */
-    useGlobalThis: useGlobalThisConfigurationSchema.optional().nullable(),
-    /**
      * Enforce the 'sandbox' attribute for 'iframe' elements.
      * See https://biomejs.dev/linter/rules/use-iframe-sandbox
      */
@@ -7365,25 +7668,15 @@ export const nurserySchema = z.object({
      */
     useImportsFirst: useImportsFirstConfigurationSchema.optional().nullable(),
     /**
-     * Enforce id attribute on next/script components with inline content or dangerouslySetInnerHTML.
-     * See https://biomejs.dev/linter/rules/use-inline-script-id
+     * Prefer Array#includes() over Array#indexOf() checks.
+     * See https://biomejs.dev/linter/rules/use-includes
      */
-    useInlineScriptId: useInlineScriptIdConfigurationSchema.optional().nullable(),
+    useIncludes: useIncludesConfigurationSchema.optional().nullable(),
     /**
-     * Require mutation argument to be always called "input".
-     * See https://biomejs.dev/linter/rules/use-input-name
+     * Prefer Math.min() and Math.max() over ternaries for simple comparisons.
+     * See https://biomejs.dev/linter/rules/use-math-min-max
      */
-    useInputName: useInputNameConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow anonymous operations when more than one operation specified in document.
-     * See https://biomejs.dev/linter/rules/use-lone-anonymous-operation
-     */
-    useLoneAnonymousOperation: useLoneAnonymousOperationConfigurationSchema.optional().nullable(),
-    /**
-     * Require queries, mutations, subscriptions or fragments each to be located in separate files.
-     * See https://biomejs.dev/linter/rules/use-lone-executable-definition
-     */
-    useLoneExecutableDefinition: useLoneExecutableDefinitionConfigurationSchema.optional().nullable(),
+    useMathMinMax: useMathMinMaxConfigurationSchema.optional().nullable(),
     /**
      * Enforce using named capture groups in regular expression.
      * See https://biomejs.dev/linter/rules/use-named-capture-group
@@ -7410,6 +7703,11 @@ export const nurserySchema = z.object({
      */
     useReactAsyncServerFunction: useReactAsyncServerFunctionConfigurationSchema.optional().nullable(),
     /**
+     * Enforce a specific function type for React function components.
+     * See https://biomejs.dev/linter/rules/use-react-function-component-definition
+     */
+    useReactFunctionComponentDefinition: useReactFunctionComponentDefinitionConfigurationSchema.optional().nullable(),
+    /**
      * Ensure that platform-specific React Native components are only imported in files named for that platform.
      * See https://biomejs.dev/linter/rules/use-react-native-platform-components
      */
@@ -7430,11 +7728,6 @@ export const nurserySchema = z.object({
      */
     useRegexpTest: useRegexpTestConfigurationSchema.optional().nullable(),
     /**
-     * Enforce the presence of required scripts in package.json.
-     * See https://biomejs.dev/linter/rules/use-required-scripts
-     */
-    useRequiredScripts: useRequiredScriptsConfigurationSchema.optional().nullable(),
-    /**
      * Enforce that \<style> blocks in Vue SFCs have the scoped attribute and that \<style> blocks in Astro components do not have the is:global directive.
      * See https://biomejs.dev/linter/rules/use-scoped-styles
      */
@@ -7445,15 +7738,30 @@ export const nurserySchema = z.object({
      */
     useSortedClasses: useSortedClassesConfigurationSchema.optional().nullable(),
     /**
-     * Enforce the use of the spread operator over .apply().
-     * See https://biomejs.dev/linter/rules/use-spread
-     */
-    useSpread: useSpreadConfigurationSchema.optional().nullable(),
-    /**
      * Prefer String#startsWith() and String#endsWith() over verbose prefix and suffix checks.
      * See https://biomejs.dev/linter/rules/use-string-starts-ends-with
      */
     useStringStartsEndsWith: useStringStartsEndsWithConfigurationSchema.optional().nullable(),
+    /**
+     * Require keyed {#each} blocks in Svelte templates.
+     * See https://biomejs.dev/linter/rules/use-svelte-require-each-key
+     */
+    useSvelteRequireEachKey: useSvelteRequireEachKeyConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that test lifecycle hooks are declared in the order they execute.
+     * See https://biomejs.dev/linter/rules/use-test-hooks-in-order
+     */
+    useTestHooksInOrder: useTestHooksInOrderConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that lifecycle hooks appear before any test cases in the same block.
+     * See https://biomejs.dev/linter/rules/use-test-hooks-on-top
+     */
+    useTestHooksOnTop: useTestHooksOnTopConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that class methods utilize this.
+     * See https://biomejs.dev/linter/rules/use-this-in-class-methods
+     */
+    useThisInClassMethods: useThisInClassMethodsConfigurationSchema.optional().nullable(),
     /**
      * Enforce the use of the u or v flag for regular expressions.
      * See https://biomejs.dev/linter/rules/use-unicode-regex
@@ -7470,95 +7778,15 @@ export const nurserySchema = z.object({
      */
     useVueConsistentDefinePropsDeclaration: useVueConsistentDefinePropsDeclarationConfigurationSchema.optional().nullable(),
     /**
-     * Enforce a consistent style for v-bind in Vue templates.
-     * See https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style
+     * Enforces Promise syntax when using Vue nextTick.
+     * See https://biomejs.dev/linter/rules/use-vue-next-tick-promise
      */
-    useVueConsistentVBindStyle: useVueConsistentVBindStyleConfigurationSchema.optional().nullable(),
+    useVueNextTickPromise: useVueNextTickPromiseConfigurationSchema.optional().nullable(),
     /**
-     * Enforce a consistent style for v-on in Vue templates.
-     * See https://biomejs.dev/linter/rules/use-vue-consistent-v-on-style
+     * Enforces valid v-for directives in Vue templates.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-for
      */
-    useVueConsistentVOnStyle: useVueConsistentVOnStyleConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce specific order of Vue compiler macros.
-     * See https://biomejs.dev/linter/rules/use-vue-define-macros-order
-     */
-    useVueDefineMacrosOrder: useVueDefineMacrosOrderConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce hyphenated (kebab-case) attribute names in Vue templates.
-     * See https://biomejs.dev/linter/rules/use-vue-hyphenated-attributes
-     */
-    useVueHyphenatedAttributes: useVueHyphenatedAttributesConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce multi-word component names in Vue components.
-     * See https://biomejs.dev/linter/rules/use-vue-multi-word-component-names
-     */
-    useVueMultiWordComponentNames: useVueMultiWordComponentNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that elements using v-for also specify a unique key.
-     * See https://biomejs.dev/linter/rules/use-vue-v-for-key
-     */
-    useVueVForKey: useVueVForKeyConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid Vue \<template> root usage.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-template-root
-     */
-    useVueValidTemplateRoot: useVueValidTemplateRootConfigurationSchema.optional().nullable(),
-    /**
-     * Forbids v-bind directives with missing values or invalid modifiers.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-bind
-     */
-    useVueValidVBind: useVueValidVBindConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid v-cloak Vue directives.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-cloak
-     */
-    useVueValidVCloak: useVueValidVCloakConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid usage of v-else.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-else
-     */
-    useVueValidVElse: useVueValidVElseConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid v-else-if directives.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-else-if
-     */
-    useVueValidVElseIf: useVueValidVElseIfConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid v-html directives.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-html
-     */
-    useVueValidVHtml: useVueValidVHtmlConfigurationSchema.optional().nullable(),
-    /**
-     * Enforces valid v-if usage for Vue templates.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-if
-     */
-    useVueValidVIf: useVueValidVIfConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid v-on directives with proper arguments, modifiers, and handlers.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-on
-     */
-    useVueValidVOn: useVueValidVOnConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid v-once Vue directives.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-once
-     */
-    useVueValidVOnce: useVueValidVOnceConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid v-pre Vue directives.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-pre
-     */
-    useVueValidVPre: useVueValidVPreConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid v-text Vue directives.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-text
-     */
-    useVueValidVText: useVueValidVTextConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce opting in to Vue Vapor mode in \<script setup> blocks.
-     * See https://biomejs.dev/linter/rules/use-vue-vapor
-     */
-    useVueVapor: useVueVaporConfigurationSchema.optional().nullable()
+    useVueValidVFor: useVueValidVForConfigurationSchema.optional().nullable()
 });
 
 /**
@@ -7596,6 +7824,11 @@ export const performanceSchema = z.object({
      */
     noImgElement: noImgElementConfigurationSchema.optional().nullable(),
     /**
+     * Disallow .bind(), arrow functions, or function expressions in JSX props.
+     * See https://biomejs.dev/linter/rules/no-jsx-props-bind
+     */
+    noJsxPropsBind: noJsxPropsBindConfigurationSchema.optional().nullable(),
+    /**
      * Disallow the use of namespace imports.
      * See https://biomejs.dev/linter/rules/no-namespace-import
      */
@@ -7606,10 +7839,19 @@ export const performanceSchema = z.object({
      */
     noReExportAll: noReExportAllConfigurationSchema.optional().nullable(),
     /**
+     * Prevent the usage of synchronous scripts.
+     * See https://biomejs.dev/linter/rules/no-sync-scripts
+     */
+    noSyncScripts: noSyncScriptsConfigurationSchema.optional().nullable(),
+    /**
      * Prevent duplicate polyfills from Polyfill.io.
      * See https://biomejs.dev/linter/rules/no-unwanted-polyfillio
      */
     noUnwantedPolyfillio: noUnwantedPolyfillioConfigurationSchema.optional().nullable(),
+    /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
     /**
      * Enables the recommended rules for this group
      */
@@ -7628,7 +7870,12 @@ export const performanceSchema = z.object({
      * Require regex literals to be declared at the top level.
      * See https://biomejs.dev/linter/rules/use-top-level-regex
      */
-    useTopLevelRegex: useTopLevelRegexConfigurationSchema.optional().nullable()
+    useTopLevelRegex: useTopLevelRegexConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce opting in to Vue Vapor mode in \<script setup> blocks.
+     * See https://biomejs.dev/linter/rules/use-vue-vapor
+     */
+    useVueVapor: useVueVaporConfigurationSchema.optional().nullable()
 });
 
 /**
@@ -7656,10 +7903,19 @@ export const securitySchema = z.object({
      */
     noGlobalEval: noGlobalEvalConfigurationSchema.optional().nullable(),
     /**
+     * Disallow javascript: URLs in HTML.
+     * See https://biomejs.dev/linter/rules/no-script-url
+     */
+    noScriptUrl: noScriptUrlConfigurationSchema.optional().nullable(),
+    /**
      * Disallow usage of sensitive data such as API keys and tokens.
      * See https://biomejs.dev/linter/rules/no-secrets
      */
     noSecrets: noSecretsConfigurationSchema.optional().nullable(),
+    /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
     /**
      * Enables the recommended rules for this group
      */
@@ -7670,6 +7926,17 @@ export const ruleWithNoRestrictedTypesOptionsSchema = z.object({
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noRestrictedTypesOptionsSchema.optional()
+});
+
+export const ruleWithUseDestructuringOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useDestructuringOptionsSchema.optional()
+});
+
+export const ruleWithUseNumericSeparatorsOptionsSchema = z.object({
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useNumericSeparatorsOptionsSchema.optional()
 });
 
 /**
@@ -7772,6 +8039,11 @@ export const suspiciousSchema = z.object({
      */
     noDeprecatedImports: noDeprecatedImportsConfigurationSchema.optional().nullable(),
     /**
+     * Disallow deprecated media types.
+     * See https://biomejs.dev/linter/rules/no-deprecated-media-type
+     */
+    noDeprecatedMediaType: noDeprecatedMediaTypeConfigurationSchema.optional().nullable(),
+    /**
      * Disallow direct assignments to document.cookie.
      * See https://biomejs.dev/linter/rules/no-document-cookie
      */
@@ -7817,6 +8089,11 @@ export const suspiciousSchema = z.object({
      */
     noDuplicateElseIf: noDuplicateElseIfConfigurationSchema.optional().nullable(),
     /**
+     * Disallow duplicate enum member values.
+     * See https://biomejs.dev/linter/rules/no-duplicate-enum-values
+     */
+    noDuplicateEnumValues: noDuplicateEnumValuesConfigurationSchema.optional().nullable(),
+    /**
      * No duplicated fields in GraphQL operations.
      * See https://biomejs.dev/linter/rules/no-duplicate-fields
      */
@@ -7826,6 +8103,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-duplicate-font-names
      */
     noDuplicateFontNames: noDuplicateFontNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce unique operation names across a GraphQL document.
+     * See https://biomejs.dev/linter/rules/no-duplicate-graphql-operation-name
+     */
+    noDuplicateGraphqlOperationName: noDuplicateGraphqlOperationNameConfigurationSchema.optional().nullable(),
     /**
      * Prevents JSX properties to be assigned multiple times.
      * See https://biomejs.dev/linter/rules/no-duplicate-jsx-props
@@ -7857,6 +8139,11 @@ export const suspiciousSchema = z.object({
      */
     noDuplicateTestHooks: noDuplicateTestHooksConfigurationSchema.optional().nullable(),
     /**
+     * Disallow JSX prop spreading the same identifier multiple times.
+     * See https://biomejs.dev/linter/rules/no-duplicated-spread-props
+     */
+    noDuplicatedSpreadProps: noDuplicatedSpreadPropsConfigurationSchema.optional().nullable(),
+    /**
      * Disallow CSS empty blocks.
      * See https://biomejs.dev/linter/rules/no-empty-block
      */
@@ -7876,6 +8163,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-empty-source
      */
     noEmptySource: noEmptySourceConfigurationSchema.optional().nullable(),
+    /**
+     * Require the use of === or !== for comparison with null.
+     * See https://biomejs.dev/linter/rules/no-equals-to-null
+     */
+    noEqualsToNull: noEqualsToNullConfigurationSchema.optional().nullable(),
     /**
      * Disallow variables from evolving into any type through reassignments.
      * See https://biomejs.dev/linter/rules/no-evolving-types
@@ -7906,6 +8198,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-focused-tests
      */
     noFocusedTests: noFocusedTestsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow iterating using a for-in loop.
+     * See https://biomejs.dev/linter/rules/no-for-in
+     */
+    noForIn: noForInConfigurationSchema.optional().nullable(),
     /**
      * Disallow reassigning function declarations.
      * See https://biomejs.dev/linter/rules/no-function-assign
@@ -7962,6 +8259,11 @@ export const suspiciousSchema = z.object({
      */
     noLabelVar: noLabelVarConfigurationSchema.optional().nullable(),
     /**
+     * Prevent problematic leaked values from being rendered.
+     * See https://biomejs.dev/linter/rules/no-leaked-render
+     */
+    noLeakedRender: noLeakedRenderConfigurationSchema.optional().nullable(),
+    /**
      * Disallow characters made with multiple code points in character class syntax.
      * See https://biomejs.dev/linter/rules/no-misleading-character-class
      */
@@ -7982,6 +8284,11 @@ export const suspiciousSchema = z.object({
      */
     noMisrefactoredShorthandAssign: noMisrefactoredShorthandAssignConfigurationSchema.optional().nullable(),
     /**
+     * Disallow nested .then() or .catch() promise calls.
+     * See https://biomejs.dev/linter/rules/no-nested-promises
+     */
+    noNestedPromises: noNestedPromisesConfigurationSchema.optional().nullable(),
+    /**
      * Disallow non-null assertions after optional chaining expressions.
      * See https://biomejs.dev/linter/rules/no-non-null-asserted-optional-chain
      */
@@ -7991,6 +8298,16 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-octal-escape
      */
     noOctalEscape: noOctalEscapeConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow function parameters that are only used in recursive calls.
+     * See https://biomejs.dev/linter/rules/no-parameters-only-used-in-recursion
+     */
+    noParametersOnlyUsedInRecursion: noParametersOnlyUsedInRecursionConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of the deprecated __proto__ object property.
+     * See https://biomejs.dev/linter/rules/no-proto
+     */
+    noProto: noProtoConfigurationSchema.optional().nullable(),
     /**
      * Disallow direct use of Object.prototype builtins.
      * See https://biomejs.dev/linter/rules/no-prototype-builtins
@@ -8022,10 +8339,20 @@ export const suspiciousSchema = z.object({
      */
     noRedundantUseStrict: noRedundantUseStrictConfigurationSchema.optional().nullable(),
     /**
+     * Disallow assignments in return statements.
+     * See https://biomejs.dev/linter/rules/no-return-assign
+     */
+    noReturnAssign: noReturnAssignConfigurationSchema.optional().nullable(),
+    /**
      * Disallow comparisons where both sides are exactly the same.
      * See https://biomejs.dev/linter/rules/no-self-compare
      */
     noSelfCompare: noSelfCompareConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow variable declarations from shadowing variables declared in the outer scope.
+     * See https://biomejs.dev/linter/rules/no-shadow
+     */
+    noShadow: noShadowConfigurationSchema.optional().nullable(),
     /**
      * Disallow identifiers from shadowing restricted names.
      * See https://biomejs.dev/linter/rules/no-shadow-restricted-names
@@ -8072,10 +8399,25 @@ export const suspiciousSchema = z.object({
      */
     noUnassignedVariables: noUnassignedVariablesConfigurationSchema.optional().nullable(),
     /**
+     * Disallow the use of undeclared environment variables.
+     * See https://biomejs.dev/linter/rules/no-undeclared-env-vars
+     */
+    noUndeclaredEnvVars: noUndeclaredEnvVarsConfigurationSchema.optional().nullable(),
+    /**
      * Disallow unknown at-rules.
      * See https://biomejs.dev/linter/rules/no-unknown-at-rules
      */
     noUnknownAtRules: noUnknownAtRulesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unknown DOM properties.
+     * See https://biomejs.dev/linter/rules/no-unknown-attribute
+     */
+    noUnknownAttribute: noUnknownAttributeConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow conditions that always evaluate to the same value.
+     * See https://biomejs.dev/linter/rules/no-unnecessary-conditions
+     */
+    noUnnecessaryConditions: noUnnecessaryConditionsConfigurationSchema.optional().nullable(),
     /**
      * Disallow unsafe declaration merging between interfaces and classes.
      * See https://biomejs.dev/linter/rules/no-unsafe-declaration-merging
@@ -8107,10 +8449,19 @@ export const suspiciousSchema = z.object({
      */
     noVar: noVarConfigurationSchema.optional().nullable(),
     /**
+     * Disallows using arrow functions when defining a watcher.
+     * See https://biomejs.dev/linter/rules/no-vue-arrow-func-in-watch
+     */
+    noVueArrowFuncInWatch: noVueArrowFuncInWatchConfigurationSchema.optional().nullable(),
+    /**
      * Disallow with statements in non-strict contexts.
      * See https://biomejs.dev/linter/rules/no-with
      */
     noWith: noWithConfigurationSchema.optional().nullable(),
+    /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
     /**
      * Enables the recommended rules for this group
      */
@@ -8120,6 +8471,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/use-adjacent-overload-signatures
      */
     useAdjacentOverloadSignatures: useAdjacentOverloadSignaturesConfigurationSchema.optional().nullable(),
+    /**
+     * Require Array#sort and Array#toSorted calls to always provide a compareFunction.
+     * See https://biomejs.dev/linter/rules/use-array-sort-compare
+     */
+    useArraySortCompare: useArraySortCompareConfigurationSchema.optional().nullable(),
     /**
      * Ensure async functions utilize await.
      * See https://biomejs.dev/linter/rules/use-await
@@ -8181,6 +8537,11 @@ export const suspiciousSchema = z.object({
      */
     useNumberToFixedDigitsArgument: useNumberToFixedDigitsArgumentConfigurationSchema.optional().nullable(),
     /**
+     * Enforce the presence of required scripts in package.json.
+     * See https://biomejs.dev/linter/rules/use-required-scripts
+     */
+    useRequiredScripts: useRequiredScriptsConfigurationSchema.optional().nullable(),
+    /**
      * Use static Response methods instead of new Response() constructor when possible.
      * See https://biomejs.dev/linter/rules/use-static-response-methods
      */
@@ -8208,9 +8569,15 @@ export const severityOrSuspiciousSchema = z.union([groupPlainConfigurationSchema
 
 export const noRestrictedElementsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedElementsOptionsSchema]);
 
+export const noUnusedVariablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedVariablesOptionsSchema]);
+
 export const useExhaustiveDependenciesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveDependenciesOptionsSchema]);
 
 export const noRestrictedTypesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedTypesOptionsSchema]);
+
+export const useDestructuringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDestructuringOptionsSchema]);
+
+export const useNumericSeparatorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNumericSeparatorsOptionsSchema]);
 
 export const noRestrictedImportsOptionsSchema = z.object({
     /**
@@ -8247,6 +8614,11 @@ export const useNamingConventionOptionsSchema = z.object({
  */
 export const correctnessSchema = z.object({
     /**
+     * Prevent usage of next/script's beforeInteractive strategy outside of pages/_document.js in a Next.js project.
+     * See https://biomejs.dev/linter/rules/no-before-interactive-script-outside-document
+     */
+    noBeforeInteractiveScriptOutsideDocument: noBeforeInteractiveScriptOutsideDocumentConfigurationSchema.optional().nullable(),
+    /**
      * Prevent passing of children as props.
      * See https://biomejs.dev/linter/rules/no-children-prop
      */
@@ -8271,6 +8643,31 @@ export const correctnessSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-constructor-return
      */
     noConstructorReturn: noConstructorReturnConfigurationSchema.optional().nullable(),
+    /**
+     * Require all argument names for fields & directives to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-argument-names
+     */
+    noDuplicateArgumentNames: noDuplicateArgumentNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplication of attributes.
+     * See https://biomejs.dev/linter/rules/no-duplicate-attributes
+     */
+    noDuplicateAttributes: noDuplicateAttributesConfigurationSchema.optional().nullable(),
+    /**
+     * Require all enum value names to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-enum-value-names
+     */
+    noDuplicateEnumValueNames: noDuplicateEnumValueNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Require fields within an input object to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-input-field-names
+     */
+    noDuplicateInputFieldNames: noDuplicateInputFieldNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Require all variable definitions to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-variable-names
+     */
+    noDuplicateVariableNames: noDuplicateVariableNamesConfigurationSchema.optional().nullable(),
     /**
      * Disallow empty character classes in regular expression literals.
      * See https://biomejs.dev/linter/rules/no-empty-character-class-in-regex
@@ -8497,6 +8894,11 @@ export const correctnessSchema = z.object({
      */
     noUnusedImports: noUnusedImportsConfigurationSchema.optional().nullable(),
     /**
+     * Disallow new operators outside of assignments or comparisons.
+     * See https://biomejs.dev/linter/rules/no-unused-instantiation
+     */
+    noUnusedInstantiation: noUnusedInstantiationConfigurationSchema.optional().nullable(),
+    /**
      * Disallow unused labels.
      * See https://biomejs.dev/linter/rules/no-unused-labels
      */
@@ -8547,6 +8949,15 @@ export const correctnessSchema = z.object({
      */
     noVueSetupPropsReactivityLoss: noVueSetupPropsReactivityLossConfigurationSchema.optional().nullable(),
     /**
+     * Disallow using v-if and v-for directives on the same element.
+     * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
+     */
+    noVueVIfWithVFor: noVueVIfWithVForConfigurationSchema.optional().nullable(),
+    /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
+    /**
      * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
@@ -8576,6 +8987,11 @@ export const correctnessSchema = z.object({
      */
     useImportExtensions: useImportExtensionsConfigurationSchema.optional().nullable(),
     /**
+     * Enforce id attribute on next/script components with inline content or dangerouslySetInnerHTML.
+     * See https://biomejs.dev/linter/rules/use-inline-script-id
+     */
+    useInlineScriptId: useInlineScriptIdConfigurationSchema.optional().nullable(),
+    /**
      * Require calls to isNaN() when checking for NaN.
      * See https://biomejs.dev/linter/rules/use-is-nan
      */
@@ -8590,6 +9006,11 @@ export const correctnessSchema = z.object({
      * See https://biomejs.dev/linter/rules/use-jsx-key-in-iterable
      */
     useJsxKeyInIterable: useJsxKeyInIterableConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow anonymous operations when more than one operation specified in document.
+     * See https://biomejs.dev/linter/rules/use-lone-anonymous-operation
+     */
+    useLoneAnonymousOperation: useLoneAnonymousOperationConfigurationSchema.optional().nullable(),
     /**
      * Enforce the consistent use of the radix argument when using parseInt().
      * See https://biomejs.dev/linter/rules/use-parse-int-radix
@@ -8631,6 +9052,66 @@ export const correctnessSchema = z.object({
      */
     useValidTypeof: useValidTypeofConfigurationSchema.optional().nullable(),
     /**
+     * Enforce that elements using v-for also specify a unique key.
+     * See https://biomejs.dev/linter/rules/use-vue-v-for-key
+     */
+    useVueVForKey: useVueVForKeyConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid Vue \<template> root usage.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-template-root
+     */
+    useVueValidTemplateRoot: useVueValidTemplateRootConfigurationSchema.optional().nullable(),
+    /**
+     * Forbids v-bind directives with missing values or invalid modifiers.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-bind
+     */
+    useVueValidVBind: useVueValidVBindConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-cloak Vue directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-cloak
+     */
+    useVueValidVCloak: useVueValidVCloakConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid usage of v-else.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-else
+     */
+    useVueValidVElse: useVueValidVElseConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-else-if directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-else-if
+     */
+    useVueValidVElseIf: useVueValidVElseIfConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-html directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-html
+     */
+    useVueValidVHtml: useVueValidVHtmlConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces valid v-if usage for Vue templates.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-if
+     */
+    useVueValidVIf: useVueValidVIfConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-on directives with proper arguments, modifiers, and handlers.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-on
+     */
+    useVueValidVOn: useVueValidVOnConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-once Vue directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-once
+     */
+    useVueValidVOnce: useVueValidVOnceConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-pre Vue directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-pre
+     */
+    useVueValidVPre: useVueValidVPreConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-text Vue directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-text
+     */
+    useVueValidVText: useVueValidVTextConfigurationSchema.optional().nullable(),
+    /**
      * Require generator functions to contain yield.
      * See https://biomejs.dev/linter/rules/use-yield
      */
@@ -8649,8 +9130,20 @@ export const ruleWithUseNamingConventionOptionsSchema = z.object({
 });
 
 export const organizeImportsOptionsSchema = z.object({
+    /**
+     * Groups to change how imports and exports are sorted.
+     */
     groups: importGroupsSchema.optional().nullable(),
-    identifierOrder: sortOrderSchema.optional().nullable()
+    /**
+     * Order used for sorting identifiers within imports and exports.
+     *
+     * Default: `natural`.
+     */
+    identifierOrder: sortOrderSchema.optional().nullable(),
+    /**
+     * If `true`, bare imports such as `import "module"` are sorted with other imports.
+     */
+    sortBareImports: z.boolean().optional().nullable()
 });
 
 export const severityOrCorrectnessSchema = z.union([groupPlainConfigurationSchema, correctnessSchema]);
@@ -8674,6 +9167,11 @@ export const styleSchema = z.object({
      */
     noCommonJs: noCommonJsConfigurationSchema.optional().nullable(),
     /**
+     * Disallow continue statements.
+     * See https://biomejs.dev/linter/rules/no-continue
+     */
+    noContinue: noContinueConfigurationSchema.optional().nullable(),
+    /**
      * Disallow default exports.
      * See https://biomejs.dev/linter/rules/no-default-export
      */
@@ -8694,6 +9192,16 @@ export const styleSchema = z.object({
      */
     noEnum: noEnumConfigurationSchema.optional().nullable(),
     /**
+     * Enforce a maximum number of classes per file.
+     * See https://biomejs.dev/linter/rules/no-excessive-classes-per-file
+     */
+    noExcessiveClassesPerFile: noExcessiveClassesPerFileConfigurationSchema.optional().nullable(),
+    /**
+     * Restrict the number of lines in a file.
+     * See https://biomejs.dev/linter/rules/no-excessive-lines-per-file
+     */
+    noExcessiveLinesPerFile: noExcessiveLinesPerFileConfigurationSchema.optional().nullable(),
+    /**
      * Disallow exporting an imported variable.
      * See https://biomejs.dev/linter/rules/no-exported-imports
      */
@@ -8704,10 +9212,20 @@ export const styleSchema = z.object({
      */
     noHeadElement: noHeadElementConfigurationSchema.optional().nullable(),
     /**
+     * Disallow hex colors.
+     * See https://biomejs.dev/linter/rules/no-hex-colors
+     */
+    noHexColors: noHexColorsConfigurationSchema.optional().nullable(),
+    /**
      * Disallow implicit true values on JSX boolean attributes.
      * See https://biomejs.dev/linter/rules/no-implicit-boolean
      */
     noImplicitBoolean: noImplicitBooleanConfigurationSchema.optional().nullable(),
+    /**
+     * Disallows the usage of the unary operators ++ and --.
+     * See https://biomejs.dev/linter/rules/no-increment-decrement
+     */
+    noIncrementDecrement: noIncrementDecrementConfigurationSchema.optional().nullable(),
     /**
      * Disallow type annotations for variables, parameters, and class properties initialized with a literal expression.
      * See https://biomejs.dev/linter/rules/no-inferrable-types
@@ -8723,6 +9241,16 @@ export const styleSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-magic-numbers
      */
     noMagicNumbers: noMagicNumbersConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow use of chained assignment expressions.
+     * See https://biomejs.dev/linter/rules/no-multi-assign
+     */
+    noMultiAssign: noMultiAssignConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow creating multiline strings by escaping newlines.
+     * See https://biomejs.dev/linter/rules/no-multiline-string
+     */
+    noMultilineString: noMultilineStringConfigurationSchema.optional().nullable(),
     /**
      * Disallow the use of TypeScript's namespaces.
      * See https://biomejs.dev/linter/rules/no-namespace
@@ -8774,6 +9302,11 @@ export const styleSchema = z.object({
      */
     noRestrictedTypes: noRestrictedTypesConfigurationSchema.optional().nullable(),
     /**
+     * Disallow the usage of specified root types.
+     * See https://biomejs.dev/linter/rules/no-root-type
+     */
+    noRootType: noRootTypeConfigurationSchema.optional().nullable(),
+    /**
      * Disallow the use of constants which its value is the upper-case version of its name.
      * See https://biomejs.dev/linter/rules/no-shouty-constants
      */
@@ -8783,6 +9316,11 @@ export const styleSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-substr
      */
     noSubstr: noSubstrConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow ternary operators.
+     * See https://biomejs.dev/linter/rules/no-ternary
+     */
+    noTernary: noTernaryConfigurationSchema.optional().nullable(),
     /**
      * Disallow template literals if interpolation and special-character handling are not needed.
      * See https://biomejs.dev/linter/rules/no-unused-template-literal
@@ -8799,10 +9337,19 @@ export const styleSchema = z.object({
      */
     noValueAtRule: noValueAtRuleConfigurationSchema.optional().nullable(),
     /**
+     * Disallow the use of Vue Options API.
+     * See https://biomejs.dev/linter/rules/no-vue-options-api
+     */
+    noVueOptionsApi: noVueOptionsApiConfigurationSchema.optional().nullable(),
+    /**
      * Disallow the use of yoda expressions.
      * See https://biomejs.dev/linter/rules/no-yoda-expression
      */
     noYodaExpression: noYodaExpressionConfigurationSchema.optional().nullable(),
+    /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
     /**
      * Enables the recommended rules for this group
      */
@@ -8863,12 +9410,27 @@ export const styleSchema = z.object({
      */
     useConsistentCurlyBraces: useConsistentCurlyBracesConfigurationSchema.optional().nullable(),
     /**
+     * Disallow enums from having both number and string members.
+     * See https://biomejs.dev/linter/rules/use-consistent-enum-value-type
+     */
+    useConsistentEnumValueType: useConsistentEnumValueTypeConfigurationSchema.optional().nullable(),
+    /**
+     * Require all descriptions to follow the same style (either block or inline) to  maintain consistency and improve readability across the schema.
+     * See https://biomejs.dev/linter/rules/use-consistent-graphql-descriptions
+     */
+    useConsistentGraphqlDescriptions: useConsistentGraphqlDescriptionsConfigurationSchema.optional().nullable(),
+    /**
      * Require consistent accessibility modifiers on class properties and methods.
      * See https://biomejs.dev/linter/rules/use-consistent-member-accessibility
      */
     useConsistentMemberAccessibility: useConsistentMemberAccessibilityConfigurationSchema.optional().nullable(),
     /**
-     * Require the consistent declaration of object literals. Defaults to explicit definitions.
+     * Enforce consistent use of either method signatures or function properties within interfaces and type aliases.
+     * See https://biomejs.dev/linter/rules/use-consistent-method-signatures
+     */
+    useConsistentMethodSignatures: useConsistentMethodSignaturesConfigurationSchema.optional().nullable(),
+    /**
+     * Require the consistent declaration of object literals.
      * See https://biomejs.dev/linter/rules/use-consistent-object-definitions
      */
     useConsistentObjectDefinitions: useConsistentObjectDefinitionsConfigurationSchema.optional().nullable(),
@@ -8898,10 +9460,20 @@ export const styleSchema = z.object({
      */
     useDeprecatedReason: useDeprecatedReasonConfigurationSchema.optional().nullable(),
     /**
+     * Require destructuring from arrays and/or objects.
+     * See https://biomejs.dev/linter/rules/use-destructuring
+     */
+    useDestructuring: useDestructuringConfigurationSchema.optional().nullable(),
+    /**
      * Require that each enum member value be explicitly initialized.
      * See https://biomejs.dev/linter/rules/use-enum-initializers
      */
     useEnumInitializers: useEnumInitializersConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that new Error() is thrown with the original error as cause.
+     * See https://biomejs.dev/linter/rules/use-error-cause
+     */
+    useErrorCause: useErrorCauseConfigurationSchema.optional().nullable(),
     /**
      * Enforce explicitly comparing the length, size, byteLength or byteOffset property of a value.
      * See https://biomejs.dev/linter/rules/use-explicit-length-check
@@ -8938,6 +9510,11 @@ export const styleSchema = z.object({
      */
     useFragmentSyntax: useFragmentSyntaxConfigurationSchema.optional().nullable(),
     /**
+     * Enforce the use of globalThis over window, self, and global.
+     * See https://biomejs.dev/linter/rules/use-global-this
+     */
+    useGlobalThis: useGlobalThisConfigurationSchema.optional().nullable(),
+    /**
      * Validates that all enum values are capitalized.
      * See https://biomejs.dev/linter/rules/use-graphql-naming-convention
      */
@@ -8953,10 +9530,20 @@ export const styleSchema = z.object({
      */
     useImportType: useImportTypeConfigurationSchema.optional().nullable(),
     /**
+     * Require mutation argument to be always called "input".
+     * See https://biomejs.dev/linter/rules/use-input-name
+     */
+    useInputName: useInputNameConfigurationSchema.optional().nullable(),
+    /**
      * Require all enum members to be literal values.
      * See https://biomejs.dev/linter/rules/use-literal-enum-members
      */
     useLiteralEnumMembers: useLiteralEnumMembersConfigurationSchema.optional().nullable(),
+    /**
+     * Require queries, mutations, subscriptions or fragments each to be located in separate files.
+     * See https://biomejs.dev/linter/rules/use-lone-executable-definition
+     */
+    useLoneExecutableDefinition: useLoneExecutableDefinitionConfigurationSchema.optional().nullable(),
     /**
      * Enforce naming conventions for everything across a codebase.
      * See https://biomejs.dev/linter/rules/use-naming-convention
@@ -9018,6 +9605,11 @@ export const styleSchema = z.object({
      */
     useSingleVarDeclarator: useSingleVarDeclaratorConfigurationSchema.optional().nullable(),
     /**
+     * Enforce the use of the spread operator over .apply().
+     * See https://biomejs.dev/linter/rules/use-spread-over-apply
+     */
+    useSpreadOverApply: useSpreadOverApplyConfigurationSchema.optional().nullable(),
+    /**
      * Require a description parameter for the Symbol().
      * See https://biomejs.dev/linter/rules/use-symbol-description
      */
@@ -9046,7 +9638,32 @@ export const styleSchema = z.object({
      * Disallow overload signatures that can be unified into a single signature.
      * See https://biomejs.dev/linter/rules/use-unified-type-signatures
      */
-    useUnifiedTypeSignatures: useUnifiedTypeSignaturesConfigurationSchema.optional().nullable()
+    useUnifiedTypeSignatures: useUnifiedTypeSignaturesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce a consistent style for v-bind in Vue templates.
+     * See https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style
+     */
+    useVueConsistentVBindStyle: useVueConsistentVBindStyleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce a consistent style for v-on in Vue templates.
+     * See https://biomejs.dev/linter/rules/use-vue-consistent-v-on-style
+     */
+    useVueConsistentVOnStyle: useVueConsistentVOnStyleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce specific order of Vue compiler macros.
+     * See https://biomejs.dev/linter/rules/use-vue-define-macros-order
+     */
+    useVueDefineMacrosOrder: useVueDefineMacrosOrderConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce hyphenated (kebab-case) attribute names in Vue templates.
+     * See https://biomejs.dev/linter/rules/use-vue-hyphenated-attributes
+     */
+    useVueHyphenatedAttributes: useVueHyphenatedAttributesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce multi-word component names in Vue components.
+     * See https://biomejs.dev/linter/rules/use-vue-multi-word-component-names
+     */
+    useVueMultiWordComponentNames: useVueMultiWordComponentNamesConfigurationSchema.optional().nullable()
 });
 
 export const organizeImportsConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithOrganizeImportsOptionsSchema]);
@@ -9059,6 +9676,10 @@ export const rulesSchema = z.object({
     correctness: severityOrCorrectnessSchema.optional().nullable(),
     nursery: severityOrNurserySchema.optional().nullable(),
     performance: severityOrPerformanceSchema.optional().nullable(),
+    /**
+     * The rule presets to use.
+     */
+    preset: presetConfigSchema.optional().nullable(),
     /**
      * It enables the lint rules recommended by Biome. `true` by default.
      */
@@ -9103,14 +9724,23 @@ export const sourceSchema = z.object({
      */
     organizeImports: organizeImportsConfigurationSchema.optional().nullable(),
     /**
+     * Enables a particular rule preset
+     */
+    preset: presetConfigSchema.optional().nullable(),
+    /**
      * Enables the recommended rules for this group
      */
     recommended: z.boolean().optional().nullable(),
     /**
-     * Enforce attribute sorting in JSX elements.
+     * Enforce attribute sorting in HTML elements.
      * See https://biomejs.dev/assist/actions/use-sorted-attributes
      */
     useSortedAttributes: useSortedAttributesConfigurationSchema.optional().nullable(),
+    /**
+     * Sort the members of an enum in natural order.
+     * See https://biomejs.dev/assist/actions/use-sorted-enum-members
+     */
+    useSortedEnumMembers: useSortedEnumMembersConfigurationSchema.optional().nullable(),
     /**
      * Sort interface members by key.
      * See https://biomejs.dev/assist/actions/use-sorted-interface-members
@@ -9122,10 +9752,25 @@ export const sourceSchema = z.object({
      */
     useSortedKeys: useSortedKeysConfigurationSchema.optional().nullable(),
     /**
+     * Organize package.json fields according to established conventions.
+     * See https://biomejs.dev/assist/actions/use-sorted-package-json
+     */
+    useSortedPackageJson: useSortedPackageJsonConfigurationSchema.optional().nullable(),
+    /**
      * Enforce ordering of CSS properties and nested rules.
      * See https://biomejs.dev/assist/actions/use-sorted-properties
      */
-    useSortedProperties: useSortedPropertiesConfigurationSchema.optional().nullable()
+    useSortedProperties: useSortedPropertiesConfigurationSchema.optional().nullable(),
+    /**
+     * Sort GraphQL selection sets.
+     * See https://biomejs.dev/assist/actions/use-sorted-selection-set
+     */
+    useSortedSelectionSet: useSortedSelectionSetConfigurationSchema.optional().nullable(),
+    /**
+     * Sort fields in GraphQL type definitions alphabetically.
+     * See https://biomejs.dev/assist/actions/use-sorted-type-fields
+     */
+    useSortedTypeFields: useSortedTypeFieldsConfigurationSchema.optional().nullable()
 });
 
 export const overrideLinterConfigurationSchema = z.object({
@@ -9144,6 +9789,10 @@ export const overrideLinterConfigurationSchema = z.object({
 });
 
 export const actionsSchema = z.object({
+    /**
+     * The actions preset to use.
+     */
+    preset: presetConfigSchema.optional().nullable(),
     /**
      * It enables the assist actions recommended by Biome. `true` by default.
      */
@@ -9237,7 +9886,7 @@ export const overridesSchema = z.array(overridePatternSchema);
  */
 export const configurationSchema = z.object({
     /**
-     * A field for the [JSON schema](https://json-schema.org/) specification
+     * A field for the JSON schema specification: https://json-schema.org/
      */
     $schema: schemaSchema.optional().nullable(),
     /**
@@ -9249,7 +9898,7 @@ export const configurationSchema = z.object({
      */
     css: cssConfigurationSchema.optional().nullable(),
     /**
-     * A list of paths to other JSON files, used to extends the current configuration.
+     * A list of paths to other JSON files, used to extend the current configuration.
      */
     extends: extendsSchema.optional().nullable(),
     /**

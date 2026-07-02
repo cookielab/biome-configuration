@@ -17,6 +17,10 @@ import type {
  */
 const a11y = {
 	noAccessKey: "off",
+	/**
+	 * HTML-only rule.
+	 */
+	noAmbiguousAnchorText: "off",
 	noAriaHiddenOnFocusable: "off",
 	noAriaUnsupportedElements: "off",
 	noAutofocus: "off",
@@ -32,6 +36,7 @@ const a11y = {
 	noRedundantRoles: "off",
 	noStaticElementInteractions: "off",
 	noSvgWithoutTitle: "off",
+	preset: "none",
 	recommended: false,
 	useAltText: "off",
 	useAnchorContent: "off",
@@ -64,6 +69,10 @@ const complexity = {
 	 */
 	noBannedTypes: "off",
 	noCommaOperator: "error",
+	/**
+	 * Enforces a more readable regular expression.
+	 */
+	noDivRegex: "error",
 	noEmptyTypeParameters: "error",
 	noExcessiveCognitiveComplexity: "warn",
 	/**
@@ -79,6 +88,10 @@ const complexity = {
 	 * Frontend-only rule.
 	 */
 	noImportantStyles: "off",
+	/**
+	 * Prevents re-exporting the same value as a named export and a default export as well.
+	 */
+	noRedundantDefaultExport: "error",
 	noStaticOnlyClass: "error",
 	noThisInStatic: "off",
 	noUselessCatch: "error",
@@ -94,6 +107,12 @@ const complexity = {
 	noUselessLabel: "error",
 	noUselessLoneBlockStatements: "error",
 	noUselessRename: "error",
+	/**
+	 * This rule is meant to prevent using a plain `return;` at the end of a function.
+	 *
+	 * Other usage, such as early returns, should not be affected.
+	 */
+	noUselessReturn: "error",
 	noUselessStringConcat: "error",
 	noUselessStringRaw: "error",
 	noUselessSwitchCase: "error",
@@ -112,7 +131,12 @@ const complexity = {
 	 * Using `void` to intentionally ignore callback return values is a useful shorthand.
 	 */
 	noVoid: "off",
+	preset: "none",
 	recommended: false,
+	/**
+	 * Enforces the usage of `Array.prototype.find` over `Array.prototype.filter` with index access.
+	 */
+	useArrayFind: "error",
 	useArrowFunction: "error",
 	useDateNow: "error",
 	useFlatMap: "error",
@@ -132,6 +156,10 @@ const complexity = {
 
 const correctness = {
 	/**
+	 * NextJS-only rule.
+	 */
+	noBeforeInteractiveScriptOutsideDocument: "off",
+	/**
 	 * React-only rule.
 	 */
 	noChildrenProp: "off",
@@ -139,6 +167,26 @@ const correctness = {
 	noConstantCondition: "error",
 	noConstantMathMinMaxClamp: "error",
 	noConstructorReturn: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateArgumentNames: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	noDuplicateAttributes: "off",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	noDuplicateEnumValueNames: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateInputFieldNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateVariableNames: "off",
 	noEmptyCharacterClassInRegex: "error",
 	noEmptyPattern: "error",
 	/**
@@ -252,6 +300,10 @@ const correctness = {
 	noUnsafeOptionalChaining: "error",
 	noUnusedFunctionParameters: "error",
 	noUnusedImports: "error",
+	/**
+	 * Prevents instantiation of classes that never get used.
+	 */
+	noUnusedInstantiation: "error",
 	noUnusedLabels: "error",
 	noUnusedPrivateClassMembers: "error",
 	noUnusedVariables: "error",
@@ -280,6 +332,11 @@ const correctness = {
 	 * Vue-only rule.
 	 */
 	noVueSetupPropsReactivityLoss: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueVIfWithVFor: "off",
+	preset: "none",
 	recommended: false,
 	/**
 	 * React-only rule.
@@ -303,12 +360,20 @@ const correctness = {
 	 * Recommended level would be `error`.
 	 */
 	useImportExtensions: "off",
+	/**
+	 * NextJS-only rule.
+	 */
+	useInlineScriptId: "off",
 	useIsNan: "error",
 	useJsonImportAttributes: "error",
 	/**
 	 * React-only rule.
 	 */
 	useJsxKeyInIterable: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useLoneAnonymousOperation: "off",
 	useParseIntRadix: "error",
 	/**
 	 * Qwik-only rule.
@@ -329,19 +394,62 @@ const correctness = {
 	useUniqueElementIds: "off",
 	useValidForDirection: "error",
 	useValidTypeof: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidTemplateRoot: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVBind: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVCloak: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVElse: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVElseIf: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVHtml: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVIf: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVOn: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVOnce: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVPre: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueValidVText: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueVForKey: "off",
 	useYield: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
 	/**
-	 * This rule promotes  more accessible interfaces. However, turning this into an error would be too harsh as a lot of links would not meet the necessary criteria to pass.
-	 * Leaving the level to `warn` keeps the balance between being helpful and annoying/fighting with designers.
+	 * Helps prevent stringification to `[object Object]`.
 	 */
-	noAmbiguousAnchorText: "warn",
-	/**
-	 * NextJS-only rule.
-	 */
-	noBeforeInteractiveScriptOutsideDocument: "off",
+	noBaseToString: "error",
 	/**
 	 * React-only rule.
 	 */
@@ -351,18 +459,6 @@ const nursery = {
 	 */
 	noConditionalExpect: "error",
 	/**
-	 * `continue` helps to avoid nesting inside loop bodies.
-	 */
-	noContinue: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	noDeprecatedMediaType: "off",
-	/**
-	 * Enforces a more readable regular expression.
-	 */
-	noDivRegex: "error",
-	/**
 	 * Drizzle-only rule.
 	 */
 	noDrizzleDeleteWithoutWhere: "off",
@@ -370,80 +466,21 @@ const nursery = {
 	/**
 	 * GraphQL-only rule.
 	 */
-	noDuplicateArgumentNames: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	noDuplicateAttributes: "off",
-	/**
-	 * React & Solid.js only rule.
-	 */
-	noDuplicatedSpreadProps: "off",
-	/**
-	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-	 */
-	noDuplicateEnumValueNames: "error",
-	/**
-	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-	 */
-	noDuplicateEnumValues: "error",
-	/**
-	 * GraphQL-only rule.
-	 */
 	noDuplicateFieldDefinitionNames: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noDuplicateGraphqlOperationName: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noDuplicateInputFieldNames: "off",
 	noDuplicateSelectors: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noDuplicateVariableNames: "off",
 	/**
 	 * Empty object keys are usually just a typo.
 	 */
 	noEmptyObjectKeys: "error",
 	/**
-	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
+	 * Keeps the code from nesting too deep.
 	 */
-	noEqualsToNull: "off",
-	/**
-	 * Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
-	 * The configuration is left up at the `warn` level to let maintainers know that a rule like this exists and can be configured differently.
-	 */
-	noExcessiveClassesPerFile: {
-		level: "warn",
-		options: {
-			maxClasses: 2,
-		},
-	},
-	/**
-	 * The rule is left as `off`. If required, it should be enabled on a project level.
-	 */
-	noExcessiveLinesPerFile: "off",
+	noExcessiveNestedCallbacks: "error",
 	/**
 	 * Frontend-only rule.
 	 */
 	noExcessiveSelectorClasses: "off",
-	/**
-	 * Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
-	 */
-	noFloatingClasses: "error",
 	noFloatingPromises: "error",
-	/**
-	 * `for-in` loops are usually just a typo when trying to remember how `for-of` is written.
-	 *  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
-	 */
-	noForIn: "warn",
-	/**
-	 * Frontend-only rule.
-	 */
-	noHexColors: "off",
 	/**
 	 * Test titles should be unique in their respective groups.
 	 */
@@ -452,16 +489,6 @@ const nursery = {
 	 * Prevents eval()-like behavior of executing arbitrary strings as JavaScript code.
 	 */
 	noImpliedEval: "error",
-	/**
-	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
-	 * Although, the usage in for-loops makes sense and is thus allowed.
-	 */
-	noIncrementDecrement: {
-		level: "error",
-		options: {
-			allowForLoopAfterthoughts: true,
-		},
-	},
 	/**
 	 * Frontend-only rule.
 	 */
@@ -475,14 +502,6 @@ const nursery = {
 	 */
 	noJsxNamespace: "off",
 	/**
-	 * React-only rule.
-	 */
-	noJsxPropsBind: "off",
-	/**
-	 * React-only rule.
-	 */
-	noLeakedRender: "off",
-	/**
 	 * Prevents outer variable capture inside loop-defined functions.
 	 */
 	noLoopFunc: "error",
@@ -493,24 +512,6 @@ const nursery = {
 	 */
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
-	/**
-	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
-	 * Keeping the assignments separate makes them more readable.
-	 */
-	noMultiAssign: "error",
-	/**
-	 * Using strings with ``` is a better approach.
-	 */
-	noMultiStr: "error",
-	/**
-	 * `async await` has been implemented to replace promise nesting.
-	 * `async await` is now generally available and should be the preferred approach to writing asynchronous code.
-	 */
-	noNestedPromises: "error",
-	/**
-	 * Just making sure there are no unused parameters in recursive functions.
-	 */
-	noParametersOnlyUsedInRecursion: "off",
 	/**
 	 * Usage of locators is preferred as they include auto-wait.
 	 */
@@ -552,10 +553,6 @@ const nursery = {
 	 */
 	noPlaywrightWaitForTimeout: "error",
 	/**
-	 * This approach to accessing object's prototype is deprecated since 2009.
-	 */
-	noProto: "error",
-	/**
 	 * React-only rule.
 	 */
 	noReactNativeDeepImports: "off",
@@ -568,44 +565,21 @@ const nursery = {
 	 */
 	noReactNativeRawText: "off",
 	/**
-	 * Prevents re-exporting the same value as a named export and a default export as well.
+	 * React-only rule.
 	 */
-	noRedundantDefaultExport: "error",
+	noReactStringRefs: "off",
 	/**
-	 * There is no need to assign anything when returning.
+	 * Prevents usage of superseeded dependencies as checked by [e18e](https://e18e.dev/).
 	 */
-	noReturnAssign: "error",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noRootType: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	noScriptUrl: "off",
-	noShadow: "error",
-	/**
-	 * NextJS-only rule.
-	 */
-	noSyncScripts: "off",
-	/**
-	 * Ternaries are a superior way of assigning to variables.
-	 * They only become hard to read once they become nested or use long conditions.
-	 */
-	noTernary: "off",
+	noRestrictedDependencies: "error",
 	/**
 	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
 	 */
 	noTopLevelLiterals: "error",
 	/**
-	 * Turborepo-only rule.
+	 * Frontend-only rule.
 	 */
-	noUndeclaredEnvVars: "off",
-	/**
-	 * JSX-only rule.
-	 */
-	noUnknownAttribute: "off",
-	noUnnecessaryConditions: "warn",
+	noUndeclaredClasses: "off",
 	/**
 	 * Disallows template literals for which a plain string can be used instead.
 	 */
@@ -619,11 +593,9 @@ const nursery = {
 	 */
 	noUntrustedLicenses: "info",
 	/**
-	 * This rule is meant to prevent using a plain `return;` at the end of a function.
-	 *
-	 * Other usage, such as early returns, should not be affected.
+	 * Frontend-only rule.
 	 */
-	noUselessReturn: "error",
+	noUnusedClasses: "off",
 	/**
 	 * Disallows unnecessary type conversions.
 	 */
@@ -631,11 +603,7 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
-	noVueArrowFuncInWatch: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueOptionsApi: "off",
+	noVueImportCompilerMacros: "off",
 	/**
 	 * Vue-only rule.
 	 */
@@ -643,16 +611,13 @@ const nursery = {
 	/**
 	 * Vue-only rule.
 	 */
-	noVueVIfWithVFor: "off",
+	noVueVOnNumberValues: "off",
+	preset: "none",
 	recommended: false,
 	/**
 	 * using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
 	 */
 	useArraySome: "error",
-	/**
-	 * Enforces all sorting operations to be explicitly defined.
-	 */
-	useArraySortCompare: "error",
 	/**
 	 * There is no need to await non-Promise values.
 	 */
@@ -662,27 +627,9 @@ const nursery = {
 	 */
 	useBaseline: "off",
 	/**
-	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-	 */
-	useConsistentEnumValueType: "error",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useConsistentGraphqlDescriptions: "off",
-	/**
-	 * This rule enforces a consistent method signature in interfaces and types.
-	 * The property style keeps the code definitions consistant between attributes and methods.
-	 */
-	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
-	/**
 	 * Forces consistent usage of `test` over `it` in test definitions.
 	 */
 	useConsistentTestIt: { level: "error", options: { function: "test" } },
-	/**
-	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
-	 * The level is left at `info` to at least let the user know that the option exists.
-	 */
-	useDestructuring: "info",
 	/**
 	 * Detects when a disposable object is not disposed off with the `using` keyword.
 	 */
@@ -695,10 +642,6 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	useDomQuerySelector: "off",
-	/**
-	 * Promotes better error-handling practices.
-	 */
-	useErrorCause: "error",
 	useExhaustiveSwitchCases: "error",
 	/**
 	 * Each test should include at least one assertion.
@@ -725,15 +668,6 @@ const nursery = {
 	 */
 	useExplicitType: "off",
 	/**
-	 * Much more readable approach then indexing into a possibly empty array.
-	 */
-	useFind: "error",
-	/**
-	 * This rule promotes the use of cross-platform compatible global accessors.
-	 * Biome allows for some `window` specific accesses that are not directly available on globalThis.
-	 */
-	useGlobalThis: "warn",
-	/**
 	 * Frontend-only rule.
 	 */
 	useIframeSandbox: "off",
@@ -742,21 +676,13 @@ const nursery = {
 	 */
 	useImportsFirst: "error",
 	/**
-	 * NextJS-only rule.
+	 * Forces the usage of a more idiomatic `Array.prototype.includes` over `Array.prototype.indexOf`.
 	 */
-	useInlineScriptId: "off",
+	useIncludes: "error",
 	/**
-	 * GraphQL-only rule.
+	 * Forces the usage of `Math.min` or `Math.max` over ternaries.
 	 */
-	useInputName: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useLoneAnonymousOperation: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	useLoneExecutableDefinition: "off",
+	useMathMinMax: "error",
 	/**
 	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
 	 */
@@ -780,6 +706,10 @@ const nursery = {
 	/**
 	 * React-only rule.
 	 */
+	useReactFunctionComponentDefinition: "off",
+	/**
+	 * React-only rule.
+	 */
 	useReactNativePlatformComponents: "off",
 	/**
 	 * Forces that any usage of `Array.prototype.reduce` is correctly typed via a generic argument rather than a type assertion.
@@ -794,10 +724,6 @@ const nursery = {
 	 */
 	useRegexpTest: "error",
 	/**
-	 * This rule should only be enabled in a specific project as every project uses different required scripts.
-	 */
-	useRequiredScripts: "off",
-	/**
 	 * Vue-only rule.
 	 */
 	useScopedStyles: "off",
@@ -806,48 +732,47 @@ const nursery = {
 	 */
 	useSortedClasses: "off",
 	/**
-	 * Spread syntax is more readable than using `Object.apply`.
-	 */
-	useSpread: "error",
-	/**
 	 * Forces the usage of `String.prototype.startsWith` over index-based assertions.
 	 */
 	useStringStartsEndsWith: "error",
+	/**
+	 * Svelte-only rule.
+	 */
+	useSvelteRequireEachKey: "off",
+	/**
+	 * Forces test hook definition to follow the order of execution.
+	 */
+	useTestHooksInOrder: "error",
+	/**
+	 * Forces the test hooks to be defined at the top of the scope.
+	 */
+	useTestHooksOnTop: "error",
+	/**
+	 * Ensures that class methods actually utilize `this`. If `this` is not used, the methods can be declared static or moved outside of the class.
+	 */
+	useThisInClassMethods: "error",
 	/**
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
 	/**
-	 * `var` declarations are automatically hoisted to the tope of their scope. This rule enforces that even in code, the `var` declaration is placed at the top of the scope to match the behavior.
+	 * Forces `var` declarations to be placed at the top of the scope to avoid hoisting issues.
 	 *
-	 * Even though `var` is not used anymore, it is better to have this rule enabled. Just in case.
+	 * `var` declarations should not be used. However, this rule is enabled just in case.
 	 */
 	useVarsOnTop: "error",
+	/**
+	 * Vue-only rule.
+	 */
 	useVueConsistentDefinePropsDeclaration: "off",
-	useVueConsistentVBindStyle: "off",
-	useVueConsistentVOnStyle: "off",
 	/**
 	 * Vue-only rule.
 	 */
-	useVueDefineMacrosOrder: "off",
-	useVueHyphenatedAttributes: "off",
+	useVueNextTickPromise: "off",
 	/**
 	 * Vue-only rule.
 	 */
-	useVueMultiWordComponentNames: "off",
-	useVueValidTemplateRoot: "off",
-	useVueValidVBind: "off",
-	useVueValidVCloak: "off",
-	useVueValidVElse: "off",
-	useVueValidVElseIf: "off",
-	useVueValidVHtml: "off",
-	useVueValidVIf: "off",
-	useVueValidVOn: "off",
-	useVueValidVOnce: "off",
-	useVueValidVPre: "off",
-	useVueValidVText: "off",
-	useVueVapor: "off",
-	useVueVForKey: "off",
+	useVueValidVFor: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -865,12 +790,21 @@ const performance = {
 	 * NextJS-only rule.
 	 */
 	noImgElement: "off",
+	/**
+	 * React-only rule.
+	 */
+	noJsxPropsBind: "off",
 	noNamespaceImport: "error",
 	noReExportAll: "error",
 	/**
 	 * NextJS-only rule.
 	 */
+	noSyncScripts: "off",
+	/**
+	 * NextJS-only rule.
+	 */
 	noUnwantedPolyfillio: "off",
+	preset: "none",
 	recommended: false,
 	/**
 	 * Frontend-only rule.
@@ -881,6 +815,10 @@ const performance = {
 	 */
 	useSolidForComponent: "off",
 	useTopLevelRegex: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueVapor: "off",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
 const security = {
@@ -898,9 +836,14 @@ const security = {
 	noDangerouslySetInnerHtmlWithChildren: "off",
 	noGlobalEval: "error",
 	/**
+	 * Frontend-only rule.
+	 */
+	noScriptUrl: "off",
+	/**
 	 * Produces too many false-positives.
 	 */
 	noSecrets: "off",
+	preset: "none",
 	recommended: false,
 } as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
 
@@ -911,6 +854,10 @@ const style = {
 	 * Recommended level would be `error`.
 	 */
 	noCommonJs: "off",
+	/**
+	 * `continue` helps to avoid nesting inside loop bodies.
+	 */
+	noContinue: "off",
 	noDefaultExport: "error",
 	/**
 	 * Frontend-only rule.
@@ -918,18 +865,53 @@ const style = {
 	noDescendingSpecificity: "off",
 	noDoneCallback: "error",
 	noEnum: "error",
+	/**
+	 * Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
+	 */
+	noExcessiveClassesPerFile: {
+		level: "error",
+		options: {
+			maxClasses: 2,
+		},
+	},
+	/**
+	 * The rule is left as `off`. If required, it should be enabled on a project level.
+	 */
+	noExcessiveLinesPerFile: "off",
 	noExportedImports: "error",
 	/**
 	 * NextJS-only rule.
 	 */
 	noHeadElement: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	noHexColors: "off",
 	noImplicitBoolean: "error",
+	/**
+	 * This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
+	 * Although, the usage in for-loops makes sense and is thus allowed.
+	 */
+	noIncrementDecrement: {
+		level: "error",
+		options: {
+			allowForLoopAfterthoughts: true,
+		},
+	},
 	noInferrableTypes: "error",
 	/**
 	 * JSX-dialects only rule.
 	 */
 	noJsxLiterals: "off",
 	noMagicNumbers: "warn",
+	/**
+	 * Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
+	 */
+	noMultiAssign: "error",
+	/**
+	 * Enforces that strings are either multiline via template string literals or with explicit line breaks.
+	 */
+	noMultilineString: "error",
 	noNamespace: "error",
 	noNegationElse: "error",
 	noNestedTernary: "error",
@@ -950,17 +932,31 @@ const style = {
 	 */
 	noRestrictedTypes: "off",
 	/**
+	 * GraphQL-only rule.
+	 */
+	noRootType: "off",
+	/**
 	 * Shouting is not a crime.
 	 */
 	noShoutyConstants: "off",
 	noSubstr: "error",
+	/**
+	 * Ternaries are a superior way of assigning to variables.
+	 * They only become hard to read once they become nested or use long conditions.
+	 */
+	noTernary: "off",
 	noUnusedTemplateLiteral: "error",
 	noUselessElse: "error",
 	/**
 	 * Frontend-only rule.
 	 */
 	noValueAtRule: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueOptionsApi: "off",
 	noYodaExpression: "error",
+	preset: "none",
 	recommended: false,
 	useArrayLiterals: "error",
 	useAsConstAssertion: "error",
@@ -984,12 +980,25 @@ const style = {
 	 * React-only rule.
 	 */
 	useConsistentCurlyBraces: "off",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	useConsistentEnumValueType: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useConsistentGraphqlDescriptions: "off",
 	useConsistentMemberAccessibility: {
 		level: "error",
 		options: {
 			accessibility: "explicit",
 		},
 	},
+	/**
+	 * This rule enforces a consistent method signature in interfaces and types.
+	 * The property style keeps the code definitions consistant between attributes and methods.
+	 */
+	useConsistentMethodSignatures: { level: "error", options: { style: "property" } },
 	useConsistentObjectDefinitions: {
 		level: "error",
 		options: {
@@ -1021,9 +1030,18 @@ const style = {
 	 */
 	useDeprecatedReason: "off",
 	/**
+	 * Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
+	 * The level is left at `off` to at least let the user know that the option exists.
+	 */
+	useDestructuring: "off",
+	/**
 	 * Enums are forbidden.
 	 */
 	useEnumInitializers: "off",
+	/**
+	 * Promotes better error-handling practices.
+	 */
+	useErrorCause: "error",
 	useExplicitLengthCheck: "error",
 	useExponentiationOperator: "error",
 	useExportsLast: "error",
@@ -1038,15 +1056,28 @@ const style = {
 	 */
 	useFragmentSyntax: "off",
 	/**
+	 * This rule promotes the use of cross-platform compatible global accessors.
+	 * Biome allows for some `window` specific accesses that are not directly available on globalThis.
+	 */
+	useGlobalThis: "error",
+	/**
 	 * GraphQL-only rule.
 	 */
 	useGraphqlNamingConvention: "off",
 	useGroupedAccessorPairs: "error",
 	useImportType: "error",
 	/**
+	 * GraphQL-only rule
+	 */
+	useInputName: "off",
+	/**
 	 * Enums are forbidden.
 	 */
 	useLiteralEnumMembers: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	useLoneExecutableDefinition: "off",
 	useNamingConvention: "warn",
 	/**
 	 * Node-only rule.
@@ -1071,12 +1102,38 @@ const style = {
 	useShorthandAssign: "error",
 	useShorthandFunctionType: "error",
 	useSingleVarDeclarator: "error",
+	/**
+	 * Enforces the spread syntax usage over a plain `apply`.
+	 *
+	 * `apply` is still accepted in cases where there is a custom `this` value supplied.
+	 */
+	useSpreadOverApply: "error",
 	useSymbolDescription: "error",
 	useTemplate: "error",
 	useThrowNewError: "error",
 	useThrowOnlyError: "error",
 	useTrimStartEnd: "error",
 	useUnifiedTypeSignatures: "warn",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueConsistentVBindStyle: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueConsistentVOnStyle: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueDefineMacrosOrder: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueHyphenatedAttributes: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueMultiWordComponentNames: "off",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
@@ -1114,6 +1171,10 @@ const suspicious = {
 	/**
 	 * Frontend-only rule.
 	 */
+	noDeprecatedMediaType: "off",
+	/**
+	 * Frontend-only rule.
+	 */
 	noDocumentCookie: "off",
 	/**
 	 * Frontend-only rule.
@@ -1134,7 +1195,15 @@ const suspicious = {
 	 * NodeJS-only rule.
 	 */
 	noDuplicateDependencies: "off",
+	/**
+	 * React & Solid.js only rule.
+	 */
+	noDuplicatedSpreadProps: "off",
 	noDuplicateElseIf: "error",
+	/**
+	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+	 */
+	noDuplicateEnumValues: "error",
 	/**
 	 * GraphQL-only rule.
 	 */
@@ -1143,6 +1212,10 @@ const suspicious = {
 	 * Frontend-only rule.
 	 */
 	noDuplicateFontNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateGraphqlOperationName: "off",
 	/**
 	 * React-only rule.
 	 */
@@ -1171,12 +1244,21 @@ const suspicious = {
 	 * GraphQL-only rule.
 	 */
 	noEmptySource: "off",
+	/**
+	 * Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
+	 */
+	noEqualsToNull: "off",
 	noEvolvingTypes: "error",
 	noExplicitAny: "error",
 	noExportsInTest: "error",
 	noExtraNonNullAssertion: "error",
 	noFallthroughSwitchClause: "error",
 	noFocusedTests: "error",
+	/**
+	 * `for-in` loops are usually just a typo when trying to remember how `for-of` is written.
+	 *  As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
+	 */
+	noForIn: "error",
 	noFunctionAssign: "error",
 	noGlobalAssign: "error",
 	noGlobalIsFinite: "error",
@@ -1197,12 +1279,28 @@ const suspicious = {
 	noImportCycles: "error",
 	noIrregularWhitespace: "error",
 	noLabelVar: "error",
+	/**
+	 * React-only rule.
+	 */
+	noLeakedRender: "off",
 	noMisleadingCharacterClass: "error",
 	noMisleadingInstantiator: "error",
 	noMisplacedAssertion: "error",
 	noMisrefactoredShorthandAssign: "error",
+	/**
+	 * `async await` is now generally available and should be the preferred approach to writing asynchronous code.
+	 */
+	noNestedPromises: "error",
 	noNonNullAssertedOptionalChain: "error",
 	noOctalEscape: "error",
+	/**
+	 * Just making sure there are no unused parameters in recursive functions.
+	 */
+	noParametersOnlyUsedInRecursion: "error",
+	/**
+	 * This approach to accessing object's prototype is deprecated since 2009.
+	 */
+	noProto: "error",
 	noPrototypeBuiltins: "error",
 	/**
 	 * Disables "quickfix" actions from being defined in Biome configuration. Left up to consumers to enable/disable.
@@ -1218,7 +1316,15 @@ const suspicious = {
 	noReactSpecificProps: "off",
 	noRedeclare: "error",
 	noRedundantUseStrict: "error",
+	/**
+	 * There is no need to assign anything when returning.
+	 */
+	noReturnAssign: "error",
 	noSelfCompare: "error",
+	/**
+	 * Forbids name-shadowing.
+	 */
+	noShadow: "error",
 	noShadowRestrictedNames: "error",
 	/**
 	 * Frontend-only rule.
@@ -1235,9 +1341,21 @@ const suspicious = {
 	noTsIgnore: "error",
 	noUnassignedVariables: "error",
 	/**
+	 * Turborepo-only rule.
+	 */
+	noUndeclaredEnvVars: "off",
+	/**
 	 * Frontend-only rule.
 	 */
 	noUnknownAtRules: "off",
+	/**
+	 * JSX-only rule.
+	 */
+	noUnknownAttribute: "off",
+	/**
+	 * Prevents the usage of a most likely incorrect code used in a condition. Only flags conditions that always evaluate to the same value.
+	 */
+	noUnnecessaryConditions: "error",
 	noUnsafeDeclarationMerging: "error",
 	noUnsafeNegation: "error",
 	/**
@@ -1247,9 +1365,18 @@ const suspicious = {
 	noUselessEscapeInString: "error",
 	noUselessRegexBackrefs: "error",
 	noVar: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueArrowFuncInWatch: "off",
 	noWith: "error",
+	preset: "none",
 	recommended: false,
 	useAdjacentOverloadSignatures: "error",
+	/**
+	 * Enforces all sorting operations to be explicitly defined.
+	 */
+	useArraySortCompare: "error",
 	useAwait: "error",
 	useBiomeIgnoreFolder: "error",
 	useDefaultSwitchClauseLast: "error",
@@ -1270,6 +1397,10 @@ const suspicious = {
 	useIterableCallbackReturn: "error",
 	useNamespaceKeyword: "error",
 	useNumberToFixedDigitsArgument: "error",
+	/**
+	 * This rule should only be enabled in a specific project as every project uses different required scripts.
+	 */
+	useRequiredScripts: "off",
 	useStaticResponseMethods: "warn",
 	useStrictMode: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
@@ -1280,6 +1411,7 @@ const base = {
 	correctness: correctness,
 	nursery: nursery,
 	performance: performance,
+	preset: "none",
 	recommended: false,
 	security: security,
 	style: style,

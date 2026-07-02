@@ -8,7 +8,7 @@
 
 > `const` **next**: `object`
 
-Defined in: [rules/next.ts:72](https://github.com/cookielab/biome-configuration/blob/main/src/rules/next.ts#L72)
+Defined in: [rules/next.ts:71](https://github.com/cookielab/biome-configuration/blob/main/src/rules/next.ts#L71)
 
 ## Type Declaration
 
@@ -19,6 +19,12 @@ Defined in: [rules/next.ts:72](https://github.com/cookielab/biome-configuration/
 #### a11y.noAccessKey
 
 > `readonly` **noAccessKey**: `"error"` = `"error"`
+
+#### a11y.noAmbiguousAnchorText
+
+> `readonly` **noAmbiguousAnchorText**: `"error"` = `"error"`
+
+This rule promotes  more accessible interfaces.
 
 #### a11y.noAriaHiddenOnFocusable
 
@@ -79,6 +85,10 @@ Defined in: [rules/next.ts:72](https://github.com/cookielab/biome-configuration/
 #### a11y.noSvgWithoutTitle
 
 > `readonly` **noSvgWithoutTitle**: `"error"` = `"error"`
+
+#### a11y.preset
+
+> `readonly` **preset**: `"none"` = `"none"`
 
 #### a11y.recommended
 
@@ -190,6 +200,12 @@ No point in banning any types globally. Should be done per-project, if at all.
 
 > `readonly` **noCommaOperator**: `"error"` = `"error"`
 
+#### complexity.noDivRegex
+
+> `readonly` **noDivRegex**: `"error"` = `"error"`
+
+Enforces a more readable regular expression.
+
 #### complexity.noEmptyTypeParameters
 
 > `readonly` **noEmptyTypeParameters**: `"error"` = `"error"`
@@ -227,6 +243,12 @@ Does not really make sense as high line count != high complexity.
 #### complexity.noImportantStyles
 
 > `readonly` **noImportantStyles**: `"error"` = `"error"`
+
+#### complexity.noRedundantDefaultExport
+
+> `readonly` **noRedundantDefaultExport**: `"error"` = `"error"`
+
+Prevents re-exporting the same value as a named export and a default export as well.
 
 #### complexity.noStaticOnlyClass
 
@@ -276,6 +298,14 @@ Does not really make sense as high line count != high complexity.
 
 > `readonly` **noUselessRename**: `"error"` = `"error"`
 
+#### complexity.noUselessReturn
+
+> `readonly` **noUselessReturn**: `"error"` = `"error"`
+
+This rule is meant to prevent using a plain `return;` at the end of a function.
+
+Other usage, such as early returns, should not be affected.
+
 #### complexity.noUselessStringConcat
 
 > `readonly` **noUselessStringConcat**: `"error"` = `"error"`
@@ -319,9 +349,19 @@ An `Option` or `Maybe` type would be more appropriate pattern for such usage, bu
 
 Using `void` to intentionally ignore callback return values is a useful shorthand.
 
+#### complexity.preset
+
+> `readonly` **preset**: `"none"` = `"none"`
+
 #### complexity.recommended
 
 > `readonly` **recommended**: `false` = `false`
+
+#### complexity.useArrayFind
+
+> `readonly` **useArrayFind**: `"error"` = `"error"`
+
+Enforces the usage of `Array.prototype.find` over `Array.prototype.filter` with index access.
 
 #### complexity.useArrowFunction
 
@@ -377,6 +417,12 @@ Clashes with index-based access required by a strict Typescript configuration wh
 
 > `readonly` **correctness**: `object`
 
+#### correctness.noBeforeInteractiveScriptOutsideDocument
+
+> `readonly` **noBeforeInteractiveScriptOutsideDocument**: `"error"` = `"error"`
+
+Enforces the correct usage of `beforeInteractive` scripts.
+
 #### correctness.noChildrenProp
 
 > `readonly` **noChildrenProp**: `"error"` = `"error"`
@@ -396,6 +442,36 @@ Clashes with index-based access required by a strict Typescript configuration wh
 #### correctness.noConstructorReturn
 
 > `readonly` **noConstructorReturn**: `"error"` = `"error"`
+
+#### correctness.noDuplicateArgumentNames
+
+> `readonly` **noDuplicateArgumentNames**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+#### correctness.noDuplicateAttributes
+
+> `readonly` **noDuplicateAttributes**: `"error"` = `"error"`
+
+This rule should help with writing valid HTML.
+
+#### correctness.noDuplicateEnumValueNames
+
+> `readonly` **noDuplicateEnumValueNames**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+
+#### correctness.noDuplicateInputFieldNames
+
+> `readonly` **noDuplicateInputFieldNames**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
+#### correctness.noDuplicateVariableNames
+
+> `readonly` **noDuplicateVariableNames**: `"off"` = `"off"`
+
+GraphQL-only rule.
 
 #### correctness.noEmptyCharacterClassInRegex
 
@@ -593,6 +669,12 @@ Flags any imports that Biome cannot resolve.
 
 > `readonly` **noUnusedImports**: `"error"` = `"error"`
 
+#### correctness.noUnusedInstantiation
+
+> `readonly` **noUnusedInstantiation**: `"error"` = `"error"`
+
+Prevents instantiation of classes that never get used.
+
 #### correctness.noUnusedLabels
 
 > `readonly` **noUnusedLabels**: `"error"` = `"error"`
@@ -643,6 +725,16 @@ Vue-only rule.
 
 Vue-only rule.
 
+#### correctness.noVueVIfWithVFor
+
+> `readonly` **noVueVIfWithVFor**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.preset
+
+> `readonly` **preset**: `"none"` = `"none"`
+
 #### correctness.recommended
 
 > `readonly` **recommended**: `false` = `false`
@@ -673,6 +765,12 @@ Should only be enabled per-project, depending on the bundler usage.
 
 Recommended level would be `error`.
 
+#### correctness.useInlineScriptId
+
+> `readonly` **useInlineScriptId**: `"error"` = `"error"`
+
+Inline script IDs are required for compiler tracking and optimization.
+
 #### correctness.useIsNan
 
 > `readonly` **useIsNan**: `"error"` = `"error"`
@@ -684,6 +782,12 @@ Recommended level would be `error`.
 #### correctness.useJsxKeyInIterable
 
 > `readonly` **useJsxKeyInIterable**: `"error"` = `"error"`
+
+#### correctness.useLoneAnonymousOperation
+
+> `readonly` **useLoneAnonymousOperation**: `"off"` = `"off"`
+
+GraphQL-only rule.
 
 #### correctness.useParseIntRadix
 
@@ -723,6 +827,78 @@ Qwik-only rule.
 
 > `readonly` **useValidTypeof**: `"error"` = `"error"`
 
+#### correctness.useVueValidTemplateRoot
+
+> `readonly` **useVueValidTemplateRoot**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVBind
+
+> `readonly` **useVueValidVBind**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVCloak
+
+> `readonly` **useVueValidVCloak**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVElse
+
+> `readonly` **useVueValidVElse**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVElseIf
+
+> `readonly` **useVueValidVElseIf**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVHtml
+
+> `readonly` **useVueValidVHtml**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVIf
+
+> `readonly` **useVueValidVIf**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVOn
+
+> `readonly` **useVueValidVOn**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVOnce
+
+> `readonly` **useVueValidVOnce**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVPre
+
+> `readonly` **useVueValidVPre**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueValidVText
+
+> `readonly` **useVueValidVText**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### correctness.useVueVForKey
+
+> `readonly` **useVueVForKey**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### correctness.useYield
 
 > `readonly` **useYield**: `"error"` = `"error"`
@@ -731,18 +907,11 @@ Qwik-only rule.
 
 > `readonly` **nursery**: `object`
 
-#### nursery.noAmbiguousAnchorText
+#### nursery.noBaseToString
 
-> `readonly` **noAmbiguousAnchorText**: `"warn"` = `"warn"`
+> `readonly` **noBaseToString**: `"error"` = `"error"`
 
-This rule promotes  more accessible interfaces. However, turning this into an error would be too harsh as a lot of links would not meet the necessary criteria to pass.
-Leaving the level to `warn` keeps the balance between being helpful and annoying/fighting with designers.
-
-#### nursery.noBeforeInteractiveScriptOutsideDocument
-
-> `readonly` **noBeforeInteractiveScriptOutsideDocument**: `"error"` = `"error"`
-
-Enforces the correct usage of `beforeInteractive` scripts.
+Helps prevent stringification to `[object Object]`.
 
 #### nursery.noComponentHookFactories
 
@@ -756,24 +925,6 @@ Prevents unnecessary component recreation on each render.
 
 Tests should be strictly linear without any branching.
 
-#### nursery.noContinue
-
-> `readonly` **noContinue**: `"off"` = `"off"`
-
-`continue` helps to avoid nesting inside loop bodies.
-
-#### nursery.noDeprecatedMediaType
-
-> `readonly` **noDeprecatedMediaType**: `"error"` = `"error"`
-
-This rule prevents the usage of deprecated media types in CSS.
-
-#### nursery.noDivRegex
-
-> `readonly` **noDivRegex**: `"error"` = `"error"`
-
-Enforces a more readable regular expression.
-
 #### nursery.noDrizzleDeleteWithoutWhere
 
 > `readonly` **noDrizzleDeleteWithoutWhere**: `"off"` = `"off"`
@@ -784,51 +935,9 @@ Drizzle-only rule.
 
 > `readonly` **noDrizzleUpdateWithoutWhere**: `"off"` = `"off"`
 
-#### nursery.noDuplicateArgumentNames
-
-> `readonly` **noDuplicateArgumentNames**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.noDuplicateAttributes
-
-> `readonly` **noDuplicateAttributes**: `"error"` = `"error"`
-
-This rule should help with writing valid HTML.
-
-#### nursery.noDuplicatedSpreadProps
-
-> `readonly` **noDuplicatedSpreadProps**: `"error"` = `"error"`
-
-Prevents unnecessary computations as spreading props twice makes React go crazy.
-
-#### nursery.noDuplicateEnumValueNames
-
-> `readonly` **noDuplicateEnumValueNames**: `"error"` = `"error"`
-
-This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-
-#### nursery.noDuplicateEnumValues
-
-> `readonly` **noDuplicateEnumValues**: `"error"` = `"error"`
-
-This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-
 #### nursery.noDuplicateFieldDefinitionNames
 
 > `readonly` **noDuplicateFieldDefinitionNames**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.noDuplicateGraphqlOperationName
-
-> `readonly` **noDuplicateGraphqlOperationName**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.noDuplicateInputFieldNames
-
-> `readonly` **noDuplicateInputFieldNames**: `"off"` = `"off"`
 
 GraphQL-only rule.
 
@@ -838,48 +947,17 @@ GraphQL-only rule.
 
 Prevents selector duplication.
 
-#### nursery.noDuplicateVariableNames
-
-> `readonly` **noDuplicateVariableNames**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
 #### nursery.noEmptyObjectKeys
 
 > `readonly` **noEmptyObjectKeys**: `"error"` = `"error"`
 
 Empty object keys are usually just a typo.
 
-#### nursery.noEqualsToNull
+#### nursery.noExcessiveNestedCallbacks
 
-> `readonly` **noEqualsToNull**: `"off"` = `"off"`
+> `readonly` **noExcessiveNestedCallbacks**: `"error"` = `"error"`
 
-Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
-
-#### nursery.noExcessiveClassesPerFile
-
-> `readonly` **noExcessiveClassesPerFile**: `object`
-
-Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
-The configuration is left up at the `warn` level to let maintainers know that a rule like this exists and can be configured differently.
-
-#### nursery.noExcessiveClassesPerFile.level
-
-> `readonly` **level**: `"warn"` = `"warn"`
-
-#### nursery.noExcessiveClassesPerFile.options
-
-> `readonly` **options**: `object`
-
-#### nursery.noExcessiveClassesPerFile.options.maxClasses
-
-> `readonly` **maxClasses**: `2` = `2`
-
-#### nursery.noExcessiveLinesPerFile
-
-> `readonly` **noExcessiveLinesPerFile**: `"off"` = `"off"`
-
-The rule is left as `off`. If required, it should be enabled on a project level.
+Keeps the code from nesting too deep.
 
 #### nursery.noExcessiveSelectorClasses
 
@@ -887,28 +965,9 @@ The rule is left as `off`. If required, it should be enabled on a project level.
 
 Excessive class selectors are not necessarily an error but they make the CSS harder to read.
 
-#### nursery.noFloatingClasses
-
-> `readonly` **noFloatingClasses**: `"error"` = `"error"`
-
-Creating a new class without consuming it seems like a code smell - constructors should not have side-effects.
-
 #### nursery.noFloatingPromises
 
 > `readonly` **noFloatingPromises**: `"error"` = `"error"`
-
-#### nursery.noForIn
-
-> `readonly` **noForIn**: `"warn"` = `"warn"`
-
-`for-in` loops are usually just a typo when trying to remember how `for-of` is written.
- As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
-
-#### nursery.noHexColors
-
-> `readonly` **noHexColors**: `"off"` = `"off"`
-
-This rule is disabled as HEX colors are pretty widely used.
 
 #### nursery.noIdenticalTestTitle
 
@@ -921,25 +980,6 @@ Test titles should be unique in their respective groups.
 > `readonly` **noImpliedEval**: `"error"` = `"error"`
 
 Prevents eval()-like behavior of executing arbitrary strings as JavaScript code.
-
-#### nursery.noIncrementDecrement
-
-> `readonly` **noIncrementDecrement**: `object`
-
-This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
-Although, the usage in for-loops makes sense and is thus allowed.
-
-#### nursery.noIncrementDecrement.level
-
-> `readonly` **level**: `"error"` = `"error"`
-
-#### nursery.noIncrementDecrement.options
-
-> `readonly` **options**: `object`
-
-#### nursery.noIncrementDecrement.options.allowForLoopAfterthoughts
-
-> `readonly` **allowForLoopAfterthoughts**: `true` = `true`
 
 #### nursery.noInlineStyles
 
@@ -959,18 +999,6 @@ Using template strings syntax in plain component text is not indended in most ca
 
 XML-like syntax is not supported by React.
 
-#### nursery.noJsxPropsBind
-
-> `readonly` **noJsxPropsBind**: `"error"` = `"error"`
-
-Using `bind` is treated by React as a new function on each render.
-
-#### nursery.noLeakedRender
-
-> `readonly` **noLeakedRender**: `"error"` = `"error"`
-
-Prevents unintended values from being rendered. For example the `false` case when using `&&`.
-
 #### nursery.noLoopFunc
 
 > `readonly` **noLoopFunc**: `"error"` = `"error"`
@@ -988,32 +1016,6 @@ In case the widening is expected, using `return value as WiderType` is recommend
 #### nursery.noMisusedPromises
 
 > `readonly` **noMisusedPromises**: `"error"` = `"error"`
-
-#### nursery.noMultiAssign
-
-> `readonly` **noMultiAssign**: `"error"` = `"error"`
-
-Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
-Keeping the assignments separate makes them more readable.
-
-#### nursery.noMultiStr
-
-> `readonly` **noMultiStr**: `"error"` = `"error"`
-
-Using strings with ``` is a better approach.
-
-#### nursery.noNestedPromises
-
-> `readonly` **noNestedPromises**: `"error"` = `"error"`
-
-`async await` has been implemented to replace promise nesting.
-`async await` is now generally available and should be the preferred approach to writing asynchronous code.
-
-#### nursery.noParametersOnlyUsedInRecursion
-
-> `readonly` **noParametersOnlyUsedInRecursion**: `"off"` = `"off"`
-
-Just making sure there are no unused parameters in recursive functions.
 
 #### nursery.noPlaywrightElementHandle
 
@@ -1075,12 +1077,6 @@ Locators are preferred as they are more reliable and auto-awaited.
 
 `waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
 
-#### nursery.noProto
-
-> `readonly` **noProto**: `"error"` = `"error"`
-
-This approach to accessing object's prototype is deprecated since 2009.
-
 #### nursery.noReactNativeDeepImports
 
 > `readonly` **noReactNativeDeepImports**: `"error"` = `"error"`
@@ -1099,46 +1095,17 @@ Disallows hardcoding colors in React Native components for better reusability in
 
 Text should always be wrapped in the React Native `Text` component.
 
-#### nursery.noRedundantDefaultExport
+#### nursery.noReactStringRefs
 
-> `readonly` **noRedundantDefaultExport**: `"error"` = `"error"`
+> `readonly` **noReactStringRefs**: `"error"` = `"error"`
 
-Prevents re-exporting the same value as a named export and a default export as well.
+Prevents the usage of the old string refs that are less maintainable than the explicit refs.
 
-#### nursery.noReturnAssign
+#### nursery.noRestrictedDependencies
 
-> `readonly` **noReturnAssign**: `"error"` = `"error"`
+> `readonly` **noRestrictedDependencies**: `"error"` = `"error"`
 
-There is no need to assign anything when returning.
-
-#### nursery.noRootType
-
-> `readonly` **noRootType**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.noScriptUrl
-
-> `readonly` **noScriptUrl**: `"error"` = `"error"`
-
-This rule should help with preventing any XSS vulnerabilities.
-
-#### nursery.noShadow
-
-> `readonly` **noShadow**: `"error"` = `"error"`
-
-#### nursery.noSyncScripts
-
-> `readonly` **noSyncScripts**: `"error"` = `"error"`
-
-Synchronous scripts by themselves impact the performance.
-
-#### nursery.noTernary
-
-> `readonly` **noTernary**: `"off"` = `"off"`
-
-Ternaries are a superior way of assigning to variables.
-They only become hard to read once they become nested or use long conditions.
+Prevents usage of superseeded dependencies as checked by [e18e](https://e18e.dev/).
 
 #### nursery.noTopLevelLiterals
 
@@ -1146,19 +1113,11 @@ They only become hard to read once they become nested or use long conditions.
 
 Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
 
-#### nursery.noUndeclaredEnvVars
+#### nursery.noUndeclaredClasses
 
-> `readonly` **noUndeclaredEnvVars**: `"off"` = `"off"`
+> `readonly` **noUndeclaredClasses**: `"off"` = `"off"`
 
-Turborepo-only rule.
-
-#### nursery.noUnknownAttribute
-
-> `readonly` **noUnknownAttribute**: `"warn"` = `"warn"`
-
-#### nursery.noUnnecessaryConditions
-
-> `readonly` **noUnnecessaryConditions**: `"warn"` = `"warn"`
+Disabled to prevent issues with false-positives.
 
 #### nursery.noUnnecessaryTemplateExpression
 
@@ -1178,13 +1137,11 @@ Disallows the `+` operand on two values that may produce unexpected results.
 
 Informational rule that reports when a dependency license may not be compatible with the project.
 
-#### nursery.noUselessReturn
+#### nursery.noUnusedClasses
 
-> `readonly` **noUselessReturn**: `"error"` = `"error"`
+> `readonly` **noUnusedClasses**: `"off"` = `"off"`
 
-This rule is meant to prevent using a plain `return;` at the end of a function.
-
-Other usage, such as early returns, should not be affected.
+Disabled to prevent issues with false-positives.
 
 #### nursery.noUselessTypeConversion
 
@@ -1192,15 +1149,9 @@ Other usage, such as early returns, should not be affected.
 
 Disallows unnecessary type conversions.
 
-#### nursery.noVueArrowFuncInWatch
+#### nursery.noVueImportCompilerMacros
 
-> `readonly` **noVueArrowFuncInWatch**: `"off"` = `"off"`
-
-Vue-only rule.
-
-#### nursery.noVueOptionsApi
-
-> `readonly` **noVueOptionsApi**: `"off"` = `"off"`
+> `readonly` **noVueImportCompilerMacros**: `"off"` = `"off"`
 
 Vue-only rule.
 
@@ -1210,11 +1161,15 @@ Vue-only rule.
 
 Vue-only rule.
 
-#### nursery.noVueVIfWithVFor
+#### nursery.noVueVOnNumberValues
 
-> `readonly` **noVueVIfWithVFor**: `"off"` = `"off"`
+> `readonly` **noVueVOnNumberValues**: `"off"` = `"off"`
 
 Vue-only rule.
+
+#### nursery.preset
+
+> `readonly` **preset**: `"none"` = `"none"`
 
 #### nursery.recommended
 
@@ -1225,12 +1180,6 @@ Vue-only rule.
 > `readonly` **useArraySome**: `"error"` = `"error"`
 
 using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
-
-#### nursery.useArraySortCompare
-
-> `readonly` **useArraySortCompare**: `"error"` = `"error"`
-
-Enforces all sorting operations to be explicitly defined.
 
 #### nursery.useAwaitThenable
 
@@ -1256,37 +1205,6 @@ Reports when a CSS feature is not widely available. Intended to prevent usage of
 
 > `readonly` **available**: `"widely"` = `"widely"`
 
-#### nursery.useConsistentEnumValueType
-
-> `readonly` **useConsistentEnumValueType**: `"error"` = `"error"`
-
-This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
-
-#### nursery.useConsistentGraphqlDescriptions
-
-> `readonly` **useConsistentGraphqlDescriptions**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.useConsistentMethodSignatures
-
-> `readonly` **useConsistentMethodSignatures**: `object`
-
-This rule enforces a consistent method signature in interfaces and types.
-The property style keeps the code definitions consistant between attributes and methods.
-
-#### nursery.useConsistentMethodSignatures.level
-
-> `readonly` **level**: `"error"` = `"error"`
-
-#### nursery.useConsistentMethodSignatures.options
-
-> `readonly` **options**: `object`
-
-#### nursery.useConsistentMethodSignatures.options.style
-
-> `readonly` **style**: `"property"` = `"property"`
-
 #### nursery.useConsistentTestIt
 
 > `readonly` **useConsistentTestIt**: `object`
@@ -1305,13 +1223,6 @@ Forces consistent usage of `test` over `it` in test definitions.
 
 > `readonly` **function**: `"test"` = `"test"`
 
-#### nursery.useDestructuring
-
-> `readonly` **useDestructuring**: `"info"` = `"info"`
-
-Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
-The level is left at `info` to at least let the user know that the option exists.
-
 #### nursery.useDisposables
 
 > `readonly` **useDisposables**: `"error"` = `"error"`
@@ -1329,12 +1240,6 @@ Detects when a disposable object is not disposed off with the `using` keyword.
 > `readonly` **useDomQuerySelector**: `"error"` = `"error"`
 
 Enforces `querySelector` usage over the old DOM APIs.
-
-#### nursery.useErrorCause
-
-> `readonly` **useErrorCause**: `"error"` = `"error"`
-
-Promotes better error-handling practices.
 
 #### nursery.useExhaustiveSwitchCases
 
@@ -1378,19 +1283,6 @@ const returnsString = (): string => "value";
 const isDefinitelyString = returnsString(); // isDefinitelyString would have to have it's typed explicitly written out
 ```
 
-#### nursery.useFind
-
-> `readonly` **useFind**: `"error"` = `"error"`
-
-Much more readable approach then indexing into a possibly empty array.
-
-#### nursery.useGlobalThis
-
-> `readonly` **useGlobalThis**: `"warn"` = `"warn"`
-
-This rule promotes the use of cross-platform compatible global accessors.
-Biome allows for some `window` specific accesses that are not directly available on globalThis.
-
 #### nursery.useIframeSandbox
 
 > `readonly` **useIframeSandbox**: `"error"` = `"error"`
@@ -1403,29 +1295,17 @@ Forces `iframe` elements to have a sandbox attribute.
 
 Forces all imports to be at the top of the source code file.
 
-#### nursery.useInlineScriptId
+#### nursery.useIncludes
 
-> `readonly` **useInlineScriptId**: `"error"` = `"error"`
+> `readonly` **useIncludes**: `"error"` = `"error"`
 
-Inline script IDs are required for compiler tracking and optimization.
+Forces the usage of a more idiomatic `Array.prototype.includes` over `Array.prototype.indexOf`.
 
-#### nursery.useInputName
+#### nursery.useMathMinMax
 
-> `readonly` **useInputName**: `"off"` = `"off"`
+> `readonly` **useMathMinMax**: `"error"` = `"error"`
 
-GraphQL-only rule.
-
-#### nursery.useLoneAnonymousOperation
-
-> `readonly` **useLoneAnonymousOperation**: `"off"` = `"off"`
-
-GraphQL-only rule.
-
-#### nursery.useLoneExecutableDefinition
-
-> `readonly` **useLoneExecutableDefinition**: `"off"` = `"off"`
-
-GraphQL-only rule.
+Forces the usage of `Math.min` or `Math.max` over ternaries.
 
 #### nursery.useNamedCaptureGroup
 
@@ -1457,6 +1337,24 @@ Qwik-only rule.
 
 Forces any function with `use server` directive to be asynchronous.
 
+#### nursery.useReactFunctionComponentDefinition
+
+> `readonly` **useReactFunctionComponentDefinition**: `object`
+
+Forces a consistent React component declaration.
+
+#### nursery.useReactFunctionComponentDefinition.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### nursery.useReactFunctionComponentDefinition.options
+
+> `readonly` **options**: `object`
+
+#### nursery.useReactFunctionComponentDefinition.options.namedComponents
+
+> `readonly` **namedComponents**: `"arrowFunction"` = `"arrowFunction"`
+
 #### nursery.useReactNativePlatformComponents
 
 > `readonly` **useReactNativePlatformComponents**: `"error"` = `"error"`
@@ -1481,12 +1379,6 @@ Forces that any usage of `Array.prototype.reduce` is correctly typed via a gener
 
 Promotes the usage of `Regex.prototype.test` over `String.prototype.match`.
 
-#### nursery.useRequiredScripts
-
-> `readonly` **useRequiredScripts**: `"off"` = `"off"`
-
-This rule should only be enabled in a specific project as every project uses different required scripts.
-
 #### nursery.useScopedStyles
 
 > `readonly` **useScopedStyles**: `"off"` = `"off"`
@@ -1497,17 +1389,35 @@ Vue-only rule.
 
 > `readonly` **useSortedClasses**: `"error"` = `"error"`
 
-#### nursery.useSpread
-
-> `readonly` **useSpread**: `"error"` = `"error"`
-
-Spread syntax is more readable than using `Object.apply`.
-
 #### nursery.useStringStartsEndsWith
 
 > `readonly` **useStringStartsEndsWith**: `"error"` = `"error"`
 
 Forces the usage of `String.prototype.startsWith` over index-based assertions.
+
+#### nursery.useSvelteRequireEachKey
+
+> `readonly` **useSvelteRequireEachKey**: `"off"` = `"off"`
+
+Svelte-only rule.
+
+#### nursery.useTestHooksInOrder
+
+> `readonly` **useTestHooksInOrder**: `"error"` = `"error"`
+
+Forces test hook definition to follow the order of execution.
+
+#### nursery.useTestHooksOnTop
+
+> `readonly` **useTestHooksOnTop**: `"error"` = `"error"`
+
+Forces the test hooks to be defined at the top of the scope.
+
+#### nursery.useThisInClassMethods
+
+> `readonly` **useThisInClassMethods**: `"error"` = `"error"`
+
+Ensures that class methods actually utilize `this`. If `this` is not used, the methods can be declared static or moved outside of the class.
 
 #### nursery.useUnicodeRegex
 
@@ -1519,89 +1429,27 @@ Using either the `u` or the newer `v` flags ensures that all unicode characters 
 
 > `readonly` **useVarsOnTop**: `"error"` = `"error"`
 
-`var` declarations are automatically hoisted to the tope of their scope. This rule enforces that even in code, the `var` declaration is placed at the top of the scope to match the behavior.
+Forces `var` declarations to be placed at the top of the scope to avoid hoisting issues.
 
-Even though `var` is not used anymore, it is better to have this rule enabled. Just in case.
+`var` declarations should not be used. However, this rule is enabled just in case.
 
 #### nursery.useVueConsistentDefinePropsDeclaration
 
 > `readonly` **useVueConsistentDefinePropsDeclaration**: `"off"` = `"off"`
 
-#### nursery.useVueConsistentVBindStyle
+Vue-only rule.
 
-> `readonly` **useVueConsistentVBindStyle**: `"off"` = `"off"`
+#### nursery.useVueNextTickPromise
 
-#### nursery.useVueConsistentVOnStyle
-
-> `readonly` **useVueConsistentVOnStyle**: `"off"` = `"off"`
-
-#### nursery.useVueDefineMacrosOrder
-
-> `readonly` **useVueDefineMacrosOrder**: `"off"` = `"off"`
+> `readonly` **useVueNextTickPromise**: `"off"` = `"off"`
 
 Vue-only rule.
 
-#### nursery.useVueHyphenatedAttributes
+#### nursery.useVueValidVFor
 
-> `readonly` **useVueHyphenatedAttributes**: `"off"` = `"off"`
-
-#### nursery.useVueMultiWordComponentNames
-
-> `readonly` **useVueMultiWordComponentNames**: `"off"` = `"off"`
+> `readonly` **useVueValidVFor**: `"off"` = `"off"`
 
 Vue-only rule.
-
-#### nursery.useVueValidTemplateRoot
-
-> `readonly` **useVueValidTemplateRoot**: `"off"` = `"off"`
-
-#### nursery.useVueValidVBind
-
-> `readonly` **useVueValidVBind**: `"off"` = `"off"`
-
-#### nursery.useVueValidVCloak
-
-> `readonly` **useVueValidVCloak**: `"off"` = `"off"`
-
-#### nursery.useVueValidVElse
-
-> `readonly` **useVueValidVElse**: `"off"` = `"off"`
-
-#### nursery.useVueValidVElseIf
-
-> `readonly` **useVueValidVElseIf**: `"off"` = `"off"`
-
-#### nursery.useVueValidVHtml
-
-> `readonly` **useVueValidVHtml**: `"off"` = `"off"`
-
-#### nursery.useVueValidVIf
-
-> `readonly` **useVueValidVIf**: `"off"` = `"off"`
-
-#### nursery.useVueValidVOn
-
-> `readonly` **useVueValidVOn**: `"off"` = `"off"`
-
-#### nursery.useVueValidVOnce
-
-> `readonly` **useVueValidVOnce**: `"off"` = `"off"`
-
-#### nursery.useVueValidVPre
-
-> `readonly` **useVueValidVPre**: `"off"` = `"off"`
-
-#### nursery.useVueValidVText
-
-> `readonly` **useVueValidVText**: `"off"` = `"off"`
-
-#### nursery.useVueVapor
-
-> `readonly` **useVueVapor**: `"off"` = `"off"`
-
-#### nursery.useVueVForKey
-
-> `readonly` **useVueVForKey**: `"off"` = `"off"`
 
 ### performance
 
@@ -1635,6 +1483,12 @@ Recommended level would be `error`.
 
 > `readonly` **noImgElement**: `"error"` = `"error"`
 
+#### performance.noJsxPropsBind
+
+> `readonly` **noJsxPropsBind**: `"error"` = `"error"`
+
+Using `bind` is treated by React as a new function on each render.
+
 #### performance.noNamespaceImport
 
 > `readonly` **noNamespaceImport**: `"error"` = `"error"`
@@ -1643,9 +1497,19 @@ Recommended level would be `error`.
 
 > `readonly` **noReExportAll**: `"error"` = `"error"`
 
+#### performance.noSyncScripts
+
+> `readonly` **noSyncScripts**: `"error"` = `"error"`
+
+Synchronous scripts by themselves impact the performance.
+
 #### performance.noUnwantedPolyfillio
 
 > `readonly` **noUnwantedPolyfillio**: `"error"` = `"error"`
+
+#### performance.preset
+
+> `readonly` **preset**: `"none"` = `"none"`
 
 #### performance.recommended
 
@@ -1664,6 +1528,16 @@ Solid-only rule.
 #### performance.useTopLevelRegex
 
 > `readonly` **useTopLevelRegex**: `"error"` = `"error"`
+
+#### performance.useVueVapor
+
+> `readonly` **useVueVapor**: `"off"` = `"off"`
+
+Vue-only rule.
+
+### preset
+
+> `readonly` **preset**: `"none"` = `"none"`
 
 ### recommended
 
@@ -1689,11 +1563,21 @@ Solid-only rule.
 
 > `readonly` **noGlobalEval**: `"error"` = `"error"`
 
+#### security.noScriptUrl
+
+> `readonly` **noScriptUrl**: `"error"` = `"error"`
+
+This rule should help with preventing any XSS vulnerabilities.
+
 #### security.noSecrets
 
 > `readonly` **noSecrets**: `"off"` = `"off"`
 
 Produces too many false-positives.
+
+#### security.preset
+
+> `readonly` **preset**: `"none"` = `"none"`
 
 #### security.recommended
 
@@ -1711,6 +1595,12 @@ Should only be enabled in ESM projects or projects using bundlers.
 
 Recommended level would be `error`.
 
+#### style.noContinue
+
+> `readonly` **noContinue**: `"off"` = `"off"`
+
+`continue` helps to avoid nesting inside loop bodies.
+
 #### style.noDefaultExport
 
 > `readonly` **noDefaultExport**: `"error"` = `"error"`
@@ -1727,6 +1617,30 @@ Recommended level would be `error`.
 
 > `readonly` **noEnum**: `"error"` = `"error"`
 
+#### style.noExcessiveClassesPerFile
+
+> `readonly` **noExcessiveClassesPerFile**: `object`
+
+Should really be left up to individual projects. More than two can be fine, if defining things like Errors in a single place.
+
+#### style.noExcessiveClassesPerFile.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### style.noExcessiveClassesPerFile.options
+
+> `readonly` **options**: `object`
+
+#### style.noExcessiveClassesPerFile.options.maxClasses
+
+> `readonly` **maxClasses**: `2` = `2`
+
+#### style.noExcessiveLinesPerFile
+
+> `readonly` **noExcessiveLinesPerFile**: `"off"` = `"off"`
+
+The rule is left as `off`. If required, it should be enabled on a project level.
+
 #### style.noExportedImports
 
 > `readonly` **noExportedImports**: `"error"` = `"error"`
@@ -1735,9 +1649,34 @@ Recommended level would be `error`.
 
 > `readonly` **noHeadElement**: `"error"` = `"error"`
 
+#### style.noHexColors
+
+> `readonly` **noHexColors**: `"off"` = `"off"`
+
+This rule is disabled as HEX colors are pretty widely used.
+
 #### style.noImplicitBoolean
 
 > `readonly` **noImplicitBoolean**: `"error"` = `"error"`
+
+#### style.noIncrementDecrement
+
+> `readonly` **noIncrementDecrement**: `object`
+
+This rule should be useful for the avoidance of incorrectly auto-inserted semicolons.
+Although, the usage in for-loops makes sense and is thus allowed.
+
+#### style.noIncrementDecrement.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### style.noIncrementDecrement.options
+
+> `readonly` **options**: `object`
+
+#### style.noIncrementDecrement.options.allowForLoopAfterthoughts
+
+> `readonly` **allowForLoopAfterthoughts**: `true` = `true`
 
 #### style.noInferrableTypes
 
@@ -1752,6 +1691,18 @@ Should only be a recommendation as not every React project will be using transla
 #### style.noMagicNumbers
 
 > `readonly` **noMagicNumbers**: `"warn"` = `"warn"`
+
+#### style.noMultiAssign
+
+> `readonly` **noMultiAssign**: `"error"` = `"error"`
+
+Keeping the assignments more explicit. There are no performance gains, as the code is bundled & minified anyway.
+
+#### style.noMultilineString
+
+> `readonly` **noMultilineString**: `"error"` = `"error"`
+
+Enforces that strings are either multiline via template string literals or with explicit line breaks.
 
 #### style.noNamespace
 
@@ -1799,6 +1750,12 @@ No point in banning any imports globally. Should be done per-project, if at all.
 
 No point in banning any types globally. Should be done per-project, if at all.
 
+#### style.noRootType
+
+> `readonly` **noRootType**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### style.noShoutyConstants
 
 > `readonly` **noShoutyConstants**: `"off"` = `"off"`
@@ -1808,6 +1765,13 @@ Shouting is not a crime.
 #### style.noSubstr
 
 > `readonly` **noSubstr**: `"error"` = `"error"`
+
+#### style.noTernary
+
+> `readonly` **noTernary**: `"off"` = `"off"`
+
+Ternaries are a superior way of assigning to variables.
+They only become hard to read once they become nested or use long conditions.
 
 #### style.noUnusedTemplateLiteral
 
@@ -1821,9 +1785,19 @@ Shouting is not a crime.
 
 > `readonly` **noValueAtRule**: `"error"` = `"error"`
 
+#### style.noVueOptionsApi
+
+> `readonly` **noVueOptionsApi**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### style.noYodaExpression
 
 > `readonly` **noYodaExpression**: `"error"` = `"error"`
+
+#### style.preset
+
+> `readonly` **preset**: `"none"` = `"none"`
 
 #### style.recommended
 
@@ -1885,6 +1859,18 @@ Shouting is not a crime.
 
 > `readonly` **useConsistentCurlyBraces**: `"error"` = `"error"`
 
+#### style.useConsistentEnumValueType
+
+> `readonly` **useConsistentEnumValueType**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
+
+#### style.useConsistentGraphqlDescriptions
+
+> `readonly` **useConsistentGraphqlDescriptions**: `"off"` = `"off"`
+
+GraphQL-only rule.
+
 #### style.useConsistentMemberAccessibility
 
 > `readonly` **useConsistentMemberAccessibility**: `object`
@@ -1900,6 +1886,25 @@ Shouting is not a crime.
 #### style.useConsistentMemberAccessibility.options.accessibility
 
 > `readonly` **accessibility**: `"explicit"` = `"explicit"`
+
+#### style.useConsistentMethodSignatures
+
+> `readonly` **useConsistentMethodSignatures**: `object`
+
+This rule enforces a consistent method signature in interfaces and types.
+The property style keeps the code definitions consistant between attributes and methods.
+
+#### style.useConsistentMethodSignatures.level
+
+> `readonly` **level**: `"error"` = `"error"`
+
+#### style.useConsistentMethodSignatures.options
+
+> `readonly` **options**: `object`
+
+#### style.useConsistentMethodSignatures.options.style
+
+> `readonly` **style**: `"property"` = `"property"`
 
 #### style.useConsistentObjectDefinitions
 
@@ -1960,11 +1965,24 @@ Only `warn` as to not clash with `nursery/useExhaustiveSwitchCases`.
 
 GraphQL-only rule.
 
+#### style.useDestructuring
+
+> `readonly` **useDestructuring**: `"off"` = `"off"`
+
+Destructuring may be more readable in many cases. However, the distinction is not simply black-and-white and is left up to the code reviewer.
+The level is left at `off` to at least let the user know that the option exists.
+
 #### style.useEnumInitializers
 
 > `readonly` **useEnumInitializers**: `"off"` = `"off"`
 
 Enums are forbidden.
+
+#### style.useErrorCause
+
+> `readonly` **useErrorCause**: `"error"` = `"error"`
+
+Promotes better error-handling practices.
 
 #### style.useExplicitLengthCheck
 
@@ -1996,6 +2014,13 @@ Should only be enabled per-project.
 
 > `readonly` **useFragmentSyntax**: `"error"` = `"error"`
 
+#### style.useGlobalThis
+
+> `readonly` **useGlobalThis**: `"error"` = `"error"`
+
+This rule promotes the use of cross-platform compatible global accessors.
+Biome allows for some `window` specific accesses that are not directly available on globalThis.
+
 #### style.useGraphqlNamingConvention
 
 > `readonly` **useGraphqlNamingConvention**: `"off"` = `"off"`
@@ -2010,11 +2035,23 @@ GraphQL-only rule.
 
 > `readonly` **useImportType**: `"error"` = `"error"`
 
+#### style.useInputName
+
+> `readonly` **useInputName**: `"off"` = `"off"`
+
+GraphQL-only rule
+
 #### style.useLiteralEnumMembers
 
 > `readonly` **useLiteralEnumMembers**: `"off"` = `"off"`
 
 Enums are forbidden.
+
+#### style.useLoneExecutableDefinition
+
+> `readonly` **useLoneExecutableDefinition**: `"off"` = `"off"`
+
+GraphQL-only rule.
 
 #### style.useNamingConvention
 
@@ -2068,6 +2105,14 @@ Node-only rule.
 
 > `readonly` **useSingleVarDeclarator**: `"error"` = `"error"`
 
+#### style.useSpreadOverApply
+
+> `readonly` **useSpreadOverApply**: `"error"` = `"error"`
+
+Enforces the spread syntax usage over a plain `apply`.
+
+`apply` is still accepted in cases where there is a custom `this` value supplied.
+
 #### style.useSymbolDescription
 
 > `readonly` **useSymbolDescription**: `"error"` = `"error"`
@@ -2091,6 +2136,36 @@ Node-only rule.
 #### style.useUnifiedTypeSignatures
 
 > `readonly` **useUnifiedTypeSignatures**: `"warn"` = `"warn"`
+
+#### style.useVueConsistentVBindStyle
+
+> `readonly` **useVueConsistentVBindStyle**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### style.useVueConsistentVOnStyle
+
+> `readonly` **useVueConsistentVOnStyle**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### style.useVueDefineMacrosOrder
+
+> `readonly` **useVueDefineMacrosOrder**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### style.useVueHyphenatedAttributes
+
+> `readonly` **useVueHyphenatedAttributes**: `"off"` = `"off"`
+
+Vue-only rule.
+
+#### style.useVueMultiWordComponentNames
+
+> `readonly` **useVueMultiWordComponentNames**: `"off"` = `"off"`
+
+Vue-only rule.
 
 ### suspicious
 
@@ -2174,6 +2249,12 @@ Node-only rule.
 
 Deprecated imports should be discouraged. However, with some dependencies, there are no alternatives. Thus keeping this at the `warn` level.
 
+#### suspicious.noDeprecatedMediaType
+
+> `readonly` **noDeprecatedMediaType**: `"error"` = `"error"`
+
+This rule prevents the usage of deprecated media types in CSS.
+
 #### suspicious.noDocumentCookie
 
 > `readonly` **noDocumentCookie**: `"error"` = `"error"`
@@ -2208,9 +2289,21 @@ Deprecated imports should be discouraged. However, with some dependencies, there
 
 NodeJS-only rule.
 
+#### suspicious.noDuplicatedSpreadProps
+
+> `readonly` **noDuplicatedSpreadProps**: `"error"` = `"error"`
+
+Prevents unnecessary computations as spreading props twice makes React go crazy.
+
 #### suspicious.noDuplicateElseIf
 
 > `readonly` **noDuplicateElseIf**: `"error"` = `"error"`
+
+#### suspicious.noDuplicateEnumValues
+
+> `readonly` **noDuplicateEnumValues**: `"error"` = `"error"`
+
+This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 
 #### suspicious.noDuplicateFields
 
@@ -2221,6 +2314,12 @@ GraphQL-only rule.
 #### suspicious.noDuplicateFontNames
 
 > `readonly` **noDuplicateFontNames**: `"error"` = `"error"`
+
+#### suspicious.noDuplicateGraphqlOperationName
+
+> `readonly` **noDuplicateGraphqlOperationName**: `"off"` = `"off"`
+
+GraphQL-only rule.
 
 #### suspicious.noDuplicateJsxProps
 
@@ -2266,6 +2365,12 @@ Frontend-only rule.
 
 GraphQL-only rule.
 
+#### suspicious.noEqualsToNull
+
+> `readonly` **noEqualsToNull**: `"off"` = `"off"`
+
+Keeping this `off` as this approach is useful when working with libraries and projects that use `null` and `undefined` interchangeably.
+
 #### suspicious.noEvolvingTypes
 
 > `readonly` **noEvolvingTypes**: `"error"` = `"error"`
@@ -2289,6 +2394,13 @@ GraphQL-only rule.
 #### suspicious.noFocusedTests
 
 > `readonly` **noFocusedTests**: `"error"` = `"error"`
+
+#### suspicious.noForIn
+
+> `readonly` **noForIn**: `"error"` = `"error"`
+
+`for-in` loops are usually just a typo when trying to remember how `for-of` is written.
+ As the Biome documentation mentions, `for-of`, plain `for` loop, or even `array.entries` are the better and more explicit options.
 
 #### suspicious.noFunctionAssign
 
@@ -2336,6 +2448,12 @@ Import cycles are bad for obvious reasons.
 
 > `readonly` **noLabelVar**: `"error"` = `"error"`
 
+#### suspicious.noLeakedRender
+
+> `readonly` **noLeakedRender**: `"error"` = `"error"`
+
+Prevents unintended values from being rendered. For example the `false` case when using `&&`.
+
 #### suspicious.noMisleadingCharacterClass
 
 > `readonly` **noMisleadingCharacterClass**: `"error"` = `"error"`
@@ -2352,6 +2470,12 @@ Import cycles are bad for obvious reasons.
 
 > `readonly` **noMisrefactoredShorthandAssign**: `"error"` = `"error"`
 
+#### suspicious.noNestedPromises
+
+> `readonly` **noNestedPromises**: `"error"` = `"error"`
+
+`async await` is now generally available and should be the preferred approach to writing asynchronous code.
+
 #### suspicious.noNonNullAssertedOptionalChain
 
 > `readonly` **noNonNullAssertedOptionalChain**: `"error"` = `"error"`
@@ -2359,6 +2483,18 @@ Import cycles are bad for obvious reasons.
 #### suspicious.noOctalEscape
 
 > `readonly` **noOctalEscape**: `"error"` = `"error"`
+
+#### suspicious.noParametersOnlyUsedInRecursion
+
+> `readonly` **noParametersOnlyUsedInRecursion**: `"error"` = `"error"`
+
+Just making sure there are no unused parameters in recursive functions.
+
+#### suspicious.noProto
+
+> `readonly` **noProto**: `"error"` = `"error"`
+
+This approach to accessing object's prototype is deprecated since 2009.
 
 #### suspicious.noPrototypeBuiltins
 
@@ -2390,9 +2526,21 @@ Solid and qwik rule only.
 
 > `readonly` **noRedundantUseStrict**: `"error"` = `"error"`
 
+#### suspicious.noReturnAssign
+
+> `readonly` **noReturnAssign**: `"error"` = `"error"`
+
+There is no need to assign anything when returning.
+
 #### suspicious.noSelfCompare
 
 > `readonly` **noSelfCompare**: `"error"` = `"error"`
+
+#### suspicious.noShadow
+
+> `readonly` **noShadow**: `"error"` = `"error"`
+
+Forbids name-shadowing.
 
 #### suspicious.noShadowRestrictedNames
 
@@ -2430,9 +2578,27 @@ Solid and qwik rule only.
 
 > `readonly` **noUnassignedVariables**: `"error"` = `"error"`
 
+#### suspicious.noUndeclaredEnvVars
+
+> `readonly` **noUndeclaredEnvVars**: `"off"` = `"off"`
+
+Turborepo-only rule.
+
 #### suspicious.noUnknownAtRules
 
 > `readonly` **noUnknownAtRules**: `"error"` = `"error"`
+
+#### suspicious.noUnknownAttribute
+
+> `readonly` **noUnknownAttribute**: `"error"` = `"error"`
+
+Prevents the usage of unknown attributes.
+
+#### suspicious.noUnnecessaryConditions
+
+> `readonly` **noUnnecessaryConditions**: `"error"` = `"error"`
+
+Prevents the usage of a most likely incorrect code used in a condition. Only flags conditions that always evaluate to the same value.
 
 #### suspicious.noUnsafeDeclarationMerging
 
@@ -2460,9 +2626,19 @@ Unused expressions can be safely remove and should not litter the codebase.
 
 > `readonly` **noVar**: `"error"` = `"error"`
 
+#### suspicious.noVueArrowFuncInWatch
+
+> `readonly` **noVueArrowFuncInWatch**: `"off"` = `"off"`
+
+Vue-only rule.
+
 #### suspicious.noWith
 
 > `readonly` **noWith**: `"error"` = `"error"`
+
+#### suspicious.preset
+
+> `readonly` **preset**: `"none"` = `"none"`
 
 #### suspicious.recommended
 
@@ -2471,6 +2647,12 @@ Unused expressions can be safely remove and should not litter the codebase.
 #### suspicious.useAdjacentOverloadSignatures
 
 > `readonly` **useAdjacentOverloadSignatures**: `"error"` = `"error"`
+
+#### suspicious.useArraySortCompare
+
+> `readonly` **useArraySortCompare**: `"error"` = `"error"`
+
+Enforces all sorting operations to be explicitly defined.
 
 #### suspicious.useAwait
 
@@ -2523,6 +2705,12 @@ GraphQL-only rule.
 #### suspicious.useNumberToFixedDigitsArgument
 
 > `readonly` **useNumberToFixedDigitsArgument**: `"error"` = `"error"`
+
+#### suspicious.useRequiredScripts
+
+> `readonly` **useRequiredScripts**: `"off"` = `"off"`
+
+This rule should only be enabled in a specific project as every project uses different required scripts.
 
 #### suspicious.useStaticResponseMethods
 

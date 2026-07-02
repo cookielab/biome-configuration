@@ -16,6 +16,10 @@ const a11y = {
 	...base.a11y,
 
 	noAccessKey: "error",
+	/**
+	 * This rule promotes  more accessible interfaces.
+	 */
+	noAmbiguousAnchorText: "error",
 	noAriaHiddenOnFocusable: "error",
 	noAriaUnsupportedElements: "error",
 	noAutofocus: "error",
@@ -64,6 +68,10 @@ const complexity = {
 const correctness = {
 	...base.correctness,
 
+	/**
+	 * This rule should help with writing valid HTML.
+	 */
+	noDuplicateAttributes: "error",
 	noInvalidDirectionInLinearGradient: "error",
 	noInvalidGridAreas: "error",
 	noInvalidPositionAtImportRule: "error",
@@ -82,14 +90,6 @@ const nursery = {
 	...base.nursery,
 
 	/**
-	 * This rule prevents the usage of deprecated media types in CSS.
-	 */
-	noDeprecatedMediaType: "error",
-	/**
-	 * This rule should help with writing valid HTML.
-	 */
-	noDuplicateAttributes: "error",
-	/**
 	 * Prevents selector duplication.
 	 */
 	noDuplicateSelectors: "error",
@@ -98,17 +98,17 @@ const nursery = {
 	 */
 	noExcessiveSelectorClasses: "warn",
 	/**
-	 * This rule is disabled as HEX colors are pretty widely used.
-	 */
-	noHexColors: "off",
-	/**
 	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
 	 */
 	noInlineStyles: "warn",
 	/**
-	 * This rule should help with preventing any XSS vulnerabilities.
+	 * Disabled to prevent issues with false-positives.
 	 */
-	noScriptUrl: "error",
+	noUndeclaredClasses: "off",
+	/**
+	 * Disabled to prevent issues with false-positives.
+	 */
+	noUnusedClasses: "off",
 	/**
 	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
 	 */
@@ -143,12 +143,20 @@ const security = {
 	...base.security,
 
 	noBlankTarget: "error",
+	/**
+	 * This rule should help with preventing any XSS vulnerabilities.
+	 */
+	noScriptUrl: "error",
 } as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
 
 const style = {
 	...base.style,
 
 	noDescendingSpecificity: "error",
+	/**
+	 * This rule is disabled as HEX colors are pretty widely used.
+	 */
+	noHexColors: "off",
 	noValueAtRule: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
@@ -156,6 +164,10 @@ const suspicious = {
 	...base.suspicious,
 
 	noAlert: "error",
+	/**
+	 * This rule prevents the usage of deprecated media types in CSS.
+	 */
+	noDeprecatedMediaType: "error",
 	noDocumentCookie: "error",
 	noDocumentImportInPage: "error",
 	noDuplicateAtImportRules: "error",
@@ -176,6 +188,7 @@ const frontend = {
 	correctness: correctness,
 	nursery: nursery,
 	performance: performance,
+	preset: "none",
 	recommended: false,
 	security: security,
 	style: style,

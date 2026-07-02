@@ -24,32 +24,31 @@ const correctness = {
 	...react.correctness,
 
 	/**
-	 * Disallows the usage of async functions for NextJS components.
-	 */
-	noNextAsyncClientComponent: "error",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
-
-const nursery = {
-	...react.nursery,
-
-	/**
 	 * Enforces the correct usage of `beforeInteractive` scripts.
 	 */
 	noBeforeInteractiveScriptOutsideDocument: "error",
 	/**
-	 * Synchronous scripts by themselves impact the performance.
+	 * Disallows the usage of async functions for NextJS components.
 	 */
-	noSyncScripts: "error",
+	noNextAsyncClientComponent: "error",
 	/**
 	 * Inline script IDs are required for compiler tracking and optimization.
 	 */
 	useInlineScriptId: "error",
+} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+
+const nursery = {
+	...react.nursery,
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
 	...react.performance,
 
 	noImgElement: "error",
+	/**
+	 * Synchronous scripts by themselves impact the performance.
+	 */
+	noSyncScripts: "error",
 	noUnwantedPolyfillio: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
@@ -75,6 +74,7 @@ const next = {
 	correctness: correctness,
 	nursery: nursery,
 	performance: performance,
+	preset: "none",
 	recommended: false,
 	security: security,
 	style: style,

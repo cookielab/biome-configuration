@@ -23,24 +23,10 @@ const complexity = {
 const correctness = {
 	...base.correctness,
 
-	useGraphqlNamedOperations: "error",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
-
-const nursery = {
-	...base.nursery,
-
 	/**
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	noDuplicateArgumentNames: "error",
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	noDuplicateFieldDefinitionNames: "error",
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	noDuplicateGraphqlOperationName: "error",
 	/**
 	 * GraphQL should not enable this behavior in the first place.
 	 */
@@ -49,27 +35,20 @@ const nursery = {
 	 * GraphQL should not enable this behavior in the first place.
 	 */
 	noDuplicateVariableNames: "error",
-	/**
-	 * Enforces a consistent style of descriptions.
-	 */
-	useConsistentGraphqlDescriptions: {
-		level: "error",
-		options: {
-			style: "block",
-		},
-	},
-	/**
-	 * This rule promotes consistent naming across mutations.
-	 */
-	useInputName: "error",
+	useGraphqlNamedOperations: "error",
 	/**
 	 * This rule helps with writing valid GraphQL queries.
 	 */
 	useLoneAnonymousOperation: "error",
+} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+
+const nursery = {
+	...base.nursery,
+
 	/**
-	 * This rule helps with writing maintainable GraphQL.
+	 * GraphQL should not enable this behavior in the first place.
 	 */
-	useLoneExecutableDefinition: "error",
+	noDuplicateFieldDefinitionNames: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -83,14 +62,39 @@ const security = {
 const style = {
 	...base.style,
 
+	/**
+	 * Disabling specific types at the root level is left up to the user project.
+	 */
+	noRootType: "off",
+	/**
+	 * Enforces a consistent style of descriptions.
+	 */
+	useConsistentGraphqlDescriptions: {
+		level: "error",
+		options: {
+			style: "block",
+		},
+	},
 	useDeprecatedReason: "error",
 	useGraphqlNamingConvention: "error",
+	/**
+	 * This rule promotes consistent naming across mutations.
+	 */
+	useInputName: "error",
+	/**
+	 * This rule helps with writing maintainable GraphQL.
+	 */
+	useLoneExecutableDefinition: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
 	...base.suspicious,
 
 	noDuplicateFields: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
+	noDuplicateGraphqlOperationName: "error",
 	noEmptySource: "error",
 	/**
 	 * @deprecated
@@ -104,6 +108,7 @@ const graphql = {
 	correctness: correctness,
 	nursery: nursery,
 	performance: performance,
+	preset: "none",
 	recommended: false,
 	security: security,
 	style: style,
