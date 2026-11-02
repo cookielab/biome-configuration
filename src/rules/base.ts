@@ -79,6 +79,15 @@ const complexity = {
 	 * Does not really make sense as high line count != high complexity.
 	 */
 	noExcessiveLinesPerFunction: "off",
+	/**
+	 * Enforces a more readable code. Anything beyond 3 levels of indentation should lead to a refactor.
+	 */
+	noExcessiveNestedCallbacks: {
+		level: "error",
+		options: {
+			max: 3,
+		},
+	},
 	noExcessiveNestedTestSuites: "warn",
 	noExtraBooleanCast: "error",
 	noFlatMapIdentity: "error",
@@ -463,10 +472,6 @@ const nursery = {
 	 * Empty object keys are usually just a typo.
 	 */
 	noEmptyObjectKeys: "error",
-	/**
-	 * Keeps the code from nesting too deep.
-	 */
-	noExcessiveNestedCallbacks: "error",
 	/**
 	 * Frontend-only rule.
 	 */
