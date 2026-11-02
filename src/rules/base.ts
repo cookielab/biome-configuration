@@ -582,10 +582,6 @@ const nursery = {
 	/**
 	 * Frontend-only rule.
 	 */
-	useDomNodeTextContent: "off",
-	/**
-	 * Frontend-only rule.
-	 */
 	useDomQuerySelector: "off",
 	useExhaustiveSwitchCases: "error",
 	/**
@@ -723,6 +719,10 @@ const performance = {
 	noUnwantedPolyfillio: "off",
 	preset: "none",
 	recommended: false,
+	/**
+	 * Frontend-only rule.
+	 */
+	useDomNodeTextContent: "off",
 	/**
 	 * Frontend-only rule.
 	 */

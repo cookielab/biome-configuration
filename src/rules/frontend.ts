@@ -107,10 +107,6 @@ const nursery = {
 	 */
 	noUnusedClasses: "off",
 	/**
-	 * `innerText` and `textContent` do not always return the same value, which may lead to unexpected issues.
-	 */
-	useDomNodeTextContent: "error",
-	/**
 	 * Enforces `querySelector` usage over the old DOM APIs.
 	 */
 	useDomQuerySelector: "error",
@@ -124,6 +120,10 @@ const nursery = {
 const performance = {
 	...base.performance,
 
+	/**
+	 * `innerText` and `textContent` do not always return the same value, which may lead to unexpected issues.
+	 */
+	useDomNodeTextContent: "error",
 	useGoogleFontPreconnect: "error",
 } as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
 
