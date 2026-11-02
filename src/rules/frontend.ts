@@ -175,6 +175,10 @@ const suspicious = {
 	noDuplicateCustomProperties: "error",
 	noDuplicateFontNames: "error",
 	noDuplicateProperties: "error",
+	/**
+	 * Prevents selector duplication.
+	 */
+	noDuplicateSelectors: "error",
 	noEmptyBlock: "error",
 	noEmptyBlockStatements: "error",
 	noImportantInKeyframe: "error",

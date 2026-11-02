@@ -1236,6 +1236,10 @@ const suspicious = {
 	/**
 	 * Frontend-only rule.
 	 */
+	noDuplicateSelectors: "off",
+	/**
+	 * Frontend-only rule.
+	 */
 	noDuplicateSelectorsKeyframeBlock: "off",
 	noDuplicateTestHooks: "error",
 	/**
