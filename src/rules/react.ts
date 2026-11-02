@@ -61,10 +61,6 @@ const nursery = {
 	...frontend.nursery,
 
 	/**
-	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
-	 */
-	noReactStringRefs: "error",
-	/**
 	 * Forces a consistent React component declaration.
 	 */
 	useReactFunctionComponentDefinition: { level: "error", options: { namedComponents: "arrowFunction" } },
@@ -130,6 +126,10 @@ const suspicious = {
 	 * Disallows importing from deeply nested React Native directories.
 	 */
 	noReactNativeDeepImports: "error",
+	/**
+	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
+	 */
+	noReactStringRefs: "error",
 	noSuspiciousSemicolonInJsx: "error",
 	/**
 	 * Prevents the usage of unknown attributes.

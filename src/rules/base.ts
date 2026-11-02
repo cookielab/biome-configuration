@@ -552,10 +552,6 @@ const nursery = {
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
-	 * React-only rule.
-	 */
-	noReactStringRefs: "off",
-	/**
 	 * Prevents usage of superseeded dependencies as checked by [e18e](https://e18e.dev/).
 	 */
 	noRestrictedDependencies: "error",
@@ -1329,6 +1325,10 @@ const suspicious = {
 	 * Solid and qwik rule only.
 	 */
 	noReactSpecificProps: "off",
+	/**
+	 * React-only rule.
+	 */
+	noReactStringRefs: "off",
 	noRedeclare: "error",
 	noRedundantUseStrict: "error",
 	/**
