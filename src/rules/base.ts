@@ -455,6 +455,10 @@ const correctness = {
 	/**
 	 * Qwik-only rule.
 	 */
+	useQwikLoaderLocation: "off",
+	/**
+	 * Qwik-only rule.
+	 */
 	useQwikMethodUsage: "off",
 	/**
 	 * Qwik-only rule.
@@ -694,10 +698,6 @@ const nursery = {
 	 * Nullish coalescing is always preferrable to a logic OR.
 	 */
 	useNullishCoalescing: "error",
-	/**
-	 * Qwik-only rule.
-	 */
-	useQwikLoaderLocation: "off",
 	/**
 	 * React-only rule.
 	 */
