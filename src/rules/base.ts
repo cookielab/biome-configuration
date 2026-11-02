@@ -552,10 +552,6 @@ const nursery = {
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
-	 * `waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
-	 */
-	noPlaywrightWaitForTimeout: "error",
-	/**
 	 * React-only rule.
 	 */
 	noReactNativeDeepImports: "off",
@@ -1312,6 +1308,10 @@ const suspicious = {
 	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
 	 */
 	noPlaywrightWaitForNavigation: "error",
+	/**
+	 * `waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
+	 */
+	noPlaywrightWaitForTimeout: "error",
 	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
