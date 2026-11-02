@@ -61,10 +61,6 @@ const nursery = {
 	...frontend.nursery,
 
 	/**
-	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
-	 */
-	noReactNativeLiteralColors: "error",
-	/**
 	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
 	 */
 	noReactStringRefs: "error",
@@ -97,6 +93,10 @@ const style = {
 	 * Should only be a recommendation as not every React project will be using translations.
 	 */
 	noJsxLiterals: "warn",
+	/**
+	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
+	 */
+	noReactNativeLiteralColors: "error",
 	useComponentExportOnlyModules: "error",
 	useConsistentCurlyBraces: "error",
 	useFragmentSyntax: "error",

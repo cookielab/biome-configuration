@@ -554,10 +554,6 @@ const nursery = {
 	/**
 	 * React-only rule.
 	 */
-	noReactNativeLiteralColors: "off",
-	/**
-	 * React-only rule.
-	 */
 	noReactStringRefs: "off",
 	/**
 	 * Prevents usage of superseeded dependencies as checked by [e18e](https://e18e.dev/).
@@ -878,6 +874,10 @@ const style = {
 	 */
 	noPlaywrightWaitForSelector: "error",
 	noProcessEnv: "error",
+	/**
+	 * React-only rule.
+	 */
+	noReactNativeLiteralColors: "off",
 	/**
 	 * No point in banning any globals globally. Should be done per-project, if at all.
 	 */
