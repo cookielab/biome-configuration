@@ -1252,6 +1252,10 @@ const suspicious = {
 	noEmptyBlockStatements: "off",
 	noEmptyInterface: "error",
 	/**
+	 * Empty object keys are usually just a typo.
+	 */
+	noEmptyObjectKeys: "error",
+	/**
 	 * GraphQL-only rule.
 	 */
 	noEmptySource: "off",
