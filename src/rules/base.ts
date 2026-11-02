@@ -292,6 +292,10 @@ const correctness = {
 	/**
 	 * React-only rule.
 	 */
+	noReactNativeRawText: "off",
+	/**
+	 * React-only rule.
+	 */
 	noReactPropAssignments: "off",
 	/**
 	 * React-only rule.
@@ -571,10 +575,6 @@ const nursery = {
 	 * React-only rule.
 	 */
 	noReactNativeLiteralColors: "off",
-	/**
-	 * React-only rule.
-	 */
-	noReactNativeRawText: "off",
 	/**
 	 * React-only rule.
 	 */

@@ -35,6 +35,10 @@ const correctness = {
 	 */
 	noJsxNamespace: "error",
 	noNestedComponentDefinitions: "error",
+	/**
+	 * Text should always be wrapped in the React Native `Text` component.
+	 */
+	noReactNativeRawText: "error",
 	noReactPropAssignments: "error",
 	noRenderReturnValue: "error",
 	noRestrictedElements: "error",
@@ -60,10 +64,6 @@ const nursery = {
 	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
 	 */
 	noReactNativeLiteralColors: "error",
-	/**
-	 * Text should always be wrapped in the React Native `Text` component.
-	 */
-	noReactNativeRawText: "error",
 	/**
 	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
 	 */
