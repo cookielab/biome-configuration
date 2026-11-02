@@ -30,6 +30,10 @@ const correctness = {
 	 * Prevents unnecessary component recreation on each render.
 	 */
 	noComponentHookFactories: "error",
+	/**
+	 * XML-like syntax is not supported by React.
+	 */
+	noJsxNamespace: "error",
 	noNestedComponentDefinitions: "error",
 	noReactPropAssignments: "error",
 	noRenderReturnValue: "error",
@@ -48,10 +52,6 @@ const nursery = {
 	 * Using template strings syntax in plain component text is not indended in most cases.
 	 */
 	noJsxLeakedDollar: "error",
-	/**
-	 * XML-like syntax is not supported by React.
-	 */
-	noJsxNamespace: "error",
 	/**
 	 * Disallows importing from deeply nested React Native directories.
 	 */

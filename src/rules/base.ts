@@ -258,6 +258,10 @@ const correctness = {
 	noInvalidPositionAtImportRule: "off",
 	noInvalidUseBeforeDeclaration: "error",
 	/**
+	 * React-only rule.
+	 */
+	noJsxNamespace: "off",
+	/**
 	 * Frontend-only rule.
 	 */
 	noMissingVarFunction: "off",
@@ -512,10 +516,6 @@ const nursery = {
 	 * JSX-only rule.
 	 */
 	noJsxLeakedDollar: "off",
-	/**
-	 * JSX-only rule.
-	 */
-	noJsxNamespace: "off",
 	/**
 	 * Prevents outer variable capture inside loop-defined functions.
 	 */
