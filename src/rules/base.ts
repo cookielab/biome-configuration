@@ -384,6 +384,10 @@ const correctness = {
 	/**
 	 * Vue-only rule.
 	 */
+	noVueRefAsOperand: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	noVueReservedKeys: "off",
 	/**
 	 * Vue-only rule.
@@ -611,10 +615,6 @@ const nursery = {
 	 * Disallows unnecessary type conversions.
 	 */
 	noUselessTypeConversion: "error",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueRefAsOperand: "off",
 	/**
 	 * Vue-only rule.
 	 */
