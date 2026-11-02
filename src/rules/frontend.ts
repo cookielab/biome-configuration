@@ -106,7 +106,6 @@ const nursery = {
 	 * Disabled to prevent issues with false-positives.
 	 */
 	noUnusedClasses: "off",
-	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

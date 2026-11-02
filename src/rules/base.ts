@@ -617,10 +617,6 @@ const nursery = {
 	 */
 	useRegexpExec: "error",
 	/**
-	 * Frontend-only rule.
-	 */
-	useSortedClasses: "off",
-	/**
 	 * Forces the usage of `String.prototype.startsWith` over index-based assertions.
 	 */
 	useStringStartsEndsWith: "error",
