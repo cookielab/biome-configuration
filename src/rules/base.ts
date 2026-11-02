@@ -454,7 +454,6 @@ const nursery = {
 	 * Helps prevent stringification to `[object Object]`.
 	 */
 	noBaseToString: "error",
-	noDrizzleUpdateWithoutWhere: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
@@ -1181,6 +1180,10 @@ const suspicious = {
 	 * Drizzle-only rule.
 	 */
 	noDrizzleDeleteWithoutWhere: "off",
+	/**
+	 * Drizzle-only rule.
+	 */
+	noDrizzleUpdateWithoutWhere: "off",
 	/**
 	 * Frontend-only rule.
 	 */
