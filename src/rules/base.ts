@@ -625,10 +625,6 @@ const nursery = {
 	 */
 	useSvelteRequireEachKey: "off",
 	/**
-	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
-	 */
-	useUnicodeRegex: "error",
-	/**
 	 * Forces `var` declarations to be placed at the top of the scope to avoid hoisting issues.
 	 *
 	 * `var` declarations should not be used. However, this rule is enabled just in case.
@@ -1046,6 +1042,10 @@ const style = {
 	useThrowNewError: "error",
 	useThrowOnlyError: "error",
 	useTrimStartEnd: "error",
+	/**
+	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
+	 */
+	useUnicodeRegex: "error",
 	useUnifiedTypeSignatures: "warn",
 	/**
 	 * Vue-only rule.
