@@ -61,10 +61,6 @@ const nursery = {
 	...frontend.nursery,
 
 	/**
-	 * Disallows importing from deeply nested React Native directories.
-	 */
-	noReactNativeDeepImports: "error",
-	/**
 	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
 	 */
 	noReactNativeLiteralColors: "error",
@@ -130,6 +126,10 @@ const suspicious = {
 	 * Forbids the usage of the deprecated `forwardRef`.
 	 */
 	noReactForwardRef: "error",
+	/**
+	 * Disallows importing from deeply nested React Native directories.
+	 */
+	noReactNativeDeepImports: "error",
 	noSuspiciousSemicolonInJsx: "error",
 	/**
 	 * Prevents the usage of unknown attributes.

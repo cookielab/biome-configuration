@@ -554,10 +554,6 @@ const nursery = {
 	/**
 	 * React-only rule.
 	 */
-	noReactNativeDeepImports: "off",
-	/**
-	 * React-only rule.
-	 */
 	noReactNativeLiteralColors: "off",
 	/**
 	 * React-only rule.
@@ -1325,6 +1321,10 @@ const suspicious = {
 	 * React-only rule.
 	 */
 	noReactForwardRef: "off",
+	/**
+	 * React-only rule.
+	 */
+	noReactNativeDeepImports: "off",
 	/**
 	 * Solid and qwik rule only.
 	 */
