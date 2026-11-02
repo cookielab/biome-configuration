@@ -62,6 +62,15 @@ const a11y = {
 const complexity = {
 	...base.complexity,
 
+	/**
+	 * Enforces a cleaner CSS definition. Nesting 3 or more classes in a single rule should lead to a refactor.
+	 */
+	noExcessiveSelectorClasses: {
+		level: "error",
+		options: {
+			maxClasses: 2,
+		},
+	},
 	noImportantStyles: "error",
 } as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
 
@@ -89,14 +98,6 @@ const correctness = {
 const nursery = {
 	...base.nursery,
 
-	/**
-	 * Prevents selector duplication.
-	 */
-	noDuplicateSelectors: "error",
-	/**
-	 * Excessive class selectors are not necessarily an error but they make the CSS harder to read.
-	 */
-	noExcessiveSelectorClasses: "warn",
 	/**
 	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
 	 */

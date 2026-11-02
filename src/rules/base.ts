@@ -89,6 +89,10 @@ const complexity = {
 		},
 	},
 	noExcessiveNestedTestSuites: "warn",
+	/**
+	 * Frontend-only rule.
+	 */
+	noExcessiveSelectorClasses: "off",
 	noExtraBooleanCast: "error",
 	noFlatMapIdentity: "error",
 	noForEach: "error",
@@ -467,15 +471,6 @@ const nursery = {
 	 * Helps prevent stringification to `[object Object]`.
 	 */
 	noBaseToString: "error",
-	noDuplicateSelectors: "off",
-	/**
-	 * Empty object keys are usually just a typo.
-	 */
-	noEmptyObjectKeys: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	noExcessiveSelectorClasses: "off",
 	noFloatingPromises: "error",
 	/**
 	 * Test titles should be unique in their respective groups.
