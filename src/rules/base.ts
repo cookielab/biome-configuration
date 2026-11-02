@@ -552,10 +552,6 @@ const nursery = {
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
-	 * Locators are preferred as they are more reliable and auto-awaited.
-	 */
-	noPlaywrightWaitForSelector: "error",
-	/**
 	 * `waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
 	 */
 	noPlaywrightWaitForTimeout: "error",
@@ -885,6 +881,10 @@ const style = {
 	 * Locators are preferred over `evaluate`.
 	 */
 	noPlaywrightEval: "error",
+	/**
+	 * Locators are preferred as they are more reliable and auto-awaited.
+	 */
+	noPlaywrightWaitForSelector: "error",
 	noProcessEnv: "error",
 	/**
 	 * No point in banning any globals globally. Should be done per-project, if at all.
