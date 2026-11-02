@@ -106,10 +106,6 @@ const nursery = {
 	 * Disabled to prevent issues with false-positives.
 	 */
 	noUnusedClasses: "off",
-	/**
-	 * Forces `iframe` elements to have a sandbox attribute.
-	 */
-	useIframeSandbox: "error",
 	useSortedClasses: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
@@ -131,6 +127,10 @@ const security = {
 	 * This rule should help with preventing any XSS vulnerabilities.
 	 */
 	noScriptUrl: "error",
+	/**
+	 * Forces `iframe` elements to have a sandbox attribute.
+	 */
+	useIframeSandbox: "error",
 } as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
 
 const style = {

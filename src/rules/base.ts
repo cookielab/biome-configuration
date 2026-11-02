@@ -601,10 +601,6 @@ const nursery = {
 	 */
 	useExplicitType: "off",
 	/**
-	 * Frontend-only rule.
-	 */
-	useIframeSandbox: "off",
-	/**
 	 * Forces all imports to be at the top of the source code file.
 	 */
 	useImportsFirst: "error",
@@ -754,6 +750,10 @@ const security = {
 	noSecrets: "off",
 	preset: "none",
 	recommended: false,
+	/**
+	 * Frontend-only rule.
+	 */
+	useIframeSandbox: "off",
 } as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
 
 const style = {
