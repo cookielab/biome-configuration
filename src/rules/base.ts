@@ -278,6 +278,10 @@ const correctness = {
 	 */
 	noNodejsModules: "error",
 	noNonoctalDecimalEscape: "error",
+	/**
+	 * Forces the async code of Playwright to be handled.
+	 */
+	noPlaywrightMissingAwait: "error",
 	noPrecisionLoss: "error",
 	noPrivateImports: "error",
 	noProcessGlobal: "error",
@@ -527,6 +531,26 @@ const nursery = {
 	 */
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
+	/**
+	 * Usage of locators is preferred as they include auto-wait.
+	 */
+	noPlaywrightElementHandle: "error",
+	/**
+	 * Locators are preferred over `evaluate`.
+	 */
+	noPlaywrightEval: "error",
+	/**
+	 * Force may lead to unreliable tests.
+	 */
+	noPlaywrightForceOption: "error",
+	/**
+	 * Using `networkidle` may lead to unreliable or flaky tests.
+	 */
+	noPlaywrightNetworkidle: "error",
+	/**
+	 * `page.pause()` is a debugging utility and should not be committed.
+	 */
+	noPlaywrightPagePause: "error",
 	/**
 	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
 	 */
