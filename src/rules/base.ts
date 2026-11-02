@@ -625,10 +625,6 @@ const nursery = {
 	 */
 	useSvelteRequireEachKey: "off",
 	/**
-	 * Forces test hook definition to follow the order of execution.
-	 */
-	useTestHooksInOrder: "error",
-	/**
 	 * Forces the test hooks to be defined at the top of the scope.
 	 */
 	useTestHooksOnTop: "error",
@@ -1043,6 +1039,10 @@ const style = {
 	useSpreadOverApply: "error",
 	useSymbolDescription: "error",
 	useTemplate: "error",
+	/**
+	 * Forces test hook definition to follow the order of execution.
+	 */
+	useTestHooksInOrder: "error",
 	useThrowNewError: "error",
 	useThrowOnlyError: "error",
 	useTrimStartEnd: "error",
