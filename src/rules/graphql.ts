@@ -30,6 +30,10 @@ const correctness = {
 	/**
 	 * GraphQL should not enable this behavior in the first place.
 	 */
+	noDuplicateFieldDefinitionNames: "error",
+	/**
+	 * GraphQL should not enable this behavior in the first place.
+	 */
 	noDuplicateInputFieldNames: "error",
 	/**
 	 * GraphQL should not enable this behavior in the first place.
@@ -44,11 +48,6 @@ const correctness = {
 
 const nursery = {
 	...base.nursery,
-
-	/**
-	 * GraphQL should not enable this behavior in the first place.
-	 */
-	noDuplicateFieldDefinitionNames: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

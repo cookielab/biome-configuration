@@ -186,6 +186,10 @@ const correctness = {
 	/**
 	 * GraphQL-only rule.
 	 */
+	noDuplicateFieldDefinitionNames: "off",
+	/**
+	 * GraphQL-only rule.
+	 */
 	noDuplicateInputFieldNames: "off",
 	/**
 	 * GraphQL-only rule.
@@ -454,10 +458,6 @@ const nursery = {
 	 * Helps prevent stringification to `[object Object]`.
 	 */
 	noBaseToString: "error",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noDuplicateFieldDefinitionNames: "off",
 	noDuplicateSelectors: "off",
 	/**
 	 * Empty object keys are usually just a typo.
