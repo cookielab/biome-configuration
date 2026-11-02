@@ -113,6 +113,10 @@ const complexity = {
 	noRedundantDefaultExport: "error",
 	noStaticOnlyClass: "error",
 	noThisInStatic: "off",
+	/**
+	 * Prevents template expression from being used when a plain string can be used instead.
+	 */
+	noUnnecessaryTemplateExpression: "error",
 	noUselessCatch: "error",
 	noUselessCatchBinding: "error",
 	noUselessConstructor: "error",
@@ -549,10 +553,6 @@ const nursery = {
 	 * Frontend-only rule.
 	 */
 	noUndeclaredClasses: "off",
-	/**
-	 * Disallows template literals for which a plain string can be used instead.
-	 */
-	noUnnecessaryTemplateExpression: "error",
 	/**
 	 * Disallows the `+` operand on two values that may produce unexpected results.
 	 */
