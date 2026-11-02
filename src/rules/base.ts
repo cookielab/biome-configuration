@@ -571,8 +571,6 @@ const nursery = {
 	 * Disallows unnecessary type conversions.
 	 */
 	noUselessTypeConversion: "error",
-	preset: "none",
-	recommended: false,
 	/**
 	 * There is no need to await non-Promise values.
 	 */
