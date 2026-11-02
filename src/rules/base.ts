@@ -172,6 +172,11 @@ const complexity = {
 	 * Clashes with index-based access required by a strict Typescript configuration when using records with `string` as the key type.
 	 */
 	useLiteralKeys: "off",
+	/**
+	 * Promotes the usage of `Math.min` or `Math.max` over a ternary when dealing with numbers.
+	 * Using the `Math.*` methods makes the intent clearer.
+	 */
+	useMathMinMax: "error",
 	useMaxParams: "error",
 	useNumericLiterals: "error",
 	useOptionalChain: "error",
@@ -648,10 +653,6 @@ const nursery = {
 	 * Forces the usage of a more idiomatic `Array.prototype.includes` over `Array.prototype.indexOf`.
 	 */
 	useIncludes: "error",
-	/**
-	 * Forces the usage of `Math.min` or `Math.max` over ternaries.
-	 */
-	useMathMinMax: "error",
 	/**
 	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
 	 */
