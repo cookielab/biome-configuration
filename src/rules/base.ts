@@ -576,10 +576,6 @@ const nursery = {
 	 */
 	useAwaitThenable: "error",
 	/**
-	 * Forces consistent usage of `test` over `it` in test definitions.
-	 */
-	useConsistentTestIt: { level: "error", options: { function: "test" } },
-	/**
 	 * Detects when a disposable object is not disposed off with the `using` keyword.
 	 */
 	useDisposables: "error",
@@ -950,6 +946,10 @@ const style = {
 			syntax: "explicit",
 		},
 	},
+	/**
+	 * Forces consistent usage of `test` over `it` in test definitions.
+	 */
+	useConsistentTestIt: { level: "error", options: { function: "test" } },
 	/**
 	 * `type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
 	 * conditional types, `type` is the recommended approach.
