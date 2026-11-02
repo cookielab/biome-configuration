@@ -46,6 +46,10 @@ const correctness = {
 	useExhaustiveDependencies: "error",
 	useHookAtTopLevel: "error",
 	useJsxKeyInIterable: "error",
+	/**
+	 * Forces any function with `use server` directive to be asynchronous.
+	 */
+	useReactAsyncServerFunction: "error",
 	useUniqueElementIds: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
@@ -68,10 +72,6 @@ const nursery = {
 	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
 	 */
 	noReactStringRefs: "error",
-	/**
-	 * Forces any function with `use server` directive to be asynchronous.
-	 */
-	useReactAsyncServerFunction: "error",
 	/**
 	 * Forces a consistent React component declaration.
 	 */

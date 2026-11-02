@@ -464,6 +464,10 @@ const correctness = {
 	 * Qwik-only rule.
 	 */
 	useQwikValidLexicalScope: "off",
+	/**
+	 * React-only rule.
+	 */
+	useReactAsyncServerFunction: "off",
 	useSingleJsDocAsterisk: "warn",
 	/**
 	 * React-only rule.
@@ -698,10 +702,6 @@ const nursery = {
 	 * Nullish coalescing is always preferrable to a logic OR.
 	 */
 	useNullishCoalescing: "error",
-	/**
-	 * React-only rule.
-	 */
-	useReactAsyncServerFunction: "off",
 	/**
 	 * React-only rule.
 	 */
