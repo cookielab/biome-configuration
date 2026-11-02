@@ -552,10 +552,6 @@ const nursery = {
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
-	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
-	 */
-	noPlaywrightWaitForNavigation: "error",
-	/**
 	 * Locators are preferred as they are more reliable and auto-awaited.
 	 */
 	noPlaywrightWaitForSelector: "error",
@@ -1312,6 +1308,10 @@ const suspicious = {
 	 * `page.pause()` is a debugging utility and should not be committed.
 	 */
 	noPlaywrightPagePause: "error",
+	/**
+	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
+	 */
+	noPlaywrightWaitForNavigation: "error",
 	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
