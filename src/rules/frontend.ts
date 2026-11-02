@@ -99,10 +99,6 @@ const nursery = {
 	...base.nursery,
 
 	/**
-	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
-	 */
-	noInlineStyles: "warn",
-	/**
 	 * Disabled to prevent issues with false-positives.
 	 */
 	noUndeclaredClasses: "off",
@@ -158,6 +154,10 @@ const style = {
 	 * This rule is disabled as HEX colors are pretty widely used.
 	 */
 	noHexColors: "off",
+	/**
+	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
+	 */
+	noInlineStyles: "warn",
 	noValueAtRule: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 

@@ -545,10 +545,6 @@ const nursery = {
 	 */
 	noImpliedEval: "error",
 	/**
-	 * Frontend-only rule.
-	 */
-	noInlineStyles: "off",
-	/**
 	 * JSX-only rule.
 	 */
 	noJsxLeakedDollar: "off",
@@ -890,6 +886,10 @@ const style = {
 		},
 	},
 	noInferrableTypes: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	noInlineStyles: "off",
 	/**
 	 * JSX-dialects only rule.
 	 */
