@@ -401,6 +401,10 @@ const correctness = {
 	 * Vue-only rule.
 	 */
 	noVueVIfWithVFor: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueVOnNumberValues: "off",
 	preset: "none",
 	recommended: false,
 	/**
@@ -615,10 +619,6 @@ const nursery = {
 	 * Disallows unnecessary type conversions.
 	 */
 	noUselessTypeConversion: "error",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueVOnNumberValues: "off",
 	preset: "none",
 	recommended: false,
 	/**
