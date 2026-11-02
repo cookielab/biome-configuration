@@ -160,6 +160,10 @@ const complexity = {
 	 * Enforces the usage of `Array.prototype.find` over `Array.prototype.filter` with index access.
 	 */
 	useArrayFind: "error",
+	/**
+	 * Enforces the usage of `Array.prototype.some` over `Array.prototype.filter` with length check.
+	 */
+	useArraySome: "error",
 	useArrowFunction: "error",
 	useDateNow: "error",
 	useFlatMap: "error",
@@ -583,10 +587,6 @@ const nursery = {
 	noVueVOnNumberValues: "off",
 	preset: "none",
 	recommended: false,
-	/**
-	 * using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
-	 */
-	useArraySome: "error",
 	/**
 	 * There is no need to await non-Promise values.
 	 */
