@@ -605,10 +605,6 @@ const nursery = {
 	 */
 	useIncludes: "error",
 	/**
-	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
-	 */
-	useNamedCaptureGroup: "warn",
-	/**
 	 * Nullish coalescing is always preferrable to a logic OR.
 	 */
 	useNullishCoalescing: "error",
@@ -1019,6 +1015,10 @@ const style = {
 	 * GraphQL-only rule.
 	 */
 	useLoneExecutableDefinition: "off",
+	/**
+	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
+	 */
+	useNamedCaptureGroup: "warn",
 	useNamingConvention: "warn",
 	/**
 	 * Node-only rule.
