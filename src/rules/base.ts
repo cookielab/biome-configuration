@@ -535,6 +535,10 @@ const correctness = {
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
 const nursery = {
+  /**
+   * Highlights the potentionally incorrect usage of bitwise operations when a boolean operation should be used instead.
+   */
+  noAccidentalBitwiseOperators: "error",
 	/**
 	 * Helps prevent stringification to `[object Object]`.
 	 */
