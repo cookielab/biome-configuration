@@ -625,10 +625,6 @@ const nursery = {
 	 */
 	useSvelteRequireEachKey: "off",
 	/**
-	 * Forces the test hooks to be defined at the top of the scope.
-	 */
-	useTestHooksOnTop: "error",
-	/**
 	 * Ensures that class methods actually utilize `this`. If `this` is not used, the methods can be declared static or moved outside of the class.
 	 */
 	useThisInClassMethods: "error",
@@ -1043,6 +1039,10 @@ const style = {
 	 * Forces test hook definition to follow the order of execution.
 	 */
 	useTestHooksInOrder: "error",
+	/**
+	 * Forces the test hooks to be defined at the top of the scope.
+	 */
+	useTestHooksOnTop: "error",
 	useThrowNewError: "error",
 	useThrowOnlyError: "error",
 	useTrimStartEnd: "error",
