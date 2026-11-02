@@ -445,6 +445,10 @@ const correctness = {
 	useLoneAnonymousOperation: "off",
 	useParseIntRadix: "error",
 	/**
+	 * Describe callback should not have any parameters nor should it be async.
+	 */
+	usePlaywrightValidDescribeCallback: "error",
+	/**
 	 * Qwik-only rule.
 	 */
 	useQwikClasslist: "off",
@@ -690,10 +694,6 @@ const nursery = {
 	 * Nullish coalescing is always preferrable to a logic OR.
 	 */
 	useNullishCoalescing: "error",
-	/**
-	 * Describe callback should not have any parameters nor should it be async.
-	 */
-	usePlaywrightValidDescribeCallback: "error",
 	/**
 	 * Qwik-only rule.
 	 */
