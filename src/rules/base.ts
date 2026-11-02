@@ -455,10 +455,6 @@ const nursery = {
 	 */
 	noBaseToString: "error",
 	/**
-	 * Tests should be strictly linear without any branching.
-	 */
-	noConditionalExpect: "error",
-	/**
 	 * Drizzle-only rule.
 	 */
 	noDrizzleDeleteWithoutWhere: "off",
@@ -1157,6 +1153,10 @@ const suspicious = {
 	 */
 	noCommentText: "off",
 	noCompareNegZero: "error",
+	/**
+	 * Tests should be strictly linear without any branching.
+	 */
+	noConditionalExpect: "error",
 	noConfusingLabels: "error",
 	noConfusingVoidType: "error",
 	noConsole: "error",
