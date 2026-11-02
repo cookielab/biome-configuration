@@ -556,10 +556,6 @@ const nursery = {
 	 */
 	noRestrictedDependencies: "error",
 	/**
-	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
-	 */
-	noTopLevelLiterals: "error",
-	/**
 	 * Frontend-only rule.
 	 */
 	noUndeclaredClasses: "off",
@@ -900,6 +896,10 @@ const style = {
 	 * They only become hard to read once they become nested or use long conditions.
 	 */
 	noTernary: "off",
+	/**
+	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
+	 */
+	noTopLevelLiterals: "error",
 	noUnusedTemplateLiteral: "error",
 	noUselessElse: "error",
 	/**
