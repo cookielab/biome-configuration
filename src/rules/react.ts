@@ -50,6 +50,10 @@ const correctness = {
 	 * Forces any function with `use server` directive to be asynchronous.
 	 */
 	useReactAsyncServerFunction: "error",
+	/**
+	 * Ensures that platform-specific components are only used in platform-specific files.
+	 */
+	useReactNativePlatformComponents: "error",
 	useUniqueElementIds: "error",
 } as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
 
@@ -76,10 +80,6 @@ const nursery = {
 	 * Forces a consistent React component declaration.
 	 */
 	useReactFunctionComponentDefinition: { level: "error", options: { namedComponents: "arrowFunction" } },
-	/**
-	 * Ensures that platform-specific components are only used in platform-specific files.
-	 */
-	useReactNativePlatformComponents: "error",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {

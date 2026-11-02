@@ -468,6 +468,10 @@ const correctness = {
 	 * React-only rule.
 	 */
 	useReactAsyncServerFunction: "off",
+	/**
+	 * React-only rule.
+	 */
+	useReactNativePlatformComponents: "off",
 	useSingleJsDocAsterisk: "warn",
 	/**
 	 * React-only rule.
@@ -706,10 +710,6 @@ const nursery = {
 	 * React-only rule.
 	 */
 	useReactFunctionComponentDefinition: "off",
-	/**
-	 * React-only rule.
-	 */
-	useReactNativePlatformComponents: "off",
 	/**
 	 * Forces that any usage of `Array.prototype.reduce` is correctly typed via a generic argument rather than a type assertion.
 	 */
