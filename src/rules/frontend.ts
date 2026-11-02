@@ -95,15 +95,6 @@ const correctness = {
 
 const nursery = {
 	...base.nursery,
-
-	/**
-	 * Disabled to prevent issues with false-positives.
-	 */
-	noUndeclaredClasses: "off",
-	/**
-	 * Disabled to prevent issues with false-positives.
-	 */
-	noUnusedClasses: "off",
 } as const satisfies NurseryRules;
 
 const performance = {

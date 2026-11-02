@@ -58,11 +58,6 @@ const correctness = {
 
 const nursery = {
 	...frontend.nursery,
-
-	/**
-	 * Forces a consistent React component declaration.
-	 */
-	useReactFunctionComponentDefinition: { level: "error", options: { namedComponents: "arrowFunction" } },
 } as const satisfies NurseryRules;
 
 const performance = {
