@@ -181,6 +181,11 @@ const complexity = {
 	useNumericLiterals: "error",
 	useOptionalChain: "error",
 	useRegexLiterals: "error",
+	/**
+	 * Promotes the usage of `RegExp.prototype.text` over `String.prototype.match` or `RegExp.prototype.exec` when just testing a given string.
+	 * The `test` method is cleaner and returns a pure boolean compared to the other two methods.
+	 */
+	useRegexpTest: "error",
 	useSimpleNumberKeys: "error",
 	useSimplifiedLogicExpression: "error",
 	useWhile: "error",
@@ -689,10 +694,6 @@ const nursery = {
 	 * `RegExp.exec` is slightly faster than `String.match`.
 	 */
 	useRegexpExec: "error",
-	/**
-	 * Promotes the usage of `Regex.prototype.test` over `String.prototype.match`.
-	 */
-	useRegexpTest: "error",
 	/**
 	 * Vue-only rule.
 	 */
