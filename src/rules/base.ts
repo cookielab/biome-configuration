@@ -552,10 +552,6 @@ const nursery = {
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
-	 * Using `networkidle` may lead to unreliable or flaky tests.
-	 */
-	noPlaywrightNetworkidle: "error",
-	/**
 	 * `page.pause()` is a debugging utility and should not be committed.
 	 */
 	noPlaywrightPagePause: "error",
@@ -1312,6 +1308,10 @@ const suspicious = {
 	 * Force may lead to unreliable tests.
 	 */
 	noPlaywrightForceOption: "error",
+	/**
+	 * Using `networkidle` may lead to unreliable or flaky tests.
+	 */
+	noPlaywrightNetworkidle: "error",
 	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
