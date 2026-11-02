@@ -601,10 +601,6 @@ const nursery = {
 	 */
 	useExplicitType: "off",
 	/**
-	 * Forces all imports to be at the top of the source code file.
-	 */
-	useImportsFirst: "error",
-	/**
 	 * Forces the usage of a more idiomatic `Array.prototype.includes` over `Array.prototype.indexOf`.
 	 */
 	useIncludes: "error",
@@ -1006,6 +1002,10 @@ const style = {
 	 */
 	useGraphqlNamingConvention: "off",
 	useGroupedAccessorPairs: "error",
+	/**
+	 * Forces all imports to be at the top of the source code file.
+	 */
+	useImportsFirst: "error",
 	useImportType: "error",
 	/**
 	 * GraphQL-only rule
