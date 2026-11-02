@@ -624,10 +624,6 @@ const nursery = {
 	 * Svelte-only rule.
 	 */
 	useSvelteRequireEachKey: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	useVueNextTickPromise: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
@@ -1067,6 +1063,10 @@ const style = {
 	 * Vue-only rule.
 	 */
 	useVueMultiWordComponentNames: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueNextTickPromise: "off",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
