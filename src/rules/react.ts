@@ -1,32 +1,43 @@
-import type { z } from "zod";
 import type {
-	a11YSchema,
-	complexitySchema,
-	correctnessSchema,
-	nurserySchema,
-	performanceSchema,
-	rulesSchema,
-	securitySchema,
-	styleSchema,
-	suspiciousSchema,
-} from "../generated/configuration";
+	A11yRules,
+	ComplexityRules,
+	CorrectnessRules,
+	NurseryRules,
+	PerformanceRules,
+	Rules,
+	SecurityRules,
+	StyleRules,
+	SuspiciousRules,
+} from "./base";
 import { frontend } from "./frontend";
 
 const a11y = {
 	...frontend.a11y,
-} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
+} as const satisfies A11yRules;
 
 const complexity = {
 	...frontend.complexity,
 
 	noUselessFragments: "error",
-} as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
+} as const satisfies ComplexityRules;
 
 const correctness = {
 	...frontend.correctness,
 
 	noChildrenProp: "error",
+	/**
+	 * Prevents unnecessary component recreation on each render.
+	 */
+	noComponentHookFactories: "error",
+	/**
+	 * XML-like syntax is not supported by React.
+	 */
+	noJsxNamespace: "error",
 	noNestedComponentDefinitions: "error",
+	/**
+	 * Text should always be wrapped in the React Native `Text` component.
+	 */
+	noReactNativeRawText: "error",
 	noReactPropAssignments: "error",
 	noRenderReturnValue: "error",
 	noRestrictedElements: "error",
@@ -34,53 +45,20 @@ const correctness = {
 	useExhaustiveDependencies: "error",
 	useHookAtTopLevel: "error",
 	useJsxKeyInIterable: "error",
-	useUniqueElementIds: "error",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
-
-const nursery = {
-	...frontend.nursery,
-
-	/**
-	 * Prevents unnecessary component recreation on each render.
-	 */
-	noComponentHookFactories: "error",
-	/**
-	 * Using template strings syntax in plain component text is not indended in most cases.
-	 */
-	noJsxLeakedDollar: "error",
-	/**
-	 * XML-like syntax is not supported by React.
-	 */
-	noJsxNamespace: "error",
-	/**
-	 * Disallows importing from deeply nested React Native directories.
-	 */
-	noReactNativeDeepImports: "error",
-	/**
-	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
-	 */
-	noReactNativeLiteralColors: "error",
-	/**
-	 * Text should always be wrapped in the React Native `Text` component.
-	 */
-	noReactNativeRawText: "error",
-	/**
-	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
-	 */
-	noReactStringRefs: "error",
 	/**
 	 * Forces any function with `use server` directive to be asynchronous.
 	 */
 	useReactAsyncServerFunction: "error",
 	/**
-	 * Forces a consistent React component declaration.
-	 */
-	useReactFunctionComponentDefinition: { level: "error", options: { namedComponents: "arrowFunction" } },
-	/**
 	 * Ensures that platform-specific components are only used in platform-specific files.
 	 */
 	useReactNativePlatformComponents: "error",
-} as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
+	useUniqueElementIds: "error",
+} as const satisfies CorrectnessRules;
+
+const nursery = {
+	...frontend.nursery,
+} as const satisfies NurseryRules;
 
 const performance = {
 	...frontend.performance,
@@ -89,14 +67,14 @@ const performance = {
 	 * Using `bind` is treated by React as a new function on each render.
 	 */
 	noJsxPropsBind: "error",
-} as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
+} as const satisfies PerformanceRules;
 
 const security = {
 	...frontend.security,
 
 	noDangerouslySetInnerHtml: "error",
 	noDangerouslySetInnerHtmlWithChildren: "error",
-} as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
+} as const satisfies SecurityRules;
 
 const style = {
 	...frontend.style,
@@ -105,12 +83,16 @@ const style = {
 	 * Should only be a recommendation as not every React project will be using translations.
 	 */
 	noJsxLiterals: "warn",
+	/**
+	 * Disallows hardcoding colors in React Native components for better reusability inside the application.
+	 */
+	noReactNativeLiteralColors: "error",
 	useComponentExportOnlyModules: "error",
 	useConsistentCurlyBraces: "error",
 	useFragmentSyntax: "error",
 	useReactFunctionComponents: "error",
 	useSelfClosingElements: "error",
-} as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
+} as const satisfies StyleRules;
 
 const suspicious = {
 	...frontend.suspicious,
@@ -123,6 +105,10 @@ const suspicious = {
 	noDuplicatedSpreadProps: "error",
 	noDuplicateJsxProps: "error",
 	/**
+	 * Using template strings syntax in plain component text is not indended in most cases.
+	 */
+	noJsxLeakedDollar: "error",
+	/**
 	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
 	 */
 	noLeakedRender: "error",
@@ -130,12 +116,20 @@ const suspicious = {
 	 * Forbids the usage of the deprecated `forwardRef`.
 	 */
 	noReactForwardRef: "error",
+	/**
+	 * Disallows importing from deeply nested React Native directories.
+	 */
+	noReactNativeDeepImports: "error",
+	/**
+	 * Prevents the usage of the old string refs that are less maintainable than the explicit refs.
+	 */
+	noReactStringRefs: "error",
 	noSuspiciousSemicolonInJsx: "error",
 	/**
 	 * Prevents the usage of unknown attributes.
 	 */
 	noUnknownAttribute: "error",
-} as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
+} as const satisfies SuspiciousRules;
 
 const react = {
 	a11y: a11y,
@@ -144,10 +138,9 @@ const react = {
 	nursery: nursery,
 	performance: performance,
 	preset: "none",
-	recommended: false,
 	security: security,
 	style: style,
 	suspicious: suspicious,
-} as const satisfies z.infer<ReturnType<typeof rulesSchema.required>>;
+} as const satisfies Rules;
 
 export { react };

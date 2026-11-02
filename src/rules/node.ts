@@ -1,55 +1,54 @@
-import type { z } from "zod";
-import type {
-	a11YSchema,
-	complexitySchema,
-	correctnessSchema,
-	nurserySchema,
-	performanceSchema,
-	rulesSchema,
-	securitySchema,
-	styleSchema,
-	suspiciousSchema,
-} from "../generated/configuration";
-import { base } from "./base";
+import {
+	type A11yRules,
+	base,
+	type ComplexityRules,
+	type CorrectnessRules,
+	type NurseryRules,
+	type PerformanceRules,
+	type Rules,
+	type SecurityRules,
+	type StyleRules,
+	type SuspiciousRules,
+} from "./base";
 
 const a11y = {
 	...base.a11y,
-} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
+} as const satisfies A11yRules;
 
 const complexity = {
 	...base.complexity,
-} as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
+} as const satisfies ComplexityRules;
 
 const correctness = {
 	...base.correctness,
 
 	noNodejsModules: "off",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+} as const satisfies CorrectnessRules;
 
 const nursery = {
 	...base.nursery,
-} as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
+} as const satisfies NurseryRules;
 
 const performance = {
 	...base.performance,
-} as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
+} as const satisfies PerformanceRules;
 
 const security = {
 	...base.security,
-} as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
+} as const satisfies SecurityRules;
 
 const style = {
 	...base.style,
 
 	useNodeAssertStrict: "error",
 	useNodejsImportProtocol: "error",
-} as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
+} as const satisfies StyleRules;
 
 const suspicious = {
 	...base.suspicious,
 
 	noDuplicateDependencies: "error",
-} as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
+} as const satisfies SuspiciousRules;
 
 const node = {
 	a11y: a11y,
@@ -58,10 +57,9 @@ const node = {
 	nursery: nursery,
 	performance: performance,
 	preset: "none",
-	recommended: false,
 	security: security,
 	style: style,
 	suspicious: suspicious,
-} as const satisfies z.infer<ReturnType<typeof rulesSchema.required>>;
+} as const satisfies Rules;
 
 export { node };

@@ -1,16 +1,15 @@
-import type { z } from "zod";
-import type {
-	a11YSchema,
-	complexitySchema,
-	correctnessSchema,
-	nurserySchema,
-	performanceSchema,
-	rulesSchema,
-	securitySchema,
-	styleSchema,
-	suspiciousSchema,
-} from "../generated/configuration";
-import { base } from "./base";
+import {
+	type A11yRules,
+	base,
+	type ComplexityRules,
+	type CorrectnessRules,
+	type NurseryRules,
+	type PerformanceRules,
+	type Rules,
+	type SecurityRules,
+	type StyleRules,
+	type SuspiciousRules,
+} from "./base";
 
 const a11y = {
 	...base.a11y,
@@ -35,7 +34,6 @@ const a11y = {
 	noRedundantRoles: "error",
 	noStaticElementInteractions: "error",
 	noSvgWithoutTitle: "error",
-	recommended: false,
 	useAltText: "error",
 	useAnchorContent: "error",
 	useAriaActivedescendantWithTabindex: "error",
@@ -57,13 +55,22 @@ const a11y = {
 	useValidAriaValues: "error",
 	useValidAutocomplete: "error",
 	useValidLang: "error",
-} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
+} as const satisfies A11yRules;
 
 const complexity = {
 	...base.complexity,
 
+	/**
+	 * Enforces a cleaner CSS definition. Nesting 3 or more classes in a single rule should lead to a refactor.
+	 */
+	noExcessiveSelectorClasses: {
+		level: "error",
+		options: {
+			maxClasses: 2,
+		},
+	},
 	noImportantStyles: "error",
-} as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
+} as const satisfies ComplexityRules;
 
 const correctness = {
 	...base.correctness,
@@ -84,60 +91,21 @@ const correctness = {
 	noUnknownTypeSelector: "error",
 	noUnmatchableAnbSelector: "error",
 	useImageSize: "warn",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+} as const satisfies CorrectnessRules;
 
 const nursery = {
 	...base.nursery,
-
-	/**
-	 * Prevents selector duplication.
-	 */
-	noDuplicateSelectors: "error",
-	/**
-	 * Excessive class selectors are not necessarily an error but they make the CSS harder to read.
-	 */
-	noExcessiveSelectorClasses: "warn",
-	/**
-	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
-	 */
-	noInlineStyles: "warn",
-	/**
-	 * Disabled to prevent issues with false-positives.
-	 */
-	noUndeclaredClasses: "off",
-	/**
-	 * Disabled to prevent issues with false-positives.
-	 */
-	noUnusedClasses: "off",
-	/**
-	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
-	 */
-	useBaseline: {
-		level: "warn",
-		options: {
-			available: "widely",
-		},
-	},
-	/**
-	 * `innerText` and `textContent` do not always return the same value, which may lead to unexpected issues.
-	 */
-	useDomNodeTextContent: "error",
-	/**
-	 * Enforces `querySelector` usage over the old DOM APIs.
-	 */
-	useDomQuerySelector: "error",
-	/**
-	 * Forces `iframe` elements to have a sandbox attribute.
-	 */
-	useIframeSandbox: "error",
-	useSortedClasses: "error",
-} as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
+} as const satisfies NurseryRules;
 
 const performance = {
 	...base.performance,
 
+	/**
+	 * `innerText` and `textContent` do not always return the same value, which may lead to unexpected issues.
+	 */
+	useDomNodeTextContent: "error",
 	useGoogleFontPreconnect: "error",
-} as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
+} as const satisfies PerformanceRules;
 
 const security = {
 	...base.security,
@@ -147,7 +115,11 @@ const security = {
 	 * This rule should help with preventing any XSS vulnerabilities.
 	 */
 	noScriptUrl: "error",
-} as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
+	/**
+	 * Forces `iframe` elements to have a sandbox attribute.
+	 */
+	useIframeSandbox: "error",
+} as const satisfies SecurityRules;
 
 const style = {
 	...base.style,
@@ -157,8 +129,16 @@ const style = {
 	 * This rule is disabled as HEX colors are pretty widely used.
 	 */
 	noHexColors: "off",
+	/**
+	 * Inline styles do not generate any errors but are harder to maintain in general. CSS files or similar solutions should be preferred.
+	 */
+	noInlineStyles: "warn",
 	noValueAtRule: "error",
-} as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
+	/**
+	 * Enforces `querySelector` usage over the old DOM APIs.
+	 */
+	useDomQuerySelector: "error",
+} as const satisfies StyleRules;
 
 const suspicious = {
 	...base.suspicious,
@@ -174,13 +154,26 @@ const suspicious = {
 	noDuplicateCustomProperties: "error",
 	noDuplicateFontNames: "error",
 	noDuplicateProperties: "error",
+	/**
+	 * Prevents selector duplication.
+	 */
+	noDuplicateSelectors: "error",
 	noEmptyBlock: "error",
 	noEmptyBlockStatements: "error",
 	noImportantInKeyframe: "error",
 	noShorthandPropertyOverrides: "error",
 	noUnknownAtRules: "error",
+	/**
+	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
+	 */
+	useBaseline: {
+		level: "warn",
+		options: {
+			available: "widely",
+		},
+	},
 	useGoogleFontDisplay: "error",
-} as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
+} as const satisfies SuspiciousRules;
 
 const frontend = {
 	a11y: a11y,
@@ -189,10 +182,9 @@ const frontend = {
 	nursery: nursery,
 	performance: performance,
 	preset: "none",
-	recommended: false,
 	security: security,
 	style: style,
 	suspicious: suspicious,
-} as const satisfies z.infer<ReturnType<typeof rulesSchema.required>>;
+} as const satisfies Rules;
 
 export { frontend };

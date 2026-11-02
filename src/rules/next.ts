@@ -1,24 +1,23 @@
-import type { z } from "zod";
 import type {
-	a11YSchema,
-	complexitySchema,
-	correctnessSchema,
-	nurserySchema,
-	performanceSchema,
-	rulesSchema,
-	securitySchema,
-	styleSchema,
-	suspiciousSchema,
-} from "../generated/configuration";
+	A11yRules,
+	ComplexityRules,
+	CorrectnessRules,
+	NurseryRules,
+	PerformanceRules,
+	Rules,
+	SecurityRules,
+	StyleRules,
+	SuspiciousRules,
+} from "./base";
 import { react } from "./react";
 
 const a11y = {
 	...react.a11y,
-} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
+} as const satisfies A11yRules;
 
 const complexity = {
 	...react.complexity,
-} as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
+} as const satisfies ComplexityRules;
 
 const correctness = {
 	...react.correctness,
@@ -35,11 +34,11 @@ const correctness = {
 	 * Inline script IDs are required for compiler tracking and optimization.
 	 */
 	useInlineScriptId: "error",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+} as const satisfies CorrectnessRules;
 
 const nursery = {
 	...react.nursery,
-} as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
+} as const satisfies NurseryRules;
 
 const performance = {
 	...react.performance,
@@ -50,23 +49,23 @@ const performance = {
 	 */
 	noSyncScripts: "error",
 	noUnwantedPolyfillio: "error",
-} as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
+} as const satisfies PerformanceRules;
 
 const security = {
 	...react.security,
-} as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
+} as const satisfies SecurityRules;
 
 const style = {
 	...react.style,
 
 	noHeadElement: "error",
-} as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
+} as const satisfies StyleRules;
 
 const suspicious = {
 	...react.suspicious,
 
 	noHeadImportInDocument: "error",
-} as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
+} as const satisfies SuspiciousRules;
 
 const next = {
 	a11y: a11y,
@@ -75,10 +74,9 @@ const next = {
 	nursery: nursery,
 	performance: performance,
 	preset: "none",
-	recommended: false,
 	security: security,
 	style: style,
 	suspicious: suspicious,
-} as const satisfies z.infer<ReturnType<typeof rulesSchema.required>>;
+} as const satisfies Rules;
 
 export { next };

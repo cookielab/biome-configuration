@@ -12,6 +12,19 @@ import type {
 	suspiciousSchema,
 } from "../generated/configuration";
 
+// Even though the `recommended` attribute is deprecated by the Biome CLI, it is not marked as such in the JSON schema.
+// The Biome CLI prints out a warning in cases where used.
+// Thus all of the definitions are omitting the specific attribute to get a clean Biome output.
+type A11yRules = Omit<z.infer<ReturnType<typeof a11YSchema.required>>, "recommended">;
+type ComplexityRules = Omit<z.infer<ReturnType<typeof complexitySchema.required>>, "recommended">;
+type CorrectnessRules = Omit<z.infer<ReturnType<typeof correctnessSchema.required>>, "recommended">;
+type NurseryRules = z.infer<typeof nurserySchema>;
+type PerformanceRules = Omit<z.infer<ReturnType<typeof performanceSchema.required>>, "recommended">;
+type SecurityRules = Omit<z.infer<ReturnType<typeof securitySchema.required>>, "recommended">;
+type StyleRules = Omit<z.infer<ReturnType<typeof styleSchema.required>>, "recommended">;
+type SuspiciousRules = Omit<z.infer<ReturnType<typeof suspiciousSchema.required>>, "recommended">;
+type Rules = Omit<z.infer<ReturnType<typeof rulesSchema.required>>, "recommended">;
+
 /**
  * Accessibility should only be activated in projects with frontend code (HTML, React, Solid, Svelte, Vue...)
  */
@@ -37,7 +50,6 @@ const a11y = {
 	noStaticElementInteractions: "off",
 	noSvgWithoutTitle: "off",
 	preset: "none",
-	recommended: false,
 	useAltText: "off",
 	useAnchorContent: "off",
 	useAriaActivedescendantWithTabindex: "off",
@@ -59,7 +71,7 @@ const a11y = {
 	useValidAriaValues: "off",
 	useValidAutocomplete: "off",
 	useValidLang: "off",
-} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
+} as const satisfies A11yRules;
 
 const complexity = {
 	noAdjacentSpacesInRegex: "error",
@@ -79,7 +91,20 @@ const complexity = {
 	 * Does not really make sense as high line count != high complexity.
 	 */
 	noExcessiveLinesPerFunction: "off",
+	/**
+	 * Enforces a more readable code. Anything beyond 3 levels of indentation should lead to a refactor.
+	 */
+	noExcessiveNestedCallbacks: {
+		level: "error",
+		options: {
+			max: 3,
+		},
+	},
 	noExcessiveNestedTestSuites: "warn",
+	/**
+	 * Frontend-only rule.
+	 */
+	noExcessiveSelectorClasses: "off",
 	noExtraBooleanCast: "error",
 	noFlatMapIdentity: "error",
 	noForEach: "error",
@@ -89,11 +114,21 @@ const complexity = {
 	 */
 	noImportantStyles: "off",
 	/**
+	 * Prevents from using `await` in Playwright methods that are not asynchronous.
+	 * Ideally, this should already be prevented by the TypeScript check.
+	 * Enabled in the base as Playwright may not be used purely for frontend testing.
+	 */
+	noPlaywrightUselessAwait: "error",
+	/**
 	 * Prevents re-exporting the same value as a named export and a default export as well.
 	 */
 	noRedundantDefaultExport: "error",
 	noStaticOnlyClass: "error",
 	noThisInStatic: "off",
+	/**
+	 * Prevents template expression from being used when a plain string can be used instead.
+	 */
+	noUnnecessaryTemplateExpression: "error",
 	noUselessCatch: "error",
 	noUselessCatchBinding: "error",
 	noUselessConstructor: "error",
@@ -132,11 +167,14 @@ const complexity = {
 	 */
 	noVoid: "off",
 	preset: "none",
-	recommended: false,
 	/**
 	 * Enforces the usage of `Array.prototype.find` over `Array.prototype.filter` with index access.
 	 */
 	useArrayFind: "error",
+	/**
+	 * Enforces the usage of `Array.prototype.some` over `Array.prototype.filter` with length check.
+	 */
+	useArraySome: "error",
 	useArrowFunction: "error",
 	useDateNow: "error",
 	useFlatMap: "error",
@@ -145,14 +183,24 @@ const complexity = {
 	 * Clashes with index-based access required by a strict Typescript configuration when using records with `string` as the key type.
 	 */
 	useLiteralKeys: "off",
+	/**
+	 * Promotes the usage of `Math.min` or `Math.max` over a ternary when dealing with numbers.
+	 * Using the `Math.*` methods makes the intent clearer.
+	 */
+	useMathMinMax: "error",
 	useMaxParams: "error",
 	useNumericLiterals: "error",
 	useOptionalChain: "error",
 	useRegexLiterals: "error",
+	/**
+	 * Promotes the usage of `RegExp.prototype.text` over `String.prototype.match` or `RegExp.prototype.exec` when just testing a given string.
+	 * The `test` method is cleaner and returns a pure boolean compared to the other two methods.
+	 */
+	useRegexpTest: "error",
 	useSimpleNumberKeys: "error",
 	useSimplifiedLogicExpression: "error",
 	useWhile: "error",
-} as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
+} as const satisfies ComplexityRules;
 
 const correctness = {
 	/**
@@ -163,6 +211,10 @@ const correctness = {
 	 * React-only rule.
 	 */
 	noChildrenProp: "off",
+	/**
+	 * React-only rule.
+	 */
+	noComponentHookFactories: "off",
 	noConstAssign: "error",
 	noConstantCondition: "error",
 	noConstantMathMinMaxClamp: "error",
@@ -179,6 +231,10 @@ const correctness = {
 	 * This rule is enabled just in case. Enums are otherwise forbidden by the configuration.
 	 */
 	noDuplicateEnumValueNames: "error",
+	/**
+	 * GraphQL-only rule.
+	 */
+	noDuplicateFieldDefinitionNames: "off",
 	/**
 	 * GraphQL-only rule.
 	 */
@@ -213,6 +269,10 @@ const correctness = {
 	noInvalidPositionAtImportRule: "off",
 	noInvalidUseBeforeDeclaration: "error",
 	/**
+	 * React-only rule.
+	 */
+	noJsxNamespace: "off",
+	/**
 	 * Frontend-only rule.
 	 */
 	noMissingVarFunction: "off",
@@ -229,6 +289,10 @@ const correctness = {
 	 */
 	noNodejsModules: "error",
 	noNonoctalDecimalEscape: "error",
+	/**
+	 * Forces the async code of Playwright to be handled.
+	 */
+	noPlaywrightMissingAwait: "error",
 	noPrecisionLoss: "error",
 	noPrivateImports: "error",
 	noProcessGlobal: "error",
@@ -236,6 +300,10 @@ const correctness = {
 	 * Qwik-only rule
 	 */
 	noQwikUseVisibleTask: "off",
+	/**
+	 * React-only rule.
+	 */
+	noReactNativeRawText: "off",
 	/**
 	 * React-only rule.
 	 */
@@ -323,6 +391,14 @@ const correctness = {
 	/**
 	 * Vue-only rule.
 	 */
+	noVueImportCompilerMacros: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueRefAsOperand: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	noVueReservedKeys: "off",
 	/**
 	 * Vue-only rule.
@@ -336,8 +412,11 @@ const correctness = {
 	 * Vue-only rule.
 	 */
 	noVueVIfWithVFor: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	noVueVOnNumberValues: "off",
 	preset: "none",
-	recommended: false,
 	/**
 	 * React-only rule.
 	 */
@@ -376,9 +455,17 @@ const correctness = {
 	useLoneAnonymousOperation: "off",
 	useParseIntRadix: "error",
 	/**
+	 * Describe callback should not have any parameters nor should it be async.
+	 */
+	usePlaywrightValidDescribeCallback: "error",
+	/**
 	 * Qwik-only rule.
 	 */
 	useQwikClasslist: "off",
+	/**
+	 * Qwik-only rule.
+	 */
+	useQwikLoaderLocation: "off",
 	/**
 	 * Qwik-only rule.
 	 */
@@ -387,6 +474,14 @@ const correctness = {
 	 * Qwik-only rule.
 	 */
 	useQwikValidLexicalScope: "off",
+	/**
+	 * React-only rule.
+	 */
+	useReactAsyncServerFunction: "off",
+	/**
+	 * React-only rule.
+	 */
+	useReactNativePlatformComponents: "off",
 	useSingleJsDocAsterisk: "warn",
 	/**
 	 * React-only rule.
@@ -417,6 +512,10 @@ const correctness = {
 	/**
 	 * Vue-only rule.
 	 */
+	useVueValidVFor: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	useVueValidVHtml: "off",
 	/**
 	 * Vue-only rule.
@@ -443,337 +542,9 @@ const correctness = {
 	 */
 	useVueVForKey: "off",
 	useYield: "error",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+} as const satisfies CorrectnessRules;
 
-const nursery = {
-	/**
-	 * Helps prevent stringification to `[object Object]`.
-	 */
-	noBaseToString: "error",
-	/**
-	 * React-only rule.
-	 */
-	noComponentHookFactories: "off",
-	/**
-	 * Tests should be strictly linear without any branching.
-	 */
-	noConditionalExpect: "error",
-	/**
-	 * Drizzle-only rule.
-	 */
-	noDrizzleDeleteWithoutWhere: "off",
-	noDrizzleUpdateWithoutWhere: "off",
-	/**
-	 * GraphQL-only rule.
-	 */
-	noDuplicateFieldDefinitionNames: "off",
-	noDuplicateSelectors: "off",
-	/**
-	 * Empty object keys are usually just a typo.
-	 */
-	noEmptyObjectKeys: "error",
-	/**
-	 * Keeps the code from nesting too deep.
-	 */
-	noExcessiveNestedCallbacks: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	noExcessiveSelectorClasses: "off",
-	noFloatingPromises: "error",
-	/**
-	 * Test titles should be unique in their respective groups.
-	 */
-	noIdenticalTestTitle: "error",
-	/**
-	 * Prevents eval()-like behavior of executing arbitrary strings as JavaScript code.
-	 */
-	noImpliedEval: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	noInlineStyles: "off",
-	/**
-	 * JSX-only rule.
-	 */
-	noJsxLeakedDollar: "off",
-	/**
-	 * JSX-only rule.
-	 */
-	noJsxNamespace: "off",
-	/**
-	 * Prevents outer variable capture inside loop-defined functions.
-	 */
-	noLoopFunc: "error",
-	/**
-	 * Ensures that functions do not report the return type as wider than what is actually returned.
-	 *
-	 * In case the widening is expected, using `return value as WiderType` is recommended. Casting makes the intent explicit.
-	 */
-	noMisleadingReturnType: "error",
-	noMisusedPromises: "error",
-	/**
-	 * Usage of locators is preferred as they include auto-wait.
-	 */
-	noPlaywrightElementHandle: "error",
-	/**
-	 * Locators are preferred over `evaluate`.
-	 */
-	noPlaywrightEval: "error",
-	/**
-	 * Force may lead to unreliable tests.
-	 */
-	noPlaywrightForceOption: "error",
-	/**
-	 * Forces the async code of Playwright to be handled.
-	 */
-	noPlaywrightMissingAwait: "error",
-	/**
-	 * Using `networkidle` may lead to unreliable or flaky tests.
-	 */
-	noPlaywrightNetworkidle: "error",
-	/**
-	 * `page.pause()` is a debugging utility and should not be committed.
-	 */
-	noPlaywrightPagePause: "error",
-	/**
-	 * Not all Playwright functions return a Promise. This rule helps avoid unnecessary `await` on such functions.
-	 */
-	noPlaywrightUselessAwait: "error",
-	/**
-	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
-	 */
-	noPlaywrightWaitForNavigation: "error",
-	/**
-	 * Locators are preferred as they are more reliable and auto-awaited.
-	 */
-	noPlaywrightWaitForSelector: "error",
-	/**
-	 * `waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
-	 */
-	noPlaywrightWaitForTimeout: "error",
-	/**
-	 * React-only rule.
-	 */
-	noReactNativeDeepImports: "off",
-	/**
-	 * React-only rule.
-	 */
-	noReactNativeLiteralColors: "off",
-	/**
-	 * React-only rule.
-	 */
-	noReactNativeRawText: "off",
-	/**
-	 * React-only rule.
-	 */
-	noReactStringRefs: "off",
-	/**
-	 * Prevents usage of superseeded dependencies as checked by [e18e](https://e18e.dev/).
-	 */
-	noRestrictedDependencies: "error",
-	/**
-	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
-	 */
-	noTopLevelLiterals: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	noUndeclaredClasses: "off",
-	/**
-	 * Disallows template literals for which a plain string can be used instead.
-	 */
-	noUnnecessaryTemplateExpression: "error",
-	/**
-	 * Disallows the `+` operand on two values that may produce unexpected results.
-	 */
-	noUnsafePlusOperands: "error",
-	/**
-	 * Informational rule that reports when a dependency license may not be compatible with the project.
-	 */
-	noUntrustedLicenses: "info",
-	/**
-	 * Frontend-only rule.
-	 */
-	noUnusedClasses: "off",
-	/**
-	 * Disallows unnecessary type conversions.
-	 */
-	noUselessTypeConversion: "error",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueImportCompilerMacros: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueRefAsOperand: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	noVueVOnNumberValues: "off",
-	preset: "none",
-	recommended: false,
-	/**
-	 * using `some` is cleaner and more explicit than checking the resulting length of a `.filter` call.
-	 */
-	useArraySome: "error",
-	/**
-	 * There is no need to await non-Promise values.
-	 */
-	useAwaitThenable: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	useBaseline: "off",
-	/**
-	 * Forces consistent usage of `test` over `it` in test definitions.
-	 */
-	useConsistentTestIt: { level: "error", options: { function: "test" } },
-	/**
-	 * Detects when a disposable object is not disposed off with the `using` keyword.
-	 */
-	useDisposables: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	useDomNodeTextContent: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	useDomQuerySelector: "off",
-	useExhaustiveSwitchCases: "error",
-	/**
-	 * Each test should include at least one assertion.
-	 */
-	useExpect: "error",
-	/**
-	 * Forces functions to report their return types.
-	 */
-	useExplicitReturnType: {
-		level: "error",
-		options: {
-			allowExpressions: true,
-		},
-	},
-	/**
-	 * The rule is currently missing the option to make the following usage valid:
-	 *
-	 * @example
-	 * ```typescript
-	 * const returnsString = (): string => "value";
-	 *
-	 * const isDefinitelyString = returnsString(); // isDefinitelyString would have to have it's typed explicitly written out
-	 * ```
-	 */
-	useExplicitType: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	useIframeSandbox: "off",
-	/**
-	 * Forces all imports to be at the top of the source code file.
-	 */
-	useImportsFirst: "error",
-	/**
-	 * Forces the usage of a more idiomatic `Array.prototype.includes` over `Array.prototype.indexOf`.
-	 */
-	useIncludes: "error",
-	/**
-	 * Forces the usage of `Math.min` or `Math.max` over ternaries.
-	 */
-	useMathMinMax: "error",
-	/**
-	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
-	 */
-	useNamedCaptureGroup: "warn",
-	/**
-	 * Nullish coalescing is always preferrable to a logic OR.
-	 */
-	useNullishCoalescing: "error",
-	/**
-	 * Describe callback should not have any parameters nor should it be async.
-	 */
-	usePlaywrightValidDescribeCallback: "error",
-	/**
-	 * Qwik-only rule.
-	 */
-	useQwikLoaderLocation: "off",
-	/**
-	 * React-only rule.
-	 */
-	useReactAsyncServerFunction: "off",
-	/**
-	 * React-only rule.
-	 */
-	useReactFunctionComponentDefinition: "off",
-	/**
-	 * React-only rule.
-	 */
-	useReactNativePlatformComponents: "off",
-	/**
-	 * Forces that any usage of `Array.prototype.reduce` is correctly typed via a generic argument rather than a type assertion.
-	 */
-	useReduceTypeParameter: "error",
-	/**
-	 * `RegExp.exec` is slightly faster than `String.match`.
-	 */
-	useRegexpExec: "error",
-	/**
-	 * Promotes the usage of `Regex.prototype.test` over `String.prototype.match`.
-	 */
-	useRegexpTest: "error",
-	/**
-	 * Vue-only rule.
-	 */
-	useScopedStyles: "off",
-	/**
-	 * Frontend-only rule.
-	 */
-	useSortedClasses: "off",
-	/**
-	 * Forces the usage of `String.prototype.startsWith` over index-based assertions.
-	 */
-	useStringStartsEndsWith: "error",
-	/**
-	 * Svelte-only rule.
-	 */
-	useSvelteRequireEachKey: "off",
-	/**
-	 * Forces test hook definition to follow the order of execution.
-	 */
-	useTestHooksInOrder: "error",
-	/**
-	 * Forces the test hooks to be defined at the top of the scope.
-	 */
-	useTestHooksOnTop: "error",
-	/**
-	 * Ensures that class methods actually utilize `this`. If `this` is not used, the methods can be declared static or moved outside of the class.
-	 */
-	useThisInClassMethods: "error",
-	/**
-	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
-	 */
-	useUnicodeRegex: "error",
-	/**
-	 * Forces `var` declarations to be placed at the top of the scope to avoid hoisting issues.
-	 *
-	 * `var` declarations should not be used. However, this rule is enabled just in case.
-	 */
-	useVarsOnTop: "error",
-	/**
-	 * Vue-only rule.
-	 */
-	useVueConsistentDefinePropsDeclaration: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	useVueNextTickPromise: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	useVueValidVFor: "off",
-} as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
+const nursery = {} as const satisfies NurseryRules;
 
 const performance = {
 	noAccumulatingSpread: "error",
@@ -805,7 +576,10 @@ const performance = {
 	 */
 	noUnwantedPolyfillio: "off",
 	preset: "none",
-	recommended: false,
+	/**
+	 * Frontend-only rule.
+	 */
+	useDomNodeTextContent: "off",
 	/**
 	 * Frontend-only rule.
 	 */
@@ -819,7 +593,7 @@ const performance = {
 	 * Vue-only rule.
 	 */
 	useVueVapor: "off",
-} as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
+} as const satisfies PerformanceRules;
 
 const security = {
 	/**
@@ -844,8 +618,11 @@ const security = {
 	 */
 	noSecrets: "off",
 	preset: "none",
-	recommended: false,
-} as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
+	/**
+	 * Frontend-only rule.
+	 */
+	useIframeSandbox: "off",
+} as const satisfies SecurityRules;
 
 const style = {
 	/**
@@ -900,6 +677,10 @@ const style = {
 	},
 	noInferrableTypes: "error",
 	/**
+	 * Frontend-only rule.
+	 */
+	noInlineStyles: "off",
+	/**
 	 * JSX-dialects only rule.
 	 */
 	noJsxLiterals: "off",
@@ -918,7 +699,23 @@ const style = {
 	noNonNullAssertion: "error",
 	noParameterAssign: "error",
 	noParameterProperties: "error",
+	/**
+	 * Usage of locators is preferred as they include auto-wait.
+	 */
+	noPlaywrightElementHandle: "error",
+	/**
+	 * Locators are preferred over `evaluate`.
+	 */
+	noPlaywrightEval: "error",
+	/**
+	 * Locators are preferred as they are more reliable and auto-awaited.
+	 */
+	noPlaywrightWaitForSelector: "error",
 	noProcessEnv: "error",
+	/**
+	 * React-only rule.
+	 */
+	noReactNativeLiteralColors: "off",
 	/**
 	 * No point in banning any globals globally. Should be done per-project, if at all.
 	 */
@@ -945,6 +742,10 @@ const style = {
 	 * They only become hard to read once they become nested or use long conditions.
 	 */
 	noTernary: "off",
+	/**
+	 * Disallows top-level literals in JSON files. Only accepted data types are objects and arrays.
+	 */
+	noTopLevelLiterals: "error",
 	noUnusedTemplateLiteral: "error",
 	noUselessElse: "error",
 	/**
@@ -957,7 +758,6 @@ const style = {
 	noVueOptionsApi: "off",
 	noYodaExpression: "error",
 	preset: "none",
-	recommended: false,
 	useArrayLiterals: "error",
 	useAsConstAssertion: "error",
 	useAtIndex: "error",
@@ -1006,6 +806,10 @@ const style = {
 		},
 	},
 	/**
+	 * Forces consistent usage of `test` over `it` in test definitions.
+	 */
+	useConsistentTestIt: { level: "error", options: { function: "test" } },
+	/**
 	 * `type` and `interface` are pretty much equivalent. However, to prevent accidental declaration merging of interfaces with the same name and to enable easy declaration of unions, mapped types or
 	 * conditional types, `type` is the recommended approach.
 	 *
@@ -1034,6 +838,10 @@ const style = {
 	 * The level is left at `off` to at least let the user know that the option exists.
 	 */
 	useDestructuring: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	useDomQuerySelector: "off",
 	/**
 	 * Enums are forbidden.
 	 */
@@ -1065,6 +873,10 @@ const style = {
 	 */
 	useGraphqlNamingConvention: "off",
 	useGroupedAccessorPairs: "error",
+	/**
+	 * Forces all imports to be at the top of the source code file.
+	 */
+	useImportsFirst: "error",
 	useImportType: "error",
 	/**
 	 * GraphQL-only rule
@@ -1078,6 +890,10 @@ const style = {
 	 * GraphQL-only rule.
 	 */
 	useLoneExecutableDefinition: "off",
+	/**
+	 * Capture groups are more reliable and maintainable. However, not every regex must use them.
+	 */
+	useNamedCaptureGroup: "warn",
 	useNamingConvention: "warn",
 	/**
 	 * Node-only rule.
@@ -1096,6 +912,10 @@ const style = {
 	useReactFunctionComponents: "off",
 	useReadonlyClassProperties: "warn",
 	/**
+	 * Forces that any usage of `Array.prototype.reduce` is correctly typed via a generic argument rather than a type assertion.
+	 */
+	useReduceTypeParameter: "error",
+	/**
 	 * React-only rule.
 	 */
 	useSelfClosingElements: "off",
@@ -1110,10 +930,36 @@ const style = {
 	useSpreadOverApply: "error",
 	useSymbolDescription: "error",
 	useTemplate: "error",
+	/**
+	 * Forces test hook definition to follow the order of execution.
+	 */
+	useTestHooksInOrder: "error",
+	/**
+	 * Forces the test hooks to be defined at the top of the scope.
+	 */
+	useTestHooksOnTop: "error",
+	/**
+	 * Ensures that class methods actually utilize `this`. If `this` is not used, the methods can be declared static or moved outside of the class.
+	 */
+	useThisInClassMethods: "error",
 	useThrowNewError: "error",
 	useThrowOnlyError: "error",
 	useTrimStartEnd: "error",
+	/**
+	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
+	 */
+	useUnicodeRegex: "error",
 	useUnifiedTypeSignatures: "warn",
+	/**
+	 * Forces `var` declarations to be placed at the top of the scope to avoid hoisting issues.
+	 *
+	 * `var` declarations should not be used. However, this rule is enabled just in case.
+	 */
+	useVarsOnTop: "error",
+	/**
+	 * Vue-only rule.
+	 */
+	useVueConsistentDefinePropsDeclaration: "off",
 	/**
 	 * Vue-only rule.
 	 */
@@ -1134,7 +980,11 @@ const style = {
 	 * Vue-only rule.
 	 */
 	useVueMultiWordComponentNames: "off",
-} as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
+	/**
+	 * Vue-only rule.
+	 */
+	useVueNextTickPromise: "off",
+} as const satisfies StyleRules;
 
 const suspicious = {
 	/**
@@ -1157,6 +1007,10 @@ const suspicious = {
 	 */
 	noCommentText: "off",
 	noCompareNegZero: "error",
+	/**
+	 * Tests should be strictly linear without any branching.
+	 */
+	noConditionalExpect: "error",
 	noConfusingLabels: "error",
 	noConfusingVoidType: "error",
 	noConsole: "error",
@@ -1181,6 +1035,14 @@ const suspicious = {
 	 */
 	noDocumentImportInPage: "off",
 	noDoubleEquals: "error",
+	/**
+	 * Drizzle-only rule.
+	 */
+	noDrizzleDeleteWithoutWhere: "off",
+	/**
+	 * Drizzle-only rule.
+	 */
+	noDrizzleUpdateWithoutWhere: "off",
 	/**
 	 * Frontend-only rule.
 	 */
@@ -1229,6 +1091,10 @@ const suspicious = {
 	/**
 	 * Frontend-only rule.
 	 */
+	noDuplicateSelectors: "off",
+	/**
+	 * Frontend-only rule.
+	 */
 	noDuplicateSelectorsKeyframeBlock: "off",
 	noDuplicateTestHooks: "error",
 	/**
@@ -1240,6 +1106,10 @@ const suspicious = {
 	 */
 	noEmptyBlockStatements: "off",
 	noEmptyInterface: "error",
+	/**
+	 * Empty object keys are usually just a typo.
+	 */
+	noEmptyObjectKeys: "error",
 	/**
 	 * GraphQL-only rule.
 	 */
@@ -1267,6 +1137,10 @@ const suspicious = {
 	 * NextJS-only rule.
 	 */
 	noHeadImportInDocument: "off",
+	/**
+	 * Test titles should be unique in their respective groups.
+	 */
+	noIdenticalTestTitle: "error",
 	noImplicitAnyLet: "error",
 	noImportAssign: "error",
 	/**
@@ -1278,11 +1152,19 @@ const suspicious = {
 	 */
 	noImportCycles: "error",
 	noIrregularWhitespace: "error",
+	/**
+	 * JSX-only rule.
+	 */
+	noJsxLeakedDollar: "off",
 	noLabelVar: "error",
 	/**
 	 * React-only rule.
 	 */
 	noLeakedRender: "off",
+	/**
+	 * Prevents outer variable capture inside loop-defined functions.
+	 */
+	noLoopFunc: "error",
 	noMisleadingCharacterClass: "error",
 	noMisleadingInstantiator: "error",
 	noMisplacedAssertion: "error",
@@ -1298,6 +1180,26 @@ const suspicious = {
 	 */
 	noParametersOnlyUsedInRecursion: "error",
 	/**
+	 * Force may lead to unreliable tests.
+	 */
+	noPlaywrightForceOption: "error",
+	/**
+	 * Using `networkidle` may lead to unreliable or flaky tests.
+	 */
+	noPlaywrightNetworkidle: "error",
+	/**
+	 * `page.pause()` is a debugging utility and should not be committed.
+	 */
+	noPlaywrightPagePause: "error",
+	/**
+	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
+	 */
+	noPlaywrightWaitForNavigation: "error",
+	/**
+	 * `waitForLoadState`, `waitForURL` and `waitForFunction` are preferred and more reliable.
+	 */
+	noPlaywrightWaitForTimeout: "error",
+	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
 	noProto: "error",
@@ -1311,9 +1213,17 @@ const suspicious = {
 	 */
 	noReactForwardRef: "off",
 	/**
+	 * React-only rule.
+	 */
+	noReactNativeDeepImports: "off",
+	/**
 	 * Solid and qwik rule only.
 	 */
 	noReactSpecificProps: "off",
+	/**
+	 * React-only rule.
+	 */
+	noReactStringRefs: "off",
 	noRedeclare: "error",
 	noRedundantUseStrict: "error",
 	/**
@@ -1359,6 +1269,10 @@ const suspicious = {
 	noUnsafeDeclarationMerging: "error",
 	noUnsafeNegation: "error",
 	/**
+	 * Informational rule that reports when a dependency license may not be compatible with the project.
+	 */
+	noUntrustedLicenses: "info",
+	/**
 	 * Unused expressions can be safely remove and should not litter the codebase.
 	 */
 	noUnusedExpressions: "error",
@@ -1371,13 +1285,16 @@ const suspicious = {
 	noVueArrowFuncInWatch: "off",
 	noWith: "error",
 	preset: "none",
-	recommended: false,
 	useAdjacentOverloadSignatures: "error",
 	/**
 	 * Enforces all sorting operations to be explicitly defined.
 	 */
 	useArraySortCompare: "error",
 	useAwait: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	useBaseline: "off",
 	useBiomeIgnoreFolder: "error",
 	useDefaultSwitchClauseLast: "error",
 	/**
@@ -1387,6 +1304,10 @@ const suspicious = {
 	 */
 	useDeprecatedDate: "off",
 	useErrorMessage: "error",
+	/**
+	 * Each test should include at least one assertion.
+	 */
+	useExpect: "error",
 	useGetterReturn: "error",
 	/**
 	 * Frontend-only rule.
@@ -1401,9 +1322,13 @@ const suspicious = {
 	 * This rule should only be enabled in a specific project as every project uses different required scripts.
 	 */
 	useRequiredScripts: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useScopedStyles: "off",
 	useStaticResponseMethods: "warn",
 	useStrictMode: "error",
-} as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
+} as const satisfies SuspiciousRules;
 
 const base = {
 	a11y: a11y,
@@ -1412,10 +1337,20 @@ const base = {
 	nursery: nursery,
 	performance: performance,
 	preset: "none",
-	recommended: false,
 	security: security,
 	style: style,
 	suspicious: suspicious,
-} as const satisfies z.infer<ReturnType<typeof rulesSchema.required>>;
+} as const satisfies Rules;
 
+export type {
+	A11yRules,
+	ComplexityRules,
+	CorrectnessRules,
+	NurseryRules,
+	PerformanceRules,
+	Rules,
+	SecurityRules,
+	StyleRules,
+	SuspiciousRules,
+};
 export { base };
