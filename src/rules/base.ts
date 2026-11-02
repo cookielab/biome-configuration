@@ -625,12 +625,6 @@ const nursery = {
 	 */
 	useSvelteRequireEachKey: "off",
 	/**
-	 * Forces `var` declarations to be placed at the top of the scope to avoid hoisting issues.
-	 *
-	 * `var` declarations should not be used. However, this rule is enabled just in case.
-	 */
-	useVarsOnTop: "error",
-	/**
 	 * Vue-only rule.
 	 */
 	useVueConsistentDefinePropsDeclaration: "off",
@@ -1047,6 +1041,12 @@ const style = {
 	 */
 	useUnicodeRegex: "error",
 	useUnifiedTypeSignatures: "warn",
+	/**
+	 * Forces `var` declarations to be placed at the top of the scope to avoid hoisting issues.
+	 *
+	 * `var` declarations should not be used. However, this rule is enabled just in case.
+	 */
+	useVarsOnTop: "error",
 	/**
 	 * Vue-only rule.
 	 */
