@@ -502,6 +502,10 @@ const correctness = {
 	/**
 	 * Vue-only rule.
 	 */
+	useVueValidVFor: "off",
+	/**
+	 * Vue-only rule.
+	 */
 	useVueValidVHtml: "off",
 	/**
 	 * Vue-only rule.
@@ -764,10 +768,6 @@ const nursery = {
 	 * Vue-only rule.
 	 */
 	useVueNextTickPromise: "off",
-	/**
-	 * Vue-only rule.
-	 */
-	useVueValidVFor: "off",
 } as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
 
 const performance = {
