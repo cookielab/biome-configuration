@@ -552,10 +552,6 @@ const nursery = {
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
 	/**
-	 * Force may lead to unreliable tests.
-	 */
-	noPlaywrightForceOption: "error",
-	/**
 	 * Using `networkidle` may lead to unreliable or flaky tests.
 	 */
 	noPlaywrightNetworkidle: "error",
@@ -1312,6 +1308,10 @@ const suspicious = {
 	 * Just making sure there are no unused parameters in recursive functions.
 	 */
 	noParametersOnlyUsedInRecursion: "error",
+	/**
+	 * Force may lead to unreliable tests.
+	 */
+	noPlaywrightForceOption: "error",
 	/**
 	 * This approach to accessing object's prototype is deprecated since 2009.
 	 */
