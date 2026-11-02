@@ -579,10 +579,6 @@ const nursery = {
 	 * Detects when a disposable object is not disposed off with the `using` keyword.
 	 */
 	useDisposables: "error",
-	/**
-	 * Frontend-only rule.
-	 */
-	useDomQuerySelector: "off",
 	useExhaustiveSwitchCases: "error",
 	/**
 	 * Each test should include at least one assertion.
@@ -979,6 +975,10 @@ const style = {
 	 * The level is left at `off` to at least let the user know that the option exists.
 	 */
 	useDestructuring: "off",
+	/**
+	 * Frontend-only rule.
+	 */
+	useDomQuerySelector: "off",
 	/**
 	 * Enums are forbidden.
 	 */

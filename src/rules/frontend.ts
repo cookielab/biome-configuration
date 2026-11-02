@@ -107,10 +107,6 @@ const nursery = {
 	 */
 	noUnusedClasses: "off",
 	/**
-	 * Enforces `querySelector` usage over the old DOM APIs.
-	 */
-	useDomQuerySelector: "error",
-	/**
 	 * Forces `iframe` elements to have a sandbox attribute.
 	 */
 	useIframeSandbox: "error",
@@ -150,6 +146,10 @@ const style = {
 	 */
 	noInlineStyles: "warn",
 	noValueAtRule: "error",
+	/**
+	 * Enforces `querySelector` usage over the old DOM APIs.
+	 */
+	useDomQuerySelector: "error",
 } as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
 
 const suspicious = {
