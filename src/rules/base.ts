@@ -581,10 +581,6 @@ const nursery = {
 	useDisposables: "error",
 	useExhaustiveSwitchCases: "error",
 	/**
-	 * Each test should include at least one assertion.
-	 */
-	useExpect: "error",
-	/**
 	 * Forces functions to report their return types.
 	 */
 	useExplicitReturnType: {
@@ -1400,6 +1396,10 @@ const suspicious = {
 	 */
 	useDeprecatedDate: "off",
 	useErrorMessage: "error",
+	/**
+	 * Each test should include at least one assertion.
+	 */
+	useExpect: "error",
 	useGetterReturn: "error",
 	/**
 	 * Frontend-only rule.
