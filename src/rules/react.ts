@@ -61,10 +61,6 @@ const nursery = {
 	...frontend.nursery,
 
 	/**
-	 * Using template strings syntax in plain component text is not indended in most cases.
-	 */
-	noJsxLeakedDollar: "error",
-	/**
 	 * Disallows importing from deeply nested React Native directories.
 	 */
 	noReactNativeDeepImports: "error",
@@ -122,6 +118,10 @@ const suspicious = {
 	 */
 	noDuplicatedSpreadProps: "error",
 	noDuplicateJsxProps: "error",
+	/**
+	 * Using template strings syntax in plain component text is not indended in most cases.
+	 */
+	noJsxLeakedDollar: "error",
 	/**
 	 * Prevents unintended values from being rendered. For example the `false` case when using `&&`.
 	 */

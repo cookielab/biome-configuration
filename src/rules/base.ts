@@ -545,10 +545,6 @@ const nursery = {
 	 */
 	noImpliedEval: "error",
 	/**
-	 * JSX-only rule.
-	 */
-	noJsxLeakedDollar: "off",
-	/**
 	 * Prevents outer variable capture inside loop-defined functions.
 	 */
 	noLoopFunc: "error",
@@ -1293,6 +1289,10 @@ const suspicious = {
 	 */
 	noImportCycles: "error",
 	noIrregularWhitespace: "error",
+	/**
+	 * JSX-only rule.
+	 */
+	noJsxLeakedDollar: "off",
 	noLabelVar: "error",
 	/**
 	 * React-only rule.
