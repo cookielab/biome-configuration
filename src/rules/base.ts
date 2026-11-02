@@ -564,10 +564,6 @@ const nursery = {
 	 */
 	noUnsafePlusOperands: "error",
 	/**
-	 * Informational rule that reports when a dependency license may not be compatible with the project.
-	 */
-	noUntrustedLicenses: "info",
-	/**
 	 * Frontend-only rule.
 	 */
 	noUnusedClasses: "off",
@@ -1373,6 +1369,10 @@ const suspicious = {
 	noUnnecessaryConditions: "error",
 	noUnsafeDeclarationMerging: "error",
 	noUnsafeNegation: "error",
+	/**
+	 * Informational rule that reports when a dependency license may not be compatible with the project.
+	 */
+	noUntrustedLicenses: "info",
 	/**
 	 * Unused expressions can be safely remove and should not litter the codebase.
 	 */
