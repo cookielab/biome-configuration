@@ -545,10 +545,6 @@ const nursery = {
 	 */
 	noImpliedEval: "error",
 	/**
-	 * Prevents outer variable capture inside loop-defined functions.
-	 */
-	noLoopFunc: "error",
-	/**
 	 * Ensures that functions do not report the return type as wider than what is actually returned.
 	 *
 	 * In case the widening is expected, using `return value as WiderType` is recommended. Casting makes the intent explicit.
@@ -1298,6 +1294,10 @@ const suspicious = {
 	 * React-only rule.
 	 */
 	noLeakedRender: "off",
+	/**
+	 * Prevents outer variable capture inside loop-defined functions.
+	 */
+	noLoopFunc: "error",
 	noMisleadingCharacterClass: "error",
 	noMisleadingInstantiator: "error",
 	noMisplacedAssertion: "error",
