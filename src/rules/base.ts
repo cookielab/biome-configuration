@@ -617,10 +617,6 @@ const nursery = {
 	 */
 	useRegexpExec: "error",
 	/**
-	 * Vue-only rule.
-	 */
-	useScopedStyles: "off",
-	/**
 	 * Frontend-only rule.
 	 */
 	useSortedClasses: "off",
@@ -1414,6 +1410,10 @@ const suspicious = {
 	 * This rule should only be enabled in a specific project as every project uses different required scripts.
 	 */
 	useRequiredScripts: "off",
+	/**
+	 * Vue-only rule.
+	 */
+	useScopedStyles: "off",
 	useStaticResponseMethods: "warn",
 	useStrictMode: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
