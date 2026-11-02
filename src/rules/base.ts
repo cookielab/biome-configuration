@@ -163,6 +163,10 @@ const correctness = {
 	 * React-only rule.
 	 */
 	noChildrenProp: "off",
+	/**
+	 * React-only rule.
+	 */
+	noComponentHookFactories: "off",
 	noConstAssign: "error",
 	noConstantCondition: "error",
 	noConstantMathMinMaxClamp: "error",
@@ -450,10 +454,6 @@ const nursery = {
 	 * Helps prevent stringification to `[object Object]`.
 	 */
 	noBaseToString: "error",
-	/**
-	 * React-only rule.
-	 */
-	noComponentHookFactories: "off",
 	/**
 	 * Tests should be strictly linear without any branching.
 	 */

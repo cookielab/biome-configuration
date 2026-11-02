@@ -26,6 +26,10 @@ const correctness = {
 	...frontend.correctness,
 
 	noChildrenProp: "error",
+	/**
+	 * Prevents unnecessary component recreation on each render.
+	 */
+	noComponentHookFactories: "error",
 	noNestedComponentDefinitions: "error",
 	noReactPropAssignments: "error",
 	noRenderReturnValue: "error",
@@ -40,10 +44,6 @@ const correctness = {
 const nursery = {
 	...frontend.nursery,
 
-	/**
-	 * Prevents unnecessary component recreation on each render.
-	 */
-	noComponentHookFactories: "error",
 	/**
 	 * Using template strings syntax in plain component text is not indended in most cases.
 	 */
