@@ -12,6 +12,19 @@ import type {
 	suspiciousSchema,
 } from "../generated/configuration";
 
+// Even though the `recommended` attribute is deprecated by the Biome CLI, it is not marked as such in the JSON schema.
+// The Biome CLI prints out a warning in cases where used.
+// Thus all of the definitions are omitting the specific attribute to get a clean Biome output.
+type A11yRules = Omit<z.infer<ReturnType<typeof a11YSchema.required>>, "recommended">;
+type ComplexityRules = Omit<z.infer<ReturnType<typeof complexitySchema.required>>, "recommended">;
+type CorrectnessRules = Omit<z.infer<ReturnType<typeof correctnessSchema.required>>, "recommended">;
+type NurseryRules = z.infer<typeof nurserySchema>;
+type PerformanceRules = Omit<z.infer<ReturnType<typeof performanceSchema.required>>, "recommended">;
+type SecurityRules = Omit<z.infer<ReturnType<typeof securitySchema.required>>, "recommended">;
+type StyleRules = Omit<z.infer<ReturnType<typeof styleSchema.required>>, "recommended">;
+type SuspiciousRules = Omit<z.infer<ReturnType<typeof suspiciousSchema.required>>, "recommended">;
+type Rules = Omit<z.infer<ReturnType<typeof rulesSchema.required>>, "recommended">;
+
 /**
  * Accessibility should only be activated in projects with frontend code (HTML, React, Solid, Svelte, Vue...)
  */
@@ -37,7 +50,6 @@ const a11y = {
 	noStaticElementInteractions: "off",
 	noSvgWithoutTitle: "off",
 	preset: "none",
-	recommended: false,
 	useAltText: "off",
 	useAnchorContent: "off",
 	useAriaActivedescendantWithTabindex: "off",
@@ -59,7 +71,7 @@ const a11y = {
 	useValidAriaValues: "off",
 	useValidAutocomplete: "off",
 	useValidLang: "off",
-} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
+} as const satisfies A11yRules;
 
 const complexity = {
 	noAdjacentSpacesInRegex: "error",
@@ -155,7 +167,6 @@ const complexity = {
 	 */
 	noVoid: "off",
 	preset: "none",
-	recommended: false,
 	/**
 	 * Enforces the usage of `Array.prototype.find` over `Array.prototype.filter` with index access.
 	 */
@@ -189,7 +200,7 @@ const complexity = {
 	useSimpleNumberKeys: "error",
 	useSimplifiedLogicExpression: "error",
 	useWhile: "error",
-} as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
+} as const satisfies ComplexityRules;
 
 const correctness = {
 	/**
@@ -406,7 +417,6 @@ const correctness = {
 	 */
 	noVueVOnNumberValues: "off",
 	preset: "none",
-	recommended: false,
 	/**
 	 * React-only rule.
 	 */
@@ -532,7 +542,7 @@ const correctness = {
 	 */
 	useVueVForKey: "off",
 	useYield: "error",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+} as const satisfies CorrectnessRules;
 
 const nursery = {
   /**
@@ -628,7 +638,7 @@ const nursery = {
 	 * Svelte-only rule.
 	 */
 	useSvelteRequireEachKey: "off",
-} as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
+} as const satisfies NurseryRules;
 
 const performance = {
 	noAccumulatingSpread: "error",
@@ -660,7 +670,6 @@ const performance = {
 	 */
 	noUnwantedPolyfillio: "off",
 	preset: "none",
-	recommended: false,
 	/**
 	 * Frontend-only rule.
 	 */
@@ -678,7 +687,7 @@ const performance = {
 	 * Vue-only rule.
 	 */
 	useVueVapor: "off",
-} as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
+} as const satisfies PerformanceRules;
 
 const security = {
 	/**
@@ -703,12 +712,11 @@ const security = {
 	 */
 	noSecrets: "off",
 	preset: "none",
-	recommended: false,
 	/**
 	 * Frontend-only rule.
 	 */
 	useIframeSandbox: "off",
-} as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
+} as const satisfies SecurityRules;
 
 const style = {
 	/**
@@ -844,7 +852,6 @@ const style = {
 	noVueOptionsApi: "off",
 	noYodaExpression: "error",
 	preset: "none",
-	recommended: false,
 	useArrayLiterals: "error",
 	useAsConstAssertion: "error",
 	useAtIndex: "error",
@@ -1071,7 +1078,7 @@ const style = {
 	 * Vue-only rule.
 	 */
 	useVueNextTickPromise: "off",
-} as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
+} as const satisfies StyleRules;
 
 const suspicious = {
 	/**
@@ -1372,7 +1379,6 @@ const suspicious = {
 	noVueArrowFuncInWatch: "off",
 	noWith: "error",
 	preset: "none",
-	recommended: false,
 	useAdjacentOverloadSignatures: "error",
 	/**
 	 * Enforces all sorting operations to be explicitly defined.
@@ -1416,7 +1422,7 @@ const suspicious = {
 	useScopedStyles: "off",
 	useStaticResponseMethods: "warn",
 	useStrictMode: "error",
-} as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
+} as const satisfies SuspiciousRules;
 
 const base = {
 	a11y: a11y,
@@ -1425,10 +1431,20 @@ const base = {
 	nursery: nursery,
 	performance: performance,
 	preset: "none",
-	recommended: false,
 	security: security,
 	style: style,
 	suspicious: suspicious,
-} as const satisfies z.infer<ReturnType<typeof rulesSchema.required>>;
+} as const satisfies Rules;
 
+export type {
+	A11yRules,
+	ComplexityRules,
+	CorrectnessRules,
+	NurseryRules,
+	PerformanceRules,
+	Rules,
+	SecurityRules,
+	StyleRules,
+	SuspiciousRules,
+};
 export { base };

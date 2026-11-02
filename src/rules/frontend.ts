@@ -1,16 +1,15 @@
-import type { z } from "zod";
-import type {
-	a11YSchema,
-	complexitySchema,
-	correctnessSchema,
-	nurserySchema,
-	performanceSchema,
-	rulesSchema,
-	securitySchema,
-	styleSchema,
-	suspiciousSchema,
-} from "../generated/configuration";
-import { base } from "./base";
+import {
+	type A11yRules,
+	base,
+	type ComplexityRules,
+	type CorrectnessRules,
+	type NurseryRules,
+	type PerformanceRules,
+	type Rules,
+	type SecurityRules,
+	type StyleRules,
+	type SuspiciousRules,
+} from "./base";
 
 const a11y = {
 	...base.a11y,
@@ -35,7 +34,6 @@ const a11y = {
 	noRedundantRoles: "error",
 	noStaticElementInteractions: "error",
 	noSvgWithoutTitle: "error",
-	recommended: false,
 	useAltText: "error",
 	useAnchorContent: "error",
 	useAriaActivedescendantWithTabindex: "error",
@@ -57,7 +55,7 @@ const a11y = {
 	useValidAriaValues: "error",
 	useValidAutocomplete: "error",
 	useValidLang: "error",
-} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
+} as const satisfies A11yRules;
 
 const complexity = {
 	...base.complexity,
@@ -72,7 +70,7 @@ const complexity = {
 		},
 	},
 	noImportantStyles: "error",
-} as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
+} as const satisfies ComplexityRules;
 
 const correctness = {
 	...base.correctness,
@@ -93,7 +91,7 @@ const correctness = {
 	noUnknownTypeSelector: "error",
 	noUnmatchableAnbSelector: "error",
 	useImageSize: "warn",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+} as const satisfies CorrectnessRules;
 
 const nursery = {
 	...base.nursery,
@@ -106,7 +104,7 @@ const nursery = {
 	 * Disabled to prevent issues with false-positives.
 	 */
 	noUnusedClasses: "off",
-} as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
+} as const satisfies NurseryRules;
 
 const performance = {
 	...base.performance,
@@ -116,7 +114,7 @@ const performance = {
 	 */
 	useDomNodeTextContent: "error",
 	useGoogleFontPreconnect: "error",
-} as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
+} as const satisfies PerformanceRules;
 
 const security = {
 	...base.security,
@@ -130,7 +128,7 @@ const security = {
 	 * Forces `iframe` elements to have a sandbox attribute.
 	 */
 	useIframeSandbox: "error",
-} as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
+} as const satisfies SecurityRules;
 
 const style = {
 	...base.style,
@@ -149,7 +147,7 @@ const style = {
 	 * Enforces `querySelector` usage over the old DOM APIs.
 	 */
 	useDomQuerySelector: "error",
-} as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
+} as const satisfies StyleRules;
 
 const suspicious = {
 	...base.suspicious,
@@ -184,7 +182,7 @@ const suspicious = {
 		},
 	},
 	useGoogleFontDisplay: "error",
-} as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
+} as const satisfies SuspiciousRules;
 
 const frontend = {
 	a11y: a11y,
@@ -193,10 +191,9 @@ const frontend = {
 	nursery: nursery,
 	performance: performance,
 	preset: "none",
-	recommended: false,
 	security: security,
 	style: style,
 	suspicious: suspicious,
-} as const satisfies z.infer<ReturnType<typeof rulesSchema.required>>;
+} as const satisfies Rules;
 
 export { frontend };

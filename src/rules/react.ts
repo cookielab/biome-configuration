@@ -1,26 +1,25 @@
-import type { z } from "zod";
 import type {
-	a11YSchema,
-	complexitySchema,
-	correctnessSchema,
-	nurserySchema,
-	performanceSchema,
-	rulesSchema,
-	securitySchema,
-	styleSchema,
-	suspiciousSchema,
-} from "../generated/configuration";
+	A11yRules,
+	ComplexityRules,
+	CorrectnessRules,
+	NurseryRules,
+	PerformanceRules,
+	Rules,
+	SecurityRules,
+	StyleRules,
+	SuspiciousRules,
+} from "./base";
 import { frontend } from "./frontend";
 
 const a11y = {
 	...frontend.a11y,
-} as const satisfies z.infer<ReturnType<typeof a11YSchema.required>>;
+} as const satisfies A11yRules;
 
 const complexity = {
 	...frontend.complexity,
 
 	noUselessFragments: "error",
-} as const satisfies z.infer<ReturnType<typeof complexitySchema.required>>;
+} as const satisfies ComplexityRules;
 
 const correctness = {
 	...frontend.correctness,
@@ -55,7 +54,7 @@ const correctness = {
 	 */
 	useReactNativePlatformComponents: "error",
 	useUniqueElementIds: "error",
-} as const satisfies z.infer<ReturnType<typeof correctnessSchema.required>>;
+} as const satisfies CorrectnessRules;
 
 const nursery = {
 	...frontend.nursery,
@@ -64,7 +63,7 @@ const nursery = {
 	 * Forces a consistent React component declaration.
 	 */
 	useReactFunctionComponentDefinition: { level: "error", options: { namedComponents: "arrowFunction" } },
-} as const satisfies z.infer<ReturnType<typeof nurserySchema.required>>;
+} as const satisfies NurseryRules;
 
 const performance = {
 	...frontend.performance,
@@ -73,14 +72,14 @@ const performance = {
 	 * Using `bind` is treated by React as a new function on each render.
 	 */
 	noJsxPropsBind: "error",
-} as const satisfies z.infer<ReturnType<typeof performanceSchema.required>>;
+} as const satisfies PerformanceRules;
 
 const security = {
 	...frontend.security,
 
 	noDangerouslySetInnerHtml: "error",
 	noDangerouslySetInnerHtmlWithChildren: "error",
-} as const satisfies z.infer<ReturnType<typeof securitySchema.required>>;
+} as const satisfies SecurityRules;
 
 const style = {
 	...frontend.style,
@@ -98,7 +97,7 @@ const style = {
 	useFragmentSyntax: "error",
 	useReactFunctionComponents: "error",
 	useSelfClosingElements: "error",
-} as const satisfies z.infer<ReturnType<typeof styleSchema.required>>;
+} as const satisfies StyleRules;
 
 const suspicious = {
 	...frontend.suspicious,
@@ -135,7 +134,7 @@ const suspicious = {
 	 * Prevents the usage of unknown attributes.
 	 */
 	noUnknownAttribute: "error",
-} as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
+} as const satisfies SuspiciousRules;
 
 const react = {
 	a11y: a11y,
@@ -144,10 +143,9 @@ const react = {
 	nursery: nursery,
 	performance: performance,
 	preset: "none",
-	recommended: false,
 	security: security,
 	style: style,
 	suspicious: suspicious,
-} as const satisfies z.infer<ReturnType<typeof rulesSchema.required>>;
+} as const satisfies Rules;
 
 export { react };
