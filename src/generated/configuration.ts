@@ -25,7 +25,10 @@ export const sortOrderSchema = z.union([z.literal("natural"), z.literal("lexicog
 export const boolSchema = z.boolean();
 
 /**
- * Normalized Biome glob pattern that strips `./` from the pattern.
+ * Matches case-sensitive paths with `/` separators. Supports `*` within a path segment,
+ * segment-only `**`, brace alternatives such as `{js,ts}`, backslash escaping, and leading `!` or
+ * `!!` negation. Does not support `?`, character classes, nested brace alternatives, partial
+ * globstars, or consecutive globstars. Leading `./` sequences are removed before parsing.
  */
 export const normalizedGlobSchema = z.string();
 
@@ -40,14 +43,22 @@ export const delimiterSpacingSchema = z.boolean();
 
 export const indentStyleSchema = z.union([z.literal("tab"), z.literal("space")]);
 
+/**
+ * Sets the indentation width. With space indentation, this is the number of spaces emitted per
+ * indentation level. With tab indentation, Biome emits one tab per level and uses this value as the
+ * tab's display width when calculating line length.
+ *
+ * Accepted values range from 0 through 24.
+ */
 export const indentWidthSchema = z.number();
 
 export const lineEndingSchema = z.union([z.literal("lf"), z.literal("crlf"), z.literal("cr"), z.literal("auto")]);
 
 /**
- * Validated value for the `line_width` formatter options
+ * Sets the preferred maximum line width used when deciding where to wrap code. Some content, such
+ * as long unbreakable strings, may still exceed this width.
  *
- * The allowed range of values is 1..=320
+ * Accepted values range from 1 through 320.
  */
 export const lineWidthSchema = z.number();
 
@@ -55,14 +66,23 @@ export const quoteStyleSchema = z.union([z.literal("double"), z.literal("single"
 
 export const trailingNewlineSchema = z.boolean();
 
-export const extendsSchema = z.union([z.array(z.string()), z.string()]);
+/**
+ * Extends the current configuration with settings from other Biome configurations. `//` extends the root configuration from any nesting depth. A list extends configurations by relative path or installed package specifier. Biome merges list entries from left to right: later configurations take precedence for single-value options, list entries are combined, and the current configuration is applied last.
+ */
+export const extendsSchema = z.union([z.array(z.string()), z.literal("//")]);
 
 export const maxSizeSchema = z.number();
 
+/**
+ * Controls attribute placement in HTML-like languages.
+ */
 export const attributePositionSchema = z.union([z.literal("auto"), z.literal("multiline")]);
 
 /**
- * Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements).
+ * Controls the placement of the closing bracket for multiline HTML and JSX opening tags. Biome
+ * places the bracket at the end of the last attribute line when enabled and on its own line after
+ * the last attribute when disabled. This option also affects self-closing HTML elements, but
+ * self-closing JSX elements are unaffected.
  */
 export const bracketSameLineSchema = z.boolean();
 
@@ -71,19 +91,19 @@ export const bracketSpacingSchema = z.boolean();
 export const expandSchema = z.union([z.literal("auto"), z.literal("always"), z.literal("never")]);
 
 /**
- * Whether to indent the content of `<script>` and `<style>` tags for HTML-ish templating languages (Vue, Svelte, etc.).
- *
- * When true, the content of `<script>` and `<style>` tags will be indented one level.
+ * Controls whether the content of `<script>` and `<style>` tags is indented by one level in HTML,
+ * Vue, Svelte, and Astro files.
  */
 export const indentScriptAndStyleSchema = z.boolean();
 
 /**
- * Controls whether void-elements should be self closed
+ * Controls whether HTML void elements such as `<img>` and `<input>` include a slash before `>`.
  */
 export const selfCloseVoidElementsSchema = z.union([z.literal("never"), z.literal("always")]);
 
 /**
- * Whitespace sensitivity for HTML formatting.
+ * Controls how the formatter treats whitespace around text and child elements in HTML, Vue,
+ * Svelte, and Astro markup.
  *
  * The following two cases won't produce the same output:
  *
@@ -123,12 +143,12 @@ export const semicolonsSchema = z.union([z.literal("always"), z.literal("asNeede
 export const jsTrailingCommasSchema = z.union([z.literal("all"), z.literal("es5"), z.literal("none")]);
 
 /**
- * Indicates the type of runtime or transformation used for interpreting JSX.
+ * How Biome's analyzer accounts for imports used by JSX.
  */
 export const jsxRuntimeSchema = z.union([z.literal("transparent"), z.literal("reactClassic")]);
 
 /**
- * Print trailing commas wherever possible in multi-line comma-separated syntactic structures for JSON files.
+ * Controls trailing commas in multiline JSON arrays and objects. Use `all` only for JSON variants that allow trailing commas, and ensure `json.parser.allowTrailingCommas` is enabled or automatically detected for those files.
  */
 export const jsonTrailingCommasSchema = z.union([z.literal("none"), z.literal("all")]);
 
@@ -151,19 +171,38 @@ export const stableHookResultSchema = z.union([z.boolean(), z.tuple([z.number()]
 
 export const useImageSizeOptionsSchema = z.null();
 
+export const tailwindUtilityCategorySchema = z.union([z.union([z.literal("color"), z.literal("typography"), z.literal("spacing"), z.literal("shape"), z.literal("effects"), z.literal("motion")]), z.literal("layout")]);
+
 /**
- * The function to use for tests
+ * The required form for function definitions: `"expression"` or `"declaration"`.
  */
-export const testFunctionKindSchema = z.union([z.literal("it"), z.literal("test")]);
+export const functionStyleSchema = z.union([z.literal("expression"), z.literal("declaration")]);
+
+export const jsonFileReadAsSchema = z.union([z.literal("string"), z.literal("buffer")]);
+
+export const lightnessNotationSchema = z.union([z.literal("percentage"), z.literal("number")]);
+
+export const normalizationFormSchema = z.union([z.literal("NFC"), z.literal("NFD"), z.literal("NFKC"), z.literal("NFKD")]);
+
+export const unicodeBomSchema = z.union([z.literal("always"), z.literal("never")]);
+
+export const useLogicalPropertiesDirectionSchema = z.union([z.literal("ltr"), z.literal("rtl")]);
+
+export const ignorePrimitivesSchema = z.union([z.boolean(), z.object({
+        bigint: z.boolean().optional(),
+        boolean: z.boolean().optional(),
+        number: z.boolean().optional(),
+        string: z.boolean().optional()
+    })]);
+
+/**
+ * Controls which functions React Compiler analyzes.
+ */
+export const compilationModeSchema = z.union([z.literal("infer"), z.literal("annotation"), z.literal("all")]);
 
 export const componentDefinitionStyleSchema = z.union([z.literal("functionDeclaration"), z.literal("functionExpression"), z.literal("arrowFunction")]);
 
-/**
- * Controls how `useThisInClassMethods` treats classes that implement interfaces.
- */
-export const ignoreClassesWithImplementsSchema = z.union([z.literal("none"), z.literal("all"), z.literal("public-fields")]);
-
-export const declarationStyleSchema = z.union([z.literal("type"), z.literal("runtime")]);
+export const eventHyphenationSchema = z.union([z.literal("always"), z.literal("never")]);
 
 /**
  * Specifies whether property assignments on function parameters are allowed or denied.
@@ -210,6 +249,11 @@ export const methodSignatureStyleSchema = z.union([z.literal("property"), z.lite
 
 export const objectPropertySyntaxSchema = z.union([z.literal("explicit"), z.literal("shorthand")]);
 
+/**
+ * The function to use for tests
+ */
+export const testFunctionKindSchema = z.union([z.literal("it"), z.literal("test")]);
+
 export const consistentTypeDefinitionSchema = z.union([z.literal("interface"), z.literal("type")]);
 
 /**
@@ -248,209 +292,325 @@ export const restrictedModifierSchema = z.union([z.literal("abstract"), z.litera
  */
 export const modifiersSchema = z.array(restrictedModifierSchema);
 
+/**
+ * Controls how `useThisInClassMethods` treats classes that implement interfaces.
+ */
+export const ignoreClassesWithImplementsSchema = z.union([z.literal("none"), z.literal("all"), z.literal("public-fields")]);
+
+export const declarationStyleSchema = z.union([z.literal("type"), z.literal("runtime")]);
+
 export const vueDirectiveStyleSchema = z.union([z.literal("shorthand"), z.literal("longhand")]);
 
 export const vueDirectiveStyle2Schema = z.union([z.literal("shorthand"), z.literal("longhand")]);
 
+/**
+ * Controls whether Biome keeps, adds, or removes line breaks in Markdown paragraphs.
+ *
+ * Manual line breaks are always kept. In Markdown, a manual line break is created by ending a
+ * line with two spaces or a backslash.
+ */
+export const proseWrapSchema = z.union([z.literal("preserve"), z.literal("always"), z.literal("never")]);
+
+/**
+ * Matches case-sensitive paths with `/` separators. Supports `*` within a path segment,
+ * segment-only `**`, brace alternatives such as `{js,ts}`, backslash escaping, and leading `!` or
+ * `!!` negation. Does not support `?`, character classes, nested brace alternatives, partial
+ * globstars, or consecutive globstars.
+ */
 export const globSchema = z.string();
 
 export const overrideGlobsSchema = z.array(globSchema);
 
-/**
- * A path with additional options.
- */
-export const pluginWithOptionsSchema = z.object({
-    /**
-     * A list of glob patterns. The plugin will only run on files matching
-     * these patterns. Use negated globs (e.g., `!** /*.test.ts`) for exclusions.
-     */
-    includes: z.array(normalizedGlobSchema).optional().nullable(),
-    /**
-     * The path to the plugin.
-     */
-    path: z.string()
-});
-
-/**
- * Configuration for a single plugin entry.
- *
- * Can be either a plain path string or an object with path and options:
- *
- * ```json
- * {
- *   "plugins": [
- *     "simple-plugin.grit",
- *     { "path": "scoped-plugin.grit", "includes": ["src/** /*.ts"] }
- *   ]
- * }
- * ```
- */
-export const pluginConfigurationSchema = z.union([z.string(), pluginWithOptionsSchema]);
+export const pluginResolvePathSchema = z.union([z.literal("project"), z.literal("config")]);
 
 export const vcsClientKindSchema = z.literal("git");
 
 /**
- * The configuration of the filesystem
+ * The file handling configuration.
  */
 export const filesConfigurationSchema = z.object({
     /**
      * **Deprecated:** Please use _force-ignore syntax_ in `files.includes`
      * instead: <https://biomejs.dev/reference/configuration/#filesincludes>
      *
-     * Set of file and folder names that should be unconditionally ignored by
-     * Biome's scanner.
+     * File or directory names that the scanner ignores unconditionally while crawling. Each value
+     * matches a complete path component, not a glob. Ignored files are not added to the module graph,
+     * so types are not inferred from them.
      */
     experimentalScannerIgnores: z.array(z.string()).optional().nullable(),
     /**
-     * Tells Biome to not emit diagnostics when handling files that it doesn't know
+     * Prevents Biome from emitting diagnostics for unrecognized file types. Defaults to `false`.
      */
     ignoreUnknown: boolSchema.optional().nullable(),
     /**
-     * A list of glob patterns. Biome will handle only those files/folders that will
-     * match these patterns.
+     * A list of glob patterns selecting which files and directories Biome can process. If omitted,
+     * this option does not further restrict the supported files Biome can process. An empty list
+     * selects no files. Biome ignores files under `node_modules` even when they match a pattern.
+     *
+     * The scanner uses these patterns and, when enabled, VCS ignore files while discovering nested
+     * configuration and ignore files. When enabled rules use the `project` or `types` domains, it
+     * also indexes source files and project dependencies. It may still discover required metadata or
+     * index excluded source files needed for analysis. A pattern beginning with `!!` prevents the
+     * scanner from indexing matching paths. Patterns are evaluated in order, and a pattern beginning
+     * with `!` excludes matches.
      */
     includes: z.array(normalizedGlobSchema).optional().nullable(),
     /**
-     * The maximum allowed size for source code files in bytes. Files above
-     * this limit will be ignored for performance reasons. Defaults to 1 MiB
+     * The maximum source-file size in bytes. Biome skips larger files and emits a warning
+     * diagnostic. Defaults to `1 MiB`.
      */
     maxSize: maxSizeSchema.optional().nullable()
 });
 
 /**
- * Generic options applied to all files
+ * Configures formatting for selected files.
  */
 export const formatterConfigurationSchema = z.object({
     /**
-     * The attribute position style in HTML-ish languages. Defaults to auto.
+     * The attribute position style in HTML-like languages. Defaults to `auto`.
      */
     attributePosition: attributePositionSchema.optional().nullable(),
     /**
-     * Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements).
+     * Controls the placement of the closing bracket for multiline HTML and JSX opening tags. Biome
+     * places the bracket at the end of the last attribute line when enabled and on its own line when
+     * disabled. This also affects self-closing HTML elements, but self-closing JSX elements are
+     * unaffected. Defaults to `false`.
      */
     bracketSameLine: bracketSameLineSchema.optional().nullable(),
     /**
-     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     * Controls spaces inside braces in supported single-line structures. The affected structures
+     * vary by language. Defaults to `true`.
      */
     bracketSpacing: bracketSpacingSchema.optional().nullable(),
     /**
-     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
-     * closing delimiter), such as parentheses, brackets, angle brackets, and template literal
-     * interpolations. Spaces are not added before the opening delimiter, and empty delimiters
-     * are not affected. Only applies when the content fits on a single line. The specific
-     * delimiters affected depend on the language. Defaults to false.
+     * Controls spaces immediately inside supported delimiters when their content fits on one line.
+     * It doesn't add spaces before opening delimiters or inside empty delimiters.
+     *
+     * The affected delimiters vary by language. Defaults to `false`.
      */
     delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
+    /**
+     * Enables or disables the formatter. Defaults to `true`.
+     */
     enabled: boolSchema.optional().nullable(),
     /**
-     * Whether to expand arrays and objects on multiple lines.
-     * When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-     * and array literals are formatted on a single line if it fits in the line.
-     * When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-     * When set to `never`, these literals are formatted on a single line if it fits in the line.
-     * When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+     * Controls whether arrays and objects are formatted on one line or multiple lines.
+     *
+     * `auto` formats objects on multiple lines if the first property has a newline, and arrays on
+     * one line if they fit.
+     *
+     * `always` formats arrays and objects on multiple lines.
+     *
+     * `never` formats arrays and objects on one line if they fit.
+     *
+     * Defaults to `auto`.
+     *
+     * When formatting `package.json`, Biome uses `always` unless configured otherwise.
      */
     expand: expandSchema.optional().nullable(),
     /**
-     * Whether formatting should be allowed to proceed if a given file
-     * has syntax errors
+     * Allows formatting files that contain syntax errors when set to `true`. Defaults to `false`.
      */
     formatWithErrors: boolSchema.optional().nullable(),
     /**
-     * A list of glob patterns. The formatter will include files/folders that will
-     * match these patterns.
+     * A list of glob patterns selecting files to format. If omitted, all files selected by
+     * `files.includes` remain eligible for formatting. An empty list selects no files. This option
+     * can only narrow the files selected by `files.includes`.
      */
     includes: z.array(normalizedGlobSchema).optional().nullable(),
     /**
-     * The indent style.
+     * Uses tabs or spaces for indentation. Defaults to `tab`.
      */
     indentStyle: indentStyleSchema.optional().nullable(),
     /**
-     * The size of the indentation, 2 by default
+     * Sets the indentation width. With space indentation, this is the number of spaces emitted per
+     * indentation level. With tab indentation, Biome emits one tab per level and uses this value as
+     * the tab's display width when calculating line length. Accepted values are `0` through `24`.
+     * Defaults to `2`.
      */
     indentWidth: indentWidthSchema.optional().nullable(),
     /**
-     * The type of line ending.
+     * Selects the line ending. `auto` uses the platform convention. Defaults to `lf`.
      */
     lineEnding: lineEndingSchema.optional().nullable(),
     /**
-     * What's the max width of a line. Defaults to 80.
+     * Sets the preferred maximum line width used when deciding where to wrap code. Some content,
+     * such as long unbreakable strings, may still exceed this width. Accepted values are `1` through
+     * `320`. Defaults to `80`.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
     /**
-     * Whether to add a trailing newline at the end of the file.
-     *
-     * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
-     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-     *
-     * Disable the option at your own risk.
-     *
-     * Defaults to true.
+     * Whether to add a trailing newline at the end of the file. Defaults to `true`. Disabling
+     * this option can cause compatibility problems with other tools.
      */
     trailingNewline: trailingNewlineSchema.optional().nullable(),
     /**
-     * Use any `.editorconfig` files to configure the formatter. Configuration
-     * in `biome.json` will override `.editorconfig` configuration.
-     *
-     * Default: `false`.
+     * Controls whether Biome loads formatter settings from an `.editorconfig` file. Biome reads
+     * `indent_style`, `indent_size`, `end_of_line`, and `insert_final_newline`. Settings in
+     * `biome.json` or `biome.jsonc` take precedence. Biome loads only one `.editorconfig`. Nested
+     * cascading configurations and the EditorConfig `root` property are not supported. Defaults to
+     * `false`.
      */
     useEditorconfig: boolSchema.optional().nullable()
 });
 
-export const pluginsSchema = z.array(pluginConfigurationSchema);
+/**
+ * Tells Biome where your code lists Tailwind CSS classes, so the Tailwind
+ * lint rules know which strings to check.
+ */
+export const tailwindConfigurationSchema = z.object({
+    /**
+     * Attributes whose values are Tailwind classes, such as `class` in
+     * `<div class="px-2 py-2">`.
+     *
+     * Defaults to `class` and `className`. In HTML, they are case-insensitive.
+     */
+    attributes: z.array(z.string()).optional().nullable(),
+    /**
+     * Functions that combine Tailwind classes, such as `clsx` and `cn`.
+     *
+     * Biome checks every string passed to these functions, like both strings
+     * in `cn("px-2", "py-2")`. When an object is passed, Biome checks its
+     * keys: in `cn({ "px-2": isActive })`, it checks `"px-2"`.
+     *
+     * Properties of these functions are checked too, so listing `tw` also
+     * covers `` tw.div`px-2` `` and `tw.div("px-2")`.
+     *
+     * Defaults to `clsx`, `tw`, `twMerge`, `twJoin`, `cn`, `cc`, `cnb`, and
+     * `ctl`.
+     */
+    mergeFunctions: z.array(z.string()).optional().nullable(),
+    /**
+     * The CSS file that holds your Tailwind CSS configuration, such as
+     * `"./src/app.css"`. A relative path starts from the folder of the Biome
+     * configuration file.
+     *
+     * Biome reads the `@theme`, `@utility`, and `@custom-variant` rules in
+     * this file and in the files it imports with `@import`, so that the
+     * Tailwind rules know your theme values, utilities, and variants.
+     *
+     * To read the file, Biome scans your project when a Tailwind rule is
+     * enabled. Setting this option also turns on `css.parser.tailwindDirectives`,
+     * unless you set that option yourself.
+     */
+    stylesheet: z.string().optional().nullable(),
+    /**
+     * Functions that describe a component's styles with an object, such as
+     * `cva` and `tv`.
+     *
+     * Biome checks every string passed directly to these functions. In an
+     * object passed to them, Biome checks the classes under these properties:
+     *
+     * - `base`, `class`, and `className`: classes that always apply.
+     * - `variants`: classes for each version of the component, such as each
+     *   button size.
+     * - `slots`: classes for each part of the component, such as its icon.
+     * - `compoundVariants` and `compoundSlots`: only the `class` and
+     *   `className` of each entry.
+     *
+     * Other properties, such as `defaultVariants`, hold names rather than
+     * classes, so Biome skips them. For example, Biome checks `"rounded"`,
+     * `"px-2"`, and `"px-4"` here, but not `"small"`:
+     *
+     * ```js
+     * cva("rounded", {
+     *     variants: {
+     *         size: { small: "px-2", large: "px-4" },
+     *     },
+     *     defaultVariants: { size: "small" },
+     * });
+     * ```
+     *
+     * Defaults to `cva` and `tv`.
+     */
+    variantFunctions: z.array(z.string()).optional().nullable()
+});
 
 /**
- * Set of properties to integrate Biome with a VCS software.
+ * Configures how Biome integrates with a version control system.
  */
 export const vcsConfigurationSchema = z.object({
     /**
-     * The kind of client.
+     * Selects the version-control client. Currently, only `git` is supported.
      */
     clientKind: vcsClientKindSchema.optional().nullable(),
     /**
-     * The main branch of the project
+     * Sets the base branch used by `--changed` when `--since` is not provided. If neither this option
+     * nor `--since` is set, commands using `--changed` fail because Biome cannot determine the
+     * comparison base.
      */
     defaultBranch: z.string().optional().nullable(),
     /**
-     * Whether Biome should integrate itself with the VCS client
+     * Enables or disables version-control integration. Defaults to `false`. Enabling integration
+     * requires `vcs.clientKind` to be set.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * The folder where Biome should check for VCS files. By default, Biome will use the same
-     * folder where `biome.json` was found.
+     * Sets the directory where Biome looks for version-control files. A relative value is resolved
+     * from the directory containing the current configuration file, while an absolute path is used
+     * directly.
      *
-     * If Biome can't find the configuration, it will attempt to use the current working directory.
-     * If no current working directory can't be found, Biome won't use the VCS integration, and a diagnostic
-     * will be emitted
+     * Defaults to the directory containing `biome.json` or `biome.jsonc`. If no configuration is
+     * found, Biome uses the current working directory.
+     *
+     * If neither directory is available, Biome disables version control integration and emits a
+     * diagnostic.
      */
     root: z.string().optional().nullable(),
     /**
-     * Whether Biome should use VCS ignore files. When [true], Biome will ignore files
-     * specified in `.gitignore`, `.ignore`, and Git's local exclude file.
+     * Controls whether Biome applies patterns from `.gitignore`, Git's local `.git/info/exclude`,
+     * and supported `.ignore` files, including nested ignore files. Patterns in the root ignore file
+     * are resolved from `vcs.root`. Patterns in nested ignore files are resolved from the directory
+     * containing that file. Defaults to `false`.
      */
     useIgnoreFile: boolSchema.optional().nullable()
 });
 
+/**
+ * Options for the `noDuplicateClasses` assist action.
+ *
+ * Controls which JSX attributes and utility functions are checked for duplicate classes.
+ */
 export const noDuplicateClassesOptionsSchema = z.object({
     /**
-     * Additional attributes that will be sorted.
+     * Additional attributes whose classes are checked for duplicates.
      */
     attributes: z.array(z.string()).optional().nullable(),
     /**
-     * Names of the functions or tagged templates that will be sorted.
+     * Names of the functions or tagged templates whose classes are checked for
+     * duplicates.
      */
     functions: z.array(z.string()).optional().nullable()
 });
 
+export const useGraphqlSortedArgumentsOptionsSchema = z.object({});
+
+export const useGraphqlSortedDefinitionsOptionsSchema = z.object({});
+
+export const useGraphqlSortedVariablesOptionsSchema = z.object({});
+
 export const useSortedAttributesOptionsSchema = z.object({
+    /**
+     * A list of attribute names that should be sorted before all other
+     * attributes, in the order they appear in this list. The remaining
+     * attributes are sorted after the listed ones.
+     *
+     * This is useful to keep attributes such as `key` first.
+     */
+    sortFirst: z.array(z.string()).optional().nullable(),
     sortOrder: sortOrderSchema.optional().nullable()
 });
 
 export const useSortedEnumMembersOptionsSchema = z.object({});
 
-export const useSortedInterfaceMembersOptionsSchema = z.object({});
+export const useSortedInterfaceMembersOptionsSchema = z.object({
+    /**
+     * When enabled, members separated by a blank line are kept in their own
+     * section and sorted only within that section. This preserves logical
+     * groupings the author intentionally introduced with empty lines.
+     */
+    partitionByNewLine: z.boolean().optional().nullable()
+});
 
 export const useSortedKeysOptionsSchema = z.object({
     /**
@@ -471,147 +631,148 @@ export const useSortedSelectionSetOptionsSchema = z.object({});
 export const useSortedTypeFieldsOptionsSchema = z.object({});
 
 /**
- * Options that changes how the CSS assist behaves
+ * Options that change how CSS assist behaves.
  */
 export const cssAssistConfigurationSchema = z.object({
     /**
-     * Control the assist for CSS files.
+     * Enables or disables assist actions for CSS.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the CSS formatter behaves
+ * Options that change how the CSS formatter behaves.
  */
 export const cssFormatterConfigurationSchema = z.object({
     /**
-     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
-     * closing delimiter). Only applies when the content fits on a single line, and empty
-     * delimiters are not affected. For CSS, affects parentheses (e.g., `rgb( 0, 0, 0 )`) and
-     * square brackets (e.g., `[ data-attr ]`). Defaults to false.
+     * Controls spaces inside CSS parentheses and square brackets when their content fits on one
+     * line. When enabled, `rgb(0, 0, 0)` becomes `rgb( 0, 0, 0 )` and `[data-attr]` becomes
+     * `[ data-attr ]`. Empty delimiters are unchanged.
+     *
+     * If unset, inherits the global delimiter spacing setting.
      */
     delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     /**
-     * Control the formatter for CSS (and its super languages) files.
+     * Enables or disables the formatter for CSS and languages that extend it.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * The indent style applied to CSS (and its super languages) files.
+     * The indent style applied to CSS and languages that extend it. If unset, inherits the global
+     * indentation style.
      */
     indentStyle: indentStyleSchema.optional().nullable(),
     /**
-     * The size of the indentation applied to CSS (and its super languages) files. Default to 2.
+     * The indentation width applied to CSS and languages that extend it. If unset, inherits the
+     * global indentation width.
      */
     indentWidth: indentWidthSchema.optional().nullable(),
     /**
-     * The type of line ending applied to CSS (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
+     * The line ending applied to CSS and languages that extend it. If unset, inherits the global
+     * line ending.
      */
     lineEnding: lineEndingSchema.optional().nullable(),
     /**
-     * What's the max width of a line applied to CSS (and its super languages) files. Defaults to 80.
+     * The preferred maximum line width for CSS and languages that extend it. If unset, inherits
+     * the global line width.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
     /**
-     * The type of quotes used in CSS code. Defaults to double.
+     * Selects the preferred quote style for CSS strings. Biome may use the alternate quote when
+     * that avoids additional escaping. Quotes in `@charset` rules are currently preserved.
+     * Defaults to `double`.
      */
     quoteStyle: quoteStyleSchema.optional().nullable(),
     /**
-     * Whether to add a trailing newline at the end of the file.
-     *
-     * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
-     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-     *
-     * Disable the option at your own risk.
-     *
-     * Defaults to true.
+     * Whether to add a trailing newline at the end of the file. If unset, inherits the global
+     * trailing newline setting.
      */
     trailingNewline: trailingNewlineSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the CSS linter behaves
+ * Options that change how the CSS linter behaves.
  */
 export const cssLinterConfigurationSchema = z.object({
     /**
-     * Control the linter for CSS files.
+     * Enables or disables the linter for CSS.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the CSS parser behaves
+ * Options that change how the CSS parser behaves.
  */
 export const cssParserConfigurationSchema = z.object({
     /**
-     * Allow comments to appear on incorrect lines in `.css` files
+     * Enables `//` line comments in plain CSS. Standard CSS treats `//` as delimiter characters
+     * rather than as a comment, and SCSS accepts `//` comments independently of this option.
+     * Defaults to `false`.
      */
     allowWrongLineComments: boolSchema.optional().nullable(),
     /**
-     * Enables parsing of CSS Modules specific features. Enable this feature only
-     * when your files don't end in `.module.css`.
+     * Enables CSS Modules-specific syntax such as `:local`, `:global`, `composes`, and `@value`.
+     * When unset, Biome enables this syntax automatically for files whose names end in
+     * `.module.css` or `.module.scss; otherwise, it defaults to `false`. Enable it explicitly when CSS Module files
+     * use another naming convention.
      */
     cssModules: boolSchema.optional().nullable(),
     /**
-     * Enables parsing of Tailwind CSS 4.0 directives and functions.
+     * Enables parsing Tailwind CSS 4.0 directives and functions, including `@theme`, `@utility`,
+     * `@variant`, `@source`, and `@apply`. Defaults to `false`.
      */
     tailwindDirectives: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the GraphQL linter behaves
+ * Options that change how GraphQL assist behaves.
  */
 export const graphqlAssistConfigurationSchema = z.object({
     /**
-     * Control the formatter for GraphQL files.
+     * Enables or disables assist actions for GraphQL. Defaults to `false`.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the GraphQL formatter behaves
+ * Options that change how the GraphQL formatter behaves.
  */
 export const graphqlFormatterConfigurationSchema = z.object({
     /**
-     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     * Controls spaces inside the braces of single-line GraphQL object values. Biome formats
+     * `{name: "Biome"}` when disabled and `{ name: "Biome" }` when enabled. If unset, inherits the
+     * global bracket spacing setting.
      */
     bracketSpacing: bracketSpacingSchema.optional().nullable(),
     /**
-     * Control the formatter for GraphQL files.
+     * Enables or disables the formatter for GraphQL.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * The indent style applied to GraphQL files.
+     * The indent style applied to GraphQL files. If unset, inherits the global indentation style.
      */
     indentStyle: indentStyleSchema.optional().nullable(),
     /**
-     * The size of the indentation applied to GraphQL files. Default to 2.
+     * The indentation width applied to GraphQL files. If unset, inherits the global indentation
+     * width.
      */
     indentWidth: indentWidthSchema.optional().nullable(),
     /**
-     * The type of line ending applied to GraphQL files. `auto` uses CRLF on Windows and LF on other platforms.
+     * The line ending applied to GraphQL files. If unset, inherits the global line ending.
      */
     lineEnding: lineEndingSchema.optional().nullable(),
     /**
-     * What's the max width of a line applied to GraphQL files. Defaults to 80.
+     * The preferred maximum line width for GraphQL files. If unset, inherits the global line
+     * width.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
     /**
-     * The type of quotes used in GraphQL code. Defaults to double.
+     * Reserved for future formatter support. The current formatter preserves standard
+     * double-quoted GraphQL strings and does not use this setting.
      */
     quoteStyle: quoteStyleSchema.optional().nullable(),
     /**
-     * Whether to add a trailing newline at the end of the file.
-     *
-     * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
-     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-     *
-     * Disable the option at your own risk.
-     *
-     * Defaults to true.
+     * Whether to add a trailing newline at the end of the file. If unset, inherits the global
+     * trailing newline setting.
      */
     trailingNewline: trailingNewlineSchema.optional().nullable()
 });
@@ -621,154 +782,164 @@ export const graphqlFormatterConfigurationSchema = z.object({
  */
 export const graphqlLinterConfigurationSchema = z.object({
     /**
-     * Control the formatter for GraphQL files.
+     * Enables or disables the linter for GraphQL.
      */
     enabled: boolSchema.optional().nullable()
 });
 
+/**
+ * Options that change how GritQL assist behaves.
+ */
 export const gritAssistConfigurationSchema = z.object({
     /**
-     * Control the assist functionality for Grit files.
+     * Enables or disables assist actions for GritQL.
      */
     enabled: boolSchema.optional().nullable()
 });
 
+/**
+ * Options that change how the GritQL formatter behaves.
+ */
 export const gritFormatterConfigurationSchema = z.object({
     /**
-     * Control the formatter for Grit files.
+     * Enables or disables the formatter for GritQL.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * The indent style applied to Grit files.
+     * The indent style applied to GritQL files. If unset, inherits the global indentation style.
      */
     indentStyle: indentStyleSchema.optional().nullable(),
     /**
-     * The size of the indentation applied to Grit files. Default to 2.
+     * The indentation width applied to GritQL files. If unset, inherits the global indentation
+     * width.
      */
     indentWidth: indentWidthSchema.optional().nullable(),
     /**
-     * The type of line ending applied to Grit files.
+     * The line ending applied to GritQL files. If unset, inherits the global line ending.
      */
     lineEnding: lineEndingSchema.optional().nullable(),
     /**
-     * What's the max width of a line applied to Grit files. Defaults to 80.
+     * The preferred maximum line width for GritQL files. If unset, inherits the global line width.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
     /**
-     * Whether to add a trailing newline at the end of the file.
-     *
-     * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
-     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-     *
-     * Disable the option at your own risk.
-     *
-     * Defaults to true.
+     * Whether to add a trailing newline at the end of the file. If unset, inherits the global
+     * trailing newline setting.
      */
     trailingNewline: trailingNewlineSchema.optional().nullable()
 });
 
+/**
+ * Options that change how the GritQL linter behaves.
+ */
 export const gritLinterConfigurationSchema = z.object({
     /**
-     * Control the linter for Grit files.
+     * Enables or disables the linter for GritQL.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the HTML assist behaves
+ * Options that change how HTML assist behaves.
  */
 export const htmlAssistConfigurationSchema = z.object({
     /**
-     * Control the assist for HTML (and its super languages) files.
+     * Enables or disables assist actions for HTML and languages that extend it.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the HTML formatter behaves
+ * Options that change how the HTML formatter behaves.
  */
 export const htmlFormatterConfigurationSchema = z.object({
     /**
-     * The attribute position style in HTML elements. Defaults to auto.
+     * The attribute position style in HTML elements. If unset, inherits the global attribute
+     * position setting.
      */
     attributePosition: attributePositionSchema.optional().nullable(),
     /**
-     * Whether to hug the closing bracket of multiline HTML tags to the end of the last line, rather than being alone on the following line. Defaults to false.
+     * Controls the placement of the closing bracket for multiline HTML opening tags. Biome places
+     * the bracket at the end of the last attribute line when enabled and on its own line after the
+     * last attribute when disabled. This option also affects self-closing HTML elements. If unset,
+     * inherits the global `bracketSameLine` setting.
      */
     bracketSameLine: bracketSameLineSchema.optional().nullable(),
     /**
-     * Control the formatter for HTML (and its super languages) files.
+     * Enables or disables the formatter for HTML and languages that extend it. The formatter is
+     * experimental and disabled by default. Formatting complete HTML, Vue, Svelte, and Astro files
+     * requires `html.experimentalFullSupportEnabled` to be `true`.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * Whether to indent the `<script>` and `<style>` tags for HTML (and its super languages). Defaults to false.
+     * Controls whether the content of `<script>` and `<style>` tags is indented by one level in
+     * HTML, Vue, Svelte, and Astro files. Defaults to `false`.
      */
     indentScriptAndStyle: indentScriptAndStyleSchema.optional().nullable(),
     /**
-     * The indent style applied to HTML (and its super languages) files.
+     * The indent style applied to HTML and languages that extend it. If unset, inherits the global
+     * indentation style.
      */
     indentStyle: indentStyleSchema.optional().nullable(),
     /**
-     * The size of the indentation applied to HTML (and its super languages) files. Default to 2.
+     * The indentation width applied to HTML and languages that extend it. If unset, inherits the
+     * global indentation width.
      */
     indentWidth: indentWidthSchema.optional().nullable(),
     /**
-     * The type of line ending applied to HTML (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
+     * The line ending applied to HTML and languages that extend it. If unset, inherits the global
+     * line ending.
      */
     lineEnding: lineEndingSchema.optional().nullable(),
     /**
-     * What's the max width of a line applied to HTML (and its super languages) files. Defaults to 80.
+     * The preferred maximum line width for HTML and languages that extend it. If unset, inherits
+     * the global line width.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
     /**
-     * Whether void elements should be self-closed. Defaults to never.
+     * Controls whether void elements are self-closed. Defaults to `never`.
      */
     selfCloseVoidElements: selfCloseVoidElementsSchema.optional().nullable(),
     /**
-     * Whether to add a trailing newline at the end of the file.
-     *
-     * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
-     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-     *
-     * Disable the option at your own risk.
-     *
-     * Defaults to true.
+     * Whether to add a trailing newline at the end of the file. Unlike other language-specific
+     * trailing newline settings, this option defaults to `true` instead of inheriting the global
+     * setting.
      */
     trailingNewline: trailingNewlineSchema.optional().nullable(),
     /**
-     * Whether to account for whitespace sensitivity when formatting HTML (and its super languages). Defaults to "css".
+     * Controls how the formatter treats whitespace around text and child elements in HTML, Vue,
+     * Svelte, and Astro markup. The `ignore` setting should be used only when whitespace cannot
+     * affect rendered output. Defaults to `css`.
      */
     whitespaceSensitivity: whitespaceSensitivitySchema.optional().nullable()
 });
 
 /**
- * Options that changes how the HTML linter behaves
+ * Options that change how the HTML linter behaves.
  */
 export const htmlLinterConfigurationSchema = z.object({
     /**
-     * Control the linter for HTML (and its super languages) files.
+     * Enables or disables the linter for HTML and languages that extend it.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the HTML parser behaves
+ * Options that change how the HTML parser behaves.
  */
 export const htmlParserConfigurationSchema = z.object({
     /**
-     * Enables the parsing of double text expressions such as `{{ expression }}` inside `.html` files
+     * Enables double-curly interpolation expressions such as `{{ expression }}` in `.html` files.
+     * Defaults to `false`.
      */
     interpolation: boolSchema.optional().nullable(),
     /**
-     * Enables parsing of Vue syntax (v-if, v-bind, etc.) in `.html` files. If this option is enabled, it also enables `interpolation` implicitly.
+     * Enables parsing Vue syntax (`v-if`, `v-bind`, etc.) in `.html` files. Enabling this option
+     * also enables `interpolation` implicitly.
      *
      * Biome will already automatically enable Vue parsing in `.vue` files, so you probably don't need
      * to enable this option. This only affects `.html` files, and does not change how `.vue`, `.svelte`,
-     * or `.astro` files are parsed.
+     * or `.astro` files are parsed. Defaults to `false`.
      */
     vue: boolSchema.optional().nullable()
 });
@@ -778,107 +949,119 @@ export const htmlParserConfigurationSchema = z.object({
  */
 export const jsAssistConfigurationSchema = z.object({
     /**
-     * Control the assist for JavaScript (and its super languages) files.
+     * Enables or disables assist actions for JavaScript and languages that extend it.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Formatting options specific to the JavaScript files
+ * Formatting options specific to JavaScript and languages that extend it.
  */
 export const jsFormatterConfigurationSchema = z.object({
     /**
-     * Whether to add non-necessary parentheses to arrow functions. Defaults to "always".
+     * Controls parentheses around arrow-function parameters. `always` always prints parentheses,
+     * while `asNeeded` omits them when an arrow function has one parameter and the syntax permits
+     * it. Defaults to `always`.
      */
     arrowParentheses: arrowParenthesesSchema.optional().nullable(),
     /**
-     * The attribute position style in JSX elements. Defaults to auto.
+     * The attribute position style in JSX elements. If unset, inherits the global attribute
+     * position setting.
      */
     attributePosition: attributePositionSchema.optional().nullable(),
     /**
-     * Whether to hug the closing bracket of multiline HTML/JSX tags to the end of the last line, rather than being alone on the following line. Defaults to false.
+     * Controls the placement of the closing bracket for multiline JSX opening tags. Biome places
+     * the bracket at the end of the last attribute line when enabled and on its own line after the
+     * last attribute when disabled. Self-closing JSX elements are unaffected. If unset, inherits
+     * the global bracket placement setting.
      */
     bracketSameLine: bracketSameLineSchema.optional().nullable(),
     /**
-     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     * Controls spaces inside the braces of single-line object literals. Biome formats `{value: 1}`
+     * when disabled and `{ value: 1 }` when enabled. If unset, inherits the global bracket spacing
+     * setting.
      */
     bracketSpacing: bracketSpacingSchema.optional().nullable(),
     /**
-     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
-     * closing delimiter). Only applies when the content fits on a single line. Spaces are not
-     * added before the opening delimiter (e.g., `function f()` stays `function f()`, not
-     * `function f ()`), and empty delimiters are not affected (e.g., `fn()` stays `fn()`).
-     * For JavaScript and TypeScript, affects parentheses (e.g., `foo( a, b )`), square brackets
-     * (e.g., `[ a, b ]`), template literal interpolations (e.g., `${ expr }`), TypeScript angle
-     * brackets (e.g., `foo< T >()`), JSX expression braces (e.g., `{ value }`), and the logical
-     * NOT operator (e.g., `! x`, but in chains only after the last one: `!! x`). Defaults to
-     * false.
+     * Controls spaces immediately inside supported JavaScript and TypeScript delimiters when their
+     * content fits on one line. This affects parentheses, square brackets, template
+     * interpolations, TypeScript angle brackets, and JSX expression braces. Empty delimiters are
+     * unchanged.
+     *
+     * It also controls spacing after logical NOT operators. In a chain of logical NOT operators,
+     * only the final operator receives a following space. Biome doesn't add spaces before opening
+     * delimiters.
+     *
+     * If unset, inherits the global delimiter spacing setting.
      */
     delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     /**
-     * Control the formatter for JavaScript (and its super languages) files.
+     * Enables or disables the formatter for JavaScript and languages that extend it.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * Whether to expand arrays and objects on multiple lines.
-     * When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-     * and array literals are formatted on a single line if it fits in the line.
-     * When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-     * When set to `never`, these literals are formatted on a single line if it fits in the line.
-     * When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+     * Uses the same `auto`, `always`, and `never` behavior as the global expansion setting.
+     *
+     * If unset, inherits the global expansion setting.
      */
     expand: expandSchema.optional().nullable(),
     /**
-     * The indent style applied to JavaScript (and its super languages) files.
+     * The indent style applied to JavaScript and languages that extend it. If unset, inherits the
+     * global indentation style.
      */
     indentStyle: indentStyleSchema.optional().nullable(),
     /**
-     * The size of the indentation applied to JavaScript (and its super languages) files. Default to 2.
+     * The indentation width applied to JavaScript and languages that extend it. If unset,
+     * inherits the global indentation width.
      */
     indentWidth: indentWidthSchema.optional().nullable(),
     /**
-     * The type of quotes used in JSX. Defaults to double.
+     * Selects the preferred quote style for JSX attribute values. Defaults to `double`.
      */
     jsxQuoteStyle: quoteStyleSchema.optional().nullable(),
     /**
-     * The type of line ending applied to JavaScript (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
+     * The line ending applied to JavaScript and languages that extend it. If unset, inherits the
+     * global line ending.
      */
     lineEnding: lineEndingSchema.optional().nullable(),
     /**
-     * What's the max width of a line applied to JavaScript (and its super languages) files. Defaults to 80.
+     * The preferred maximum line width applied to JavaScript and languages that extend it. If
+     * unset, inherits the global line width.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
     /**
-     * When breaking binary expressions into multiple lines, whether to break them before or after the binary operator. Defaults to "after".
+     * When breaking binary expressions into multiple lines, whether to break them before or after
+     * the binary operator. Defaults to `after`.
      */
     operatorLinebreak: operatorLinebreakSchema.optional().nullable(),
     /**
-     * When properties in objects are quoted. Defaults to asNeeded.
+     * Controls whether quotes around object property names are preserved. `asNeeded` removes
+     * quotes when the property name is valid without them, while `preserve` keeps quotes around
+     * property names that were quoted in the input. Defaults to `asNeeded` in configuration
+     * (`as-needed` on the CLI).
      */
     quoteProperties: quotePropertiesSchema.optional().nullable(),
     /**
-     * The type of quotes used in JavaScript code. Defaults to double.
+     * Selects the preferred quote style for JavaScript and TypeScript string literals. Biome may
+     * use the alternate quote when that avoids additional escaping. Defaults to `double`.
      */
     quoteStyle: quoteStyleSchema.optional().nullable(),
     /**
-     * Whether the formatter prints semicolons for all statements or only in for statements where it is necessary because of ASI.
+     * Prints semicolons after every statement or only where needed to avoid automatic semicolon
+     * insertion hazards. Defaults to `always`.
      */
     semicolons: semicolonsSchema.optional().nullable(),
     /**
-     * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
+     * Controls trailing commas in multiline comma-separated structures. `all` adds trailing commas
+     * wherever syntax permits, including function parameters and calls. `es5` adds them only in
+     * constructs supported by ES5, such as array and object literals, and excludes function
+     * parameters, function calls, and TypeScript type parameters. `none` removes trailing commas.
+     * Defaults to `all`.
      */
     trailingCommas: jsTrailingCommasSchema.optional().nullable(),
     /**
-     * Whether to add a trailing newline at the end of the file.
-     *
-     * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
-     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-     *
-     * Disable the option at your own risk.
-     *
-     * Defaults to true.
+     * Whether to add a trailing newline at the end of the file. If unset, inherits the global
+     * trailing newline setting.
      */
     trailingNewline: trailingNewlineSchema.optional().nullable()
 });
@@ -888,30 +1071,23 @@ export const jsFormatterConfigurationSchema = z.object({
  */
 export const jsLinterConfigurationSchema = z.object({
     /**
-     * Control the linter for JavaScript (and its super languages) files.
+     * Enables or disables the linter for JavaScript and languages that extend it.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the JavaScript parser behaves
+ * Options that change how the JavaScript parser behaves.
  */
 export const jsParserConfigurationSchema = z.object({
     /**
-     * Enables parsing of Grit metavariables.
-     * Defaults to `false`.
-     */
-    gritMetavariables: boolSchema.optional().nullable(),
-    /**
-     * When enabled, files like `.js`/`.mjs`/`.cjs` may contain JSX syntax.
-     *
-     * Defaults to `true`.
+     * Controls whether `.js`, `.mjs`, and `.cjs` files may contain JSX syntax. Disabling this
+     * option causes JSX in those files to raise a diagnostic. Defaults to `true`.
      */
     jsxEverywhere: boolSchema.optional().nullable(),
     /**
-     * It enables the experimental and unsafe parsing of parameter decorators
-     *
-     * These decorators belong to an old proposal, and they are subject to change.
+     * Enables parsing decorators on class parameters. This syntax belongs to an old experimental
+     * proposal and may change. Defaults to `false`.
      */
     unsafeParameterDecoratorsEnabled: boolSchema.optional().nullable()
 });
@@ -943,7 +1119,7 @@ export const jsResolverConfigurationSchema = z.object({
      * - Biome only reads top-level `catalog` / `catalogs` mappings and scalar
      *   string entries.
      *
-     * Default: `false`.
+     * Defaults to `false`.
      */
     experimentalPnpmCatalogs: boolSchema.optional().nullable()
 });
@@ -953,67 +1129,66 @@ export const jsResolverConfigurationSchema = z.object({
  */
 export const jsonAssistConfigurationSchema = z.object({
     /**
-     * Control the assist for JSON (and its super languages) files.
+     * Enables or disables assist actions for JSON and languages that extend it.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 export const jsonFormatterConfigurationSchema = z.object({
     /**
-     * Whether to insert spaces around brackets in object literals. Defaults to true.
+     * Whether to insert spaces inside braces in object literals. If unset, inherits the global
+     * bracket spacing setting.
      */
     bracketSpacing: bracketSpacingSchema.optional().nullable(),
     /**
-     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
-     * closing delimiter). Only applies when the content fits on a single line, and empty
-     * brackets are not affected. For JSON, affects square brackets (e.g., `[ 1, 2, 3 ]`).
-     * Defaults to false.
+     * Controls spaces inside JSON square brackets when their content fits on one line. When
+     * enabled, `[1, 2, 3]` becomes `[ 1, 2, 3 ]`. Empty brackets are unchanged.
+     *
+     * If unset, inherits the global delimiter spacing setting.
      */
     delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     /**
-     * Control the formatter for JSON (and its super languages) files.
+     * Enables or disables the formatter for JSON and languages that extend it.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * Whether to expand arrays and objects on multiple lines.
-     * When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-     * and array literals are formatted on a single line if it fits in the line.
-     * When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-     * When set to `never`, these literals are formatted on a single line if it fits in the line.
-     * When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+     * Uses the same `auto`, `always`, and `never` behavior as the global expansion setting.
+     *
+     * If unset, inherits the global expansion setting.
+     *
+     * When formatting `package.json`, Biome uses `always` unless configured otherwise.
      */
     expand: expandSchema.optional().nullable(),
     /**
-     * The indent style applied to JSON (and its super languages) files.
+     * The indent style applied to JSON and languages that extend it. If unset, inherits the global
+     * indentation style.
      */
     indentStyle: indentStyleSchema.optional().nullable(),
     /**
-     * The size of the indentation applied to JSON (and its super languages) files. Default to 2.
+     * The indentation width applied to JSON and languages that extend it. If unset, inherits the
+     * global indentation width.
      */
     indentWidth: indentWidthSchema.optional().nullable(),
     /**
-     * The type of line ending applied to JSON (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
+     * The line ending applied to JSON and languages that extend it. If unset, inherits the global
+     * line ending.
      */
     lineEnding: lineEndingSchema.optional().nullable(),
     /**
-     * What's the max width of a line applied to JSON (and its super languages) files. Defaults to 80.
+     * The preferred maximum line width applied to JSON and languages that extend it. If unset,
+     * inherits the global line width.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
     /**
-     * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "none".
+     * Controls trailing commas in multiline JSON arrays and objects. `none` removes trailing
+     * commas, while `all` adds them wherever the JSON formatter supports them. Use `all` only for
+     * JSON variants that allow trailing commas, and ensure `json.parser.allowTrailingCommas` is
+     * enabled or automatically detected for those files. Defaults to `none`.
      */
     trailingCommas: jsonTrailingCommasSchema.optional().nullable(),
     /**
-     * Whether to add a trailing newline at the end of the file.
-     *
-     * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
-     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
-     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
-     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
-     *
-     * Disable the option at your own risk.
-     *
-     * Defaults to true.
+     * Whether to add a trailing newline at the end of the file. If unset, inherits the global
+     * trailing newline setting.
      */
     trailingNewline: trailingNewlineSchema.optional().nullable()
 });
@@ -1023,26 +1198,47 @@ export const jsonFormatterConfigurationSchema = z.object({
  */
 export const jsonLinterConfigurationSchema = z.object({
     /**
-     * Control the linter for JSON (and its super languages) files.
+     * Enables or disables the linter for JSON and languages that extend it.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 /**
- * Options that changes how the JSON parser behaves
+ * Options that change how the JSON parser behaves.
  */
 export const jsonParserConfigurationSchema = z.object({
     /**
-     * Allow parsing comments in `.json` files
+     * Controls whether comments are allowed in files parsed as JSON. When unset, Biome follows the
+     * file type's default behavior. An explicit value overrides that behavior, except that
+     * `biome.jsonc` always allows comments.
      */
     allowComments: boolSchema.optional().nullable(),
     /**
-     * Allow parsing trailing commas in `.json` files
+     * Controls whether trailing commas are allowed in files parsed as JSON. When unset, Biome
+     * follows the file type's default behavior. An explicit value overrides that behavior, except
+     * that `biome.jsonc` always allows trailing commas.
      */
     allowTrailingCommas: boolSchema.optional().nullable()
 });
 
-export const ruleDomainsSchema = z.record(z.string(), ruleDomainValueSchema);
+export const ruleDomainsSchema = z.object({
+    astro: ruleDomainValueSchema.optional(),
+    drizzle: ruleDomainValueSchema.optional(),
+    next: ruleDomainValueSchema.optional(),
+    playwright: ruleDomainValueSchema.optional(),
+    project: ruleDomainValueSchema.optional(),
+    qwik: ruleDomainValueSchema.optional(),
+    react: ruleDomainValueSchema.optional(),
+    reactNative: ruleDomainValueSchema.optional(),
+    solid: ruleDomainValueSchema.optional(),
+    svelte: ruleDomainValueSchema.optional(),
+    tailwind: ruleDomainValueSchema.optional(),
+    tanstackQuery: ruleDomainValueSchema.optional(),
+    test: ruleDomainValueSchema.optional(),
+    turborepo: ruleDomainValueSchema.optional(),
+    types: ruleDomainValueSchema.optional(),
+    vue: ruleDomainValueSchema.optional()
+});
 
 export const noAccessKeyOptionsSchema = z.object({});
 
@@ -1090,7 +1286,12 @@ export const noPositiveTabindexOptionsSchema = z.object({});
 
 export const noRedundantAltOptionsSchema = z.object({});
 
-export const noRedundantRolesOptionsSchema = z.object({});
+export const noRedundantRolesOptionsSchema = z.object({
+    /**
+     * Array of element names that the rule should ignore.
+     */
+    ignoreElements: z.array(z.string()).optional().nullable()
+});
 
 export const noStaticElementInteractionsOptionsSchema = z.object({});
 
@@ -1186,7 +1387,24 @@ export const noExcessiveLinesPerFunctionOptionsSchema = z.object({
     skipIifes: z.boolean().optional().nullable()
 });
 
+export const noExcessiveNestedCallbacksOptionsSchema = z.object({
+    /**
+     * Maximum callback nesting depth allowed (default: 5)
+     */
+    max: z.number().optional().nullable()
+});
+
 export const noExcessiveNestedTestSuitesOptionsSchema = z.object({});
+
+export const noExcessiveSelectorClassesOptionsSchema = z.object({
+    /**
+     * The maximum number of class selectors allowed in a single selector.
+     *
+     * This option is required to enable the rule.
+     * Use `0` to disallow class selectors entirely.
+     */
+    maxClasses: z.number().optional().nullable()
+});
 
 export const noExtraBooleanCastOptionsSchema = z.object({});
 
@@ -1208,11 +1426,15 @@ export const noImplicitCoercionsOptionsSchema = z.object({
 
 export const noImportantStylesOptionsSchema = z.object({});
 
+export const noPlaywrightUselessAwaitOptionsSchema = z.object({});
+
 export const noRedundantDefaultExportOptionsSchema = z.object({});
 
 export const noStaticOnlyClassOptionsSchema = z.object({});
 
 export const noThisInStaticOptionsSchema = z.object({});
+
+export const noUnnecessaryTemplateExpressionOptionsSchema = z.object({});
 
 export const noUselessCatchOptionsSchema = z.object({});
 
@@ -1260,6 +1482,8 @@ export const noVoidOptionsSchema = z.object({});
 
 export const useArrayFindOptionsSchema = z.object({});
 
+export const useArraySomeOptionsSchema = z.object({});
+
 export const useArrowFunctionOptionsSchema = z.object({});
 
 export const useDateNowOptionsSchema = z.object({});
@@ -1269,6 +1493,8 @@ export const useFlatMapOptionsSchema = z.object({});
 export const useIndexOfOptionsSchema = z.object({});
 
 export const useLiteralKeysOptionsSchema = z.object({});
+
+export const useMathMinMaxOptionsSchema = z.object({});
 
 export const useMaxParamsOptionsSchema = z.object({
     /**
@@ -1283,6 +1509,8 @@ export const useOptionalChainOptionsSchema = z.object({});
 
 export const useRegexLiteralsOptionsSchema = z.object({});
 
+export const useRegexpTestOptionsSchema = z.object({});
+
 export const useSimpleNumberKeysOptionsSchema = z.object({});
 
 export const useSimplifiedLogicExpressionOptionsSchema = z.object({});
@@ -1292,6 +1520,8 @@ export const useWhileOptionsSchema = z.object({});
 export const noBeforeInteractiveScriptOutsideDocumentOptionsSchema = z.object({});
 
 export const noChildrenPropOptionsSchema = z.object({});
+
+export const noComponentHookFactoriesOptionsSchema = z.object({});
 
 export const noConstAssignOptionsSchema = z.object({});
 
@@ -1306,6 +1536,8 @@ export const noDuplicateArgumentNamesOptionsSchema = z.object({});
 export const noDuplicateAttributesOptionsSchema = z.object({});
 
 export const noDuplicateEnumValueNamesOptionsSchema = z.object({});
+
+export const noDuplicateFieldDefinitionNamesOptionsSchema = z.object({});
 
 export const noDuplicateInputFieldNamesOptionsSchema = z.object({});
 
@@ -1333,6 +1565,8 @@ export const noInvalidPositionAtImportRuleOptionsSchema = z.object({});
 
 export const noInvalidUseBeforeDeclarationOptionsSchema = z.object({});
 
+export const noJsxNamespaceOptionsSchema = z.object({});
+
 export const noMissingVarFunctionOptionsSchema = z.object({});
 
 export const noNestedComponentDefinitionsOptionsSchema = z.object({});
@@ -1342,6 +1576,8 @@ export const noNextAsyncClientComponentOptionsSchema = z.object({});
 export const noNodejsModulesOptionsSchema = z.object({});
 
 export const noNonoctalDecimalEscapeOptionsSchema = z.object({});
+
+export const noPlaywrightMissingAwaitOptionsSchema = z.object({});
 
 export const noPrecisionLossOptionsSchema = z.object({});
 
@@ -1357,6 +1593,13 @@ export const noPrivateImportsOptionsSchema = z.object({
 export const noProcessGlobalOptionsSchema = z.object({});
 
 export const noQwikUseVisibleTaskOptionsSchema = z.object({});
+
+export const noReactNativeRawTextOptionsSchema = z.object({
+    /**
+     * Names of additional components that are allowed to contain raw text.
+     */
+    skip: z.array(z.string()).optional().nullable()
+});
 
 export const noReactPropAssignmentsOptionsSchema = z.object({});
 
@@ -1503,6 +1746,10 @@ export const noVueDataObjectDeclarationOptionsSchema = z.object({});
 
 export const noVueDuplicateKeysOptionsSchema = z.object({});
 
+export const noVueImportCompilerMacrosOptionsSchema = z.object({});
+
+export const noVueRefAsOperandOptionsSchema = z.object({});
+
 export const noVueReservedKeysOptionsSchema = z.object({});
 
 export const noVueReservedPropsOptionsSchema = z.object({});
@@ -1510,6 +1757,8 @@ export const noVueReservedPropsOptionsSchema = z.object({});
 export const noVueSetupPropsReactivityLossOptionsSchema = z.object({});
 
 export const noVueVIfWithVForOptionsSchema = z.object({});
+
+export const noVueVOnNumberValuesOptionsSchema = z.object({});
 
 export const hookSchema = z.object({
     /**
@@ -1586,11 +1835,30 @@ export const useLoneAnonymousOperationOptionsSchema = z.object({});
 
 export const useParseIntRadixOptionsSchema = z.object({});
 
+export const usePlaywrightValidDescribeCallbackOptionsSchema = z.object({});
+
 export const useQwikClasslistOptionsSchema = z.object({});
+
+export const useQwikLoaderLocationOptionsSchema = z.object({});
 
 export const useQwikMethodUsageOptionsSchema = z.object({});
 
 export const useQwikValidLexicalScopeOptionsSchema = z.object({});
+
+export const useReactAsyncServerFunctionOptionsSchema = z.object({});
+
+export const useReactNativePlatformComponentsOptionsSchema = z.object({
+    /**
+     * A list of glob patterns to identify Android-specific files.
+     * Defaults to `["** /*.android.{js,jsx,ts,tsx}"]`.
+     */
+    androidPathPatterns: z.array(normalizedGlobSchema).optional().nullable(),
+    /**
+     * A list of glob patterns to identify iOS-specific files.
+     * Defaults to `["** /*.ios.{js,jsx,ts,tsx}"]`.
+     */
+    iosPathPatterns: z.array(normalizedGlobSchema).optional().nullable()
+});
 
 export const useSingleJsDocAsteriskOptionsSchema = z.object({});
 
@@ -1618,6 +1886,8 @@ export const useVueValidVElseOptionsSchema = z.object({});
 
 export const useVueValidVElseIfOptionsSchema = z.object({});
 
+export const useVueValidVForOptionsSchema = z.object({});
+
 export const useVueValidVHtmlOptionsSchema = z.object({});
 
 export const useVueValidVIfOptionsSchema = z.object({});
@@ -1637,223 +1907,440 @@ export const useVueValidVTextOptionsSchema = z.object({});
 
 export const useYieldOptionsSchema = z.object({});
 
+export const noAccidentalBitwiseOperatorsOptionsSchema = z.object({});
+
+export const noArgumentsCallerOrCalleeOptionsSchema = z.object({});
+
+export const noArraySortForMinMaxOptionsSchema = z.object({});
+
+export const noAstroConflictingSetDirectivesOptionsSchema = z.object({});
+
+export const noAstroSetHtmlDirectiveOptionsSchema = z.object({});
+
 export const noBaseToStringOptionsSchema = z.object({
     ignoredTypeNames: z.array(z.string()).optional().nullable()
 });
 
-export const noComponentHookFactoriesOptionsSchema = z.object({});
+export const noBooleanSortComparatorOptionsSchema = z.object({});
 
-export const noConditionalExpectOptionsSchema = z.object({});
+export const noBunModulesOptionsSchema = z.object({});
 
-export const noDrizzleDeleteWithoutWhereOptionsSchema = z.object({
+export const noConsoleSpacesOptionsSchema = z.object({});
+
+export const noDanglingUnderscoreOptionsSchema = z.object({});
+
+export const noDoubleComparisonOptionsSchema = z.object({});
+
+export const noDuplicateMapKeysOptionsSchema = z.object({});
+
+export const noEagerArrayMethodsInLoopsOptionsSchema = z.object({});
+
+export const noExcessiveStatementsPerFunctionOptionsSchema = z.object({
     /**
-     * List of variable names to consider as Drizzle ORM instances.
+     * When this option is set to `true`, a function that isn't nested in another function is
+     * not checked, as long as it's the only such function in the file (default: false).
      */
-    drizzleObjectName: z.array(z.string()).optional().nullable()
-});
-
-export const noDrizzleUpdateWithoutWhereOptionsSchema = z.object({
+    ignoreTopLevelFunctions: z.boolean().optional().nullable(),
     /**
-     * List of variable names to consider as Drizzle ORM instances.
-     */
-    drizzleObjectName: z.array(z.string()).optional().nullable()
-});
-
-export const noDuplicateFieldDefinitionNamesOptionsSchema = z.object({});
-
-export const noDuplicateSelectorsOptionsSchema = z.object({});
-
-export const noEmptyObjectKeysOptionsSchema = z.object({});
-
-export const noExcessiveNestedCallbacksOptionsSchema = z.object({
-    /**
-     * Maximum callback nesting depth allowed (default: 5)
+     * The maximum number of statements allowed in a function (default: 10).
      */
     max: z.number().optional().nullable()
 });
 
-export const noExcessiveSelectorClassesOptionsSchema = z.object({
+/**
+ * Options for the `noExtendNative` rule.
+ */
+export const noExtendNativeOptionsSchema = z.object({
     /**
-     * The maximum number of class selectors allowed in a single selector.
-     *
-     * This option is required to enable the rule.
-     * Use `0` to disallow class selectors entirely.
+     * Built-in names to ignore. Extending the prototype of an ignored
+     * name will not trigger this rule.
      */
-    maxClasses: z.number().optional().nullable()
+    ignore: z.array(z.string()).optional().nullable()
 });
 
 export const noFloatingPromisesOptionsSchema = z.object({});
 
-export const noIdenticalTestTitleOptionsSchema = z.object({});
-
 export const noImpliedEvalOptionsSchema = z.object({});
 
-export const noInlineStylesOptionsSchema = z.object({});
+export const noInvalidFileInputAcceptOptionsSchema = z.object({});
 
-export const noJsxLeakedDollarOptionsSchema = z.object({});
+export const noInvalidPropertyInitValueOptionsSchema = z.object({});
 
-export const noJsxNamespaceOptionsSchema = z.object({});
+export const noInvalidThisOptionsSchema = z.object({});
 
-export const noLoopFuncOptionsSchema = z.object({});
+export const restrictedPropertyEntrySchema = z.object({
+    /**
+     * Objects that are allowed when `property` is restricted globally.
+     *
+     * Example:
+     * `{ "property": "__defineGetter__", "allowObjects": ["Object"] }`
+     */
+    allowObjects: z.array(z.string()).optional(),
+    /**
+     * Properties that are allowed when `object` is restricted globally.
+     *
+     * Example:
+     * `{ "object": "arguments", "allowProperties": ["length"] }`
+     */
+    allowProperties: z.array(z.string()).optional(),
+    /**
+     * Optional custom note appended to the diagnostic.
+     */
+    message: z.string().optional().nullable(),
+    /**
+     * Object name to restrict.
+     *
+     * Example: `"require"` or `"Object"`.
+     */
+    object: z.string().optional().nullable(),
+    /**
+     * Property name to restrict.
+     *
+     * Example: `"ensure"` or `"__defineGetter__"`.
+     */
+    property: z.string().optional().nullable()
+});
+
+export const noJsonUnsafeValuesOptionsSchema = z.object({});
+
+export const noMagicArrayFlatDepthOptionsSchema = z.object({});
+
+export const noMeaninglessVoidOperatorOptionsSchema = z.object({});
 
 export const noMisleadingReturnTypeOptionsSchema = z.object({});
 
+export const noMisplacedListElementsOptionsSchema = z.object({});
+
 export const noMisusedPromisesOptionsSchema = z.object({});
 
-export const noPlaywrightElementHandleOptionsSchema = z.object({});
+export const noNegationInEqualityCheckOptionsSchema = z.object({});
 
-export const noPlaywrightEvalOptionsSchema = z.object({});
+export const noNestedSwitchOptionsSchema = z.object({});
 
-export const noPlaywrightForceOptionOptionsSchema = z.object({});
+export const noNestedTemplateLiteralsOptionsSchema = z.object({});
 
-export const noPlaywrightMissingAwaitOptionsSchema = z.object({});
+export const noNewRequireOptionsSchema = z.object({});
 
-export const noPlaywrightNetworkidleOptionsSchema = z.object({});
+export const noNonScalableViewportOptionsSchema = z.object({});
 
-export const noPlaywrightPagePauseOptionsSchema = z.object({});
+export const noNullOptionsSchema = z.object({});
 
-export const noPlaywrightUselessAwaitOptionsSchema = z.object({});
+export const noObjectConstructorOptionsSchema = z.object({});
 
-export const noPlaywrightWaitForNavigationOptionsSchema = z.object({});
+export const noObsoleteAttributesOptionsSchema = z.object({});
 
-export const noPlaywrightWaitForSelectorOptionsSchema = z.object({});
+export const noObsoleteTagsOptionsSchema = z.object({});
 
-export const noPlaywrightWaitForTimeoutOptionsSchema = z.object({});
+export const noOctalOptionsSchema = z.object({});
 
-export const noReactNativeDeepImportsOptionsSchema = z.object({});
+export const noPathConcatOptionsSchema = z.object({});
 
-export const noReactNativeLiteralColorsOptionsSchema = z.object({});
+export const noPlaywrightNthMethodsOptionsSchema = z.object({});
 
-export const noReactNativeRawTextOptionsSchema = z.object({
-    /**
-     * Names of additional components that are allowed to contain raw text.
-     */
-    skip: z.array(z.string()).optional().nullable()
-});
+export const noProcessExitOptionsSchema = z.object({});
 
-export const noReactStringRefsOptionsSchema = z.object({});
+export const noPromiseExecutorReturnOptionsSchema = z.object({});
+
+export const noReactObjectTypeAsDefaultPropOptionsSchema = z.object({});
 
 export const noRestrictedDependenciesOptionsSchema = z.object({});
 
-export const noTopLevelLiteralsOptionsSchema = z.object({});
+export const noReturnArrayPushOptionsSchema = z.object({});
+
+export const noReturnInFinallyOptionsSchema = z.object({});
+
+export const noSelfImportOptionsSchema = z.object({});
+
+export const noSelfNestedLayerOptionsSchema = z.object({});
+
+export const noShortTimeValuesOptionsSchema = z.object({
+    /**
+     * The shortest time allowed for animations and transitions, as a whole number of milliseconds.
+     *
+     * This option is required to enable the rule.
+     */
+    minimum: z.number().optional().nullable()
+});
+
+export const noSvelteAddEventListenerOptionsSchema = z.object({});
+
+export const noSvelteAtDebugTagsOptionsSchema = z.object({});
+
+export const noSvelteAtHtmlTagsOptionsSchema = z.object({});
+
+export const noSvelteClassDirectiveOptionsSchema = z.object({});
+
+export const noSvelteExportLetOptionsSchema = z.object({});
+
+export const noSvelteInspectOptionsSchema = z.object({});
+
+export const noSvelteInternalOptionsSchema = z.object({});
+
+export const noSvelteLegacyConstOptionsSchema = z.object({});
+
+export const noSvelteObjectInTextMustachesOptionsSchema = z.object({});
+
+export const noSvelteUnnecessaryStateWrapOptionsSchema = z.object({
+    /**
+     * Additional class names to treat as already reactive (beyond the built-in `svelte/reactivity` classes).
+     */
+    additionalReactiveClasses: z.array(z.string()).optional().nullable(),
+    /**
+     * When `true`, allows `$state()` wrapping for variables that are reassigned after declaration.
+     */
+    allowReassign: z.boolean().optional().nullable()
+});
+
+export const noSvelteUselessDerivedByOptionsSchema = z.object({});
+
+export const noTailwindArbitraryValueOptionsSchema = z.object({
+    /**
+     * Categories of utilities that may use arbitrary values. Defaults to an empty list.
+     */
+    allowedCategories: z.array(tailwindUtilityCategorySchema).optional().nullable(),
+    /**
+     * Classes that may use arbitrary values, such as `w-[320px]`. Defaults to an empty list.
+     */
+    allowedClasses: z.array(z.string()).optional().nullable()
+});
+
+export const noTailwindLegacyUtilitiesOptionsSchema = z.object({});
+
+export const noTailwindRawColorsOptionsSchema = z.object({
+    /**
+     * Exact palette colors to allow, such as `slate-950` or `pink-500`. Defaults to none.
+     */
+    allowedColors: z.array(z.string()).optional().nullable()
+});
+
+export const tailwindComponentAllowanceSchema = z.object({
+    /**
+     * Instructions on how to fix the problem, shown in diagnostics for the matching
+     * components in place of the default advice.
+     */
+    advice: z.string().optional().nullable(),
+    /**
+     * Categories allowed on the matching components. Defaults to an empty list.
+     */
+    categories: z.array(tailwindUtilityCategorySchema).optional(),
+    /**
+     * Exact classes, including variants and modifiers. Defaults to an empty list.
+     */
+    classes: z.array(z.string()).optional(),
+    /**
+     * An exact component name, an array of names, or `"*"` for all components.
+     */
+    components: z.union([z.string(), z.array(z.string())])
+});
+
+export const noTanstackQueryRestDestructuringOptionsSchema = z.object({});
+
+export const noThisOutsideOfClassOptionsSchema = z.object({});
 
 /**
  * Options for the `noUndeclaredClasses` rule.
  */
 export const noUndeclaredClassesOptionsSchema = z.object({});
 
-export const noUnnecessaryTemplateExpressionOptionsSchema = z.object({});
+export const noUndeclaredCustomPropertiesOptionsSchema = z.object({});
+
+export const noUnmodifiedLoopConditionOptionsSchema = z.object({});
+
+export const noUnreadableForOfExpressionOptionsSchema = z.object({});
+
+export const noUnreadableIifeOptionsSchema = z.object({});
+
+export const noUnsafeIframeSandboxOptionsSchema = z.object({});
 
 export const noUnsafePlusOperandsOptionsSchema = z.object({});
 
-export const noUntrustedLicensesOptionsSchema = z.object({
-    /**
-     * Additional license identifiers to trust, beyond valid SPDX identifiers.
-     *
-     * Useful for custom or proprietary licenses that are not part of the SPDX
-     * standard but are acceptable in your project.
-     */
-    allow: z.array(z.string()).optional().nullable(),
-    /**
-     * License identifiers to explicitly deny, even if they are valid SPDX identifiers.
-     *
-     * Use this to block specific licenses that your project or organization can't use (e.g.,
-     * copyleft licenses in a proprietary project).
-     */
-    deny: z.array(z.string()).optional().nullable(),
-    /**
-     * When `true`, deprecated SPDX license identifiers are accepted.
-     * When `false`, deprecated licenses are flagged as untrusted.
-     * Defaults to `false`.
-     */
-    ignoreDeprecated: z.boolean().optional().nullable(),
-    /**
-     * When `true`, only licenses recognized as free/libre by the Free Software
-     * Foundation (FSF) are trusted. Licenses in the `allow` list bypass this check.
-     * Defaults to `false`.
-     */
-    requireFsfLibre: z.boolean().optional().nullable(),
-    /**
-     * When `true`, only licenses approved by the Open Source Initiative (OSI)
-     * are trusted. Licenses in the `allow` list bypass this check.
-     * Defaults to `false`.
-     */
-    requireOsiApproved: z.boolean().optional().nullable()
-});
+export const noUnsafeReturnOptionsSchema = z.object({});
+
+export const noUnsafeTypeAssertionOptionsSchema = z.object({});
+
+export const noUnsafeUnaryMinusOptionsSchema = z.object({});
 
 export const noUnusedClassesOptionsSchema = z.object({});
 
+export const noUselessAssignmentOptionsSchema = z.object({});
+
+export const noUselessCallOptionsSchema = z.object({});
+
+export const noUselessDateGetTimeOptionsSchema = z.object({});
+
+export const noUselessRecursionOptionsSchema = z.object({});
+
+export const noUselessSpliceOptionsSchema = z.object({});
+
 export const noUselessTypeConversionOptionsSchema = z.object({});
 
-export const noVueImportCompilerMacrosOptionsSchema = z.object({});
+export const noVueBooleanDefaultOptionsSchema = z.object({});
 
-export const noVueRefAsOperandOptionsSchema = z.object({});
+export const noVueComputedPropertiesInDataOptionsSchema = z.object({});
 
-export const noVueVOnNumberValuesOptionsSchema = z.object({});
+export const noVueDeprecatedDeleteSetOptionsSchema = z.object({});
 
-export const useArraySomeOptionsSchema = z.object({});
+export const noVueDeprecatedListenersOptionsSchema = z.object({});
+
+export const noVueDeprecatedRouterLinkTagPropOptionsSchema = z.object({
+    /**
+     * Names of the link components to check for the `tag` prop.
+     */
+    components: z.array(z.string()).optional().nullable()
+});
+
+export const noVueDeprecatedScopeAttributeOptionsSchema = z.object({});
+
+export const noVueDeprecatedScopedSlotsOptionsSchema = z.object({});
+
+export const noVueLifecycleAfterAwaitOptionsSchema = z.object({});
+
+export const noVueMultipleSlotArgsOptionsSchema = z.object({});
+
+export const noVueMutatingPropsOptionsSchema = z.object({});
+
+export const noVueRequiredPropWithDefaultOptionsSchema = z.object({});
+
+export const noVueRootVIfOptionsSchema = z.object({});
+
+export const noVueShadowNativeEventsOptionsSchema = z.object({});
+
+export const noVueSideEffectsInComputedOptionsSchema = z.object({});
+
+export const noVueUndeclaredDirectivesOptionsSchema = z.object({
+    /**
+     * Names of directives registered globally with `app.directive(...)`,
+     * written in kebab-case without the `v-` prefix, such as
+     * `click-outside` for `v-click-outside`.
+     */
+    globals: z.array(z.string()).optional().nullable()
+});
+
+export const noVueUnusedEmitDeclarationsOptionsSchema = z.object({});
+
+export const noVueUnusedRefsOptionsSchema = z.object({});
+
+export const noVueVHtmlOptionsSchema = z.object({});
+
+export const noVueVTextOptionsSchema = z.object({});
+
+export const noVueVTextVHtmlOnComponentOptionsSchema = z.object({});
+
+export const noVueWatchAfterAwaitOptionsSchema = z.object({});
+
+export const noXorAsExponentiationOptionsSchema = z.object({});
+
+export const noYamlBooleanKeysOptionsSchema = z.object({});
+
+export const noZeroFractionsOptionsSchema = z.object({});
+
+export const noZeroLengthUnitOptionsSchema = z.object({});
+
+export const useAstroClientOnlyDirectiveValueOptionsSchema = z.object({});
 
 export const useAwaitThenableOptionsSchema = z.object({});
 
+export const useBetterDomTraversingOptionsSchema = z.object({});
+
+export const useBigintLiteralsOptionsSchema = z.object({});
+
+export const useBlockStatementOverIifeOptionsSchema = z.object({});
+
+export const useCapitalizedConstructorsOptionsSchema = z.object({});
+
 /**
- * Options for the `useBaseline` rule.
+ * The checks for one top-level block.
  */
-export const useBaselineOptionsSchema = z.object({
+export const blockLangOptionsSchema = z.object({
     /**
-     * CSS at-rules to exclude from checking (without `@`, case-insensitive).
+     * When `true`, the block may also omit the `lang` attribute.
+     *
+     * Only applies when `lang` is set. Defaults to `false`.
      */
-    allowAtRules: z.array(z.string()).optional(),
+    allowNoLang: z.boolean().optional().nullable(),
     /**
-     * CSS value functions to exclude from checking (case-insensitive).
+     * The values allowed for the `lang` attribute of the block, such as `["ts"]`.
+     *
+     * When set, it must contain at least one value. Values must match exactly,
+     * so `"ts"` doesn't allow `lang="TS"`. When omitted, the `lang` attribute
+     * of the block isn't checked.
+     *
+     * @minItems 1
      */
-    allowFunctions: z.array(z.string()).optional(),
+    lang: z.tuple([z.string()]).rest(z.string()).optional().nullable(),
     /**
-     * CSS media conditions to exclude from checking (case-insensitive).
+     * When `true`, every component must contain at least one block with this
+     * tag name.
+     *
+     * Works with or without `lang`. Defaults to `false`.
      */
-    allowMediaConditions: z.array(z.string()).optional(),
-    /**
-     * CSS properties to exclude from checking (case-insensitive).
-     */
-    allowProperties: z.array(z.string()).optional(),
-    /**
-     * CSS property values to exclude from checking (maps property name to allowed values, case-insensitive).
-     */
-    allowPropertyValues: z.record(z.string(), z.array(z.string())).optional(),
-    /**
-     * CSS pseudo-selectors to exclude from checking (without `:` or `::`, case-insensitive).
-     */
-    allowSelectors: z.array(z.string()).optional(),
-    /**
-     * The availability level to target. Defaults to `"widely"`.
-     */
-    available: z.union([z.union([z.literal("widely"), z.literal("newly")]), z.number()]).optional()
+    required: z.boolean().optional().nullable()
 });
 
 /**
- * Options for the `useConsistentTestIt` rule
+ * Configures the required function style and whether declaration mode permits arrow functions.
  */
-export const useConsistentTestItOptionsSchema = z.object({
+export const useConsistentFunctionStyleOptionsSchema = z.object({
     /**
-     * The function to use for top-level tests (outside describe blocks).
-     * Default: `"it"`
+     * Allow arrow functions when declarations are required. Default: `false`.
      */
-    function: testFunctionKindSchema.optional().nullable(),
+    allowArrowFunctions: z.boolean().optional().nullable(),
     /**
-     * The function to use for tests inside describe blocks.
-     * Default: `"it"`
+     * The function style to enforce. Default: `"expression"`.
      */
-    withinDescribe: testFunctionKindSchema.optional().nullable()
+    style: functionStyleSchema.optional().nullable()
 });
+
+export const useConsistentHeadingLevelOptionsSchema = z.object({});
+
+export const useConsistentJsonFileReadOptionsSchema = z.object({
+    /**
+     * Whether JSON files should be read as strings or as `Buffer`s before they are passed to `JSON.parse()`.
+     *
+     * Default: `"string"`
+     */
+    readAs: jsonFileReadAsSchema.optional().nullable()
+});
+
+export const useConsistentLightnessNotationOptionsSchema = z.object({
+    /**
+     * Whether the lightness of `lab()`, `lch()`, `oklab()`, and `oklch()` colors should be written as a percentage or as a number.
+     *
+     * Default: `"percentage"`
+     */
+    notation: lightnessNotationSchema.optional().nullable()
+});
+
+export const useConsistentObjectKeysOptionsSchema = z.object({
+    /**
+     * The Unicode normalization form that every object key must use so equivalent characters share one encoding. Defaults to `NFC`.
+     */
+    form: normalizationFormSchema.optional().nullable()
+});
+
+export const useConsistentUnicodeBomOptionsSchema = z.object({
+    /**
+     * Whether files must start with a Unicode byte order mark. Defaults to `"never"`.
+     */
+    bom: unicodeBomSchema.optional().nullable()
+});
+
+/**
+ * Configuration for the `useControlLabel` lint rule.
+ */
+export const useControlLabelOptionsSchema = z.object({});
 
 export const useDisposablesOptionsSchema = z.object({});
 
-export const useDomNodeTextContentOptionsSchema = z.object({});
+export const useExhaustiveSwitchCasesOptionsSchema = z.object({
+    /**
+     * Require a `case` for each value in the union, even when the switch has a `default` clause.
+     * Default: `false`.
+     */
+    requireExplicitCase: z.boolean().optional().nullable()
+});
 
-export const useDomQuerySelectorOptionsSchema = z.object({});
-
-export const useExhaustiveSwitchCasesOptionsSchema = z.object({});
-
-export const useExpectOptionsSchema = z.object({});
+export const useExpectToContainOptionsSchema = z.object({});
 
 /**
  * Options for the `useExplicitReturnType` rule.
@@ -1876,42 +2363,106 @@ export const useExplicitReturnTypeOptionsSchema = z.object({
 
 export const useExplicitTypeOptionsSchema = z.object({});
 
-export const useIframeSandboxOptionsSchema = z.object({});
+/**
+ * Configures the language tags and info-string content accepted by fenced code blocks.
+ */
+export const useFencedCodeLanguageOptionsSchema = z.object({
+    /**
+     * The language tags a fenced code block is allowed to declare.
+     * An empty list accepts every language tag.
+     */
+    allowedLanguages: z.array(z.string()).optional().nullable(),
+    /**
+     * Requires the info string to contain only a language tag, without metadata or other
+     * non-whitespace content.
+     */
+    languageOnly: z.boolean().optional().nullable()
+});
 
-export const useImportsFirstOptionsSchema = z.object({});
+export const useFlatMathMinMaxOptionsSchema = z.object({});
 
 /**
  * Options for the `useIncludes` rule.
  */
 export const useIncludesOptionsSchema = z.object({});
 
-export const useMathMinMaxOptionsSchema = z.object({});
+export const useIteratorZipOptionsSchema = z.object({});
 
-export const useNamedCaptureGroupOptionsSchema = z.object({});
+export const useLayeredStylesOptionsSchema = z.object({
+    /**
+     * Require `@import` rules to have a cascade layer. Defaults to `true`.
+     */
+    requireImportLayers: z.boolean().optional().nullable()
+});
+
+export const useLogicalPropertiesOptionsSchema = z.object({
+    /**
+     * The text direction used to map physical inline properties. Defaults to `"ltr"`.
+     */
+    direction: useLogicalPropertiesDirectionSchema.optional().nullable()
+});
+
+export const useLowercaseTestTitleOptionsSchema = z.object({
+    /**
+     * A list of prefixes. Titles that start with one of these prefixes are not checked.
+     */
+    allowedPrefixes: z.array(z.string()).optional().nullable()
+});
+
+export const useMatchingFunctionNameOptionsSchema = z.object({});
+
+export const useMathAbsOptionsSchema = z.object({});
+
+export const useMathTruncOptionsSchema = z.object({});
+
+export const useModernMathApisOptionsSchema = z.object({});
+
+export const useNamedFunctionOptionsSchema = z.object({});
+
+export const useNamedLayerOptionsSchema = z.object({});
 
 /**
  * Options for the `useNullishCoalescing` rule.
  */
 export const useNullishCoalescingOptionsSchema = z.object({
     /**
+     * Whether to ignore `||` and `||=` binary operations used inside a `Boolean()` call (default: `false`).
+     */
+    ignoreBooleanCoercion: z.boolean().optional().nullable(),
+    /**
      * Ignore `||` expressions in conditional test positions (default: `true`).
      */
     ignoreConditionalTests: z.boolean().optional().nullable(),
     /**
+     * Whether to ignore `if` statements that only assign to a nullish variable and could be rewritten as `??=` (default: `false`).
+     */
+    ignoreIfStatements: z.boolean().optional().nullable(),
+    /**
      * Whether to ignore `||` and `||=` binary operations that are part of a mixed logical expression with `&&` (default: `false`).
      */
     ignoreMixedLogicalExpressions: z.boolean().optional().nullable(),
+    /**
+     * Whether to ignore `||` and `||=` operations whose non-nullish operand types are all primitives of the configured kinds. Accepts `true` for every primitive, or an object selecting `string`, `number`, `boolean`, `bigint` (default: none).
+     */
+    ignorePrimitives: ignorePrimitivesSchema.optional().nullable(),
     /**
      * Ignore ternary expressions that check for `null` or `undefined` (default: `false`).
      */
     ignoreTernaryTests: z.boolean().optional().nullable()
 });
 
-export const usePlaywrightValidDescribeCallbackOptionsSchema = z.object({});
+export const usePackageJsonValidCpuOptionsSchema = z.object({});
 
-export const useQwikLoaderLocationOptionsSchema = z.object({});
+export const usePackageJsonValidEnginesOptionsSchema = z.object({});
 
-export const useReactAsyncServerFunctionOptionsSchema = z.object({});
+export const usePromiseRejectErrorsOptionsSchema = z.object({});
+
+export const useReactCompilerOptionsSchema = z.object({
+    /**
+     * Which functions React Compiler analyzes. Defaults to `infer`.
+     */
+    compilationMode: compilationModeSchema.optional().nullable()
+});
 
 export const useReactFunctionComponentDefinitionOptionsSchema = z.object({
     /**
@@ -1920,83 +2471,124 @@ export const useReactFunctionComponentDefinitionOptionsSchema = z.object({
     namedComponents: componentDefinitionStyleSchema.optional().nullable()
 });
 
-export const useReactNativePlatformComponentsOptionsSchema = z.object({
-    /**
-     * A list of glob patterns to identify Android-specific files.
-     * Defaults to `["** /*.android.{js,jsx,ts,tsx}"]`.
-     */
-    androidPathPatterns: z.array(normalizedGlobSchema).optional().nullable(),
-    /**
-     * A list of glob patterns to identify iOS-specific files.
-     * Defaults to `["** /*.ios.{js,jsx,ts,tsx}"]`.
-     */
-    iosPathPatterns: z.array(normalizedGlobSchema).optional().nullable()
-});
+export const useReactNamingConventionOptionsSchema = z.object({});
 
-export const useReduceTypeParameterOptionsSchema = z.object({});
+export const useReactNativeValidPlatformColorsOptionsSchema = z.object({});
 
 export const useRegexpExecOptionsSchema = z.object({});
 
-export const useRegexpTestOptionsSchema = z.object({});
+export const useSimplifiedBooleanReturnOptionsSchema = z.object({});
 
-export const useScopedStylesOptionsSchema = z.object({});
-
-export const useSortedClassesOptionsSchema = z.object({
+export const useSingleTopLevelHeadingOptionsSchema = z.object({
     /**
-     * Additional attributes that will be sorted.
+     * The heading level that is treated as the document's top-level heading.
      */
-    attributes: z.array(z.string()).optional().nullable(),
-    /**
-     * Names of the functions or tagged templates that will be sorted.
-     */
-    functions: z.array(z.string()).optional().nullable()
+    level: z.number().optional().nullable()
 });
+
+export const useStrictBooleanExpressionsOptionsSchema = z.object({});
 
 export const useStringStartsEndsWithOptionsSchema = z.object({});
 
+export const useSvelteEventDispatcherTypesOptionsSchema = z.object({});
+
+export const useSvelteKitResolveOptionsSchema = z.object({
+    /**
+     * Whether to ignore all `goto()` calls. Default: `false`.
+     */
+    ignoreGoto: z.boolean().optional().nullable(),
+    /**
+     * Whether to ignore all `<a>` elements. Default: `false`.
+     */
+    ignoreLinks: z.boolean().optional().nullable(),
+    /**
+     * Whether to ignore all `pushState()` calls. Default: `false`.
+     */
+    ignorePushState: z.boolean().optional().nullable(),
+    /**
+     * Whether to ignore all `replaceState()` calls. Default: `false`.
+     */
+    ignoreReplaceState: z.boolean().optional().nullable()
+});
+
+export const useSvelteKitRuneImportsOptionsSchema = z.object({});
+
+export const useSvelteReactiveClassesOptionsSchema = z.object({});
+
 export const useSvelteRequireEachKeyOptionsSchema = z.object({});
 
-export const useTestHooksInOrderOptionsSchema = z.object({});
+export const useSvelteShorthandDirectiveOptionsSchema = z.object({});
 
-export const useTestHooksOnTopOptionsSchema = z.object({});
+export const useTailwindShorthandClassesOptionsSchema = z.object({});
 
-/**
- * Options for the `useThisInClassMethods` rule.
- */
-export const useThisInClassMethodsOptionsSchema = z.object({
+export const useTailwindSortedClassesOptionsSchema = z.object({});
+
+export const useTailwindStaticClassStringsOptionsSchema = z.object({});
+
+export const useTopLevelHeadingOptionsSchema = z.object({});
+
+export const useUnaryMinusOptionsSchema = z.object({});
+
+export const useValidTestTitleOptionsSchema = z.object({
     /**
-     * Whether members of classes with an `implements` clause should be ignored.
-     *
-     * Defaults to `"none"`, which means implemented classes are checked like any other class.
-     * Use `"all"` to ignore every eligible member in such classes, or `"public-fields"`
-     * to ignore only public members in them.
+     * A list of words that are disallowed in test titles.
      */
-    ignoreClassesWithImplements: ignoreClassesWithImplementsSchema.optional().nullable(),
-    /**
-     * Method names that should be ignored by the rule.
-     *
-     * Defaults to `[]`.
-     */
-    ignoreMethods: z.array(z.string()).optional().nullable(),
-    /**
-     * Whether methods marked with `override` should be ignored.
-     *
-     * Defaults to `false`.
-     */
-    ignoreOverrideMethods: z.boolean().optional().nullable()
+    disallowedWords: z.array(z.string()).optional().nullable()
 });
 
-export const useUnicodeRegexOptionsSchema = z.object({});
+export const useVueBaseImportOptionsSchema = z.object({});
 
-export const useVarsOnTopOptionsSchema = z.object({});
+export const useVueComponentIsOptionsSchema = z.object({});
 
-export const useVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
-    style: declarationStyleSchema.optional().nullable()
+export const useVueConsistentEventHyphenationOptionsSchema = z.object({
+    /**
+     * Whether event names in `v-on` directives must be hyphenated (`"always"`) or must not
+     * contain hyphens (`"never"`). If omitted, hyphenated names are required.
+     */
+    hyphenation: eventHyphenationSchema.optional().nullable(),
+    /**
+     * List of event names to exempt from the check.
+     */
+    ignore: z.array(z.string()).optional().nullable(),
+    /**
+     * List of tag names whose events should not be checked.
+     */
+    ignoreTags: z.array(z.string()).optional().nullable()
 });
 
-export const useVueNextTickPromiseOptionsSchema = z.object({});
+export const useVueDefineOptionsOptionsSchema = z.object({});
 
-export const useVueValidVForOptionsSchema = z.object({});
+export const useVueDefinePropsDestructuringOptionsSchema = z.object({});
+
+export const useVueMatchingComponentFileNameOptionsSchema = z.object({});
+
+export const useVueTemplateRefOptionsSchema = z.object({});
+
+export const useVueToggleInsideTransitionOptionsSchema = z.object({});
+
+export const useVueTypedPropsOptionsSchema = z.object({});
+
+export const useVueTypedRefOptionsSchema = z.object({});
+
+export const useVueVModelOptionsSchema = z.object({});
+
+export const useVueVOnExactOptionsSchema = z.object({});
+
+export const useVueValidDefineEmitsOptionsSchema = z.object({});
+
+export const useVueValidDefinePropsOptionsSchema = z.object({});
+
+export const useVueValidVIsOptionsSchema = z.object({});
+
+export const useVueValidVMemoOptionsSchema = z.object({});
+
+export const useVueValidVModelOptionsSchema = z.object({});
+
+export const useVueValidVShowOptionsSchema = z.object({});
+
+export const useVueValidVSlotOptionsSchema = z.object({});
+
+export const useWhileLoopConditionOptionsSchema = z.object({});
 
 export const noAccumulatingSpreadOptionsSchema = z.object({});
 
@@ -2019,6 +2611,8 @@ export const noReExportAllOptionsSchema = z.object({});
 export const noSyncScriptsOptionsSchema = z.object({});
 
 export const noUnwantedPolyfillioOptionsSchema = z.object({});
+
+export const useDomNodeTextContentOptionsSchema = z.object({});
 
 export const useGoogleFontPreconnectOptionsSchema = z.object({});
 
@@ -2054,6 +2648,8 @@ export const noSecretsOptionsSchema = z.object({
      */
     entropyThreshold: z.number().optional().nullable()
 });
+
+export const useIframeSandboxOptionsSchema = z.object({});
 
 export const noCommonJsOptionsSchema = z.object({});
 
@@ -2102,9 +2698,11 @@ export const noIncrementDecrementOptionsSchema = z.object({
 
 export const noInferrableTypesOptionsSchema = z.object({});
 
+export const noInlineStylesOptionsSchema = z.object({});
+
 export const noJsxLiteralsOptionsSchema = z.object({
     /**
-     * An array of strings that won't trigger the rule. Whitespaces are taken into consideration
+     * An array of strings that won't trigger the rule. Surrounding whitespace is ignored.
      */
     allowedStrings: z.array(z.string()).optional().nullable(),
     /**
@@ -2140,7 +2738,15 @@ export const noParameterAssignOptionsSchema = z.object({
 
 export const noParameterPropertiesOptionsSchema = z.object({});
 
+export const noPlaywrightElementHandleOptionsSchema = z.object({});
+
+export const noPlaywrightEvalOptionsSchema = z.object({});
+
+export const noPlaywrightWaitForSelectorOptionsSchema = z.object({});
+
 export const noProcessEnvOptionsSchema = z.object({});
+
+export const noReactNativeLiteralColorsOptionsSchema = z.object({});
 
 export const noRestrictedGlobalsOptionsSchema = z.object({
     /**
@@ -2166,6 +2772,8 @@ export const noShoutyConstantsOptionsSchema = z.object({});
 export const noSubstrOptionsSchema = z.object({});
 
 export const noTernaryOptionsSchema = z.object({});
+
+export const noTopLevelLiteralsOptionsSchema = z.object({});
 
 export const noUnusedTemplateLiteralOptionsSchema = z.object({});
 
@@ -2259,6 +2867,22 @@ export const useConsistentObjectDefinitionsOptionsSchema = z.object({
     syntax: objectPropertySyntaxSchema.optional().nullable()
 });
 
+/**
+ * Options for the `useConsistentTestIt` rule
+ */
+export const useConsistentTestItOptionsSchema = z.object({
+    /**
+     * The function to use for top-level tests (outside describe blocks).
+     * Default: `"it"`
+     */
+    function: testFunctionKindSchema.optional().nullable(),
+    /**
+     * The function to use for tests inside describe blocks.
+     * Default: `"it"`
+     */
+    withinDescribe: testFunctionKindSchema.optional().nullable()
+});
+
 export const useConsistentTypeDefinitionsOptionsSchema = z.object({
     style: consistentTypeDefinitionSchema.optional().nullable()
 });
@@ -2274,6 +2898,15 @@ export const useDeprecatedReasonOptionsSchema = z.object({});
 export const destructuringConfigSchema = z.object({
     array: z.boolean().optional().nullable(),
     object: z.boolean().optional().nullable()
+});
+
+export const useDomQuerySelectorOptionsSchema = z.object({
+    /**
+     * A list of receiver identifiers to ignore.
+     *
+     * In the expression `document.querySelector('div')`, the receiver is `document`.
+     */
+    ignore: z.array(z.string()).optional().nullable()
 });
 
 export const useEnumInitializersOptionsSchema = z.object({});
@@ -2338,6 +2971,8 @@ export const useImportTypeOptionsSchema = z.object({
     style: useImportTypeStyleSchema.optional().nullable()
 });
 
+export const useImportsFirstOptionsSchema = z.object({});
+
 export const useInputNameOptionsSchema = z.object({
     /**
      * Check that the input type name follows the convention <mutationName>Input
@@ -2348,6 +2983,8 @@ export const useInputNameOptionsSchema = z.object({
 export const useLiteralEnumMembersOptionsSchema = z.object({});
 
 export const useLoneExecutableDefinitionOptionsSchema = z.object({});
+
+export const useNamedCaptureGroupOptionsSchema = z.object({});
 
 /**
  * Declarations concerned by this convention
@@ -2392,6 +3029,8 @@ export const useReadonlyClassPropertiesOptionsSchema = z.object({
     checkAllProperties: z.boolean().optional().nullable()
 });
 
+export const useReduceTypeParameterOptionsSchema = z.object({});
+
 export const useSelfClosingElementsOptionsSchema = z.object({
     ignoreHtmlElements: z.boolean().optional().nullable()
 });
@@ -2408,11 +3047,43 @@ export const useSymbolDescriptionOptionsSchema = z.object({});
 
 export const useTemplateOptionsSchema = z.object({});
 
+export const useTestHooksInOrderOptionsSchema = z.object({});
+
+export const useTestHooksOnTopOptionsSchema = z.object({});
+
+/**
+ * Options for the `useThisInClassMethods` rule.
+ */
+export const useThisInClassMethodsOptionsSchema = z.object({
+    /**
+     * Whether members of classes with an `implements` clause should be ignored.
+     *
+     * Defaults to `"none"`, which means implemented classes are checked like any other class.
+     * Use `"all"` to ignore every eligible member in such classes, or `"public-fields"`
+     * to ignore only public members in them.
+     */
+    ignoreClassesWithImplements: ignoreClassesWithImplementsSchema.optional().nullable(),
+    /**
+     * Method names that should be ignored by the rule.
+     *
+     * Defaults to `[]`.
+     */
+    ignoreMethods: z.array(z.string()).optional().nullable(),
+    /**
+     * Whether methods marked with `override` should be ignored.
+     *
+     * Defaults to `false`.
+     */
+    ignoreOverrideMethods: z.boolean().optional().nullable()
+});
+
 export const useThrowNewErrorOptionsSchema = z.object({});
 
 export const useThrowOnlyErrorOptionsSchema = z.object({});
 
 export const useTrimStartEndOptionsSchema = z.object({});
+
+export const useUnicodeRegexOptionsSchema = z.object({});
 
 export const useUnifiedTypeSignaturesOptionsSchema = z.object({
     /**
@@ -2423,6 +3094,12 @@ export const useUnifiedTypeSignaturesOptionsSchema = z.object({
      * Whether to ignore overloads with differently named parameters.
      */
     ignoreDifferentlyNamedParameters: z.boolean().optional().nullable()
+});
+
+export const useVarsOnTopOptionsSchema = z.object({});
+
+export const useVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
+    style: declarationStyleSchema.optional().nullable()
 });
 
 export const useVueConsistentVBindStyleOptionsSchema = z.object({
@@ -2450,11 +3127,11 @@ export const useVueDefineMacrosOrderOptionsSchema = z.object({
 
 export const useVueHyphenatedAttributesOptionsSchema = z.object({
     /**
-     * List of attribute names to ignore when checking for hyphenated attributes.
+     * List of attribute names to ignore when checking for uppercase letters.
      */
     ignore: z.array(z.string()).optional().nullable(),
     /**
-     * List of HTML tags to ignore when checking for hyphenated attributes.
+     * List of HTML tags whose attributes should not be checked for uppercase letters.
      */
     ignoreTags: z.array(z.string()).optional().nullable()
 });
@@ -2465,6 +3142,8 @@ export const useVueMultiWordComponentNamesOptionsSchema = z.object({
      */
     ignores: z.array(z.string()).optional()
 });
+
+export const useVueNextTickPromiseOptionsSchema = z.object({});
 
 export const noAlertOptionsSchema = z.object({});
 
@@ -2492,6 +3171,8 @@ export const noClassAssignOptionsSchema = z.object({});
 export const noCommentTextOptionsSchema = z.object({});
 
 export const noCompareNegZeroOptionsSchema = z.object({});
+
+export const noConditionalExpectOptionsSchema = z.object({});
 
 export const noConfusingLabelsOptionsSchema = z.object({
     /**
@@ -2540,6 +3221,20 @@ export const noDoubleEqualsOptionsSchema = z.object({
     ignoreNull: z.boolean().optional().nullable()
 });
 
+export const noDrizzleDeleteWithoutWhereOptionsSchema = z.object({
+    /**
+     * List of variable names to consider as Drizzle ORM instances.
+     */
+    drizzleObjectName: z.array(z.string()).optional().nullable()
+});
+
+export const noDrizzleUpdateWithoutWhereOptionsSchema = z.object({
+    /**
+     * List of variable names to consider as Drizzle ORM instances.
+     */
+    drizzleObjectName: z.array(z.string()).optional().nullable()
+});
+
 export const noDuplicateAtImportRulesOptionsSchema = z.object({});
 
 export const noDuplicateCaseOptionsSchema = z.object({});
@@ -2568,6 +3263,8 @@ export const noDuplicateParametersOptionsSchema = z.object({});
 
 export const noDuplicatePropertiesOptionsSchema = z.object({});
 
+export const noDuplicateSelectorsOptionsSchema = z.object({});
+
 export const noDuplicateSelectorsKeyframeBlockOptionsSchema = z.object({});
 
 export const noDuplicateTestHooksOptionsSchema = z.object({});
@@ -2579,6 +3276,8 @@ export const noEmptyBlockOptionsSchema = z.object({});
 export const noEmptyBlockStatementsOptionsSchema = z.object({});
 
 export const noEmptyInterfaceOptionsSchema = z.object({});
+
+export const noEmptyObjectKeysOptionsSchema = z.object({});
 
 export const noEmptySourceOptionsSchema = z.object({
     /**
@@ -2613,6 +3312,8 @@ export const noGlobalIsNanOptionsSchema = z.object({});
 
 export const noHeadImportInDocumentOptionsSchema = z.object({});
 
+export const noIdenticalTestTitleOptionsSchema = z.object({});
+
 export const noImplicitAnyLetOptionsSchema = z.object({});
 
 export const noImportAssignOptionsSchema = z.object({});
@@ -2631,9 +3332,13 @@ export const noImportantInKeyframeOptionsSchema = z.object({});
 
 export const noIrregularWhitespaceOptionsSchema = z.object({});
 
+export const noJsxLeakedDollarOptionsSchema = z.object({});
+
 export const noLabelVarOptionsSchema = z.object({});
 
 export const noLeakedRenderOptionsSchema = z.record(z.string(), z.unknown());
+
+export const noLoopFuncOptionsSchema = z.object({});
 
 export const noMisleadingCharacterClassOptionsSchema = z.object({});
 
@@ -2651,6 +3356,16 @@ export const noOctalEscapeOptionsSchema = z.object({});
 
 export const noParametersOnlyUsedInRecursionOptionsSchema = z.object({});
 
+export const noPlaywrightForceOptionOptionsSchema = z.object({});
+
+export const noPlaywrightNetworkidleOptionsSchema = z.object({});
+
+export const noPlaywrightPagePauseOptionsSchema = z.object({});
+
+export const noPlaywrightWaitForNavigationOptionsSchema = z.object({});
+
+export const noPlaywrightWaitForTimeoutOptionsSchema = z.object({});
+
 export const noProtoOptionsSchema = z.object({});
 
 export const noPrototypeBuiltinsOptionsSchema = z.object({});
@@ -2664,7 +3379,11 @@ export const noQuickfixBiomeOptionsSchema = z.object({
 
 export const noReactForwardRefOptionsSchema = z.object({});
 
+export const noReactNativeDeepImportsOptionsSchema = z.object({});
+
 export const noReactSpecificPropsOptionsSchema = z.object({});
+
+export const noReactStringRefsOptionsSchema = z.object({});
 
 export const noRedeclareOptionsSchema = z.object({});
 
@@ -2740,6 +3459,41 @@ export const noUnsafeDeclarationMergingOptionsSchema = z.object({});
 
 export const noUnsafeNegationOptionsSchema = z.object({});
 
+export const noUntrustedLicensesOptionsSchema = z.object({
+    /**
+     * Additional license identifiers to trust, beyond valid SPDX identifiers.
+     *
+     * Useful for custom or proprietary licenses that are not part of the SPDX
+     * standard but are acceptable in your project.
+     */
+    allow: z.array(z.string()).optional().nullable(),
+    /**
+     * License identifiers to explicitly deny, even if they are valid SPDX identifiers.
+     *
+     * Use this to block specific licenses that your project or organization can't use (e.g.,
+     * copyleft licenses in a proprietary project).
+     */
+    deny: z.array(z.string()).optional().nullable(),
+    /**
+     * When `true`, deprecated SPDX license identifiers are accepted.
+     * When `false`, deprecated licenses are flagged as untrusted.
+     * Defaults to `false`.
+     */
+    ignoreDeprecated: z.boolean().optional().nullable(),
+    /**
+     * When `true`, only licenses recognized as free/libre by the Free Software
+     * Foundation (FSF) are trusted. Licenses in the `allow` list bypass this check.
+     * Defaults to `false`.
+     */
+    requireFsfLibre: z.boolean().optional().nullable(),
+    /**
+     * When `true`, only licenses approved by the Open Source Initiative (OSI)
+     * are trusted. Licenses in the `allow` list bypass this check.
+     * Defaults to `false`.
+     */
+    requireOsiApproved: z.boolean().optional().nullable()
+});
+
 export const noUnusedExpressionsOptionsSchema = z.object({});
 
 export const noUselessEscapeInStringOptionsSchema = z.object({});
@@ -2758,6 +3512,40 @@ export const useArraySortCompareOptionsSchema = z.object({});
 
 export const useAwaitOptionsSchema = z.object({});
 
+/**
+ * Options for the `useBaseline` rule.
+ */
+export const useBaselineOptionsSchema = z.object({
+    /**
+     * CSS at-rules to exclude from checking (without `@`, case-insensitive).
+     */
+    allowAtRules: z.array(z.string()).optional(),
+    /**
+     * CSS value functions to exclude from checking (case-insensitive).
+     */
+    allowFunctions: z.array(z.string()).optional(),
+    /**
+     * CSS media conditions to exclude from checking (case-insensitive).
+     */
+    allowMediaConditions: z.array(z.string()).optional(),
+    /**
+     * CSS properties to exclude from checking (case-insensitive).
+     */
+    allowProperties: z.array(z.string()).optional(),
+    /**
+     * CSS property values to exclude from checking (maps property name to allowed values, case-insensitive).
+     */
+    allowPropertyValues: z.record(z.string(), z.array(z.string())).optional(),
+    /**
+     * CSS pseudo-selectors to exclude from checking (without `:` or `::`, case-insensitive).
+     */
+    allowSelectors: z.array(z.string()).optional(),
+    /**
+     * The availability level to target. Defaults to `"widely"`.
+     */
+    available: z.union([z.union([z.literal("widely"), z.literal("newly")]), z.number()]).optional()
+});
+
 export const useBiomeIgnoreFolderOptionsSchema = z.object({});
 
 export const useDefaultSwitchClauseLastOptionsSchema = z.object({});
@@ -2767,6 +3555,8 @@ export const useDeprecatedDateOptionsSchema = z.object({
 });
 
 export const useErrorMessageOptionsSchema = z.object({});
+
+export const useExpectOptionsSchema = z.object({});
 
 export const useGetterReturnOptionsSchema = z.object({});
 
@@ -2800,103 +3590,52 @@ export const useRequiredScriptsOptionsSchema = z.object({
     requiredScripts: z.array(z.string()).optional()
 });
 
+export const useScopedStylesOptionsSchema = z.object({});
+
 export const useStaticResponseMethodsOptionsSchema = z.object({});
 
 export const useStrictModeOptionsSchema = z.object({});
 
 /**
- * Options applied to CSS files
+ * Options that change how the Markdown formatter behaves
  */
-export const cssConfigurationSchema = z.object({
+export const markdownFormatterConfigurationSchema = z.object({
     /**
-     * CSS assist options
+     * Control the formatter for Markdown (and its super languages) files.
      */
-    assist: cssAssistConfigurationSchema.optional().nullable(),
-    /**
-     * CSS formatter options
-     */
-    formatter: cssFormatterConfigurationSchema.optional().nullable(),
-    /**
-     * CSS globals
-     */
-    globals: z.array(z.string()).optional().nullable(),
-    /**
-     * CSS linter options
-     */
-    linter: cssLinterConfigurationSchema.optional().nullable(),
-    /**
-     * CSS parsing options
-     */
-    parser: cssParserConfigurationSchema.optional().nullable()
-});
-
-export const overrideFilesConfigurationSchema = z.object({
-    /**
-     * File size limit in bytes
-     */
-    maxSize: maxSizeSchema.optional().nullable()
-});
-
-export const overrideFormatterConfigurationSchema = z.object({
-    /**
-     * The attribute position style.
-     */
-    attributePosition: attributePositionSchema.optional().nullable(),
-    /**
-     * Put the `>` of a multi-line HTML or JSX element at the end of the last line instead of being alone on the next line (does not apply to self closing elements).
-     */
-    bracketSameLine: bracketSameLineSchema.optional().nullable(),
-    /**
-     * Whether to insert spaces around brackets in object literals. Defaults to true.
-     */
-    bracketSpacing: bracketSpacingSchema.optional().nullable(),
-    /**
-     * Whether to insert spaces inside delimiters (after the opening delimiter and before the
-     * closing delimiter), such as parentheses, brackets, angle brackets, and template literal
-     * interpolations. Spaces are not added before the opening delimiter, and empty delimiters
-     * are not affected. Only applies when the content fits on a single line. The specific
-     * delimiters affected depend on the language. Defaults to false.
-     */
-    delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
     enabled: boolSchema.optional().nullable(),
     /**
-     * Whether to expand arrays and objects on multiple lines.
-     * When set to `auto`, object literals are formatted on multiple lines if the first property has a newline,
-     * and array literals are formatted on a single line if it fits in the line.
-     * When set to `always`, these literals are formatted on multiple lines, regardless of length of the list.
-     * When set to `never`, these literals are formatted on a single line if it fits in the line.
-     * When formatting `package.json`, Biome will use `always` unless configured otherwise. Defaults to "auto".
+     * Formats the code inside fenced code blocks, frontmatter, and HTML blocks with the formatter
+     * of the code's language. Defaults to `true`.
+     *
+     * A block with a syntax error stays as written, and Biome still formats the rest of the file.
+     *
+     * When this option is `false`, Biome keeps every block as written.
      */
-    expand: expandSchema.optional().nullable(),
+    formatEmbeds: boolSchema.optional().nullable(),
     /**
-     * Stores whether formatting should be allowed to proceed if a given file
-     * has syntax errors
-     */
-    formatWithErrors: boolSchema.optional().nullable(),
-    /**
-     * The size of the indentation, 2 by default (deprecated, use `indent-width`)
-     */
-    indentSize: indentWidthSchema.optional().nullable(),
-    /**
-     * The indent style.
+     * The indent style applied to Markdown files.
      */
     indentStyle: indentStyleSchema.optional().nullable(),
     /**
-     * The size of the indentation, 2 by default
+     * The size of the indentation applied to Markdown files. Defaults to 2.
      */
     indentWidth: indentWidthSchema.optional().nullable(),
     /**
-     * The type of line ending.
+     * The type of line ending applied to Markdown (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
      */
     lineEnding: lineEndingSchema.optional().nullable(),
     /**
-     * What's the max width of a line. Defaults to 80.
+     * What's the max width of a line applied to Markdown files. Defaults to 80.
      */
     lineWidth: lineWidthSchema.optional().nullable(),
     /**
-     * Print trailing commas wherever possible in multi-line comma-separated syntactic structures.
+     * Controls whether Biome keeps, adds, or removes line breaks in Markdown paragraphs.
+     *
+     * Manual line breaks are always kept. In Markdown, a manual line break is created by ending a
+     * line with two spaces or a backslash.
      */
-    trailingCommas: jsTrailingCommasSchema.optional().nullable(),
+    proseWrap: proseWrapSchema.optional().nullable(),
     /**
      * Whether to add a trailing newline at the end of the file.
      *
@@ -2913,103 +3652,312 @@ export const overrideFormatterConfigurationSchema = z.object({
 });
 
 /**
- * Options applied to GraphQL files
+ * Options that change how the Markdown linter behaves
+ */
+export const markdownLinterConfigurationSchema = z.object({
+    /**
+     * Control the linter for Markdown files.
+     */
+    enabled: boolSchema.optional().nullable()
+});
+
+/**
+ * Options that change how the Markdown parser behaves
+ */
+export const markdownParserConfigurationSchema = z.object({
+    /**
+     * Recognizes bold, italic, and strikethrough markers placed directly next to Chinese, Japanese, or Korean text. Defaults to `false`.
+     *
+     * Standard Markdown doesn't treat `**テスト。**テスト` as bold text, because the closing `**`
+     * is between a punctuation mark and a letter with no space around it. Languages that don't
+     * put spaces between words run into this often. When enabled, Biome follows the
+     * [CommonMark CJK-friendly amendments](https://github.com/tats-u/markdown-cjk-friendly/blob/main/specification.md)
+     * and treats such text as bold or italic. The option applies to `*`, `_`, and `~~` markers.
+     * After a variation selector (an invisible character that picks a glyph style for the
+     * character before it), Biome classifies a marker by the character before the selector.
+     *
+     * The option can also change markers that aren't next to Chinese, Japanese, or Korean text,
+     * because a marker that can now open or close formatting can take another marker's partner
+     * in the same paragraph, heading, or table cell. For example, standard Markdown shows
+     * `**テスト。**テスト a**` with `テスト a` in bold. With the option enabled, `テスト。` is bold
+     * and the last `**` is shown as written.
+     *
+     * The formatter and the linter both use this reading of the document. Enable the option only
+     * when the tool that renders your Markdown also supports these amendments. Otherwise, Biome
+     * treats as bold some text that your renderer shows with literal `**`, and formatting can
+     * change what your renderer shows. For example, the option makes `__` after a variation
+     * selector a bold marker, and the formatter rewrites it as `**`, which standard Markdown
+     * shows as bold even where it showed the original `__` as written.
+     */
+    cjkFriendlyEmphasis: boolSchema.optional().nullable(),
+    /**
+     * Enables parsing frontmatter at the start of the file. Defaults to `false`.
+     */
+    frontmatter: boolSchema.optional().nullable(),
+    /**
+     * Enables GitHub Flavored Markdown extensions. Defaults to `true`.
+     */
+    gfm: boolSchema.optional().nullable()
+});
+
+/**
+ * Options applied to CSS and languages that extend it.
+ *
+ * Language-specific settings take precedence over corresponding global settings. Global settings
+ * apply when their language-specific counterparts are omitted, unless stated otherwise.
+ */
+export const cssConfigurationSchema = z.object({
+    /**
+     * CSS assist options.
+     */
+    assist: cssAssistConfigurationSchema.optional().nullable(),
+    /**
+     * CSS formatter options.
+     */
+    formatter: cssFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * Reserved for future CSS analyzer support. This option currently has no effect.
+     */
+    globals: z.array(z.string()).optional().nullable(),
+    /**
+     * CSS linter options.
+     */
+    linter: cssLinterConfigurationSchema.optional().nullable(),
+    /**
+     * CSS parsing options.
+     */
+    parser: cssParserConfigurationSchema.optional().nullable()
+});
+
+export const overrideFilesConfigurationSchema = z.object({
+    /**
+     * The maximum source-file size in bytes for matched files.
+     */
+    maxSize: maxSizeSchema.optional().nullable()
+});
+
+export const overrideFormatterConfigurationSchema = z.object({
+    /**
+     * The attribute position style in HTML-like languages.
+     */
+    attributePosition: attributePositionSchema.optional().nullable(),
+    /**
+     * Controls the placement of the closing bracket for multiline HTML and JSX opening tags. Biome
+     * places the bracket at the end of the last attribute line when enabled and on its own line when
+     * disabled. This also affects self-closing HTML elements, but self-closing JSX elements are
+     * unaffected.
+     */
+    bracketSameLine: bracketSameLineSchema.optional().nullable(),
+    /**
+     * Controls spaces inside braces in supported single-line structures. The affected structures
+     * vary by language.
+     */
+    bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Controls spaces immediately inside supported delimiters when their content fits on one line.
+     * It doesn't add spaces before opening delimiters or inside empty delimiters.
+     *
+     * The affected delimiters vary by language. If unset, uses the configured formatter setting.
+     */
+    delimiterSpacing: delimiterSpacingSchema.optional().nullable(),
+    /**
+     * Enables or disables the formatter for matched files.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * Controls whether arrays and objects are formatted on one line or multiple lines.
+     *
+     * `auto` formats objects on multiple lines if the first property has a newline, and arrays on
+     * one line if they fit.
+     *
+     * `always` formats arrays and objects on multiple lines.
+     *
+     * `never` formats arrays and objects on one line if they fit.
+     *
+     * If unset, uses the configured formatter setting.
+     *
+     * When formatting `package.json`, Biome uses `always` unless configured otherwise.
+     */
+    expand: expandSchema.optional().nullable(),
+    /**
+     * Allows formatting matched files that contain syntax errors.
+     */
+    formatWithErrors: boolSchema.optional().nullable(),
+    /**
+     * The indentation width. Deprecated, use `indentWidth` instead.
+     */
+    indentSize: indentWidthSchema.optional().nullable(),
+    /**
+     * Uses tabs or spaces for indentation.
+     */
+    indentStyle: indentStyleSchema.optional().nullable(),
+    /**
+     * Sets the indentation width. With space indentation, this is the number of spaces emitted per
+     * indentation level. With tab indentation, Biome emits one tab per level and uses this value as
+     * the tab's display width when calculating line length. Accepted values are `0` through `24`.
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The line ending.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * Sets the preferred maximum line width used when deciding where to wrap code. Some content,
+     * such as long unbreakable strings, may still exceed this width. Accepted values are `1` through
+     * `320`.
+     */
+    lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * Prints trailing commas wherever possible in multiline comma-separated structures. This is a
+     * legacy override option. Prefer `javascript.formatter.trailingCommas`.
+     */
+    trailingCommas: jsTrailingCommasSchema.optional().nullable(),
+    /**
+     * Whether to add a trailing newline at the end of matched files. Disabling this option can
+     * cause compatibility problems with other tools.
+     */
+    trailingNewline: trailingNewlineSchema.optional().nullable()
+});
+
+/**
+ * Options applied to GraphQL files.
+ *
+ * Language-specific settings take precedence over corresponding global settings. Global settings
+ * apply when their language-specific counterparts are omitted, unless stated otherwise.
  */
 export const graphqlConfigurationSchema = z.object({
     /**
-     * Assist options
+     * GraphQL assist options.
      */
     assist: graphqlAssistConfigurationSchema.optional().nullable(),
     /**
-     * GraphQL formatter options
+     * GraphQL formatter options.
      */
     formatter: graphqlFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * GraphQL linter options.
+     */
     linter: graphqlLinterConfigurationSchema.optional().nullable()
 });
 
 /**
- * Options applied to GritQL files
+ * Options applied to GritQL files.
+ *
+ * Language-specific settings take precedence over corresponding global settings. Global settings
+ * apply when their language-specific counterparts are omitted, unless stated otherwise.
  */
 export const gritConfigurationSchema = z.object({
     /**
-     * Assist options
+     * GritQL assist options.
      */
     assist: gritAssistConfigurationSchema.optional().nullable(),
     /**
-     * Formatting options
+     * GritQL formatter options.
      */
     formatter: gritFormatterConfigurationSchema.optional().nullable(),
     /**
-     * Formatting options
+     * GritQL linter options.
      */
     linter: gritLinterConfigurationSchema.optional().nullable()
 });
 
 /**
- * Options applied to HTML files
+ * Options applied to HTML and languages that extend it.
+ *
+ * Full HTML support and the HTML formatter are experimental. Biome aims to minimize breaking
+ * changes, but bug fixes and new features may change formatting output or diagnostics.
+ *
+ * Language-specific settings take precedence over corresponding global settings. Global settings
+ * apply when their language-specific counterparts are omitted, unless stated otherwise.
  */
 export const htmlConfigurationSchema = z.object({
+    /**
+     * HTML assist options.
+     */
     assist: htmlAssistConfigurationSchema.optional().nullable(),
     /**
-     * Enables full support for HTML, Vue, Svelte and Astro files.
+     * Enables Biome's experimental full support for `.html`, `.vue`, `.svelte`, and `.astro` files.
+     * In this mode, Biome parses the complete document and can analyze or format its markup and
+     * supported embedded languages.
+     *
+     * When disabled, `.vue`, `.svelte`, and `.astro` files use legacy handling, which extracts their
+     * JavaScript or TypeScript portions and leaves the rest unchanged. This option selects how
+     * these files are processed. It does not enable the HTML formatter. Set
+     * `html.formatter.enabled` to `true` to format complete HTML, Vue, Svelte, and Astro files.
+     * Defaults to `false`.
      */
     experimentalFullSupportEnabled: boolSchema.optional().nullable(),
     /**
-     * HTML formatter options
+     * HTML formatter options.
      */
     formatter: htmlFormatterConfigurationSchema.optional().nullable(),
     /**
-     * HTML linter options
+     * HTML linter options.
      */
     linter: htmlLinterConfigurationSchema.optional().nullable(),
     /**
-     * HTML parsing options
+     * HTML parsing options.
      */
     parser: htmlParserConfigurationSchema.optional().nullable()
 });
 
 /**
- * A set of options applied to the JavaScript files
+ * Options applied to JavaScript, TypeScript, JSX, TSX, and supported languages that embed
+ * JavaScript.
+ *
+ * Language-specific settings take precedence over corresponding global settings. Global settings
+ * apply when their language-specific counterparts are omitted, unless stated otherwise.
  */
 export const jsConfigurationSchema = z.object({
     /**
-     * Assist options
+     * JavaScript assist options.
      */
     assist: jsAssistConfigurationSchema.optional().nullable(),
     /**
-     * Enables support for embedding snippets.
+     * Enables experimental parsing, formatting, linting, diagnostics, and fixes for CSS and
+     * GraphQL snippets embedded in JavaScript and TypeScript template literals.
+     *
+     * Biome recognizes CSS in `css` and `styled` templates and GraphQL in `gql` and `graphql`
+     * templates or calls. Templates containing interpolations are not currently supported.
+     * Defaults to `false`.
      */
     experimentalEmbeddedSnippetsEnabled: boolSchema.optional().nullable(),
     /**
-     * Formatting options
+     * JavaScript formatter options.
      */
     formatter: jsFormatterConfigurationSchema.optional().nullable(),
     /**
-     * A list of global bindings that should be ignored by the analyzers
+     * A list of additional names that Biome's JavaScript linter treats as predefined global
+     * bindings.
      *
-     * If defined here, they should not emit diagnostics.
+     * Use this for globals supplied by a runtime, framework, or external script that are not
+     * declared in the source file.
      */
     globals: z.array(z.string()).optional().nullable(),
     /**
-     * Indicates the type of runtime or transformation used for interpreting JSX.
+     * Configures how the analyzer accounts for imports used by JSX. This option does not transform
+     * JSX or select a runtime for a build tool. Defaults to `transparent`.
      */
     jsxRuntime: jsxRuntimeSchema.optional().nullable(),
     /**
-     * Linter options
+     * JavaScript linter options.
      */
     linter: jsLinterConfigurationSchema.optional().nullable(),
     /**
-     * Parsing options
+     * JavaScript parser options.
      */
     parser: jsParserConfigurationSchema.optional().nullable(),
     /**
-     * Module/dependency resolver options
+     * JavaScript module and dependency resolver options.
      */
     resolver: jsResolverConfigurationSchema.optional().nullable()
 });
 
 /**
- * Options applied to JSON files
+ * Options applied to JSON, JSONC, and recognized JSON-based configuration files.
+ *
+ * Language-specific settings take precedence over corresponding global settings. Global settings
+ * apply when their language-specific counterparts are omitted, unless stated otherwise.
  */
 export const jsonConfigurationSchema = z.object({
     /**
@@ -3030,56 +3978,179 @@ export const jsonConfigurationSchema = z.object({
     parser: jsonParserConfigurationSchema.optional().nullable()
 });
 
-export const ruleAssistWithNoDuplicateClassesOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+/**
+ * Options applied to Markdown files
+ */
+export const markdownConfigurationSchema = z.object({
+    /**
+     * Runs the linter and assist actions on the code inside fenced code blocks, frontmatter, and
+     * HTML blocks, with the rules and actions of the code's language. Defaults to `false`.
+     */
+    analyzeEmbeds: boolSchema.optional().nullable(),
+    /**
+     * Formatter options
+     */
+    formatter: markdownFormatterConfigurationSchema.optional().nullable(),
+    /**
+     * Linter options
+     */
+    linter: markdownLinterConfigurationSchema.optional().nullable(),
+    /**
+     * Parsing options
+     */
+    parser: markdownParserConfigurationSchema.optional().nullable()
+});
+
+/**
+ * A plugin path with optional file filters.
+ */
+export const pluginWithOptionsSchema = z.object({
+    /**
+     * A list of glob patterns selecting files on which the plugin can run. Include a positive
+     * pattern before exclusions such as `!** /*.test.ts`. If omitted, the plugin runs on every
+     * supported file processed by the linter. An empty list matches no files.
+     */
+    includes: z.array(normalizedGlobSchema).optional().nullable(),
+    /**
+     * The path or installed package name.
+     */
+    path: z.string(),
+    /**
+     * Controls how the plugin is resolved.
+     *
+     * This only affects plugin resolution. It does not change how `includes`
+     * are interpreted.
+     *
+     * When omitted, relative paths and package names are resolved from the
+     * consuming project.
+     */
+    resolutionKind: pluginResolvePathSchema.optional().nullable()
+});
+
+/**
+ * Options that change how the Yaml formatter behaves
+ */
+export const yamlFormatterConfigurationSchema = z.object({
+    /**
+     * Whether to insert spaces inside non-empty flow mappings (`{ key: value }`)
+     * and sequences (`[ item ]`) that fit on one line. If unset, inherits the
+     * global bracket spacing setting. When neither is set, mappings have spaces
+     * and sequences do not.
+     */
+    bracketSpacing: bracketSpacingSchema.optional().nullable(),
+    /**
+     * Control the formatter for Yaml (and its super languages) files.
+     */
+    enabled: boolSchema.optional().nullable(),
+    /**
+     * The size of the indentation applied to Yaml files. Defaults to 2.
+     */
+    indentWidth: indentWidthSchema.optional().nullable(),
+    /**
+     * The type of line ending applied to Yaml (and its super languages) files. `auto` uses CRLF on Windows and LF on other platforms.
+     */
+    lineEnding: lineEndingSchema.optional().nullable(),
+    /**
+     * What's the max width of a line applied to Yaml files. Defaults to 80.
+     */
+    lineWidth: lineWidthSchema.optional().nullable(),
+    /**
+     * The type of quotes used in YAML code. Defaults to `double`.
+     */
+    quoteStyle: quoteStyleSchema.optional().nullable(),
+    /**
+     * Whether to add a trailing newline at the end of the file.
+     *
+     * Setting this option to `false` is **highly discouraged** because it could cause many problems with other tools:
+     * - https://thoughtbot.com/blog/no-newline-at-end-of-file
+     * - https://callmeryan.medium.com/no-newline-at-end-of-file-navigating-gits-warning-for-android-developers-af14e73dd804
+     * - https://unix.stackexchange.com/questions/345548/how-to-cat-files-together-adding-missing-newlines-at-end-of-some-files
+     *
+     * Disable the option at your own risk.
+     *
+     * Defaults to true.
+     */
+    trailingNewline: trailingNewlineSchema.optional().nullable()
+});
+
+/**
+ * Options that change how the Yaml linter behaves
+ */
+export const yamlLinterConfigurationSchema = z.object({
+    /**
+     * Control the linter for Yaml files.
+     */
+    enabled: boolSchema.optional().nullable()
+});
+
+export const ruleAssistWithNoDuplicateClassesOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: noDuplicateClassesOptionsSchema
-}));
+});
 
 export const sourceMatcherSchema = z.union([negatablePredefinedSourceMatcherSchema, z.string()]);
 
 export const sourcesMatcherSchema = z.union([sourceMatcherSchema, z.array(sourceMatcherSchema)]);
 
-export const ruleAssistWithUseSortedAttributesOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithUseGraphqlSortedArgumentsOptionsSchema = z.object({
+    level: ruleAssistPlainConfigurationSchema,
+    options: useGraphqlSortedArgumentsOptionsSchema
+});
+
+export const ruleAssistWithUseGraphqlSortedDefinitionsOptionsSchema = z.object({
+    level: ruleAssistPlainConfigurationSchema,
+    options: useGraphqlSortedDefinitionsOptionsSchema
+});
+
+export const ruleAssistWithUseGraphqlSortedVariablesOptionsSchema = z.object({
+    level: ruleAssistPlainConfigurationSchema,
+    options: useGraphqlSortedVariablesOptionsSchema
+});
+
+export const ruleAssistWithUseSortedAttributesOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedAttributesOptionsSchema
-}));
+});
 
-export const ruleAssistWithUseSortedEnumMembersOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithUseSortedEnumMembersOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedEnumMembersOptionsSchema
-}));
+});
 
-export const ruleAssistWithUseSortedInterfaceMembersOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithUseSortedInterfaceMembersOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedInterfaceMembersOptionsSchema
-}));
+});
 
-export const ruleAssistWithUseSortedKeysOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithUseSortedKeysOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedKeysOptionsSchema
-}));
+});
 
-export const ruleAssistWithUseSortedPackageJsonOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithUseSortedPackageJsonOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedPackageJsonOptionsSchema
-}));
+});
 
-export const ruleAssistWithUseSortedPropertiesOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithUseSortedPropertiesOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedPropertiesOptionsSchema
-}));
+});
 
-export const ruleAssistWithUseSortedSelectionSetOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithUseSortedSelectionSetOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedSelectionSetOptionsSchema
-}));
+});
 
-export const ruleAssistWithUseSortedTypeFieldsOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithUseSortedTypeFieldsOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: useSortedTypeFieldsOptionsSchema
-}));
+});
 
 export const ruleWithNoAccessKeyOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noAccessKeyOptionsSchema.optional()
@@ -3091,36 +4162,54 @@ export const ruleWithNoAmbiguousAnchorTextOptionsSchema = z.object({
 });
 
 export const ruleWithNoAriaHiddenOnFocusableOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noAriaHiddenOnFocusableOptionsSchema.optional()
 });
 
 export const ruleWithNoAriaUnsupportedElementsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noAriaUnsupportedElementsOptionsSchema.optional()
 });
 
 export const ruleWithNoAutofocusOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noAutofocusOptionsSchema.optional()
 });
 
 export const ruleWithNoDistractingElementsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noDistractingElementsOptionsSchema.optional()
 });
 
 export const ruleWithNoHeaderScopeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noHeaderScopeOptionsSchema.optional()
 });
 
 export const ruleWithNoInteractiveElementToNoninteractiveRoleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noInteractiveElementToNoninteractiveRoleOptionsSchema.optional()
@@ -3137,18 +4226,27 @@ export const ruleWithNoNoninteractiveElementInteractionsOptionsSchema = z.object
 });
 
 export const ruleWithNoNoninteractiveElementToInteractiveRoleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noNoninteractiveElementToInteractiveRoleOptionsSchema.optional()
 });
 
 export const ruleWithNoNoninteractiveTabindexOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noNoninteractiveTabindexOptionsSchema.optional()
 });
 
 export const ruleWithNoPositiveTabindexOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noPositiveTabindexOptionsSchema.optional()
@@ -3160,6 +4258,9 @@ export const ruleWithNoRedundantAltOptionsSchema = z.object({
 });
 
 export const ruleWithNoRedundantRolesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noRedundantRolesOptionsSchema.optional()
@@ -3181,6 +4282,9 @@ export const ruleWithUseAltTextOptionsSchema = z.object({
 });
 
 export const ruleWithUseAnchorContentOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useAnchorContentOptionsSchema.optional()
@@ -3257,12 +4361,18 @@ export const ruleWithUseValidAnchorOptionsSchema = z.object({
 });
 
 export const ruleWithUseValidAriaPropsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useValidAriaPropsOptionsSchema.optional()
 });
 
 export const ruleWithUseValidAriaRoleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useValidAriaRoleOptionsSchema.optional()
@@ -3284,6 +4394,9 @@ export const ruleWithUseValidLangOptionsSchema = z.object({
 });
 
 export const ruleWithNoAdjacentSpacesInRegexOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noAdjacentSpacesInRegexOptionsSchema.optional()
@@ -3295,6 +4408,9 @@ export const ruleWithNoArgumentsOptionsSchema = z.object({
 });
 
 export const ruleWithNoBannedTypesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noBannedTypesOptionsSchema.optional()
@@ -3306,6 +4422,9 @@ export const ruleWithNoCommaOperatorOptionsSchema = z.object({
 });
 
 export const ruleWithNoDivRegexOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noDivRegexOptionsSchema.optional()
@@ -3326,18 +4445,34 @@ export const ruleWithNoExcessiveLinesPerFunctionOptionsSchema = z.object({
     options: noExcessiveLinesPerFunctionOptionsSchema.optional()
 });
 
+export const ruleWithNoExcessiveNestedCallbacksOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noExcessiveNestedCallbacksOptionsSchema.optional()
+});
+
 export const ruleWithNoExcessiveNestedTestSuitesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noExcessiveNestedTestSuitesOptionsSchema.optional()
 });
 
+export const ruleWithNoExcessiveSelectorClassesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noExcessiveSelectorClassesOptionsSchema.optional()
+});
+
 export const ruleWithNoExtraBooleanCastOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noExtraBooleanCastOptionsSchema.optional()
 });
 
 export const ruleWithNoFlatMapIdentityOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noFlatMapIdentityOptionsSchema.optional()
@@ -3349,15 +4484,30 @@ export const ruleWithNoForEachOptionsSchema = z.object({
 });
 
 export const ruleWithNoImplicitCoercionsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noImplicitCoercionsOptionsSchema.optional()
 });
 
 export const ruleWithNoImportantStylesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noImportantStylesOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightUselessAwaitOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightUselessAwaitOptionsSchema.optional()
 });
 
 export const ruleWithNoRedundantDefaultExportOptionsSchema = z.object({
@@ -3371,78 +4521,126 @@ export const ruleWithNoStaticOnlyClassOptionsSchema = z.object({
 });
 
 export const ruleWithNoThisInStaticOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noThisInStaticOptionsSchema.optional()
 });
 
+export const ruleWithNoUnnecessaryTemplateExpressionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noUnnecessaryTemplateExpressionOptionsSchema.optional()
+});
+
 export const ruleWithNoUselessCatchOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessCatchOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessCatchBindingOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessCatchBindingOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessConstructorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessConstructorOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessContinueOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessContinueOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessEmptyExportOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessEmptyExportOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessEscapeInRegexOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessEscapeInRegexOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessFragmentsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessFragmentsOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessLabelOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessLabelOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessLoneBlockStatementsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessLoneBlockStatementsOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessRenameOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessRenameOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessReturnOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessReturnOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessStringConcatOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessStringConcatOptionsSchema.optional()
@@ -3454,36 +4652,54 @@ export const ruleWithNoUselessStringRawOptionsSchema = z.object({
 });
 
 export const ruleWithNoUselessSwitchCaseOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessSwitchCaseOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessTernaryOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessTernaryOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessThisAliasOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessThisAliasOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessTypeConstraintOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessTypeConstraintOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessUndefinedOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessUndefinedOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessUndefinedInitializationOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessUndefinedInitializationOptionsSchema.optional()
@@ -3499,34 +4715,67 @@ export const ruleWithUseArrayFindOptionsSchema = z.object({
     options: useArrayFindOptionsSchema.optional()
 });
 
+export const ruleWithUseArraySomeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useArraySomeOptionsSchema.optional()
+});
+
 export const ruleWithUseArrowFunctionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useArrowFunctionOptionsSchema.optional()
 });
 
 export const ruleWithUseDateNowOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useDateNowOptionsSchema.optional()
 });
 
 export const ruleWithUseFlatMapOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useFlatMapOptionsSchema.optional()
 });
 
 export const ruleWithUseIndexOfOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useIndexOfOptionsSchema.optional()
 });
 
 export const ruleWithUseLiteralKeysOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useLiteralKeysOptionsSchema.optional()
+});
+
+export const ruleWithUseMathMinMaxOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useMathMinMaxOptionsSchema.optional()
 });
 
 export const ruleWithUseMaxParamsOptionsSchema = z.object({
@@ -3535,36 +4784,63 @@ export const ruleWithUseMaxParamsOptionsSchema = z.object({
 });
 
 export const ruleWithUseNumericLiteralsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNumericLiteralsOptionsSchema.optional()
 });
 
 export const ruleWithUseOptionalChainOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useOptionalChainOptionsSchema.optional()
 });
 
 export const ruleWithUseRegexLiteralsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useRegexLiteralsOptionsSchema.optional()
 });
 
+export const ruleWithUseRegexpTestOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useRegexpTestOptionsSchema.optional()
+});
+
 export const ruleWithUseSimpleNumberKeysOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useSimpleNumberKeysOptionsSchema.optional()
 });
 
 export const ruleWithUseSimplifiedLogicExpressionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useSimplifiedLogicExpressionOptionsSchema.optional()
 });
 
 export const ruleWithUseWhileOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useWhileOptionsSchema.optional()
@@ -3580,7 +4856,15 @@ export const ruleWithNoChildrenPropOptionsSchema = z.object({
     options: noChildrenPropOptionsSchema.optional()
 });
 
+export const ruleWithNoComponentHookFactoriesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noComponentHookFactoriesOptionsSchema.optional()
+});
+
 export const ruleWithNoConstAssignOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noConstAssignOptionsSchema.optional()
@@ -3592,6 +4876,9 @@ export const ruleWithNoConstantConditionOptionsSchema = z.object({
 });
 
 export const ruleWithNoConstantMathMinMaxClampOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noConstantMathMinMaxClampOptionsSchema.optional()
@@ -3617,6 +4904,11 @@ export const ruleWithNoDuplicateEnumValueNamesOptionsSchema = z.object({
     options: noDuplicateEnumValueNamesOptionsSchema.optional()
 });
 
+export const ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateFieldDefinitionNamesOptionsSchema.optional()
+});
+
 export const ruleWithNoDuplicateInputFieldNamesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noDuplicateInputFieldNamesOptionsSchema.optional()
@@ -3638,6 +4930,9 @@ export const ruleWithNoEmptyPatternOptionsSchema = z.object({
 });
 
 export const ruleWithNoGlobalDirnameFilenameOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noGlobalDirnameFilenameOptionsSchema.optional()
@@ -3654,6 +4949,9 @@ export const ruleWithNoInnerDeclarationsOptionsSchema = z.object({
 });
 
 export const ruleWithNoInvalidBuiltinInstantiationOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noInvalidBuiltinInstantiationOptionsSchema.optional()
@@ -3684,6 +4982,11 @@ export const ruleWithNoInvalidUseBeforeDeclarationOptionsSchema = z.object({
     options: noInvalidUseBeforeDeclarationOptionsSchema.optional()
 });
 
+export const ruleWithNoJsxNamespaceOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noJsxNamespaceOptionsSchema.optional()
+});
+
 export const ruleWithNoMissingVarFunctionOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noMissingVarFunctionOptionsSchema.optional()
@@ -3705,9 +5008,21 @@ export const ruleWithNoNodejsModulesOptionsSchema = z.object({
 });
 
 export const ruleWithNoNonoctalDecimalEscapeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noNonoctalDecimalEscapeOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightMissingAwaitOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightMissingAwaitOptionsSchema.optional()
 });
 
 export const ruleWithNoPrecisionLossOptionsSchema = z.object({
@@ -3721,6 +5036,9 @@ export const ruleWithNoPrivateImportsOptionsSchema = z.object({
 });
 
 export const ruleWithNoProcessGlobalOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noProcessGlobalOptionsSchema.optional()
@@ -3729,6 +5047,11 @@ export const ruleWithNoProcessGlobalOptionsSchema = z.object({
 export const ruleWithNoQwikUseVisibleTaskOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noQwikUseVisibleTaskOptionsSchema.optional()
+});
+
+export const ruleWithNoReactNativeRawTextOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReactNativeRawTextOptionsSchema.optional()
 });
 
 export const ruleWithNoReactPropAssignmentsOptionsSchema = z.object({
@@ -3757,12 +5080,18 @@ export const ruleWithNoSolidDestructuredPropsOptionsSchema = z.object({
 });
 
 export const ruleWithNoStringCaseMismatchOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noStringCaseMismatchOptionsSchema.optional()
 });
 
 export const ruleWithNoSwitchDeclarationsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noSwitchDeclarationsOptionsSchema.optional()
@@ -3844,12 +5173,18 @@ export const ruleWithNoUnsafeOptionalChainingOptionsSchema = z.object({
 });
 
 export const ruleWithNoUnusedFunctionParametersOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUnusedFunctionParametersOptionsSchema.optional()
 });
 
 export const ruleWithNoUnusedImportsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUnusedImportsOptionsSchema.optional()
@@ -3861,18 +5196,27 @@ export const ruleWithNoUnusedInstantiationOptionsSchema = z.object({
 });
 
 export const ruleWithNoUnusedLabelsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUnusedLabelsOptionsSchema.optional()
 });
 
 export const ruleWithNoUnusedPrivateClassMembersOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUnusedPrivateClassMembersOptionsSchema.optional()
 });
 
 export const ruleWithNoVoidElementsWithChildrenOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noVoidElementsWithChildrenOptionsSchema.optional()
@@ -3884,6 +5228,9 @@ export const ruleWithNoVoidTypeReturnOptionsSchema = z.object({
 });
 
 export const ruleWithNoVueDataObjectDeclarationOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noVueDataObjectDeclarationOptionsSchema.optional()
@@ -3892,6 +5239,16 @@ export const ruleWithNoVueDataObjectDeclarationOptionsSchema = z.object({
 export const ruleWithNoVueDuplicateKeysOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noVueDuplicateKeysOptionsSchema.optional()
+});
+
+export const ruleWithNoVueImportCompilerMacrosOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueImportCompilerMacrosOptionsSchema.optional()
+});
+
+export const ruleWithNoVueRefAsOperandOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueRefAsOperandOptionsSchema.optional()
 });
 
 export const ruleWithNoVueReservedKeysOptionsSchema = z.object({
@@ -3914,7 +5271,15 @@ export const ruleWithNoVueVIfWithVForOptionsSchema = z.object({
     options: noVueVIfWithVForOptionsSchema.optional()
 });
 
+export const ruleWithNoVueVOnNumberValuesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueVOnNumberValuesOptionsSchema.optional()
+});
+
 export const ruleWithUseGraphqlNamedOperationsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useGraphqlNamedOperationsOptionsSchema.optional()
@@ -3928,6 +5293,9 @@ export const ruleWithUseHookAtTopLevelOptionsSchema = z.object({
 export const useImageSizeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImageSizeOptionsSchema]);
 
 export const ruleWithUseImportExtensionsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useImportExtensionsOptionsSchema.optional()
@@ -3939,12 +5307,18 @@ export const ruleWithUseInlineScriptIdOptionsSchema = z.object({
 });
 
 export const ruleWithUseIsNanOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useIsNanOptionsSchema.optional()
 });
 
 export const ruleWithUseJsonImportAttributesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useJsonImportAttributesOptionsSchema.optional()
@@ -3961,14 +5335,27 @@ export const ruleWithUseLoneAnonymousOperationOptionsSchema = z.object({
 });
 
 export const ruleWithUseParseIntRadixOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useParseIntRadixOptionsSchema.optional()
 });
 
+export const ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: usePlaywrightValidDescribeCallbackOptionsSchema.optional()
+});
+
 export const ruleWithUseQwikClasslistOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useQwikClasslistOptionsSchema.optional()
+});
+
+export const ruleWithUseQwikLoaderLocationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useQwikLoaderLocationOptionsSchema.optional()
 });
 
 export const ruleWithUseQwikMethodUsageOptionsSchema = z.object({
@@ -3981,7 +5368,24 @@ export const ruleWithUseQwikValidLexicalScopeOptionsSchema = z.object({
     options: useQwikValidLexicalScopeOptionsSchema.optional()
 });
 
+export const ruleWithUseReactAsyncServerFunctionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useReactAsyncServerFunctionOptionsSchema.optional()
+});
+
+export const ruleWithUseReactNativePlatformComponentsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useReactNativePlatformComponentsOptionsSchema.optional()
+});
+
 export const ruleWithUseSingleJsDocAsteriskOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useSingleJsDocAsteriskOptionsSchema.optional()
@@ -3998,6 +5402,9 @@ export const ruleWithUseValidForDirectionOptionsSchema = z.object({
 });
 
 export const ruleWithUseValidTypeofOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useValidTypeofOptionsSchema.optional()
@@ -4009,6 +5416,9 @@ export const ruleWithUseVueVForKeyOptionsSchema = z.object({
 });
 
 export const ruleWithUseVueValidTemplateRootOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueValidTemplateRootOptionsSchema.optional()
@@ -4020,6 +5430,9 @@ export const ruleWithUseVueValidVBindOptionsSchema = z.object({
 });
 
 export const ruleWithUseVueValidVCloakOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueValidVCloakOptionsSchema.optional()
@@ -4033,6 +5446,11 @@ export const ruleWithUseVueValidVElseOptionsSchema = z.object({
 export const ruleWithUseVueValidVElseIfOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useVueValidVElseIfOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidVForOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidVForOptionsSchema.optional()
 });
 
 export const ruleWithUseVueValidVHtmlOptionsSchema = z.object({
@@ -4051,12 +5469,18 @@ export const ruleWithUseVueValidVOnOptionsSchema = z.object({
 });
 
 export const ruleWithUseVueValidVOnceOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueValidVOnceOptionsSchema.optional()
 });
 
 export const ruleWithUseVueValidVPreOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueValidVPreOptionsSchema.optional()
@@ -4072,65 +5496,108 @@ export const ruleWithUseYieldOptionsSchema = z.object({
     options: useYieldOptionsSchema.optional()
 });
 
+export const ruleWithNoAccidentalBitwiseOperatorsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noAccidentalBitwiseOperatorsOptionsSchema.optional()
+});
+
+export const ruleWithNoArgumentsCallerOrCalleeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noArgumentsCallerOrCalleeOptionsSchema.optional()
+});
+
+export const ruleWithNoArraySortForMinMaxOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noArraySortForMinMaxOptionsSchema.optional()
+});
+
+export const ruleWithNoAstroConflictingSetDirectivesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noAstroConflictingSetDirectivesOptionsSchema.optional()
+});
+
+export const ruleWithNoAstroSetHtmlDirectiveOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noAstroSetHtmlDirectiveOptionsSchema.optional()
+});
+
 export const ruleWithNoBaseToStringOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noBaseToStringOptionsSchema.optional()
 });
 
-export const ruleWithNoComponentHookFactoriesOptionsSchema = z.object({
+export const ruleWithNoBooleanSortComparatorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noComponentHookFactoriesOptionsSchema.optional()
+    options: noBooleanSortComparatorOptionsSchema.optional()
 });
 
-export const ruleWithNoConditionalExpectOptionsSchema = z.object({
+export const ruleWithNoBunModulesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noConditionalExpectOptionsSchema.optional()
+    options: noBunModulesOptionsSchema.optional()
 });
 
-export const ruleWithNoDrizzleDeleteWithoutWhereOptionsSchema = z.object({
+export const ruleWithNoConsoleSpacesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noDrizzleDeleteWithoutWhereOptionsSchema.optional()
+    options: noConsoleSpacesOptionsSchema.optional()
 });
 
-export const ruleWithNoDrizzleUpdateWithoutWhereOptionsSchema = z.object({
+export const ruleWithNoDanglingUnderscoreOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noDrizzleUpdateWithoutWhereOptionsSchema.optional()
+    options: noDanglingUnderscoreOptionsSchema.optional()
 });
 
-export const ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema = z.object({
+export const ruleWithNoDoubleComparisonOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noDuplicateFieldDefinitionNamesOptionsSchema.optional()
+    options: noDoubleComparisonOptionsSchema.optional()
 });
 
-export const ruleWithNoDuplicateSelectorsOptionsSchema = z.object({
+export const ruleWithNoDuplicateMapKeysOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noDuplicateSelectorsOptionsSchema.optional()
+    options: noDuplicateMapKeysOptionsSchema.optional()
 });
 
-export const ruleWithNoEmptyObjectKeysOptionsSchema = z.object({
+export const ruleWithNoEagerArrayMethodsInLoopsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noEmptyObjectKeysOptionsSchema.optional()
+    options: noEagerArrayMethodsInLoopsOptionsSchema.optional()
 });
 
-export const ruleWithNoExcessiveNestedCallbacksOptionsSchema = z.object({
+export const ruleWithNoExcessiveStatementsPerFunctionOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noExcessiveNestedCallbacksOptionsSchema.optional()
+    options: noExcessiveStatementsPerFunctionOptionsSchema.optional()
 });
 
-export const ruleWithNoExcessiveSelectorClassesOptionsSchema = z.object({
+export const ruleWithNoExtendNativeOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noExcessiveSelectorClassesOptionsSchema.optional()
+    options: noExtendNativeOptionsSchema.optional()
 });
 
 export const ruleWithNoFloatingPromisesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noFloatingPromisesOptionsSchema.optional()
-});
-
-export const ruleWithNoIdenticalTestTitleOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noIdenticalTestTitleOptionsSchema.optional()
 });
 
 export const ruleWithNoImpliedEvalOptionsSchema = z.object({
@@ -4138,26 +5605,42 @@ export const ruleWithNoImpliedEvalOptionsSchema = z.object({
     options: noImpliedEvalOptionsSchema.optional()
 });
 
-export const ruleWithNoInlineStylesOptionsSchema = z.object({
+export const ruleWithNoInvalidFileInputAcceptOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noInlineStylesOptionsSchema.optional()
+    options: noInvalidFileInputAcceptOptionsSchema.optional()
 });
 
-export const ruleWithNoJsxLeakedDollarOptionsSchema = z.object({
+export const ruleWithNoInvalidPropertyInitValueOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noInvalidPropertyInitValueOptionsSchema.optional()
+});
+
+export const ruleWithNoInvalidThisOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noInvalidThisOptionsSchema.optional()
+});
+
+export const ruleWithNoJsonUnsafeValuesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noJsonUnsafeValuesOptionsSchema.optional()
+});
+
+export const ruleWithNoMagicArrayFlatDepthOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noMagicArrayFlatDepthOptionsSchema.optional()
+});
+
+export const ruleWithNoMeaninglessVoidOperatorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noJsxLeakedDollarOptionsSchema.optional()
-});
-
-export const ruleWithNoJsxNamespaceOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noJsxNamespaceOptionsSchema.optional()
-});
-
-export const ruleWithNoLoopFuncOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noLoopFuncOptionsSchema.optional()
+    options: noMeaninglessVoidOperatorOptionsSchema.optional()
 });
 
 export const ruleWithNoMisleadingReturnTypeOptionsSchema = z.object({
@@ -4165,84 +5648,109 @@ export const ruleWithNoMisleadingReturnTypeOptionsSchema = z.object({
     options: noMisleadingReturnTypeOptionsSchema.optional()
 });
 
+export const ruleWithNoMisplacedListElementsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noMisplacedListElementsOptionsSchema.optional()
+});
+
 export const ruleWithNoMisusedPromisesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noMisusedPromisesOptionsSchema.optional()
 });
 
-export const ruleWithNoPlaywrightElementHandleOptionsSchema = z.object({
+export const ruleWithNoNegationInEqualityCheckOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noPlaywrightElementHandleOptionsSchema.optional()
+    options: noNegationInEqualityCheckOptionsSchema.optional()
 });
 
-export const ruleWithNoPlaywrightEvalOptionsSchema = z.object({
+export const ruleWithNoNestedSwitchOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noPlaywrightEvalOptionsSchema.optional()
+    options: noNestedSwitchOptionsSchema.optional()
 });
 
-export const ruleWithNoPlaywrightForceOptionOptionsSchema = z.object({
+export const ruleWithNoNestedTemplateLiteralsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noPlaywrightForceOptionOptionsSchema.optional()
+    options: noNestedTemplateLiteralsOptionsSchema.optional()
 });
 
-export const ruleWithNoPlaywrightMissingAwaitOptionsSchema = z.object({
+export const ruleWithNoNewRequireOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noNewRequireOptionsSchema.optional()
+});
+
+export const ruleWithNoNonScalableViewportOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noNonScalableViewportOptionsSchema.optional()
+});
+
+export const ruleWithNoNullOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noPlaywrightMissingAwaitOptionsSchema.optional()
+    options: noNullOptionsSchema.optional()
 });
 
-export const ruleWithNoPlaywrightNetworkidleOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightNetworkidleOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightPagePauseOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noPlaywrightPagePauseOptionsSchema.optional()
-});
-
-export const ruleWithNoPlaywrightUselessAwaitOptionsSchema = z.object({
+export const ruleWithNoObjectConstructorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noPlaywrightUselessAwaitOptionsSchema.optional()
+    options: noObjectConstructorOptionsSchema.optional()
 });
 
-export const ruleWithNoPlaywrightWaitForNavigationOptionsSchema = z.object({
+export const ruleWithNoObsoleteAttributesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noPlaywrightWaitForNavigationOptionsSchema.optional()
+    options: noObsoleteAttributesOptionsSchema.optional()
 });
 
-export const ruleWithNoPlaywrightWaitForSelectorOptionsSchema = z.object({
+export const ruleWithNoObsoleteTagsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noObsoleteTagsOptionsSchema.optional()
+});
+
+export const ruleWithNoOctalOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noOctalOptionsSchema.optional()
+});
+
+export const ruleWithNoPathConcatOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPathConcatOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightNthMethodsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightNthMethodsOptionsSchema.optional()
+});
+
+export const ruleWithNoProcessExitOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noProcessExitOptionsSchema.optional()
+});
+
+export const ruleWithNoPromiseExecutorReturnOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noPlaywrightWaitForSelectorOptionsSchema.optional()
+    options: noPromiseExecutorReturnOptionsSchema.optional()
 });
 
-export const ruleWithNoPlaywrightWaitForTimeoutOptionsSchema = z.object({
+export const ruleWithNoReactObjectTypeAsDefaultPropOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noPlaywrightWaitForTimeoutOptionsSchema.optional()
-});
-
-export const ruleWithNoReactNativeDeepImportsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noReactNativeDeepImportsOptionsSchema.optional()
-});
-
-export const ruleWithNoReactNativeLiteralColorsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noReactNativeLiteralColorsOptionsSchema.optional()
-});
-
-export const ruleWithNoReactNativeRawTextOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noReactNativeRawTextOptionsSchema.optional()
-});
-
-export const ruleWithNoReactStringRefsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: noReactStringRefsOptionsSchema.optional()
+    options: noReactObjectTypeAsDefaultPropOptionsSchema.optional()
 });
 
 export const ruleWithNoRestrictedDependenciesOptionsSchema = z.object({
@@ -4250,9 +5758,133 @@ export const ruleWithNoRestrictedDependenciesOptionsSchema = z.object({
     options: noRestrictedDependenciesOptionsSchema.optional()
 });
 
-export const ruleWithNoTopLevelLiteralsOptionsSchema = z.object({
+export const ruleWithNoReturnArrayPushOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noTopLevelLiteralsOptionsSchema.optional()
+    options: noReturnArrayPushOptionsSchema.optional()
+});
+
+export const ruleWithNoReturnInFinallyOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReturnInFinallyOptionsSchema.optional()
+});
+
+export const ruleWithNoSelfImportOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSelfImportOptionsSchema.optional()
+});
+
+export const ruleWithNoSelfNestedLayerOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSelfNestedLayerOptionsSchema.optional()
+});
+
+export const ruleWithNoShortTimeValuesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noShortTimeValuesOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteAddEventListenerOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noSvelteAddEventListenerOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteAtDebugTagsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noSvelteAtDebugTagsOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteAtHtmlTagsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSvelteAtHtmlTagsOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteClassDirectiveOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSvelteClassDirectiveOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteExportLetOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSvelteExportLetOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteInspectOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSvelteInspectOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteInternalOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSvelteInternalOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteLegacyConstOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSvelteLegacyConstOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteObjectInTextMustachesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noSvelteObjectInTextMustachesOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteUnnecessaryStateWrapOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noSvelteUnnecessaryStateWrapOptionsSchema.optional()
+});
+
+export const ruleWithNoSvelteUselessDerivedByOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noSvelteUselessDerivedByOptionsSchema.optional()
+});
+
+export const ruleWithNoTailwindArbitraryValueOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noTailwindArbitraryValueOptionsSchema.optional()
+});
+
+export const ruleWithNoTailwindLegacyUtilitiesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noTailwindLegacyUtilitiesOptionsSchema.optional()
+});
+
+export const ruleWithNoTailwindRawColorsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noTailwindRawColorsOptionsSchema.optional()
+});
+
+export const ruleWithNoTanstackQueryRestDestructuringOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noTanstackQueryRestDestructuringOptionsSchema.optional()
+});
+
+export const ruleWithNoThisOutsideOfClassOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noThisOutsideOfClassOptionsSchema.optional()
 });
 
 export const ruleWithNoUndeclaredClassesOptionsSchema = z.object({
@@ -4260,10 +5892,33 @@ export const ruleWithNoUndeclaredClassesOptionsSchema = z.object({
     options: noUndeclaredClassesOptionsSchema.optional()
 });
 
-export const ruleWithNoUnnecessaryTemplateExpressionOptionsSchema = z.object({
+export const ruleWithNoUndeclaredCustomPropertiesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUndeclaredCustomPropertiesOptionsSchema.optional()
+});
+
+export const ruleWithNoUnmodifiedLoopConditionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnmodifiedLoopConditionOptionsSchema.optional()
+});
+
+export const ruleWithNoUnreadableForOfExpressionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnreadableForOfExpressionOptionsSchema.optional()
+});
+
+export const ruleWithNoUnreadableIifeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: noUnnecessaryTemplateExpressionOptionsSchema.optional()
+    options: noUnreadableIifeOptionsSchema.optional()
+});
+
+export const ruleWithNoUnsafeIframeSandboxOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnsafeIframeSandboxOptionsSchema.optional()
 });
 
 export const ruleWithNoUnsafePlusOperandsOptionsSchema = z.object({
@@ -4271,9 +5926,19 @@ export const ruleWithNoUnsafePlusOperandsOptionsSchema = z.object({
     options: noUnsafePlusOperandsOptionsSchema.optional()
 });
 
-export const ruleWithNoUntrustedLicensesOptionsSchema = z.object({
+export const ruleWithNoUnsafeReturnOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noUntrustedLicensesOptionsSchema.optional()
+    options: noUnsafeReturnOptionsSchema.optional()
+});
+
+export const ruleWithNoUnsafeTypeAssertionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnsafeTypeAssertionOptionsSchema.optional()
+});
+
+export const ruleWithNoUnsafeUnaryMinusOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUnsafeUnaryMinusOptionsSchema.optional()
 });
 
 export const ruleWithNoUnusedClassesOptionsSchema = z.object({
@@ -4281,30 +5946,192 @@ export const ruleWithNoUnusedClassesOptionsSchema = z.object({
     options: noUnusedClassesOptionsSchema.optional()
 });
 
+export const ruleWithNoUselessAssignmentOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUselessAssignmentOptionsSchema.optional()
+});
+
+export const ruleWithNoUselessCallOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUselessCallOptionsSchema.optional()
+});
+
+export const ruleWithNoUselessDateGetTimeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noUselessDateGetTimeOptionsSchema.optional()
+});
+
+export const ruleWithNoUselessRecursionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUselessRecursionOptionsSchema.optional()
+});
+
+export const ruleWithNoUselessSpliceOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noUselessSpliceOptionsSchema.optional()
+});
+
 export const ruleWithNoUselessTypeConversionOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noUselessTypeConversionOptionsSchema.optional()
 });
 
-export const ruleWithNoVueImportCompilerMacrosOptionsSchema = z.object({
+export const ruleWithNoVueBooleanDefaultOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noVueImportCompilerMacrosOptionsSchema.optional()
+    options: noVueBooleanDefaultOptionsSchema.optional()
 });
 
-export const ruleWithNoVueRefAsOperandOptionsSchema = z.object({
+export const ruleWithNoVueComputedPropertiesInDataOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noVueRefAsOperandOptionsSchema.optional()
+    options: noVueComputedPropertiesInDataOptionsSchema.optional()
 });
 
-export const ruleWithNoVueVOnNumberValuesOptionsSchema = z.object({
+export const ruleWithNoVueDeprecatedDeleteSetOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: noVueVOnNumberValuesOptionsSchema.optional()
+    options: noVueDeprecatedDeleteSetOptionsSchema.optional()
 });
 
-export const ruleWithUseArraySomeOptionsSchema = z.object({
+export const ruleWithNoVueDeprecatedListenersOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueDeprecatedListenersOptionsSchema.optional()
+});
+
+export const ruleWithNoVueDeprecatedRouterLinkTagPropOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueDeprecatedRouterLinkTagPropOptionsSchema.optional()
+});
+
+export const ruleWithNoVueDeprecatedScopeAttributeOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueDeprecatedScopeAttributeOptionsSchema.optional()
+});
+
+export const ruleWithNoVueDeprecatedScopedSlotsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useArraySomeOptionsSchema.optional()
+    options: noVueDeprecatedScopedSlotsOptionsSchema.optional()
+});
+
+export const ruleWithNoVueLifecycleAfterAwaitOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueLifecycleAfterAwaitOptionsSchema.optional()
+});
+
+export const ruleWithNoVueMultipleSlotArgsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueMultipleSlotArgsOptionsSchema.optional()
+});
+
+export const ruleWithNoVueMutatingPropsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueMutatingPropsOptionsSchema.optional()
+});
+
+export const ruleWithNoVueRequiredPropWithDefaultOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noVueRequiredPropWithDefaultOptionsSchema.optional()
+});
+
+export const ruleWithNoVueRootVIfOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueRootVIfOptionsSchema.optional()
+});
+
+export const ruleWithNoVueShadowNativeEventsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueShadowNativeEventsOptionsSchema.optional()
+});
+
+export const ruleWithNoVueSideEffectsInComputedOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueSideEffectsInComputedOptionsSchema.optional()
+});
+
+export const ruleWithNoVueUndeclaredDirectivesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueUndeclaredDirectivesOptionsSchema.optional()
+});
+
+export const ruleWithNoVueUnusedEmitDeclarationsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueUnusedEmitDeclarationsOptionsSchema.optional()
+});
+
+export const ruleWithNoVueUnusedRefsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueUnusedRefsOptionsSchema.optional()
+});
+
+export const ruleWithNoVueVHtmlOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueVHtmlOptionsSchema.optional()
+});
+
+export const ruleWithNoVueVTextOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueVTextOptionsSchema.optional()
+});
+
+export const ruleWithNoVueVTextVHtmlOnComponentOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueVTextVHtmlOnComponentOptionsSchema.optional()
+});
+
+export const ruleWithNoVueWatchAfterAwaitOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noVueWatchAfterAwaitOptionsSchema.optional()
+});
+
+export const ruleWithNoXorAsExponentiationOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noXorAsExponentiationOptionsSchema.optional()
+});
+
+export const ruleWithNoYamlBooleanKeysOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noYamlBooleanKeysOptionsSchema.optional()
+});
+
+export const ruleWithNoZeroFractionsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noZeroFractionsOptionsSchema.optional()
+});
+
+export const ruleWithNoZeroLengthUnitOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noZeroLengthUnitOptionsSchema.optional()
+});
+
+export const ruleWithUseAstroClientOnlyDirectiveValueOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useAstroClientOnlyDirectiveValueOptionsSchema.optional()
 });
 
 export const ruleWithUseAwaitThenableOptionsSchema = z.object({
@@ -4312,44 +6139,114 @@ export const ruleWithUseAwaitThenableOptionsSchema = z.object({
     options: useAwaitThenableOptionsSchema.optional()
 });
 
-export const ruleWithUseBaselineOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useBaselineOptionsSchema.optional()
-});
-
-export const ruleWithUseConsistentTestItOptionsSchema = z.object({
+export const ruleWithUseBetterDomTraversingOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useConsistentTestItOptionsSchema.optional()
+    options: useBetterDomTraversingOptionsSchema.optional()
+});
+
+export const ruleWithUseBigintLiteralsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useBigintLiteralsOptionsSchema.optional()
+});
+
+export const ruleWithUseBlockStatementOverIifeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useBlockStatementOverIifeOptionsSchema.optional()
+});
+
+export const ruleWithUseCapitalizedConstructorsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useCapitalizedConstructorsOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentFunctionStyleOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useConsistentFunctionStyleOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentHeadingLevelOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useConsistentHeadingLevelOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentJsonFileReadOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useConsistentJsonFileReadOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentLightnessNotationOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useConsistentLightnessNotationOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentObjectKeysOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useConsistentObjectKeysOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentUnicodeBomOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useConsistentUnicodeBomOptionsSchema.optional()
+});
+
+export const ruleWithUseControlLabelOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useControlLabelOptionsSchema.optional()
 });
 
 export const ruleWithUseDisposablesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useDisposablesOptionsSchema.optional()
 });
 
-export const ruleWithUseDomNodeTextContentOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useDomNodeTextContentOptionsSchema.optional()
-});
-
-export const ruleWithUseDomQuerySelectorOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
-    level: rulePlainConfigurationSchema,
-    options: useDomQuerySelectorOptionsSchema.optional()
-});
-
 export const ruleWithUseExhaustiveSwitchCasesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useExhaustiveSwitchCasesOptionsSchema.optional()
 });
 
-export const ruleWithUseExpectOptionsSchema = z.object({
+export const ruleWithUseExpectToContainOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useExpectOptionsSchema.optional()
+    options: useExpectToContainOptionsSchema.optional()
 });
 
 export const ruleWithUseExplicitReturnTypeOptionsSchema = z.object({
@@ -4362,70 +6259,145 @@ export const ruleWithUseExplicitTypeOptionsSchema = z.object({
     options: useExplicitTypeOptionsSchema.optional()
 });
 
-export const ruleWithUseIframeSandboxOptionsSchema = z.object({
+export const ruleWithUseFencedCodeLanguageOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useIframeSandboxOptionsSchema.optional()
+    options: useFencedCodeLanguageOptionsSchema.optional()
 });
 
-export const ruleWithUseImportsFirstOptionsSchema = z.object({
+export const ruleWithUseFlatMathMinMaxOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useImportsFirstOptionsSchema.optional()
+    options: useFlatMathMinMaxOptionsSchema.optional()
 });
 
 export const ruleWithUseIncludesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useIncludesOptionsSchema.optional()
 });
 
-export const ruleWithUseMathMinMaxOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
+export const ruleWithUseIteratorZipOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useMathMinMaxOptionsSchema.optional()
+    options: useIteratorZipOptionsSchema.optional()
 });
 
-export const ruleWithUseNamedCaptureGroupOptionsSchema = z.object({
+export const ruleWithUseLayeredStylesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useNamedCaptureGroupOptionsSchema.optional()
+    options: useLayeredStylesOptionsSchema.optional()
+});
+
+export const ruleWithUseLogicalPropertiesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useLogicalPropertiesOptionsSchema.optional()
+});
+
+export const ruleWithUseLowercaseTestTitleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useLowercaseTestTitleOptionsSchema.optional()
+});
+
+export const ruleWithUseMatchingFunctionNameOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useMatchingFunctionNameOptionsSchema.optional()
+});
+
+export const ruleWithUseMathAbsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useMathAbsOptionsSchema.optional()
+});
+
+export const ruleWithUseMathTruncOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useMathTruncOptionsSchema.optional()
+});
+
+export const ruleWithUseModernMathApisOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useModernMathApisOptionsSchema.optional()
+});
+
+export const ruleWithUseNamedFunctionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useNamedFunctionOptionsSchema.optional()
+});
+
+export const ruleWithUseNamedLayerOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useNamedLayerOptionsSchema.optional()
 });
 
 export const ruleWithUseNullishCoalescingOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNullishCoalescingOptionsSchema.optional()
 });
 
-export const ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema = z.object({
+export const ruleWithUsePackageJsonValidCpuOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: usePlaywrightValidDescribeCallbackOptionsSchema.optional()
+    options: usePackageJsonValidCpuOptionsSchema.optional()
 });
 
-export const ruleWithUseQwikLoaderLocationOptionsSchema = z.object({
+export const ruleWithUsePackageJsonValidEnginesOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useQwikLoaderLocationOptionsSchema.optional()
+    options: usePackageJsonValidEnginesOptionsSchema.optional()
 });
 
-export const ruleWithUseReactAsyncServerFunctionOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
+export const ruleWithUsePromiseRejectErrorsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useReactAsyncServerFunctionOptionsSchema.optional()
+    options: usePromiseRejectErrorsOptionsSchema.optional()
+});
+
+export const ruleWithUseReactCompilerOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useReactCompilerOptionsSchema.optional()
 });
 
 export const ruleWithUseReactFunctionComponentDefinitionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useReactFunctionComponentDefinitionOptionsSchema.optional()
 });
 
-export const ruleWithUseReactNativePlatformComponentsOptionsSchema = z.object({
+export const ruleWithUseReactNamingConventionOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useReactNativePlatformComponentsOptionsSchema.optional()
+    options: useReactNamingConventionOptionsSchema.optional()
 });
 
-export const ruleWithUseReduceTypeParameterOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
+export const ruleWithUseReactNativeValidPlatformColorsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useReduceTypeParameterOptionsSchema.optional()
+    options: useReactNativeValidPlatformColorsOptionsSchema.optional()
 });
 
 export const ruleWithUseRegexpExecOptionsSchema = z.object({
@@ -4433,28 +6405,52 @@ export const ruleWithUseRegexpExecOptionsSchema = z.object({
     options: useRegexpExecOptionsSchema.optional()
 });
 
-export const ruleWithUseRegexpTestOptionsSchema = z.object({
+export const ruleWithUseSimplifiedBooleanReturnOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useRegexpTestOptionsSchema.optional()
+    options: useSimplifiedBooleanReturnOptionsSchema.optional()
 });
 
-export const ruleWithUseScopedStylesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
+export const ruleWithUseSingleTopLevelHeadingOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useScopedStylesOptionsSchema.optional()
+    options: useSingleTopLevelHeadingOptionsSchema.optional()
 });
 
-export const ruleWithUseSortedClassesOptionsSchema = z.object({
-    fix: fixKindSchema.optional().nullable(),
+export const ruleWithUseStrictBooleanExpressionsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useSortedClassesOptionsSchema.optional()
+    options: useStrictBooleanExpressionsOptionsSchema.optional()
 });
 
 export const ruleWithUseStringStartsEndsWithOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useStringStartsEndsWithOptionsSchema.optional()
+});
+
+export const ruleWithUseSvelteEventDispatcherTypesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useSvelteEventDispatcherTypesOptionsSchema.optional()
+});
+
+export const ruleWithUseSvelteKitResolveOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useSvelteKitResolveOptionsSchema.optional()
+});
+
+export const ruleWithUseSvelteKitRuneImportsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useSvelteKitRuneImportsOptionsSchema.optional()
+});
+
+export const ruleWithUseSvelteReactiveClassesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useSvelteReactiveClassesOptionsSchema.optional()
 });
 
 export const ruleWithUseSvelteRequireEachKeyOptionsSchema = z.object({
@@ -4462,45 +6458,179 @@ export const ruleWithUseSvelteRequireEachKeyOptionsSchema = z.object({
     options: useSvelteRequireEachKeyOptionsSchema.optional()
 });
 
-export const ruleWithUseTestHooksInOrderOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useTestHooksInOrderOptionsSchema.optional()
-});
-
-export const ruleWithUseTestHooksOnTopOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useTestHooksOnTopOptionsSchema.optional()
-});
-
-export const ruleWithUseThisInClassMethodsOptionsSchema = z.object({
-    level: rulePlainConfigurationSchema,
-    options: useThisInClassMethodsOptionsSchema.optional()
-});
-
-export const ruleWithUseUnicodeRegexOptionsSchema = z.object({
+export const ruleWithUseSvelteShorthandDirectiveOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useUnicodeRegexOptionsSchema.optional()
+    options: useSvelteShorthandDirectiveOptionsSchema.optional()
 });
 
-export const ruleWithUseVarsOnTopOptionsSchema = z.object({
+export const ruleWithUseTailwindShorthandClassesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useVarsOnTopOptionsSchema.optional()
+    options: useTailwindShorthandClassesOptionsSchema.optional()
 });
 
-export const ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
+export const ruleWithUseTailwindSortedClassesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
-    options: useVueConsistentDefinePropsDeclarationOptionsSchema.optional()
+    options: useTailwindSortedClassesOptionsSchema.optional()
 });
 
-export const ruleWithUseVueNextTickPromiseOptionsSchema = z.object({
+export const ruleWithUseTailwindStaticClassStringsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useVueNextTickPromiseOptionsSchema.optional()
+    options: useTailwindStaticClassStringsOptionsSchema.optional()
 });
 
-export const ruleWithUseVueValidVForOptionsSchema = z.object({
+export const ruleWithUseTopLevelHeadingOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
-    options: useVueValidVForOptionsSchema.optional()
+    options: useTopLevelHeadingOptionsSchema.optional()
+});
+
+export const ruleWithUseUnaryMinusOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useUnaryMinusOptionsSchema.optional()
+});
+
+export const ruleWithUseValidTestTitleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useValidTestTitleOptionsSchema.optional()
+});
+
+export const ruleWithUseVueBaseImportOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueBaseImportOptionsSchema.optional()
+});
+
+export const ruleWithUseVueComponentIsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueComponentIsOptionsSchema.optional()
+});
+
+export const ruleWithUseVueConsistentEventHyphenationOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueConsistentEventHyphenationOptionsSchema.optional()
+});
+
+export const ruleWithUseVueDefineOptionsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueDefineOptionsOptionsSchema.optional()
+});
+
+export const ruleWithUseVueDefinePropsDestructuringOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueDefinePropsDestructuringOptionsSchema.optional()
+});
+
+export const ruleWithUseVueMatchingComponentFileNameOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueMatchingComponentFileNameOptionsSchema.optional()
+});
+
+export const ruleWithUseVueTemplateRefOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueTemplateRefOptionsSchema.optional()
+});
+
+export const ruleWithUseVueToggleInsideTransitionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueToggleInsideTransitionOptionsSchema.optional()
+});
+
+export const ruleWithUseVueTypedPropsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueTypedPropsOptionsSchema.optional()
+});
+
+export const ruleWithUseVueTypedRefOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueTypedRefOptionsSchema.optional()
+});
+
+export const ruleWithUseVueVModelOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useVueVModelOptionsSchema.optional()
+});
+
+export const ruleWithUseVueVOnExactOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueVOnExactOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidDefineEmitsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidDefineEmitsOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidDefinePropsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidDefinePropsOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidVIsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidVIsOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidVMemoOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidVMemoOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidVModelOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidVModelOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidVShowOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidVShowOptionsSchema.optional()
+});
+
+export const ruleWithUseVueValidVSlotOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueValidVSlotOptionsSchema.optional()
+});
+
+export const ruleWithUseWhileLoopConditionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useWhileLoopConditionOptionsSchema.optional()
 });
 
 export const ruleWithNoAccumulatingSpreadOptionsSchema = z.object({
@@ -4519,6 +6649,9 @@ export const ruleWithNoBarrelFileOptionsSchema = z.object({
 });
 
 export const ruleWithNoDeleteOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noDeleteOptionsSchema.optional()
@@ -4559,7 +6692,19 @@ export const ruleWithNoUnwantedPolyfillioOptionsSchema = z.object({
     options: noUnwantedPolyfillioOptionsSchema.optional()
 });
 
+export const ruleWithUseDomNodeTextContentOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useDomNodeTextContentOptionsSchema.optional()
+});
+
 export const ruleWithUseGoogleFontPreconnectOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useGoogleFontPreconnectOptionsSchema.optional()
@@ -4576,12 +6721,18 @@ export const ruleWithUseTopLevelRegexOptionsSchema = z.object({
 });
 
 export const ruleWithUseVueVaporOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueVaporOptionsSchema.optional()
 });
 
 export const ruleWithNoBlankTargetOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noBlankTargetOptionsSchema.optional()
@@ -4610,6 +6761,11 @@ export const ruleWithNoScriptUrlOptionsSchema = z.object({
 export const ruleWithNoSecretsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noSecretsOptionsSchema.optional()
+});
+
+export const ruleWithUseIframeSandboxOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useIframeSandboxOptionsSchema.optional()
 });
 
 export const ruleWithNoCommonJsOptionsSchema = z.object({
@@ -4668,6 +6824,9 @@ export const ruleWithNoHexColorsOptionsSchema = z.object({
 });
 
 export const ruleWithNoImplicitBooleanOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noImplicitBooleanOptionsSchema.optional()
@@ -4679,9 +6838,21 @@ export const ruleWithNoIncrementDecrementOptionsSchema = z.object({
 });
 
 export const ruleWithNoInferrableTypesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noInferrableTypesOptionsSchema.optional()
+});
+
+export const ruleWithNoInlineStylesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noInlineStylesOptionsSchema.optional()
 });
 
 export const ruleWithNoJsxLiteralsOptionsSchema = z.object({
@@ -4710,6 +6881,9 @@ export const ruleWithNoNamespaceOptionsSchema = z.object({
 });
 
 export const ruleWithNoNegationElseOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noNegationElseOptionsSchema.optional()
@@ -4721,6 +6895,9 @@ export const ruleWithNoNestedTernaryOptionsSchema = z.object({
 });
 
 export const ruleWithNoNonNullAssertionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noNonNullAssertionOptionsSchema.optional()
@@ -4736,9 +6913,37 @@ export const ruleWithNoParameterPropertiesOptionsSchema = z.object({
     options: noParameterPropertiesOptionsSchema.optional()
 });
 
+export const ruleWithNoPlaywrightElementHandleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightElementHandleOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightEvalOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightEvalOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForSelectorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForSelectorOptionsSchema.optional()
+});
+
 export const ruleWithNoProcessEnvOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noProcessEnvOptionsSchema.optional()
+});
+
+export const ruleWithNoReactNativeLiteralColorsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReactNativeLiteralColorsOptionsSchema.optional()
 });
 
 export const ruleWithNoRestrictedGlobalsOptionsSchema = z.object({
@@ -4771,12 +6976,18 @@ export const ruleWithNoRootTypeOptionsSchema = z.object({
 });
 
 export const ruleWithNoShoutyConstantsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noShoutyConstantsOptionsSchema.optional()
 });
 
 export const ruleWithNoSubstrOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noSubstrOptionsSchema.optional()
@@ -4787,13 +6998,24 @@ export const ruleWithNoTernaryOptionsSchema = z.object({
     options: noTernaryOptionsSchema.optional()
 });
 
+export const ruleWithNoTopLevelLiteralsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noTopLevelLiteralsOptionsSchema.optional()
+});
+
 export const ruleWithNoUnusedTemplateLiteralOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUnusedTemplateLiteralOptionsSchema.optional()
 });
 
 export const ruleWithNoUselessElseOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessElseOptionsSchema.optional()
@@ -4810,42 +7032,63 @@ export const ruleWithNoVueOptionsApiOptionsSchema = z.object({
 });
 
 export const ruleWithNoYodaExpressionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noYodaExpressionOptionsSchema.optional()
 });
 
 export const ruleWithUseArrayLiteralsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useArrayLiteralsOptionsSchema.optional()
 });
 
 export const ruleWithUseAsConstAssertionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useAsConstAssertionOptionsSchema.optional()
 });
 
 export const ruleWithUseAtIndexOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useAtIndexOptionsSchema.optional()
 });
 
 export const ruleWithUseBlockStatementsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useBlockStatementsOptionsSchema.optional()
 });
 
 export const ruleWithUseCollapsedElseIfOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useCollapsedElseIfOptionsSchema.optional()
 });
 
 export const ruleWithUseCollapsedIfOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useCollapsedIfOptionsSchema.optional()
@@ -4857,24 +7100,36 @@ export const ruleWithUseComponentExportOnlyModulesOptionsSchema = z.object({
 });
 
 export const ruleWithUseConsistentArrayTypeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useConsistentArrayTypeOptionsSchema.optional()
 });
 
 export const ruleWithUseConsistentArrowReturnOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useConsistentArrowReturnOptionsSchema.optional()
 });
 
 export const ruleWithUseConsistentBuiltinInstantiationOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useConsistentBuiltinInstantiationOptionsSchema.optional()
 });
 
 export const ruleWithUseConsistentCurlyBracesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useConsistentCurlyBracesOptionsSchema.optional()
@@ -4896,30 +7151,54 @@ export const ruleWithUseConsistentMemberAccessibilityOptionsSchema = z.object({
 });
 
 export const ruleWithUseConsistentMethodSignaturesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useConsistentMethodSignaturesOptionsSchema.optional()
 });
 
 export const ruleWithUseConsistentObjectDefinitionsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useConsistentObjectDefinitionsOptionsSchema.optional()
 });
 
+export const ruleWithUseConsistentTestItOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useConsistentTestItOptionsSchema.optional()
+});
+
 export const ruleWithUseConsistentTypeDefinitionsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useConsistentTypeDefinitionsOptionsSchema.optional()
 });
 
 export const ruleWithUseConstOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useConstOptionsSchema.optional()
 });
 
 export const ruleWithUseDefaultParameterLastOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useDefaultParameterLastOptionsSchema.optional()
@@ -4935,7 +7214,19 @@ export const ruleWithUseDeprecatedReasonOptionsSchema = z.object({
     options: useDeprecatedReasonOptionsSchema.optional()
 });
 
+export const ruleWithUseDomQuerySelectorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useDomQuerySelectorOptionsSchema.optional()
+});
+
 export const ruleWithUseEnumInitializersOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useEnumInitializersOptionsSchema.optional()
@@ -4947,18 +7238,27 @@ export const ruleWithUseErrorCauseOptionsSchema = z.object({
 });
 
 export const ruleWithUseExplicitLengthCheckOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useExplicitLengthCheckOptionsSchema.optional()
 });
 
 export const ruleWithUseExponentiationOperatorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useExponentiationOperatorOptionsSchema.optional()
 });
 
 export const ruleWithUseExportTypeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useExportTypeOptionsSchema.optional()
@@ -4980,6 +7280,9 @@ export const ruleWithUseForOfOptionsSchema = z.object({
 });
 
 export const ruleWithUseFragmentSyntaxOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useFragmentSyntaxOptionsSchema.optional()
@@ -5001,9 +7304,17 @@ export const ruleWithUseGroupedAccessorPairsOptionsSchema = z.object({
 });
 
 export const ruleWithUseImportTypeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useImportTypeOptionsSchema.optional()
+});
+
+export const ruleWithUseImportsFirstOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useImportsFirstOptionsSchema.optional()
 });
 
 export const ruleWithUseInputNameOptionsSchema = z.object({
@@ -5021,25 +7332,42 @@ export const ruleWithUseLoneExecutableDefinitionOptionsSchema = z.object({
     options: useLoneExecutableDefinitionOptionsSchema.optional()
 });
 
+export const ruleWithUseNamedCaptureGroupOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useNamedCaptureGroupOptionsSchema.optional()
+});
+
 export const ruleWithUseNodeAssertStrictOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNodeAssertStrictOptionsSchema.optional()
 });
 
 export const ruleWithUseNodejsImportProtocolOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNodejsImportProtocolOptionsSchema.optional()
 });
 
 export const ruleWithUseNumberNamespaceOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNumberNamespaceOptionsSchema.optional()
 });
 
 export const ruleWithUseObjectSpreadOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useObjectSpreadOptionsSchema.optional()
@@ -5051,36 +7379,63 @@ export const ruleWithUseReactFunctionComponentsOptionsSchema = z.object({
 });
 
 export const ruleWithUseReadonlyClassPropertiesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useReadonlyClassPropertiesOptionsSchema.optional()
 });
 
+export const ruleWithUseReduceTypeParameterOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useReduceTypeParameterOptionsSchema.optional()
+});
+
 export const ruleWithUseSelfClosingElementsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useSelfClosingElementsOptionsSchema.optional()
 });
 
 export const ruleWithUseShorthandAssignOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useShorthandAssignOptionsSchema.optional()
 });
 
 export const ruleWithUseShorthandFunctionTypeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useShorthandFunctionTypeOptionsSchema.optional()
 });
 
 export const ruleWithUseSingleVarDeclaratorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useSingleVarDeclaratorOptionsSchema.optional()
 });
 
 export const ruleWithUseSpreadOverApplyOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useSpreadOverApplyOptionsSchema.optional()
@@ -5092,12 +7447,33 @@ export const ruleWithUseSymbolDescriptionOptionsSchema = z.object({
 });
 
 export const ruleWithUseTemplateOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useTemplateOptionsSchema.optional()
 });
 
+export const ruleWithUseTestHooksInOrderOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useTestHooksInOrderOptionsSchema.optional()
+});
+
+export const ruleWithUseTestHooksOnTopOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useTestHooksOnTopOptionsSchema.optional()
+});
+
+export const ruleWithUseThisInClassMethodsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useThisInClassMethodsOptionsSchema.optional()
+});
+
 export const ruleWithUseThrowNewErrorOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useThrowNewErrorOptionsSchema.optional()
@@ -5109,36 +7485,73 @@ export const ruleWithUseThrowOnlyErrorOptionsSchema = z.object({
 });
 
 export const ruleWithUseTrimStartEndOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useTrimStartEndOptionsSchema.optional()
 });
 
+export const ruleWithUseUnicodeRegexOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useUnicodeRegexOptionsSchema.optional()
+});
+
 export const ruleWithUseUnifiedTypeSignaturesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useUnifiedTypeSignaturesOptionsSchema.optional()
 });
 
+export const ruleWithUseVarsOnTopOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVarsOnTopOptionsSchema.optional()
+});
+
+export const ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueConsistentDefinePropsDeclarationOptionsSchema.optional()
+});
+
 export const ruleWithUseVueConsistentVBindStyleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueConsistentVBindStyleOptionsSchema.optional()
 });
 
 export const ruleWithUseVueConsistentVOnStyleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueConsistentVOnStyleOptionsSchema.optional()
 });
 
 export const ruleWithUseVueDefineMacrosOrderOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueDefineMacrosOrderOptionsSchema.optional()
 });
 
 export const ruleWithUseVueHyphenatedAttributesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useVueHyphenatedAttributesOptionsSchema.optional()
@@ -5149,12 +7562,20 @@ export const ruleWithUseVueMultiWordComponentNamesOptionsSchema = z.object({
     options: useVueMultiWordComponentNamesOptionsSchema.optional()
 });
 
+export const ruleWithUseVueNextTickPromiseOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useVueNextTickPromiseOptionsSchema.optional()
+});
+
 export const ruleWithNoAlertOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noAlertOptionsSchema.optional()
 });
 
 export const ruleWithNoApproximativeNumericConstantOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noApproximativeNumericConstantOptionsSchema.optional()
@@ -5176,6 +7597,9 @@ export const ruleWithNoAsyncPromiseExecutorOptionsSchema = z.object({
 });
 
 export const ruleWithNoBiomeFirstExceptionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noBiomeFirstExceptionOptionsSchema.optional()
@@ -5197,15 +7621,26 @@ export const ruleWithNoClassAssignOptionsSchema = z.object({
 });
 
 export const ruleWithNoCommentTextOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noCommentTextOptionsSchema.optional()
 });
 
 export const ruleWithNoCompareNegZeroOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noCompareNegZeroOptionsSchema.optional()
+});
+
+export const ruleWithNoConditionalExpectOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noConditionalExpectOptionsSchema.optional()
 });
 
 export const ruleWithNoConfusingLabelsOptionsSchema = z.object({
@@ -5214,18 +7649,27 @@ export const ruleWithNoConfusingLabelsOptionsSchema = z.object({
 });
 
 export const ruleWithNoConfusingVoidTypeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noConfusingVoidTypeOptionsSchema.optional()
 });
 
 export const ruleWithNoConsoleOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noConsoleOptionsSchema.optional()
 });
 
 export const ruleWithNoConstEnumOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noConstEnumOptionsSchema.optional()
@@ -5242,6 +7686,9 @@ export const ruleWithNoControlCharactersInRegexOptionsSchema = z.object({
 });
 
 export const ruleWithNoDebuggerOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noDebuggerOptionsSchema.optional()
@@ -5268,9 +7715,22 @@ export const ruleWithNoDocumentImportInPageOptionsSchema = z.object({
 });
 
 export const ruleWithNoDoubleEqualsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noDoubleEqualsOptionsSchema.optional()
+});
+
+export const ruleWithNoDrizzleDeleteWithoutWhereOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDrizzleDeleteWithoutWhereOptionsSchema.optional()
+});
+
+export const ruleWithNoDrizzleUpdateWithoutWhereOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDrizzleUpdateWithoutWhereOptionsSchema.optional()
 });
 
 export const ruleWithNoDuplicateAtImportRulesOptionsSchema = z.object({
@@ -5343,6 +7803,11 @@ export const ruleWithNoDuplicatePropertiesOptionsSchema = z.object({
     options: noDuplicatePropertiesOptionsSchema.optional()
 });
 
+export const ruleWithNoDuplicateSelectorsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noDuplicateSelectorsOptionsSchema.optional()
+});
+
 export const ruleWithNoDuplicateSelectorsKeyframeBlockOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noDuplicateSelectorsKeyframeBlockOptionsSchema.optional()
@@ -5369,9 +7834,17 @@ export const ruleWithNoEmptyBlockStatementsOptionsSchema = z.object({
 });
 
 export const ruleWithNoEmptyInterfaceOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noEmptyInterfaceOptionsSchema.optional()
+});
+
+export const ruleWithNoEmptyObjectKeysOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noEmptyObjectKeysOptionsSchema.optional()
 });
 
 export const ruleWithNoEmptySourceOptionsSchema = z.object({
@@ -5380,6 +7853,9 @@ export const ruleWithNoEmptySourceOptionsSchema = z.object({
 });
 
 export const ruleWithNoEqualsToNullOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noEqualsToNullOptionsSchema.optional()
@@ -5401,6 +7877,9 @@ export const ruleWithNoExportsInTestOptionsSchema = z.object({
 });
 
 export const ruleWithNoExtraNonNullAssertionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noExtraNonNullAssertionOptionsSchema.optional()
@@ -5412,6 +7891,9 @@ export const ruleWithNoFallthroughSwitchClauseOptionsSchema = z.object({
 });
 
 export const ruleWithNoFocusedTestsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noFocusedTestsOptionsSchema.optional()
@@ -5433,12 +7915,18 @@ export const ruleWithNoGlobalAssignOptionsSchema = z.object({
 });
 
 export const ruleWithNoGlobalIsFiniteOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noGlobalIsFiniteOptionsSchema.optional()
 });
 
 export const ruleWithNoGlobalIsNanOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noGlobalIsNanOptionsSchema.optional()
@@ -5447,6 +7935,11 @@ export const ruleWithNoGlobalIsNanOptionsSchema = z.object({
 export const ruleWithNoHeadImportInDocumentOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noHeadImportInDocumentOptionsSchema.optional()
+});
+
+export const ruleWithNoIdenticalTestTitleOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noIdenticalTestTitleOptionsSchema.optional()
 });
 
 export const ruleWithNoImplicitAnyLetOptionsSchema = z.object({
@@ -5474,6 +7967,15 @@ export const ruleWithNoIrregularWhitespaceOptionsSchema = z.object({
     options: noIrregularWhitespaceOptionsSchema.optional()
 });
 
+export const ruleWithNoJsxLeakedDollarOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: noJsxLeakedDollarOptionsSchema.optional()
+});
+
 export const ruleWithNoLabelVarOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noLabelVarOptionsSchema.optional()
@@ -5484,7 +7986,15 @@ export const ruleWithNoLeakedRenderOptionsSchema = z.object({
     options: noLeakedRenderOptionsSchema.optional()
 });
 
+export const ruleWithNoLoopFuncOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noLoopFuncOptionsSchema.optional()
+});
+
 export const ruleWithNoMisleadingCharacterClassOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noMisleadingCharacterClassOptionsSchema.optional()
@@ -5501,6 +8011,9 @@ export const ruleWithNoMisplacedAssertionOptionsSchema = z.object({
 });
 
 export const ruleWithNoMisrefactoredShorthandAssignOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noMisrefactoredShorthandAssignOptionsSchema.optional()
@@ -5517,15 +8030,46 @@ export const ruleWithNoNonNullAssertedOptionalChainOptionsSchema = z.object({
 });
 
 export const ruleWithNoOctalEscapeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noOctalEscapeOptionsSchema.optional()
 });
 
 export const ruleWithNoParametersOnlyUsedInRecursionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noParametersOnlyUsedInRecursionOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightForceOptionOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightForceOptionOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightNetworkidleOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightNetworkidleOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightPagePauseOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightPagePauseOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForNavigationOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForNavigationOptionsSchema.optional()
+});
+
+export const ruleWithNoPlaywrightWaitForTimeoutOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noPlaywrightWaitForTimeoutOptionsSchema.optional()
 });
 
 export const ruleWithNoProtoOptionsSchema = z.object({
@@ -5534,27 +8078,49 @@ export const ruleWithNoProtoOptionsSchema = z.object({
 });
 
 export const ruleWithNoPrototypeBuiltinsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noPrototypeBuiltinsOptionsSchema.optional()
 });
 
 export const ruleWithNoQuickfixBiomeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noQuickfixBiomeOptionsSchema.optional()
 });
 
 export const ruleWithNoReactForwardRefOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noReactForwardRefOptionsSchema.optional()
 });
 
+export const ruleWithNoReactNativeDeepImportsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReactNativeDeepImportsOptionsSchema.optional()
+});
+
 export const ruleWithNoReactSpecificPropsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noReactSpecificPropsOptionsSchema.optional()
+});
+
+export const ruleWithNoReactStringRefsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noReactStringRefsOptionsSchema.optional()
 });
 
 export const ruleWithNoRedeclareOptionsSchema = z.object({
@@ -5563,6 +8129,9 @@ export const ruleWithNoRedeclareOptionsSchema = z.object({
 });
 
 export const ruleWithNoRedundantUseStrictOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noRedundantUseStrictOptionsSchema.optional()
@@ -5594,12 +8163,18 @@ export const ruleWithNoShorthandPropertyOverridesOptionsSchema = z.object({
 });
 
 export const ruleWithNoSkippedTestsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noSkippedTestsOptionsSchema.optional()
 });
 
 export const ruleWithNoSparseArrayOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noSparseArrayOptionsSchema.optional()
@@ -5621,6 +8196,9 @@ export const ruleWithNoThenPropertyOptionsSchema = z.object({
 });
 
 export const ruleWithNoTsIgnoreOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noTsIgnoreOptionsSchema.optional()
@@ -5657,9 +8235,17 @@ export const ruleWithNoUnsafeDeclarationMergingOptionsSchema = z.object({
 });
 
 export const ruleWithNoUnsafeNegationOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUnsafeNegationOptionsSchema.optional()
+});
+
+export const ruleWithNoUntrustedLicensesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noUntrustedLicensesOptionsSchema.optional()
 });
 
 export const ruleWithNoUnusedExpressionsOptionsSchema = z.object({
@@ -5668,6 +8254,9 @@ export const ruleWithNoUnusedExpressionsOptionsSchema = z.object({
 });
 
 export const ruleWithNoUselessEscapeInStringOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUselessEscapeInStringOptionsSchema.optional()
@@ -5679,12 +8268,18 @@ export const ruleWithNoUselessRegexBackrefsOptionsSchema = z.object({
 });
 
 export const ruleWithNoVarOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noVarOptionsSchema.optional()
 });
 
 export const ruleWithNoVueArrowFuncInWatchOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noVueArrowFuncInWatchOptionsSchema.optional()
@@ -5710,7 +8305,15 @@ export const ruleWithUseAwaitOptionsSchema = z.object({
     options: useAwaitOptionsSchema.optional()
 });
 
+export const ruleWithUseBaselineOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useBaselineOptionsSchema.optional()
+});
+
 export const ruleWithUseBiomeIgnoreFolderOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useBiomeIgnoreFolderOptionsSchema.optional()
@@ -5731,6 +8334,11 @@ export const ruleWithUseErrorMessageOptionsSchema = z.object({
     options: useErrorMessageOptionsSchema.optional()
 });
 
+export const ruleWithUseExpectOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: useExpectOptionsSchema.optional()
+});
+
 export const ruleWithUseGetterReturnOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: useGetterReturnOptionsSchema.optional()
@@ -5747,6 +8355,9 @@ export const ruleWithUseGuardForInOptionsSchema = z.object({
 });
 
 export const ruleWithUseIsArrayOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useIsArrayOptionsSchema.optional()
@@ -5758,12 +8369,18 @@ export const ruleWithUseIterableCallbackReturnOptionsSchema = z.object({
 });
 
 export const ruleWithUseNamespaceKeywordOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNamespaceKeywordOptionsSchema.optional()
 });
 
 export const ruleWithUseNumberToFixedDigitsArgumentOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNumberToFixedDigitsArgumentOptionsSchema.optional()
@@ -5774,19 +8391,71 @@ export const ruleWithUseRequiredScriptsOptionsSchema = z.object({
     options: useRequiredScriptsOptionsSchema.optional()
 });
 
+export const ruleWithUseScopedStylesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useScopedStylesOptionsSchema.optional()
+});
+
 export const ruleWithUseStaticResponseMethodsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useStaticResponseMethodsOptionsSchema.optional()
 });
 
 export const ruleWithUseStrictModeOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useStrictModeOptionsSchema.optional()
 });
 
+/**
+ * Configuration for one GritQL plugin.
+ *
+ * Can be either a path or package name string, or an object with options:
+ *
+ * ```json
+ * {
+ *   "plugins": [
+ *     "simple-plugin.grit",
+ *     "@scope/biome-plugin",
+ *     { "path": "scoped-plugin.grit", "includes": ["src/** /*.ts"] },
+ *     { "path": "./local-plugin.grit", "includes": ["src/** /*.ts"], "resolutionKind": "config" }
+ *   ]
+ * }
+ * ```
+ */
+export const pluginConfigurationSchema = z.union([z.string(), pluginWithOptionsSchema]);
+
+export const pluginsSchema = z.array(pluginConfigurationSchema);
+
+/**
+ * Options applied to Yaml files
+ */
+export const yamlConfigurationSchema = z.object({
+    /**
+     * Formatter options
+     */
+    formatter: yamlFormatterConfigurationSchema.optional().nullable(),
+    linter: yamlLinterConfigurationSchema.optional().nullable()
+});
+
 export const noDuplicateClassesConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithNoDuplicateClassesOptionsSchema]);
+
+export const useGraphqlSortedArgumentsConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseGraphqlSortedArgumentsOptionsSchema]);
+
+export const useGraphqlSortedDefinitionsConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseGraphqlSortedDefinitionsOptionsSchema]);
+
+export const useGraphqlSortedVariablesConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseGraphqlSortedVariablesOptionsSchema]);
 
 export const useSortedAttributesConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithUseSortedAttributesOptionsSchema]);
 
@@ -5902,7 +8571,11 @@ export const noExcessiveCognitiveComplexityConfigurationSchema = z.union([rulePl
 
 export const noExcessiveLinesPerFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveLinesPerFunctionOptionsSchema]);
 
+export const noExcessiveNestedCallbacksConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveNestedCallbacksOptionsSchema]);
+
 export const noExcessiveNestedTestSuitesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveNestedTestSuitesOptionsSchema]);
+
+export const noExcessiveSelectorClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveSelectorClassesOptionsSchema]);
 
 export const noExtraBooleanCastConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExtraBooleanCastOptionsSchema]);
 
@@ -5914,11 +8587,15 @@ export const noImplicitCoercionsConfigurationSchema = z.union([rulePlainConfigur
 
 export const noImportantStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImportantStylesOptionsSchema]);
 
+export const noPlaywrightUselessAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightUselessAwaitOptionsSchema]);
+
 export const noRedundantDefaultExportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRedundantDefaultExportOptionsSchema]);
 
 export const noStaticOnlyClassConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoStaticOnlyClassOptionsSchema]);
 
 export const noThisInStaticConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoThisInStaticOptionsSchema]);
+
+export const noUnnecessaryTemplateExpressionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnnecessaryTemplateExpressionOptionsSchema]);
 
 export const noUselessCatchConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessCatchOptionsSchema]);
 
@@ -5962,6 +8639,8 @@ export const noVoidConfigurationSchema = z.union([rulePlainConfigurationSchema, 
 
 export const useArrayFindConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArrayFindOptionsSchema]);
 
+export const useArraySomeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArraySomeOptionsSchema]);
+
 export const useArrowFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArrowFunctionOptionsSchema]);
 
 export const useDateNowConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDateNowOptionsSchema]);
@@ -5972,6 +8651,8 @@ export const useIndexOfConfigurationSchema = z.union([rulePlainConfigurationSche
 
 export const useLiteralKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLiteralKeysOptionsSchema]);
 
+export const useMathMinMaxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMathMinMaxOptionsSchema]);
+
 export const useMaxParamsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMaxParamsOptionsSchema]);
 
 export const useNumericLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNumericLiteralsOptionsSchema]);
@@ -5979,6 +8660,8 @@ export const useNumericLiteralsConfigurationSchema = z.union([rulePlainConfigura
 export const useOptionalChainConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseOptionalChainOptionsSchema]);
 
 export const useRegexLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexLiteralsOptionsSchema]);
+
+export const useRegexpTestConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexpTestOptionsSchema]);
 
 export const useSimpleNumberKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSimpleNumberKeysOptionsSchema]);
 
@@ -5989,6 +8672,8 @@ export const useWhileConfigurationSchema = z.union([rulePlainConfigurationSchema
 export const noBeforeInteractiveScriptOutsideDocumentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBeforeInteractiveScriptOutsideDocumentOptionsSchema]);
 
 export const noChildrenPropConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoChildrenPropOptionsSchema]);
+
+export const noComponentHookFactoriesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoComponentHookFactoriesOptionsSchema]);
 
 export const noConstAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConstAssignOptionsSchema]);
 
@@ -6003,6 +8688,8 @@ export const noDuplicateArgumentNamesConfigurationSchema = z.union([rulePlainCon
 export const noDuplicateAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateAttributesOptionsSchema]);
 
 export const noDuplicateEnumValueNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateEnumValueNamesOptionsSchema]);
+
+export const noDuplicateFieldDefinitionNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema]);
 
 export const noDuplicateInputFieldNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateInputFieldNamesOptionsSchema]);
 
@@ -6030,6 +8717,8 @@ export const noInvalidPositionAtImportRuleConfigurationSchema = z.union([rulePla
 
 export const noInvalidUseBeforeDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInvalidUseBeforeDeclarationOptionsSchema]);
 
+export const noJsxNamespaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxNamespaceOptionsSchema]);
+
 export const noMissingVarFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMissingVarFunctionOptionsSchema]);
 
 export const noNestedComponentDefinitionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNestedComponentDefinitionsOptionsSchema]);
@@ -6040,6 +8729,8 @@ export const noNodejsModulesConfigurationSchema = z.union([rulePlainConfiguratio
 
 export const noNonoctalDecimalEscapeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNonoctalDecimalEscapeOptionsSchema]);
 
+export const noPlaywrightMissingAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightMissingAwaitOptionsSchema]);
+
 export const noPrecisionLossConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPrecisionLossOptionsSchema]);
 
 export const noPrivateImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPrivateImportsOptionsSchema]);
@@ -6047,6 +8738,8 @@ export const noPrivateImportsConfigurationSchema = z.union([rulePlainConfigurati
 export const noProcessGlobalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoProcessGlobalOptionsSchema]);
 
 export const noQwikUseVisibleTaskConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoQwikUseVisibleTaskOptionsSchema]);
+
+export const noReactNativeRawTextConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeRawTextOptionsSchema]);
 
 export const noReactPropAssignmentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactPropAssignmentsOptionsSchema]);
 
@@ -6110,6 +8803,10 @@ export const noVueDataObjectDeclarationConfigurationSchema = z.union([rulePlainC
 
 export const noVueDuplicateKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDuplicateKeysOptionsSchema]);
 
+export const noVueImportCompilerMacrosConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueImportCompilerMacrosOptionsSchema]);
+
+export const noVueRefAsOperandConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueRefAsOperandOptionsSchema]);
+
 export const noVueReservedKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedKeysOptionsSchema]);
 
 export const noVueReservedPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueReservedPropsOptionsSchema]);
@@ -6117,6 +8814,8 @@ export const noVueReservedPropsConfigurationSchema = z.union([rulePlainConfigura
 export const noVueSetupPropsReactivityLossConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueSetupPropsReactivityLossOptionsSchema]);
 
 export const noVueVIfWithVForConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVIfWithVForOptionsSchema]);
+
+export const noVueVOnNumberValuesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVOnNumberValuesOptionsSchema]);
 
 export const useGraphqlNamedOperationsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseGraphqlNamedOperationsOptionsSchema]);
 
@@ -6136,11 +8835,19 @@ export const useLoneAnonymousOperationConfigurationSchema = z.union([rulePlainCo
 
 export const useParseIntRadixConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseParseIntRadixOptionsSchema]);
 
+export const usePlaywrightValidDescribeCallbackConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema]);
+
 export const useQwikClasslistConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikClasslistOptionsSchema]);
+
+export const useQwikLoaderLocationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikLoaderLocationOptionsSchema]);
 
 export const useQwikMethodUsageConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikMethodUsageOptionsSchema]);
 
 export const useQwikValidLexicalScopeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikValidLexicalScopeOptionsSchema]);
+
+export const useReactAsyncServerFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactAsyncServerFunctionOptionsSchema]);
+
+export const useReactNativePlatformComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactNativePlatformComponentsOptionsSchema]);
 
 export const useSingleJsDocAsteriskConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSingleJsDocAsteriskOptionsSchema]);
 
@@ -6161,6 +8868,8 @@ export const useVueValidVCloakConfigurationSchema = z.union([rulePlainConfigurat
 export const useVueValidVElseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVElseOptionsSchema]);
 
 export const useVueValidVElseIfConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVElseIfOptionsSchema]);
+
+export const useVueValidVForConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVForOptionsSchema]);
 
 export const useVueValidVHtmlConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVHtmlOptionsSchema]);
 
@@ -6192,7 +8901,11 @@ export const noUnusedVariablesOptionsSchema = z.object({
     /**
      * Whether to ignore unused variables from an object destructuring with a spread.
      */
-    ignoreRestSiblings: z.boolean().optional().nullable()
+    ignoreRestSiblings: z.boolean().optional().nullable(),
+    /**
+     * Whether to ignore unused variables declared with `using` or `await using`.
+     */
+    ignoreUsingDeclarations: z.boolean().optional().nullable()
 });
 
 export const useExhaustiveDependenciesOptionsSchema = z.object({
@@ -6210,167 +8923,402 @@ export const useExhaustiveDependenciesOptionsSchema = z.object({
     reportUnnecessaryDependencies: z.boolean().optional().nullable()
 });
 
+export const noAccidentalBitwiseOperatorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAccidentalBitwiseOperatorsOptionsSchema]);
+
+export const noArgumentsCallerOrCalleeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoArgumentsCallerOrCalleeOptionsSchema]);
+
+export const noArraySortForMinMaxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoArraySortForMinMaxOptionsSchema]);
+
+export const noAstroConflictingSetDirectivesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAstroConflictingSetDirectivesOptionsSchema]);
+
+export const noAstroSetHtmlDirectiveConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAstroSetHtmlDirectiveOptionsSchema]);
+
 export const noBaseToStringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBaseToStringOptionsSchema]);
 
-export const noComponentHookFactoriesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoComponentHookFactoriesOptionsSchema]);
+export const noBooleanSortComparatorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBooleanSortComparatorOptionsSchema]);
 
-export const noConditionalExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConditionalExpectOptionsSchema]);
+export const noBunModulesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoBunModulesOptionsSchema]);
 
-export const noDrizzleDeleteWithoutWhereConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDrizzleDeleteWithoutWhereOptionsSchema]);
+export const noConsoleSpacesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConsoleSpacesOptionsSchema]);
 
-export const noDrizzleUpdateWithoutWhereConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDrizzleUpdateWithoutWhereOptionsSchema]);
+export const noDanglingUnderscoreConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDanglingUnderscoreOptionsSchema]);
 
-export const noDuplicateFieldDefinitionNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateFieldDefinitionNamesOptionsSchema]);
+export const noDoubleComparisonConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDoubleComparisonOptionsSchema]);
 
-export const noDuplicateSelectorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateSelectorsOptionsSchema]);
+export const noDuplicateMapKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateMapKeysOptionsSchema]);
 
-export const noEmptyObjectKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyObjectKeysOptionsSchema]);
+export const noEagerArrayMethodsInLoopsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEagerArrayMethodsInLoopsOptionsSchema]);
 
-export const noExcessiveNestedCallbacksConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveNestedCallbacksOptionsSchema]);
+export const noExcessiveStatementsPerFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveStatementsPerFunctionOptionsSchema]);
 
-export const noExcessiveSelectorClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExcessiveSelectorClassesOptionsSchema]);
+export const noExtendNativeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoExtendNativeOptionsSchema]);
 
 export const noFloatingPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoFloatingPromisesOptionsSchema]);
 
-export const noIdenticalTestTitleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoIdenticalTestTitleOptionsSchema]);
-
 export const noImpliedEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImpliedEvalOptionsSchema]);
 
-export const noInlineStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInlineStylesOptionsSchema]);
+export const noInvalidFileInputAcceptConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInvalidFileInputAcceptOptionsSchema]);
 
-export const noJsxLeakedDollarConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxLeakedDollarOptionsSchema]);
+export const noInvalidPropertyInitValueConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInvalidPropertyInitValueOptionsSchema]);
 
-export const noJsxNamespaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxNamespaceOptionsSchema]);
+export const noInvalidThisConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInvalidThisOptionsSchema]);
 
-export const noLoopFuncConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLoopFuncOptionsSchema]);
+export const noJsonUnsafeValuesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsonUnsafeValuesOptionsSchema]);
+
+export const noMagicArrayFlatDepthConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMagicArrayFlatDepthOptionsSchema]);
+
+export const noMeaninglessVoidOperatorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMeaninglessVoidOperatorOptionsSchema]);
 
 export const noMisleadingReturnTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisleadingReturnTypeOptionsSchema]);
 
+export const noMisplacedListElementsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisplacedListElementsOptionsSchema]);
+
 export const noMisusedPromisesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisusedPromisesOptionsSchema]);
 
-export const noPlaywrightElementHandleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightElementHandleOptionsSchema]);
+export const noNegationInEqualityCheckConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNegationInEqualityCheckOptionsSchema]);
 
-export const noPlaywrightEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightEvalOptionsSchema]);
+export const noNestedSwitchConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNestedSwitchOptionsSchema]);
 
-export const noPlaywrightForceOptionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightForceOptionOptionsSchema]);
+export const noNestedTemplateLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNestedTemplateLiteralsOptionsSchema]);
 
-export const noPlaywrightMissingAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightMissingAwaitOptionsSchema]);
+export const noNewRequireConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNewRequireOptionsSchema]);
 
-export const noPlaywrightNetworkidleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightNetworkidleOptionsSchema]);
+export const noNonScalableViewportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNonScalableViewportOptionsSchema]);
 
-export const noPlaywrightPagePauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightPagePauseOptionsSchema]);
+export const noNullConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoNullOptionsSchema]);
 
-export const noPlaywrightUselessAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightUselessAwaitOptionsSchema]);
+export const noObjectConstructorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoObjectConstructorOptionsSchema]);
 
-export const noPlaywrightWaitForNavigationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForNavigationOptionsSchema]);
+export const noObsoleteAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoObsoleteAttributesOptionsSchema]);
 
-export const noPlaywrightWaitForSelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForSelectorOptionsSchema]);
+export const noObsoleteTagsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoObsoleteTagsOptionsSchema]);
 
-export const noPlaywrightWaitForTimeoutConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForTimeoutOptionsSchema]);
+export const noOctalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoOctalOptionsSchema]);
 
-export const noReactNativeDeepImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeDeepImportsOptionsSchema]);
+export const noPathConcatConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPathConcatOptionsSchema]);
 
-export const noReactNativeLiteralColorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeLiteralColorsOptionsSchema]);
+export const noPlaywrightNthMethodsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightNthMethodsOptionsSchema]);
 
-export const noReactNativeRawTextConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeRawTextOptionsSchema]);
+export const noProcessExitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoProcessExitOptionsSchema]);
 
-export const noReactStringRefsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactStringRefsOptionsSchema]);
+export const noPromiseExecutorReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPromiseExecutorReturnOptionsSchema]);
+
+export const noReactObjectTypeAsDefaultPropConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactObjectTypeAsDefaultPropOptionsSchema]);
 
 export const noRestrictedDependenciesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedDependenciesOptionsSchema]);
 
-export const noTopLevelLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTopLevelLiteralsOptionsSchema]);
+export const noReturnArrayPushConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReturnArrayPushOptionsSchema]);
+
+export const noReturnInFinallyConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReturnInFinallyOptionsSchema]);
+
+export const noSelfImportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSelfImportOptionsSchema]);
+
+export const noSelfNestedLayerConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSelfNestedLayerOptionsSchema]);
+
+export const noShortTimeValuesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoShortTimeValuesOptionsSchema]);
+
+export const noSvelteAddEventListenerConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteAddEventListenerOptionsSchema]);
+
+export const noSvelteAtDebugTagsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteAtDebugTagsOptionsSchema]);
+
+export const noSvelteAtHtmlTagsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteAtHtmlTagsOptionsSchema]);
+
+export const noSvelteClassDirectiveConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteClassDirectiveOptionsSchema]);
+
+export const noSvelteExportLetConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteExportLetOptionsSchema]);
+
+export const noSvelteInspectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteInspectOptionsSchema]);
+
+export const noSvelteInternalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteInternalOptionsSchema]);
+
+export const noSvelteLegacyConstConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteLegacyConstOptionsSchema]);
+
+export const noSvelteObjectInTextMustachesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteObjectInTextMustachesOptionsSchema]);
+
+export const noSvelteUnnecessaryStateWrapConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteUnnecessaryStateWrapOptionsSchema]);
+
+export const noSvelteUselessDerivedByConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSvelteUselessDerivedByOptionsSchema]);
+
+export const noTailwindArbitraryValueConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTailwindArbitraryValueOptionsSchema]);
+
+export const noTailwindLegacyUtilitiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTailwindLegacyUtilitiesOptionsSchema]);
+
+export const noTailwindRawColorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTailwindRawColorsOptionsSchema]);
+
+export const noTanstackQueryRestDestructuringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTanstackQueryRestDestructuringOptionsSchema]);
+
+export const noThisOutsideOfClassConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoThisOutsideOfClassOptionsSchema]);
 
 export const noUndeclaredClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUndeclaredClassesOptionsSchema]);
 
-export const noUnnecessaryTemplateExpressionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnnecessaryTemplateExpressionOptionsSchema]);
+export const noUndeclaredCustomPropertiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUndeclaredCustomPropertiesOptionsSchema]);
+
+export const noUnmodifiedLoopConditionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnmodifiedLoopConditionOptionsSchema]);
+
+export const noUnreadableForOfExpressionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnreadableForOfExpressionOptionsSchema]);
+
+export const noUnreadableIifeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnreadableIifeOptionsSchema]);
+
+export const noUnsafeIframeSandboxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafeIframeSandboxOptionsSchema]);
 
 export const noUnsafePlusOperandsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafePlusOperandsOptionsSchema]);
 
-export const noUntrustedLicensesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUntrustedLicensesOptionsSchema]);
+export const noUnsafeReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafeReturnOptionsSchema]);
+
+export const noUnsafeTypeAssertionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafeTypeAssertionOptionsSchema]);
+
+export const noUnsafeUnaryMinusConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafeUnaryMinusOptionsSchema]);
 
 export const noUnusedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedClassesOptionsSchema]);
 
+export const noUselessAssignmentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessAssignmentOptionsSchema]);
+
+export const noUselessCallConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessCallOptionsSchema]);
+
+export const noUselessDateGetTimeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessDateGetTimeOptionsSchema]);
+
+export const noUselessRecursionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessRecursionOptionsSchema]);
+
+export const noUselessSpliceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessSpliceOptionsSchema]);
+
 export const noUselessTypeConversionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessTypeConversionOptionsSchema]);
 
-export const noVueImportCompilerMacrosConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueImportCompilerMacrosOptionsSchema]);
+export const noVueBooleanDefaultConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueBooleanDefaultOptionsSchema]);
 
-export const noVueRefAsOperandConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueRefAsOperandOptionsSchema]);
+export const noVueComputedPropertiesInDataConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueComputedPropertiesInDataOptionsSchema]);
 
-export const noVueVOnNumberValuesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVOnNumberValuesOptionsSchema]);
+export const noVueDeprecatedDeleteSetConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDeprecatedDeleteSetOptionsSchema]);
 
-export const useArraySomeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseArraySomeOptionsSchema]);
+export const noVueDeprecatedListenersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDeprecatedListenersOptionsSchema]);
+
+export const noVueDeprecatedRouterLinkTagPropConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDeprecatedRouterLinkTagPropOptionsSchema]);
+
+export const noVueDeprecatedScopeAttributeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDeprecatedScopeAttributeOptionsSchema]);
+
+export const noVueDeprecatedScopedSlotsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueDeprecatedScopedSlotsOptionsSchema]);
+
+export const noVueLifecycleAfterAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueLifecycleAfterAwaitOptionsSchema]);
+
+export const noVueMultipleSlotArgsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueMultipleSlotArgsOptionsSchema]);
+
+export const noVueMutatingPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueMutatingPropsOptionsSchema]);
+
+export const noVueRequiredPropWithDefaultConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueRequiredPropWithDefaultOptionsSchema]);
+
+export const noVueRootVIfConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueRootVIfOptionsSchema]);
+
+export const noVueShadowNativeEventsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueShadowNativeEventsOptionsSchema]);
+
+export const noVueSideEffectsInComputedConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueSideEffectsInComputedOptionsSchema]);
+
+export const noVueUndeclaredDirectivesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueUndeclaredDirectivesOptionsSchema]);
+
+export const noVueUnusedEmitDeclarationsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueUnusedEmitDeclarationsOptionsSchema]);
+
+export const noVueUnusedRefsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueUnusedRefsOptionsSchema]);
+
+export const noVueVHtmlConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVHtmlOptionsSchema]);
+
+export const noVueVTextConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVTextOptionsSchema]);
+
+export const noVueVTextVHtmlOnComponentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueVTextVHtmlOnComponentOptionsSchema]);
+
+export const noVueWatchAfterAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoVueWatchAfterAwaitOptionsSchema]);
+
+export const noXorAsExponentiationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoXorAsExponentiationOptionsSchema]);
+
+export const noYamlBooleanKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoYamlBooleanKeysOptionsSchema]);
+
+export const noZeroFractionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoZeroFractionsOptionsSchema]);
+
+export const noZeroLengthUnitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoZeroLengthUnitOptionsSchema]);
+
+export const useAstroClientOnlyDirectiveValueConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAstroClientOnlyDirectiveValueOptionsSchema]);
 
 export const useAwaitThenableConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAwaitThenableOptionsSchema]);
 
-export const useBaselineConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseBaselineOptionsSchema]);
+export const useBetterDomTraversingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseBetterDomTraversingOptionsSchema]);
 
-export const useConsistentTestItConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentTestItOptionsSchema]);
+export const useBigintLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseBigintLiteralsOptionsSchema]);
+
+export const useBlockStatementOverIifeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseBlockStatementOverIifeOptionsSchema]);
+
+export const useCapitalizedConstructorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseCapitalizedConstructorsOptionsSchema]);
+
+export const useConsistentFunctionStyleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentFunctionStyleOptionsSchema]);
+
+export const useConsistentHeadingLevelConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentHeadingLevelOptionsSchema]);
+
+export const useConsistentJsonFileReadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentJsonFileReadOptionsSchema]);
+
+export const useConsistentLightnessNotationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentLightnessNotationOptionsSchema]);
+
+export const useConsistentObjectKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentObjectKeysOptionsSchema]);
+
+export const useConsistentUnicodeBomConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentUnicodeBomOptionsSchema]);
+
+export const useControlLabelConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseControlLabelOptionsSchema]);
 
 export const useDisposablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDisposablesOptionsSchema]);
 
-export const useDomNodeTextContentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDomNodeTextContentOptionsSchema]);
-
-export const useDomQuerySelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDomQuerySelectorOptionsSchema]);
-
 export const useExhaustiveSwitchCasesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveSwitchCasesOptionsSchema]);
 
-export const useExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExpectOptionsSchema]);
+export const useExpectToContainConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExpectToContainOptionsSchema]);
 
 export const useExplicitReturnTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitReturnTypeOptionsSchema]);
 
 export const useExplicitTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExplicitTypeOptionsSchema]);
 
-export const useIframeSandboxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseIframeSandboxOptionsSchema]);
+export const useFencedCodeLanguageConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseFencedCodeLanguageOptionsSchema]);
 
-export const useImportsFirstConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImportsFirstOptionsSchema]);
+export const useFlatMathMinMaxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseFlatMathMinMaxOptionsSchema]);
 
 export const useIncludesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseIncludesOptionsSchema]);
 
-export const useMathMinMaxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMathMinMaxOptionsSchema]);
+export const useIteratorZipConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseIteratorZipOptionsSchema]);
 
-export const useNamedCaptureGroupConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNamedCaptureGroupOptionsSchema]);
+export const useLayeredStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLayeredStylesOptionsSchema]);
+
+export const useLogicalPropertiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLogicalPropertiesOptionsSchema]);
+
+export const useLowercaseTestTitleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLowercaseTestTitleOptionsSchema]);
+
+export const useMatchingFunctionNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMatchingFunctionNameOptionsSchema]);
+
+export const useMathAbsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMathAbsOptionsSchema]);
+
+export const useMathTruncConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseMathTruncOptionsSchema]);
+
+export const useModernMathApisConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseModernMathApisOptionsSchema]);
+
+export const useNamedFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNamedFunctionOptionsSchema]);
+
+export const useNamedLayerConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNamedLayerOptionsSchema]);
 
 export const useNullishCoalescingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNullishCoalescingOptionsSchema]);
 
-export const usePlaywrightValidDescribeCallbackConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUsePlaywrightValidDescribeCallbackOptionsSchema]);
+export const usePackageJsonValidCpuConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUsePackageJsonValidCpuOptionsSchema]);
 
-export const useQwikLoaderLocationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseQwikLoaderLocationOptionsSchema]);
+export const usePackageJsonValidEnginesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUsePackageJsonValidEnginesOptionsSchema]);
 
-export const useReactAsyncServerFunctionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactAsyncServerFunctionOptionsSchema]);
+export const usePromiseRejectErrorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUsePromiseRejectErrorsOptionsSchema]);
+
+export const useReactCompilerConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactCompilerOptionsSchema]);
 
 export const useReactFunctionComponentDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactFunctionComponentDefinitionOptionsSchema]);
 
-export const useReactNativePlatformComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactNativePlatformComponentsOptionsSchema]);
+export const useReactNamingConventionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactNamingConventionOptionsSchema]);
 
-export const useReduceTypeParameterConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReduceTypeParameterOptionsSchema]);
+export const useReactNativeValidPlatformColorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactNativeValidPlatformColorsOptionsSchema]);
 
 export const useRegexpExecConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexpExecOptionsSchema]);
 
-export const useRegexpTestConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRegexpTestOptionsSchema]);
+export const useSimplifiedBooleanReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSimplifiedBooleanReturnOptionsSchema]);
 
-export const useScopedStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseScopedStylesOptionsSchema]);
+export const useSingleTopLevelHeadingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSingleTopLevelHeadingOptionsSchema]);
 
-export const useSortedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSortedClassesOptionsSchema]);
+export const useStrictBooleanExpressionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseStrictBooleanExpressionsOptionsSchema]);
 
 export const useStringStartsEndsWithConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseStringStartsEndsWithOptionsSchema]);
 
+export const useSvelteEventDispatcherTypesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSvelteEventDispatcherTypesOptionsSchema]);
+
+export const useSvelteKitResolveConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSvelteKitResolveOptionsSchema]);
+
+export const useSvelteKitRuneImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSvelteKitRuneImportsOptionsSchema]);
+
+export const useSvelteReactiveClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSvelteReactiveClassesOptionsSchema]);
+
 export const useSvelteRequireEachKeyConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSvelteRequireEachKeyOptionsSchema]);
 
-export const useTestHooksInOrderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTestHooksInOrderOptionsSchema]);
+export const useSvelteShorthandDirectiveConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSvelteShorthandDirectiveOptionsSchema]);
 
-export const useTestHooksOnTopConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTestHooksOnTopOptionsSchema]);
+export const useTailwindShorthandClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTailwindShorthandClassesOptionsSchema]);
 
-export const useThisInClassMethodsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseThisInClassMethodsOptionsSchema]);
+export const useTailwindSortedClassesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTailwindSortedClassesOptionsSchema]);
 
-export const useUnicodeRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnicodeRegexOptionsSchema]);
+export const useTailwindStaticClassStringsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTailwindStaticClassStringsOptionsSchema]);
 
-export const useVarsOnTopConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVarsOnTopOptionsSchema]);
+export const useTopLevelHeadingConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTopLevelHeadingOptionsSchema]);
 
-export const useVueConsistentDefinePropsDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema]);
+export const useUnaryMinusConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnaryMinusOptionsSchema]);
 
-export const useVueNextTickPromiseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueNextTickPromiseOptionsSchema]);
+export const useValidTestTitleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseValidTestTitleOptionsSchema]);
 
-export const useVueValidVForConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVForOptionsSchema]);
+export const useVueBaseImportConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueBaseImportOptionsSchema]);
+
+export const useVueComponentIsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueComponentIsOptionsSchema]);
+
+export const useVueConsistentEventHyphenationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentEventHyphenationOptionsSchema]);
+
+export const useVueDefineOptionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueDefineOptionsOptionsSchema]);
+
+export const useVueDefinePropsDestructuringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueDefinePropsDestructuringOptionsSchema]);
+
+export const useVueMatchingComponentFileNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueMatchingComponentFileNameOptionsSchema]);
+
+export const useVueTemplateRefConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueTemplateRefOptionsSchema]);
+
+export const useVueToggleInsideTransitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueToggleInsideTransitionOptionsSchema]);
+
+export const useVueTypedPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueTypedPropsOptionsSchema]);
+
+export const useVueTypedRefConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueTypedRefOptionsSchema]);
+
+export const useVueVModelConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueVModelOptionsSchema]);
+
+export const useVueVOnExactConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueVOnExactOptionsSchema]);
+
+export const useVueValidDefineEmitsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidDefineEmitsOptionsSchema]);
+
+export const useVueValidDefinePropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidDefinePropsOptionsSchema]);
+
+export const useVueValidVIsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVIsOptionsSchema]);
+
+export const useVueValidVMemoConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVMemoOptionsSchema]);
+
+export const useVueValidVModelConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVModelOptionsSchema]);
+
+export const useVueValidVShowConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVShowOptionsSchema]);
+
+export const useVueValidVSlotConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueValidVSlotOptionsSchema]);
+
+export const useWhileLoopConditionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseWhileLoopConditionOptionsSchema]);
+
+export const noJsRestrictedPropertiesOptionsSchema = z.object({
+    /**
+     * Restriction entries for object/property access.
+     *
+     * Each entry can describe one of these cases:
+     *
+     * - exact object/property match:
+     *   `{ "object": "require", "property": "ensure" }`
+     * - property-wide restriction with allowed objects:
+     *   `{ "property": "__defineGetter__", "allowObjects": ["Object"] }`
+     * - object-wide restriction with allowed properties:
+     *   `{ "object": "arguments", "allowProperties": ["length"] }`
+     */
+    entries: z.array(restrictedPropertyEntrySchema).optional().nullable()
+});
+
+export const noTailwindRestyledComponentsOptionsSchema = z.object({
+    /**
+     * Additional component-specific exceptions. Defaults to an empty list.
+     */
+    allow: z.array(tailwindComponentAllowanceSchema).optional().nullable()
+});
+
+export const useConsistentBlockLangOptionsSchema = z.object({
+    /**
+     * The top-level blocks to check in Vue and Svelte components.
+     *
+     * Each key is the tag name of a block, without angle brackets, such as
+     * `script`, `style`, or a Vue custom block like `i18n`. Blocks that aren't
+     * listed aren't checked. When this option is omitted, the rule doesn't
+     * check anything.
+     */
+    blocks: z.record(z.string(), blockLangOptionsSchema).optional().nullable()
+});
 
 export const noAccumulatingSpreadConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoAccumulatingSpreadOptionsSchema]);
 
@@ -6394,6 +9342,8 @@ export const noSyncScriptsConfigurationSchema = z.union([rulePlainConfigurationS
 
 export const noUnwantedPolyfillioConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnwantedPolyfillioOptionsSchema]);
 
+export const useDomNodeTextContentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDomNodeTextContentOptionsSchema]);
+
 export const useGoogleFontPreconnectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseGoogleFontPreconnectOptionsSchema]);
 
 export const useSolidForComponentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSolidForComponentOptionsSchema]);
@@ -6413,6 +9363,8 @@ export const noGlobalEvalConfigurationSchema = z.union([rulePlainConfigurationSc
 export const noScriptUrlConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoScriptUrlOptionsSchema]);
 
 export const noSecretsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSecretsOptionsSchema]);
+
+export const useIframeSandboxConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseIframeSandboxOptionsSchema]);
 
 export const noCommonJsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoCommonJsOptionsSchema]);
 
@@ -6442,6 +9394,8 @@ export const noIncrementDecrementConfigurationSchema = z.union([rulePlainConfigu
 
 export const noInferrableTypesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInferrableTypesOptionsSchema]);
 
+export const noInlineStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoInlineStylesOptionsSchema]);
+
 export const noJsxLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxLiteralsOptionsSchema]);
 
 export const noMagicNumbersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMagicNumbersOptionsSchema]);
@@ -6462,7 +9416,15 @@ export const noParameterAssignConfigurationSchema = z.union([rulePlainConfigurat
 
 export const noParameterPropertiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoParameterPropertiesOptionsSchema]);
 
+export const noPlaywrightElementHandleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightElementHandleOptionsSchema]);
+
+export const noPlaywrightEvalConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightEvalOptionsSchema]);
+
+export const noPlaywrightWaitForSelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForSelectorOptionsSchema]);
+
 export const noProcessEnvConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoProcessEnvOptionsSchema]);
+
+export const noReactNativeLiteralColorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeLiteralColorsOptionsSchema]);
 
 export const noRestrictedGlobalsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedGlobalsOptionsSchema]);
 
@@ -6473,6 +9435,8 @@ export const noShoutyConstantsConfigurationSchema = z.union([rulePlainConfigurat
 export const noSubstrConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoSubstrOptionsSchema]);
 
 export const noTernaryConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTernaryOptionsSchema]);
+
+export const noTopLevelLiteralsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTopLevelLiteralsOptionsSchema]);
 
 export const noUnusedTemplateLiteralConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedTemplateLiteralOptionsSchema]);
 
@@ -6516,6 +9480,8 @@ export const useConsistentMethodSignaturesConfigurationSchema = z.union([rulePla
 
 export const useConsistentObjectDefinitionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentObjectDefinitionsOptionsSchema]);
 
+export const useConsistentTestItConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentTestItOptionsSchema]);
+
 export const useConsistentTypeDefinitionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentTypeDefinitionsOptionsSchema]);
 
 export const useConstConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConstOptionsSchema]);
@@ -6525,6 +9491,8 @@ export const useDefaultParameterLastConfigurationSchema = z.union([rulePlainConf
 export const useDefaultSwitchClauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDefaultSwitchClauseOptionsSchema]);
 
 export const useDeprecatedReasonConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDeprecatedReasonOptionsSchema]);
+
+export const useDomQuerySelectorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDomQuerySelectorOptionsSchema]);
 
 export const useEnumInitializersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseEnumInitializersOptionsSchema]);
 
@@ -6552,11 +9520,15 @@ export const useGroupedAccessorPairsConfigurationSchema = z.union([rulePlainConf
 
 export const useImportTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImportTypeOptionsSchema]);
 
+export const useImportsFirstConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseImportsFirstOptionsSchema]);
+
 export const useInputNameConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseInputNameOptionsSchema]);
 
 export const useLiteralEnumMembersConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLiteralEnumMembersOptionsSchema]);
 
 export const useLoneExecutableDefinitionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseLoneExecutableDefinitionOptionsSchema]);
+
+export const useNamedCaptureGroupConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNamedCaptureGroupOptionsSchema]);
 
 export const useNodeAssertStrictConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNodeAssertStrictOptionsSchema]);
 
@@ -6569,6 +9541,8 @@ export const useObjectSpreadConfigurationSchema = z.union([rulePlainConfiguratio
 export const useReactFunctionComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReactFunctionComponentsOptionsSchema]);
 
 export const useReadonlyClassPropertiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReadonlyClassPropertiesOptionsSchema]);
+
+export const useReduceTypeParameterConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseReduceTypeParameterOptionsSchema]);
 
 export const useSelfClosingElementsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseSelfClosingElementsOptionsSchema]);
 
@@ -6584,13 +9558,25 @@ export const useSymbolDescriptionConfigurationSchema = z.union([rulePlainConfigu
 
 export const useTemplateConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTemplateOptionsSchema]);
 
+export const useTestHooksInOrderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTestHooksInOrderOptionsSchema]);
+
+export const useTestHooksOnTopConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTestHooksOnTopOptionsSchema]);
+
+export const useThisInClassMethodsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseThisInClassMethodsOptionsSchema]);
+
 export const useThrowNewErrorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseThrowNewErrorOptionsSchema]);
 
 export const useThrowOnlyErrorConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseThrowOnlyErrorOptionsSchema]);
 
 export const useTrimStartEndConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseTrimStartEndOptionsSchema]);
 
+export const useUnicodeRegexConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnicodeRegexOptionsSchema]);
+
 export const useUnifiedTypeSignaturesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseUnifiedTypeSignaturesOptionsSchema]);
+
+export const useVarsOnTopConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVarsOnTopOptionsSchema]);
+
+export const useVueConsistentDefinePropsDeclarationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentDefinePropsDeclarationOptionsSchema]);
 
 export const useVueConsistentVBindStyleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueConsistentVBindStyleOptionsSchema]);
 
@@ -6601,6 +9587,8 @@ export const useVueDefineMacrosOrderConfigurationSchema = z.union([rulePlainConf
 export const useVueHyphenatedAttributesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueHyphenatedAttributesOptionsSchema]);
 
 export const useVueMultiWordComponentNamesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueMultiWordComponentNamesOptionsSchema]);
+
+export const useVueNextTickPromiseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseVueNextTickPromiseOptionsSchema]);
 
 export const patternsSchema = patternOptionsSchema;
 
@@ -6663,6 +9651,8 @@ export const noCommentTextConfigurationSchema = z.union([rulePlainConfigurationS
 
 export const noCompareNegZeroConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoCompareNegZeroOptionsSchema]);
 
+export const noConditionalExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConditionalExpectOptionsSchema]);
+
 export const noConfusingLabelsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConfusingLabelsOptionsSchema]);
 
 export const noConfusingVoidTypeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoConfusingVoidTypeOptionsSchema]);
@@ -6686,6 +9676,10 @@ export const noDocumentCookieConfigurationSchema = z.union([rulePlainConfigurati
 export const noDocumentImportInPageConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDocumentImportInPageOptionsSchema]);
 
 export const noDoubleEqualsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDoubleEqualsOptionsSchema]);
+
+export const noDrizzleDeleteWithoutWhereConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDrizzleDeleteWithoutWhereOptionsSchema]);
+
+export const noDrizzleUpdateWithoutWhereConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDrizzleUpdateWithoutWhereOptionsSchema]);
 
 export const noDuplicateAtImportRulesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateAtImportRulesOptionsSchema]);
 
@@ -6715,6 +9709,8 @@ export const noDuplicateParametersConfigurationSchema = z.union([rulePlainConfig
 
 export const noDuplicatePropertiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicatePropertiesOptionsSchema]);
 
+export const noDuplicateSelectorsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateSelectorsOptionsSchema]);
+
 export const noDuplicateSelectorsKeyframeBlockConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateSelectorsKeyframeBlockOptionsSchema]);
 
 export const noDuplicateTestHooksConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoDuplicateTestHooksOptionsSchema]);
@@ -6726,6 +9722,8 @@ export const noEmptyBlockConfigurationSchema = z.union([rulePlainConfigurationSc
 export const noEmptyBlockStatementsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyBlockStatementsOptionsSchema]);
 
 export const noEmptyInterfaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyInterfaceOptionsSchema]);
+
+export const noEmptyObjectKeysConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptyObjectKeysOptionsSchema]);
 
 export const noEmptySourceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoEmptySourceOptionsSchema]);
 
@@ -6755,6 +9753,8 @@ export const noGlobalIsNanConfigurationSchema = z.union([rulePlainConfigurationS
 
 export const noHeadImportInDocumentConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoHeadImportInDocumentOptionsSchema]);
 
+export const noIdenticalTestTitleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoIdenticalTestTitleOptionsSchema]);
+
 export const noImplicitAnyLetConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImplicitAnyLetOptionsSchema]);
 
 export const noImportAssignConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoImportAssignOptionsSchema]);
@@ -6765,9 +9765,13 @@ export const noImportantInKeyframeConfigurationSchema = z.union([rulePlainConfig
 
 export const noIrregularWhitespaceConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoIrregularWhitespaceOptionsSchema]);
 
+export const noJsxLeakedDollarConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsxLeakedDollarOptionsSchema]);
+
 export const noLabelVarConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLabelVarOptionsSchema]);
 
 export const noLeakedRenderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLeakedRenderOptionsSchema]);
+
+export const noLoopFuncConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoLoopFuncOptionsSchema]);
 
 export const noMisleadingCharacterClassConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoMisleadingCharacterClassOptionsSchema]);
 
@@ -6785,6 +9789,16 @@ export const noOctalEscapeConfigurationSchema = z.union([rulePlainConfigurationS
 
 export const noParametersOnlyUsedInRecursionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoParametersOnlyUsedInRecursionOptionsSchema]);
 
+export const noPlaywrightForceOptionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightForceOptionOptionsSchema]);
+
+export const noPlaywrightNetworkidleConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightNetworkidleOptionsSchema]);
+
+export const noPlaywrightPagePauseConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightPagePauseOptionsSchema]);
+
+export const noPlaywrightWaitForNavigationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForNavigationOptionsSchema]);
+
+export const noPlaywrightWaitForTimeoutConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPlaywrightWaitForTimeoutOptionsSchema]);
+
 export const noProtoConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoProtoOptionsSchema]);
 
 export const noPrototypeBuiltinsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoPrototypeBuiltinsOptionsSchema]);
@@ -6793,7 +9807,11 @@ export const noQuickfixBiomeConfigurationSchema = z.union([rulePlainConfiguratio
 
 export const noReactForwardRefConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactForwardRefOptionsSchema]);
 
+export const noReactNativeDeepImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactNativeDeepImportsOptionsSchema]);
+
 export const noReactSpecificPropsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactSpecificPropsOptionsSchema]);
+
+export const noReactStringRefsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoReactStringRefsOptionsSchema]);
 
 export const noRedeclareConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRedeclareOptionsSchema]);
 
@@ -6835,6 +9853,8 @@ export const noUnsafeDeclarationMergingConfigurationSchema = z.union([rulePlainC
 
 export const noUnsafeNegationConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnsafeNegationOptionsSchema]);
 
+export const noUntrustedLicensesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUntrustedLicensesOptionsSchema]);
+
 export const noUnusedExpressionsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedExpressionsOptionsSchema]);
 
 export const noUselessEscapeInStringConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUselessEscapeInStringOptionsSchema]);
@@ -6853,6 +9873,8 @@ export const useArraySortCompareConfigurationSchema = z.union([rulePlainConfigur
 
 export const useAwaitConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseAwaitOptionsSchema]);
 
+export const useBaselineConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseBaselineOptionsSchema]);
+
 export const useBiomeIgnoreFolderConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseBiomeIgnoreFolderOptionsSchema]);
 
 export const useDefaultSwitchClauseLastConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDefaultSwitchClauseLastOptionsSchema]);
@@ -6860,6 +9882,8 @@ export const useDefaultSwitchClauseLastConfigurationSchema = z.union([rulePlainC
 export const useDeprecatedDateConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseDeprecatedDateOptionsSchema]);
 
 export const useErrorMessageConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseErrorMessageOptionsSchema]);
+
+export const useExpectConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExpectOptionsSchema]);
 
 export const useGetterReturnConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseGetterReturnOptionsSchema]);
 
@@ -6877,6 +9901,8 @@ export const useNumberToFixedDigitsArgumentConfigurationSchema = z.union([rulePl
 
 export const useRequiredScriptsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseRequiredScriptsOptionsSchema]);
 
+export const useScopedStylesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseScopedStylesOptionsSchema]);
+
 export const useStaticResponseMethodsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseStaticResponseMethodsOptionsSchema]);
 
 export const useStrictModeConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseStrictModeOptionsSchema]);
@@ -6886,11 +9912,11 @@ export const groupMatcherSchema = z.union([importMatcherSchema, sourceMatcherSch
 export const importGroupSchema = z.union([groupMatcherSchema, z.array(groupMatcherSchema)]).nullable();
 
 /**
- * A list of rules that belong to this group
+ * Configures all rules in one lint group.
  */
 export const a11YSchema = z.object({
     /**
-     * Enforce that the accesskey attribute is not used on any HTML element.
+     * Disallow the accesskey attribute.
      * See https://biomejs.dev/linter/rules/no-access-key
      */
     noAccessKey: noAccessKeyConfigurationSchema.optional().nullable(),
@@ -6905,7 +9931,7 @@ export const a11YSchema = z.object({
      */
     noAriaHiddenOnFocusable: noAriaHiddenOnFocusableConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that elements that do not support ARIA roles, states, and properties do not have those attributes.
+     * Disallow ARIA attributes on elements that cannot use them.
      * See https://biomejs.dev/linter/rules/no-aria-unsupported-elements
      */
     noAriaUnsupportedElements: noAriaUnsupportedElementsConfigurationSchema.optional().nullable(),
@@ -6945,12 +9971,12 @@ export const a11YSchema = z.object({
      */
     noNoninteractiveElementToInteractiveRole: noNoninteractiveElementToInteractiveRoleConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that tabindex is not assigned to non-interactive HTML elements.
+     * Require a negative integer tabindex on non-interactive elements.
      * See https://biomejs.dev/linter/rules/no-noninteractive-tabindex
      */
     noNoninteractiveTabindex: noNoninteractiveTabindexConfigurationSchema.optional().nullable(),
     /**
-     * Prevent the usage of positive integers on tabindex attribute.
+     * Disallow positive values for the tabindex attribute.
      * See https://biomejs.dev/linter/rules/no-positive-tabindex
      */
     noPositiveTabindex: noPositiveTabindexConfigurationSchema.optional().nullable(),
@@ -6965,21 +9991,25 @@ export const a11YSchema = z.object({
      */
     noRedundantRoles: noRedundantRolesConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that static, visible elements (such as \<div>) that have click handlers use the valid role attribute.
+     * Require an appropriate role when a non-interactive element has event handlers.
      * See https://biomejs.dev/linter/rules/no-static-element-interactions
      */
     noStaticElementInteractions: noStaticElementInteractionsConfigurationSchema.optional().nullable(),
     /**
-     * Enforces the usage of the title element for the svg element.
+     * Require a supported labeling pattern for non-decorative SVG elements.
      * See https://biomejs.dev/linter/rules/no-svg-without-title
      */
     noSvgWithoutTitle: noSvgWithoutTitleConfigurationSchema.optional().nullable(),
     /**
-     * Enables a particular rule preset
+     * Selects the baseline set of lint rules for a non-nursery group. `recommended`
+     * enables the group's recommended rules, `all` enables all rules in the group, and
+     * `none` starts with no rules enabled in the group. Explicit rule settings override
+     * this group preset, which overrides `linter.rules.preset` for the group.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * Enables the recommended rules for this group
+     * Enables or disables the recommended rules in a non-nursery group. The group's
+     * `preset` setting takes precedence when both options are set.
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -7008,7 +10038,7 @@ export const a11YSchema = z.object({
      */
     useAriaPropsSupportedByRole: useAriaPropsSupportedByRoleConfigurationSchema.optional().nullable(),
     /**
-     * Enforces the usage and validity of the attribute type for the element button.
+     * Require an explicit, valid type on every \<button>.
      * See https://biomejs.dev/linter/rules/use-button-type
      */
     useButtonType: useButtonTypeConfigurationSchema.optional().nullable(),
@@ -7018,7 +10048,7 @@ export const a11YSchema = z.object({
      */
     useFocusableInteractive: useFocusableInteractiveConfigurationSchema.optional().nullable(),
     /**
-     * Disallow a missing generic family keyword within font families.
+     * Require a generic fallback in font-family lists.
      * See https://biomejs.dev/linter/rules/use-generic-font-names
      */
     useGenericFontNames: useGenericFontNamesConfigurationSchema.optional().nullable(),
@@ -7028,12 +10058,12 @@ export const a11YSchema = z.object({
      */
     useHeadingContent: useHeadingContentConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that html element has lang attribute.
+     * Require a lang attribute on the \<html> element.
      * See https://biomejs.dev/linter/rules/use-html-lang
      */
     useHtmlLang: useHtmlLangConfigurationSchema.optional().nullable(),
     /**
-     * Enforces the usage of the attribute title for the element iframe.
+     * Require a title on every \<iframe>.
      * See https://biomejs.dev/linter/rules/use-iframe-title
      */
     useIframeTitle: useIframeTitleConfigurationSchema.optional().nullable(),
@@ -7043,7 +10073,7 @@ export const a11YSchema = z.object({
      */
     useKeyWithClickEvents: useKeyWithClickEventsConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that onmouseover is accompanied by onfocus and onmouseout by onblur.
+     * Require keyboard equivalents for mouse hover events.
      * See https://biomejs.dev/linter/rules/use-key-with-mouse-events
      */
     useKeyWithMouseEvents: useKeyWithMouseEventsConfigurationSchema.optional().nullable(),
@@ -7058,12 +10088,12 @@ export const a11YSchema = z.object({
      */
     useSemanticElements: useSemanticElementsConfigurationSchema.optional().nullable(),
     /**
-     * Enforce that all anchors are valid, and they are navigable elements.
+     * Require anchors to provide a real navigation destination.
      * See https://biomejs.dev/linter/rules/use-valid-anchor
      */
     useValidAnchor: useValidAnchorConfigurationSchema.optional().nullable(),
     /**
-     * Ensures that ARIA properties aria-* are all valid.
+     * Disallow unknown aria-* attributes.
      * See https://biomejs.dev/linter/rules/use-valid-aria-props
      */
     useValidAriaProps: useValidAriaPropsConfigurationSchema.optional().nullable(),
@@ -7083,14 +10113,14 @@ export const a11YSchema = z.object({
      */
     useValidAutocomplete: useValidAutocompleteConfigurationSchema.optional().nullable(),
     /**
-     * Ensure that the attribute passed to the lang attribute is a correct ISO language and/or country.
+     * Require a supported language tag on the \<html> element.
      * See https://biomejs.dev/linter/rules/use-valid-lang
      */
     useValidLang: useValidLangConfigurationSchema.optional().nullable()
 });
 
 /**
- * A list of rules that belong to this group
+ * Configures all rules in one lint group.
  */
 export const complexitySchema = z.object({
     /**
@@ -7134,10 +10164,20 @@ export const complexitySchema = z.object({
      */
     noExcessiveLinesPerFunction: noExcessiveLinesPerFunctionConfigurationSchema.optional().nullable(),
     /**
+     * Enforce a maximum depth that callbacks can be nested.
+     * See https://biomejs.dev/linter/rules/no-excessive-nested-callbacks
+     */
+    noExcessiveNestedCallbacks: noExcessiveNestedCallbacksConfigurationSchema.optional().nullable(),
+    /**
      * This rule enforces a maximum depth to nested describe() in test files.
      * See https://biomejs.dev/linter/rules/no-excessive-nested-test-suites
      */
     noExcessiveNestedTestSuites: noExcessiveNestedTestSuitesConfigurationSchema.optional().nullable(),
+    /**
+     * Limit the number of classes in a selector.
+     * See https://biomejs.dev/linter/rules/no-excessive-selector-classes
+     */
+    noExcessiveSelectorClasses: noExcessiveSelectorClassesConfigurationSchema.optional().nullable(),
     /**
      * Disallow unnecessary boolean casts.
      * See https://biomejs.dev/linter/rules/no-extra-boolean-cast
@@ -7159,10 +10199,15 @@ export const complexitySchema = z.object({
      */
     noImplicitCoercions: noImplicitCoercionsConfigurationSchema.optional().nullable(),
     /**
-     * Disallow the use of the !important style.
+     * Disallow !important declarations.
      * See https://biomejs.dev/linter/rules/no-important-styles
      */
     noImportantStyles: noImportantStylesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary await for Playwright methods that don't return promises.
+     * See https://biomejs.dev/linter/rules/no-playwright-useless-await
+     */
+    noPlaywrightUselessAwait: noPlaywrightUselessAwaitConfigurationSchema.optional().nullable(),
     /**
      * Checks if a default export exports the same symbol as a named export.
      * See https://biomejs.dev/linter/rules/no-redundant-default-export
@@ -7179,12 +10224,17 @@ export const complexitySchema = z.object({
      */
     noThisInStatic: noThisInStaticConfigurationSchema.optional().nullable(),
     /**
+     * Disallow unnecessary template expressions.
+     * See https://biomejs.dev/linter/rules/no-unnecessary-template-expression
+     */
+    noUnnecessaryTemplateExpression: noUnnecessaryTemplateExpressionConfigurationSchema.optional().nullable(),
+    /**
      * Disallow unnecessary catch clauses.
      * See https://biomejs.dev/linter/rules/no-useless-catch
      */
     noUselessCatch: noUselessCatchConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unused catch bindings.
+     * Disallow unused error parameters in catch clauses.
      * See https://biomejs.dev/linter/rules/no-useless-catch-binding
      */
     noUselessCatchBinding: noUselessCatchBindingConfigurationSchema.optional().nullable(),
@@ -7209,7 +10259,7 @@ export const complexitySchema = z.object({
      */
     noUselessEscapeInRegex: noUselessEscapeInRegexConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unnecessary fragments.
+     * Disallow unnecessary JSX fragments.
      * See https://biomejs.dev/linter/rules/no-useless-fragments
      */
     noUselessFragments: noUselessFragmentsConfigurationSchema.optional().nullable(),
@@ -7254,7 +10304,7 @@ export const complexitySchema = z.object({
      */
     noUselessTernary: noUselessTernaryConfigurationSchema.optional().nullable(),
     /**
-     * Disallow useless this aliasing.
+     * Disallow aliases for this when this can be used directly.
      * See https://biomejs.dev/linter/rules/no-useless-this-alias
      */
     noUselessThisAlias: noUselessThisAliasConfigurationSchema.optional().nullable(),
@@ -7279,11 +10329,15 @@ export const complexitySchema = z.object({
      */
     noVoid: noVoidConfigurationSchema.optional().nullable(),
     /**
-     * Enables a particular rule preset
+     * Selects the baseline set of lint rules for a non-nursery group. `recommended`
+     * enables the group's recommended rules, `all` enables all rules in the group, and
+     * `none` starts with no rules enabled in the group. Explicit rule settings override
+     * this group preset, which overrides `linter.rules.preset` for the group.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * Enables the recommended rules for this group
+     * Enables or disables the recommended rules in a non-nursery group. The group's
+     * `preset` setting takes precedence when both options are set.
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -7291,6 +10345,11 @@ export const complexitySchema = z.object({
      * See https://biomejs.dev/linter/rules/use-array-find
      */
     useArrayFind: useArrayFindConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer Array.prototype.some() over verbose existence checks.
+     * See https://biomejs.dev/linter/rules/use-array-some
+     */
+    useArraySome: useArraySomeConfigurationSchema.optional().nullable(),
     /**
      * Use arrow functions over function expressions.
      * See https://biomejs.dev/linter/rules/use-arrow-function
@@ -7317,6 +10376,11 @@ export const complexitySchema = z.object({
      */
     useLiteralKeys: useLiteralKeysConfigurationSchema.optional().nullable(),
     /**
+     * Prefer Math.min() and Math.max() over ternaries for simple comparisons.
+     * See https://biomejs.dev/linter/rules/use-math-min-max
+     */
+    useMathMinMax: useMathMinMaxConfigurationSchema.optional().nullable(),
+    /**
      * Enforce a maximum number of parameters in function definitions.
      * See https://biomejs.dev/linter/rules/use-max-params
      */
@@ -7336,6 +10400,11 @@ export const complexitySchema = z.object({
      * See https://biomejs.dev/linter/rules/use-regex-literals
      */
     useRegexLiterals: useRegexLiteralsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of RegExp.prototype.test() over String.prototype.match() and RegExp.prototype.exec() in boolean contexts.
+     * See https://biomejs.dev/linter/rules/use-regexp-test
+     */
+    useRegexpTest: useRegexpTestConfigurationSchema.optional().nullable(),
     /**
      * Disallow number literal object member names which are not base 10 or use underscore as separator.
      * See https://biomejs.dev/linter/rules/use-simple-number-keys
@@ -7359,438 +10428,44 @@ export const ruleWithNoRestrictedElementsOptionsSchema = z.object({
 });
 
 export const ruleWithNoUnusedVariablesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noUnusedVariablesOptionsSchema.optional()
 });
 
 export const ruleWithUseExhaustiveDependenciesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useExhaustiveDependenciesOptionsSchema.optional()
 });
 
-/**
- * A list of rules that belong to this group
- */
-export const nurserySchema = z.object({
-    /**
-     * Require stringification to avoid values that only use the default object representation.
-     * See https://biomejs.dev/linter/rules/no-base-to-string
-     */
-    noBaseToString: noBaseToStringConfigurationSchema.optional().nullable(),
-    /**
-     * Disallows defining React components or custom hooks inside other functions.
-     * See https://biomejs.dev/linter/rules/no-component-hook-factories
-     */
-    noComponentHookFactories: noComponentHookFactoriesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow conditional expect() calls inside tests.
-     * See https://biomejs.dev/linter/rules/no-conditional-expect
-     */
-    noConditionalExpect: noConditionalExpectConfigurationSchema.optional().nullable(),
-    /**
-     * Require .where() to be called when using .delete() with Drizzle ORM.
-     * See https://biomejs.dev/linter/rules/no-drizzle-delete-without-where
-     */
-    noDrizzleDeleteWithoutWhere: noDrizzleDeleteWithoutWhereConfigurationSchema.optional().nullable(),
-    /**
-     * Require .where() to be called when using .update() with Drizzle ORM.
-     * See https://biomejs.dev/linter/rules/no-drizzle-update-without-where
-     */
-    noDrizzleUpdateWithoutWhere: noDrizzleUpdateWithoutWhereConfigurationSchema.optional().nullable(),
-    /**
-     * Require all fields of a type to be unique.
-     * See https://biomejs.dev/linter/rules/no-duplicate-field-definition-names
-     */
-    noDuplicateFieldDefinitionNames: noDuplicateFieldDefinitionNamesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow duplicate selectors.
-     * See https://biomejs.dev/linter/rules/no-duplicate-selectors
-     */
-    noDuplicateSelectors: noDuplicateSelectorsConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow empty keys in JSON objects.
-     * See https://biomejs.dev/linter/rules/no-empty-object-keys
-     */
-    noEmptyObjectKeys: noEmptyObjectKeysConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce a maximum depth that callbacks can be nested.
-     * See https://biomejs.dev/linter/rules/no-excessive-nested-callbacks
-     */
-    noExcessiveNestedCallbacks: noExcessiveNestedCallbacksConfigurationSchema.optional().nullable(),
-    /**
-     * Limit the number of classes in a selector.
-     * See https://biomejs.dev/linter/rules/no-excessive-selector-classes
-     */
-    noExcessiveSelectorClasses: noExcessiveSelectorClassesConfigurationSchema.optional().nullable(),
-    /**
-     * Require Promise-like statements to be handled appropriately.
-     * See https://biomejs.dev/linter/rules/no-floating-promises
-     */
-    noFloatingPromises: noFloatingPromisesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow identical titles in test suites and test cases.
-     * See https://biomejs.dev/linter/rules/no-identical-test-title
-     */
-    noIdenticalTestTitle: noIdenticalTestTitleConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow the use of eval()-like methods.
-     * See https://biomejs.dev/linter/rules/no-implied-eval
-     */
-    noImpliedEval: noImpliedEvalConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow the use of inline styles.
-     * See https://biomejs.dev/linter/rules/no-inline-styles
-     */
-    noInlineStyles: noInlineStylesConfigurationSchema.optional().nullable(),
-    /**
-     * Flags text nodes with a trailing $ before a JSX expression.
-     * See https://biomejs.dev/linter/rules/no-jsx-leaked-dollar
-     */
-    noJsxLeakedDollar: noJsxLeakedDollarConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow JSX namespace syntax.
-     * See https://biomejs.dev/linter/rules/no-jsx-namespace
-     */
-    noJsxNamespace: noJsxNamespaceConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow functions declared inside loops that capture unsafe outer variables.
-     * See https://biomejs.dev/linter/rules/no-loop-func
-     */
-    noLoopFunc: noLoopFuncConfigurationSchema.optional().nullable(),
-    /**
-     * Detect return type annotations that are misleadingly wider than what the implementation actually returns.
-     * See https://biomejs.dev/linter/rules/no-misleading-return-type
-     */
-    noMisleadingReturnType: noMisleadingReturnTypeConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow Promises to be used in places where they are almost certainly a mistake.
-     * See https://biomejs.dev/linter/rules/no-misused-promises
-     */
-    noMisusedPromises: noMisusedPromisesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow usage of element handles (page.$() and page.$$()).
-     * See https://biomejs.dev/linter/rules/no-playwright-element-handle
-     */
-    noPlaywrightElementHandle: noPlaywrightElementHandleConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow usage of page.$eval() and page.$$eval().
-     * See https://biomejs.dev/linter/rules/no-playwright-eval
-     */
-    noPlaywrightEval: noPlaywrightEvalConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow usage of the { force: true } option.
-     * See https://biomejs.dev/linter/rules/no-playwright-force-option
-     */
-    noPlaywrightForceOption: noPlaywrightForceOptionConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce Playwright async APIs to be awaited or returned.
-     * See https://biomejs.dev/linter/rules/no-playwright-missing-await
-     */
-    noPlaywrightMissingAwait: noPlaywrightMissingAwaitConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow usage of the networkidle option.
-     * See https://biomejs.dev/linter/rules/no-playwright-networkidle
-     */
-    noPlaywrightNetworkidle: noPlaywrightNetworkidleConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow using page.pause().
-     * See https://biomejs.dev/linter/rules/no-playwright-page-pause
-     */
-    noPlaywrightPagePause: noPlaywrightPagePauseConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow unnecessary await for Playwright methods that don't return promises.
-     * See https://biomejs.dev/linter/rules/no-playwright-useless-await
-     */
-    noPlaywrightUselessAwait: noPlaywrightUselessAwaitConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow using page.waitForNavigation().
-     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-navigation
-     */
-    noPlaywrightWaitForNavigation: noPlaywrightWaitForNavigationConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow using page.waitForSelector().
-     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-selector
-     */
-    noPlaywrightWaitForSelector: noPlaywrightWaitForSelectorConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow using page.waitForTimeout().
-     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-timeout
-     */
-    noPlaywrightWaitForTimeout: noPlaywrightWaitForTimeoutConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow deep imports from the react-native package.
-     * See https://biomejs.dev/linter/rules/no-react-native-deep-imports
-     */
-    noReactNativeDeepImports: noReactNativeDeepImportsConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow color literals in React Native styles.
-     * See https://biomejs.dev/linter/rules/no-react-native-literal-colors
-     */
-    noReactNativeLiteralColors: noReactNativeLiteralColorsConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow raw text outside \<Text> components in React Native.
-     * See https://biomejs.dev/linter/rules/no-react-native-raw-text
-     */
-    noReactNativeRawText: noReactNativeRawTextConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow string refs in React components.
-     * See https://biomejs.dev/linter/rules/no-react-string-refs
-     */
-    noReactStringRefs: noReactStringRefsConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow dependencies that are known to have better alternatives.
-     * See https://biomejs.dev/linter/rules/no-restricted-dependencies
-     */
-    noRestrictedDependencies: noRestrictedDependenciesConfigurationSchema.optional().nullable(),
-    /**
-     * Require the JSON top-level value to be an array or object.
-     * See https://biomejs.dev/linter/rules/no-top-level-literals
-     */
-    noTopLevelLiterals: noTopLevelLiteralsConfigurationSchema.optional().nullable(),
-    /**
-     * Reports CSS class names in HTML class attributes that are not defined in any \<style> block or linked stylesheet available to the file.
-     * See https://biomejs.dev/linter/rules/no-undeclared-classes
-     */
-    noUndeclaredClasses: noUndeclaredClassesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow unnecessary template expressions.
-     * See https://biomejs.dev/linter/rules/no-unnecessary-template-expression
-     */
-    noUnnecessaryTemplateExpression: noUnnecessaryTemplateExpressionConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow + operations with operands that are known to be unsafe.
-     * See https://biomejs.dev/linter/rules/no-unsafe-plus-operands
-     */
-    noUnsafePlusOperands: noUnsafePlusOperandsConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow dependencies with untrusted licenses.
-     * See https://biomejs.dev/linter/rules/no-untrusted-licenses
-     */
-    noUntrustedLicenses: noUntrustedLicensesConfigurationSchema.optional().nullable(),
-    /**
-     * Reports CSS class selectors that are never referenced in any JSX or HTML file.
-     * See https://biomejs.dev/linter/rules/no-unused-classes
-     */
-    noUnusedClasses: noUnusedClassesConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow type conversions that do not change the type of an expression.
-     * See https://biomejs.dev/linter/rules/no-useless-type-conversion
-     */
-    noUselessTypeConversion: noUselessTypeConversionConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow importing Vue compiler macros.
-     * See https://biomejs.dev/linter/rules/no-vue-import-compiler-macros
-     */
-    noVueImportCompilerMacros: noVueImportCompilerMacrosConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow the use of value wrapped by ref()(Composition API) as operand.
-     * See https://biomejs.dev/linter/rules/no-vue-ref-as-operand
-     */
-    noVueRefAsOperand: noVueRefAsOperandConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow deprecated number modifiers on Vue v-on directives.
-     * See https://biomejs.dev/linter/rules/no-vue-v-on-number-values
-     */
-    noVueVOnNumberValues: noVueVOnNumberValuesConfigurationSchema.optional().nullable(),
-    /**
-     * Enables a particular rule preset
-     */
-    preset: presetConfigSchema.optional().nullable(),
-    /**
-     * Enables the recommended rules for this group
-     */
-    recommended: z.boolean().optional().nullable(),
-    /**
-     * Prefer Array.prototype.some() over verbose existence checks.
-     * See https://biomejs.dev/linter/rules/use-array-some
-     */
-    useArraySome: useArraySomeConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that await is only used on Promise values.
-     * See https://biomejs.dev/linter/rules/use-await-thenable
-     */
-    useAwaitThenable: useAwaitThenableConfigurationSchema.optional().nullable(),
-    /**
-     * Disallow CSS properties, values, at-rules, functions, and selectors that are not part of the configured Baseline.
-     * See https://biomejs.dev/linter/rules/use-baseline
-     */
-    useBaseline: useBaselineConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce consistent use of it or test for test functions.
-     * See https://biomejs.dev/linter/rules/use-consistent-test-it
-     */
-    useConsistentTestIt: useConsistentTestItConfigurationSchema.optional().nullable(),
-    /**
-     * Detects a disposable object assigned to a variable without using or await using syntax.
-     * See https://biomejs.dev/linter/rules/use-disposables
-     */
-    useDisposables: useDisposablesConfigurationSchema.optional().nullable(),
-    /**
-     * Prefer .textContent over .innerText for DOM node text.
-     * See https://biomejs.dev/linter/rules/use-dom-node-text-content
-     */
-    useDomNodeTextContent: useDomNodeTextContentConfigurationSchema.optional().nullable(),
-    /**
-     * Prefer querySelector() and querySelectorAll() over older DOM query APIs.
-     * See https://biomejs.dev/linter/rules/use-dom-query-selector
-     */
-    useDomQuerySelector: useDomQuerySelectorConfigurationSchema.optional().nullable(),
-    /**
-     * Require switch-case statements to be exhaustive.
-     * See https://biomejs.dev/linter/rules/use-exhaustive-switch-cases
-     */
-    useExhaustiveSwitchCases: useExhaustiveSwitchCasesConfigurationSchema.optional().nullable(),
-    /**
-     * Ensure that test functions contain at least one expect() or similar assertion.
-     * See https://biomejs.dev/linter/rules/use-expect
-     */
-    useExpect: useExpectConfigurationSchema.optional().nullable(),
-    /**
-     * Require explicit return types on functions and class methods.
-     * See https://biomejs.dev/linter/rules/use-explicit-return-type
-     */
-    useExplicitReturnType: useExplicitReturnTypeConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce types in functions, methods, variables, and parameters.
-     * See https://biomejs.dev/linter/rules/use-explicit-type
-     */
-    useExplicitType: useExplicitTypeConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce the 'sandbox' attribute for 'iframe' elements.
-     * See https://biomejs.dev/linter/rules/use-iframe-sandbox
-     */
-    useIframeSandbox: useIframeSandboxConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that all imports appear at the top of the module.
-     * See https://biomejs.dev/linter/rules/use-imports-first
-     */
-    useImportsFirst: useImportsFirstConfigurationSchema.optional().nullable(),
-    /**
-     * Prefer Array#includes() over Array#indexOf() checks.
-     * See https://biomejs.dev/linter/rules/use-includes
-     */
-    useIncludes: useIncludesConfigurationSchema.optional().nullable(),
-    /**
-     * Prefer Math.min() and Math.max() over ternaries for simple comparisons.
-     * See https://biomejs.dev/linter/rules/use-math-min-max
-     */
-    useMathMinMax: useMathMinMaxConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce using named capture groups in regular expression.
-     * See https://biomejs.dev/linter/rules/use-named-capture-group
-     */
-    useNamedCaptureGroup: useNamedCaptureGroupConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce using the nullish coalescing operator (??) instead of logical or (||).
-     * See https://biomejs.dev/linter/rules/use-nullish-coalescing
-     */
-    useNullishCoalescing: useNullishCoalescingConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce valid describe() callback.
-     * See https://biomejs.dev/linter/rules/use-playwright-valid-describe-callback
-     */
-    usePlaywrightValidDescribeCallback: usePlaywrightValidDescribeCallbackConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that Qwik loader functions are declared in the correct location.
-     * See https://biomejs.dev/linter/rules/use-qwik-loader-location
-     */
-    useQwikLoaderLocation: useQwikLoaderLocationConfigurationSchema.optional().nullable(),
-    /**
-     * Require functions with the "use server" directive to be async.
-     * See https://biomejs.dev/linter/rules/use-react-async-server-function
-     */
-    useReactAsyncServerFunction: useReactAsyncServerFunctionConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce a specific function type for React function components.
-     * See https://biomejs.dev/linter/rules/use-react-function-component-definition
-     */
-    useReactFunctionComponentDefinition: useReactFunctionComponentDefinitionConfigurationSchema.optional().nullable(),
-    /**
-     * Ensure that platform-specific React Native components are only imported in files named for that platform.
-     * See https://biomejs.dev/linter/rules/use-react-native-platform-components
-     */
-    useReactNativePlatformComponents: useReactNativePlatformComponentsConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce using a type parameter on Array#reduce instead of casting the initial value.
-     * See https://biomejs.dev/linter/rules/use-reduce-type-parameter
-     */
-    useReduceTypeParameter: useReduceTypeParameterConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce RegExp#exec over String#match if no global flag is provided.
-     * See https://biomejs.dev/linter/rules/use-regexp-exec
-     */
-    useRegexpExec: useRegexpExecConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce the use of RegExp.prototype.test() over String.prototype.match() and RegExp.prototype.exec() in boolean contexts.
-     * See https://biomejs.dev/linter/rules/use-regexp-test
-     */
-    useRegexpTest: useRegexpTestConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that \<style> blocks in Vue SFCs have the scoped attribute and that \<style> blocks in Astro components do not have the is:global directive.
-     * See https://biomejs.dev/linter/rules/use-scoped-styles
-     */
-    useScopedStyles: useScopedStylesConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce the sorting of CSS utility classes.
-     * See https://biomejs.dev/linter/rules/use-sorted-classes
-     */
-    useSortedClasses: useSortedClassesConfigurationSchema.optional().nullable(),
-    /**
-     * Prefer String#startsWith() and String#endsWith() over verbose prefix and suffix checks.
-     * See https://biomejs.dev/linter/rules/use-string-starts-ends-with
-     */
-    useStringStartsEndsWith: useStringStartsEndsWithConfigurationSchema.optional().nullable(),
-    /**
-     * Require keyed {#each} blocks in Svelte templates.
-     * See https://biomejs.dev/linter/rules/use-svelte-require-each-key
-     */
-    useSvelteRequireEachKey: useSvelteRequireEachKeyConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that test lifecycle hooks are declared in the order they execute.
-     * See https://biomejs.dev/linter/rules/use-test-hooks-in-order
-     */
-    useTestHooksInOrder: useTestHooksInOrderConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that lifecycle hooks appear before any test cases in the same block.
-     * See https://biomejs.dev/linter/rules/use-test-hooks-on-top
-     */
-    useTestHooksOnTop: useTestHooksOnTopConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce that class methods utilize this.
-     * See https://biomejs.dev/linter/rules/use-this-in-class-methods
-     */
-    useThisInClassMethods: useThisInClassMethodsConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce the use of the u or v flag for regular expressions.
-     * See https://biomejs.dev/linter/rules/use-unicode-regex
-     */
-    useUnicodeRegex: useUnicodeRegexConfigurationSchema.optional().nullable(),
-    /**
-     * Require var declarations to appear at the top of their containing scope.
-     * See https://biomejs.dev/linter/rules/use-vars-on-top
-     */
-    useVarsOnTop: useVarsOnTopConfigurationSchema.optional().nullable(),
-    /**
-     * Enforce consistent defineProps declaration style.
-     * See https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration
-     */
-    useVueConsistentDefinePropsDeclaration: useVueConsistentDefinePropsDeclarationConfigurationSchema.optional().nullable(),
-    /**
-     * Enforces Promise syntax when using Vue nextTick.
-     * See https://biomejs.dev/linter/rules/use-vue-next-tick-promise
-     */
-    useVueNextTickPromise: useVueNextTickPromiseConfigurationSchema.optional().nullable(),
-    /**
-     * Enforces valid v-for directives in Vue templates.
-     * See https://biomejs.dev/linter/rules/use-vue-valid-v-for
-     */
-    useVueValidVFor: useVueValidVForConfigurationSchema.optional().nullable()
+export const ruleWithNoJsRestrictedPropertiesOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noJsRestrictedPropertiesOptionsSchema.optional()
+});
+
+export const ruleWithNoTailwindRestyledComponentsOptionsSchema = z.object({
+    level: rulePlainConfigurationSchema,
+    options: noTailwindRestyledComponentsOptionsSchema.optional()
+});
+
+export const ruleWithUseConsistentBlockLangOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
+    fix: fixKindSchema.optional().nullable(),
+    level: rulePlainConfigurationSchema,
+    options: useConsistentBlockLangOptionsSchema.optional()
 });
 
 /**
- * A list of rules that belong to this group
+ * Configures all rules in one lint group.
  */
 export const performanceSchema = z.object({
     /**
@@ -7839,7 +10514,7 @@ export const performanceSchema = z.object({
      */
     noReExportAll: noReExportAllConfigurationSchema.optional().nullable(),
     /**
-     * Prevent the usage of synchronous scripts.
+     * Disallow external scripts that block HTML parsing.
      * See https://biomejs.dev/linter/rules/no-sync-scripts
      */
     noSyncScripts: noSyncScriptsConfigurationSchema.optional().nullable(),
@@ -7849,13 +10524,22 @@ export const performanceSchema = z.object({
      */
     noUnwantedPolyfillio: noUnwantedPolyfillioConfigurationSchema.optional().nullable(),
     /**
-     * Enables a particular rule preset
+     * Selects the baseline set of lint rules for a non-nursery group. `recommended`
+     * enables the group's recommended rules, `all` enables all rules in the group, and
+     * `none` starts with no rules enabled in the group. Explicit rule settings override
+     * this group preset, which overrides `linter.rules.preset` for the group.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * Enables the recommended rules for this group
+     * Enables or disables the recommended rules in a non-nursery group. The group's
+     * `preset` setting takes precedence when both options are set.
      */
     recommended: z.boolean().optional().nullable(),
+    /**
+     * Prefer .textContent over .innerText for DOM node text.
+     * See https://biomejs.dev/linter/rules/use-dom-node-text-content
+     */
+    useDomNodeTextContent: useDomNodeTextContentConfigurationSchema.optional().nullable(),
     /**
      * Ensure the preconnect attribute is used when using Google Fonts.
      * See https://biomejs.dev/linter/rules/use-google-font-preconnect
@@ -7879,7 +10563,7 @@ export const performanceSchema = z.object({
 });
 
 /**
- * A list of rules that belong to this group
+ * Configures all rules in one lint group.
  */
 export const securitySchema = z.object({
     /**
@@ -7888,7 +10572,7 @@ export const securitySchema = z.object({
      */
     noBlankTarget: noBlankTargetConfigurationSchema.optional().nullable(),
     /**
-     * Prevent the usage of dangerous JSX props.
+     * Disallow React's dangerouslySetInnerHTML property.
      * See https://biomejs.dev/linter/rules/no-dangerously-set-inner-html
      */
     noDangerouslySetInnerHtml: noDangerouslySetInnerHtmlConfigurationSchema.optional().nullable(),
@@ -7913,16 +10597,28 @@ export const securitySchema = z.object({
      */
     noSecrets: noSecretsConfigurationSchema.optional().nullable(),
     /**
-     * Enables a particular rule preset
+     * Selects the baseline set of lint rules for a non-nursery group. `recommended`
+     * enables the group's recommended rules, `all` enables all rules in the group, and
+     * `none` starts with no rules enabled in the group. Explicit rule settings override
+     * this group preset, which overrides `linter.rules.preset` for the group.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * Enables the recommended rules for this group
+     * Enables or disables the recommended rules in a non-nursery group. The group's
+     * `preset` setting takes precedence when both options are set.
      */
-    recommended: z.boolean().optional().nullable()
+    recommended: z.boolean().optional().nullable(),
+    /**
+     * Require the sandbox attribute on \<iframe> elements.
+     * See https://biomejs.dev/linter/rules/use-iframe-sandbox
+     */
+    useIframeSandbox: useIframeSandboxConfigurationSchema.optional().nullable()
 });
 
 export const ruleWithNoRestrictedTypesOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: noRestrictedTypesOptionsSchema.optional()
@@ -7934,13 +10630,16 @@ export const ruleWithUseDestructuringOptionsSchema = z.object({
 });
 
 export const ruleWithUseNumericSeparatorsOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNumericSeparatorsOptionsSchema.optional()
 });
 
 /**
- * A list of rules that belong to this group
+ * Configures all rules in one lint group.
  */
 export const suspiciousSchema = z.object({
     /**
@@ -7969,7 +10668,7 @@ export const suspiciousSchema = z.object({
      */
     noAsyncPromiseExecutor: noAsyncPromiseExecutorConfigurationSchema.optional().nullable(),
     /**
-     * Prevents the misuse of glob patterns inside the files.includes field.
+     * Disallow ineffective ordering in files.includes patterns.
      * See https://biomejs.dev/linter/rules/no-biome-first-exception
      */
     noBiomeFirstException: noBiomeFirstExceptionConfigurationSchema.optional().nullable(),
@@ -7998,6 +10697,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-compare-neg-zero
      */
     noCompareNegZero: noCompareNegZeroConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow conditional expect() calls inside tests.
+     * See https://biomejs.dev/linter/rules/no-conditional-expect
+     */
+    noConditionalExpect: noConditionalExpectConfigurationSchema.optional().nullable(),
     /**
      * Disallow labeled statements that are not loops.
      * See https://biomejs.dev/linter/rules/no-confusing-labels
@@ -8059,6 +10763,16 @@ export const suspiciousSchema = z.object({
      */
     noDoubleEquals: noDoubleEqualsConfigurationSchema.optional().nullable(),
     /**
+     * Require .where() to be called when using .delete() with Drizzle ORM.
+     * See https://biomejs.dev/linter/rules/no-drizzle-delete-without-where
+     */
+    noDrizzleDeleteWithoutWhere: noDrizzleDeleteWithoutWhereConfigurationSchema.optional().nullable(),
+    /**
+     * Require .where() to be called when using .update() with Drizzle ORM.
+     * See https://biomejs.dev/linter/rules/no-drizzle-update-without-where
+     */
+    noDrizzleUpdateWithoutWhere: noDrizzleUpdateWithoutWhereConfigurationSchema.optional().nullable(),
+    /**
      * Disallow duplicate @import rules.
      * See https://biomejs.dev/linter/rules/no-duplicate-at-import-rules
      */
@@ -8079,7 +10793,7 @@ export const suspiciousSchema = z.object({
      */
     noDuplicateCustomProperties: noDuplicateCustomPropertiesConfigurationSchema.optional().nullable(),
     /**
-     * Prevent the listing of duplicate dependencies. The rule supports the following dependency groups: "bundledDependencies", "bundleDependencies", "dependencies", "devDependencies", "overrides", "optionalDependencies", and "peerDependencies".
+     * Disallow duplicate dependencies in package.json.
      * See https://biomejs.dev/linter/rules/no-duplicate-dependencies
      */
     noDuplicateDependencies: noDuplicateDependenciesConfigurationSchema.optional().nullable(),
@@ -8094,27 +10808,27 @@ export const suspiciousSchema = z.object({
      */
     noDuplicateEnumValues: noDuplicateEnumValuesConfigurationSchema.optional().nullable(),
     /**
-     * No duplicated fields in GraphQL operations.
+     * Disallow duplicate names inside GraphQL operations.
      * See https://biomejs.dev/linter/rules/no-duplicate-fields
      */
     noDuplicateFields: noDuplicateFieldsConfigurationSchema.optional().nullable(),
     /**
-     * Disallow duplicate names within font families.
+     * Disallow duplicate names in font-family lists.
      * See https://biomejs.dev/linter/rules/no-duplicate-font-names
      */
     noDuplicateFontNames: noDuplicateFontNamesConfigurationSchema.optional().nullable(),
     /**
-     * Enforce unique operation names across a GraphQL document.
+     * Require unique operation names within a GraphQL document.
      * See https://biomejs.dev/linter/rules/no-duplicate-graphql-operation-name
      */
     noDuplicateGraphqlOperationName: noDuplicateGraphqlOperationNameConfigurationSchema.optional().nullable(),
     /**
-     * Prevents JSX properties to be assigned multiple times.
+     * Disallow duplicate JSX properties.
      * See https://biomejs.dev/linter/rules/no-duplicate-jsx-props
      */
     noDuplicateJsxProps: noDuplicateJsxPropsConfigurationSchema.optional().nullable(),
     /**
-     * Disallow two keys with the same name inside objects.
+     * Disallow duplicate keys in JSON objects.
      * See https://biomejs.dev/linter/rules/no-duplicate-object-keys
      */
     noDuplicateObjectKeys: noDuplicateObjectKeysConfigurationSchema.optional().nullable(),
@@ -8128,6 +10842,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-duplicate-properties
      */
     noDuplicateProperties: noDuplicatePropertiesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow duplicate selectors.
+     * See https://biomejs.dev/linter/rules/no-duplicate-selectors
+     */
+    noDuplicateSelectors: noDuplicateSelectorsConfigurationSchema.optional().nullable(),
     /**
      * Disallow duplicate selectors within keyframe blocks.
      * See https://biomejs.dev/linter/rules/no-duplicate-selectors-keyframe-block
@@ -8144,7 +10863,7 @@ export const suspiciousSchema = z.object({
      */
     noDuplicatedSpreadProps: noDuplicatedSpreadPropsConfigurationSchema.optional().nullable(),
     /**
-     * Disallow CSS empty blocks.
+     * Disallow empty CSS blocks.
      * See https://biomejs.dev/linter/rules/no-empty-block
      */
     noEmptyBlock: noEmptyBlockConfigurationSchema.optional().nullable(),
@@ -8158,6 +10877,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-empty-interface
      */
     noEmptyInterface: noEmptyInterfaceConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow empty keys in JSON objects.
+     * See https://biomejs.dev/linter/rules/no-empty-object-keys
+     */
+    noEmptyObjectKeys: noEmptyObjectKeysConfigurationSchema.optional().nullable(),
     /**
      * Disallow empty sources.
      * See https://biomejs.dev/linter/rules/no-empty-source
@@ -8229,12 +10953,17 @@ export const suspiciousSchema = z.object({
      */
     noHeadImportInDocument: noHeadImportInDocumentConfigurationSchema.optional().nullable(),
     /**
+     * Disallow identical titles in test suites and test cases.
+     * See https://biomejs.dev/linter/rules/no-identical-test-title
+     */
+    noIdenticalTestTitle: noIdenticalTestTitleConfigurationSchema.optional().nullable(),
+    /**
      * Disallow use of implicit any type on variable declarations.
      * See https://biomejs.dev/linter/rules/no-implicit-any-let
      */
     noImplicitAnyLet: noImplicitAnyLetConfigurationSchema.optional().nullable(),
     /**
-     * Disallow assigning to imported bindings.
+     * Disallow assigning a new value to an imported variable.
      * See https://biomejs.dev/linter/rules/no-import-assign
      */
     noImportAssign: noImportAssignConfigurationSchema.optional().nullable(),
@@ -8244,15 +10973,20 @@ export const suspiciousSchema = z.object({
      */
     noImportCycles: noImportCyclesConfigurationSchema.optional().nullable(),
     /**
-     * Disallow invalid !important within keyframe declarations.
+     * Disallow !important in @keyframes declarations.
      * See https://biomejs.dev/linter/rules/no-important-in-keyframe
      */
     noImportantInKeyframe: noImportantInKeyframeConfigurationSchema.optional().nullable(),
     /**
-     * Disallows the use of irregular whitespace characters.
+     * Disallow whitespace characters that CSS does not treat as normal spaces.
      * See https://biomejs.dev/linter/rules/no-irregular-whitespace
      */
     noIrregularWhitespace: noIrregularWhitespaceConfigurationSchema.optional().nullable(),
+    /**
+     * Flags text nodes with a trailing $ before a JSX expression.
+     * See https://biomejs.dev/linter/rules/no-jsx-leaked-dollar
+     */
+    noJsxLeakedDollar: noJsxLeakedDollarConfigurationSchema.optional().nullable(),
     /**
      * Disallow labels that share a name with a variable.
      * See https://biomejs.dev/linter/rules/no-label-var
@@ -8263,6 +10997,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-leaked-render
      */
     noLeakedRender: noLeakedRenderConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow functions created inside loops when they use variables that can change.
+     * See https://biomejs.dev/linter/rules/no-loop-func
+     */
+    noLoopFunc: noLoopFuncConfigurationSchema.optional().nullable(),
     /**
      * Disallow characters made with multiple code points in character class syntax.
      * See https://biomejs.dev/linter/rules/no-misleading-character-class
@@ -8304,6 +11043,31 @@ export const suspiciousSchema = z.object({
      */
     noParametersOnlyUsedInRecursion: noParametersOnlyUsedInRecursionConfigurationSchema.optional().nullable(),
     /**
+     * Disallow usage of the { force: true } option.
+     * See https://biomejs.dev/linter/rules/no-playwright-force-option
+     */
+    noPlaywrightForceOption: noPlaywrightForceOptionConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow usage of the networkidle option.
+     * See https://biomejs.dev/linter/rules/no-playwright-networkidle
+     */
+    noPlaywrightNetworkidle: noPlaywrightNetworkidleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using page.pause().
+     * See https://biomejs.dev/linter/rules/no-playwright-page-pause
+     */
+    noPlaywrightPagePause: noPlaywrightPagePauseConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using page.waitForNavigation().
+     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-navigation
+     */
+    noPlaywrightWaitForNavigation: noPlaywrightWaitForNavigationConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using page.waitForTimeout().
+     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-timeout
+     */
+    noPlaywrightWaitForTimeout: noPlaywrightWaitForTimeoutConfigurationSchema.optional().nullable(),
+    /**
      * Disallow the use of the deprecated __proto__ object property.
      * See https://biomejs.dev/linter/rules/no-proto
      */
@@ -8314,7 +11078,7 @@ export const suspiciousSchema = z.object({
      */
     noPrototypeBuiltins: noPrototypeBuiltinsConfigurationSchema.optional().nullable(),
     /**
-     * Disallow the use if quickfix.biome inside editor settings file.
+     * Disallow quickfix.biome in supported editor settings.
      * See https://biomejs.dev/linter/rules/no-quickfix-biome
      */
     noQuickfixBiome: noQuickfixBiomeConfigurationSchema.optional().nullable(),
@@ -8324,10 +11088,20 @@ export const suspiciousSchema = z.object({
      */
     noReactForwardRef: noReactForwardRefConfigurationSchema.optional().nullable(),
     /**
+     * Disallow deep imports from the react-native package.
+     * See https://biomejs.dev/linter/rules/no-react-native-deep-imports
+     */
+    noReactNativeDeepImports: noReactNativeDeepImportsConfigurationSchema.optional().nullable(),
+    /**
      * Prevents React-specific JSX properties from being used.
      * See https://biomejs.dev/linter/rules/no-react-specific-props
      */
     noReactSpecificProps: noReactSpecificPropsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow string refs in React components.
+     * See https://biomejs.dev/linter/rules/no-react-string-refs
+     */
+    noReactStringRefs: noReactStringRefsConfigurationSchema.optional().nullable(),
     /**
      * Disallow variable, function, class, and type redeclarations in the same scope.
      * See https://biomejs.dev/linter/rules/no-redeclare
@@ -8359,7 +11133,7 @@ export const suspiciousSchema = z.object({
      */
     noShadowRestrictedNames: noShadowRestrictedNamesConfigurationSchema.optional().nullable(),
     /**
-     * Disallow shorthand properties that override related longhand properties.
+     * Disallow shorthand properties that override earlier, more specific properties.
      * See https://biomejs.dev/linter/rules/no-shorthand-property-overrides
      */
     noShorthandPropertyOverrides: noShorthandPropertyOverridesConfigurationSchema.optional().nullable(),
@@ -8404,7 +11178,7 @@ export const suspiciousSchema = z.object({
      */
     noUndeclaredEnvVars: noUndeclaredEnvVarsConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unknown at-rules.
+     * Disallow unrecognized CSS at-rules.
      * See https://biomejs.dev/linter/rules/no-unknown-at-rules
      */
     noUnknownAtRules: noUnknownAtRulesConfigurationSchema.optional().nullable(),
@@ -8428,6 +11202,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-unsafe-negation
      */
     noUnsafeNegation: noUnsafeNegationConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow dependencies with untrusted licenses.
+     * See https://biomejs.dev/linter/rules/no-untrusted-licenses
+     */
+    noUntrustedLicenses: noUntrustedLicensesConfigurationSchema.optional().nullable(),
     /**
      * Disallow expression statements that are neither a function call nor an assignment.
      * See https://biomejs.dev/linter/rules/no-unused-expressions
@@ -8459,11 +11238,15 @@ export const suspiciousSchema = z.object({
      */
     noWith: noWithConfigurationSchema.optional().nullable(),
     /**
-     * Enables a particular rule preset
+     * Selects the baseline set of lint rules for a non-nursery group. `recommended`
+     * enables the group's recommended rules, `all` enables all rules in the group, and
+     * `none` starts with no rules enabled in the group. Explicit rule settings override
+     * this group preset, which overrides `linter.rules.preset` for the group.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * Enables the recommended rules for this group
+     * Enables or disables the recommended rules in a non-nursery group. The group's
+     * `preset` setting takes precedence when both options are set.
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -8482,7 +11265,12 @@ export const suspiciousSchema = z.object({
      */
     useAwait: useAwaitConfigurationSchema.optional().nullable(),
     /**
-     * Promotes the correct usage for ignoring folders in the configuration file.
+     * Disallow CSS properties, values, at-rules, functions, and selectors that are not part of the configured Baseline.
+     * See https://biomejs.dev/linter/rules/use-baseline
+     */
+    useBaseline: useBaselineConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer folder exclusions that prevent Biome from scanning the folder.
      * See https://biomejs.dev/linter/rules/use-biome-ignore-folder
      */
     useBiomeIgnoreFolder: useBiomeIgnoreFolderConfigurationSchema.optional().nullable(),
@@ -8492,7 +11280,7 @@ export const suspiciousSchema = z.object({
      */
     useDefaultSwitchClauseLast: useDefaultSwitchClauseLastConfigurationSchema.optional().nullable(),
     /**
-     * Require the @deprecated directive to specify a deletion date.
+     * Require a valid deletion date on the @deprecated directive.
      * See https://biomejs.dev/linter/rules/use-deprecated-date
      */
     useDeprecatedDate: useDeprecatedDateConfigurationSchema.optional().nullable(),
@@ -8501,6 +11289,11 @@ export const suspiciousSchema = z.object({
      * See https://biomejs.dev/linter/rules/use-error-message
      */
     useErrorMessage: useErrorMessageConfigurationSchema.optional().nullable(),
+    /**
+     * Ensure that test functions contain at least one expect() or similar assertion.
+     * See https://biomejs.dev/linter/rules/use-expect
+     */
+    useExpect: useExpectConfigurationSchema.optional().nullable(),
     /**
      * Enforce get methods to always return a value.
      * See https://biomejs.dev/linter/rules/use-getter-return
@@ -8537,10 +11330,15 @@ export const suspiciousSchema = z.object({
      */
     useNumberToFixedDigitsArgument: useNumberToFixedDigitsArgumentConfigurationSchema.optional().nullable(),
     /**
-     * Enforce the presence of required scripts in package.json.
+     * Require configured scripts in package.json.
      * See https://biomejs.dev/linter/rules/use-required-scripts
      */
     useRequiredScripts: useRequiredScriptsConfigurationSchema.optional().nullable(),
+    /**
+     * Keep component styles scoped in Vue and Astro files.
+     * See https://biomejs.dev/linter/rules/use-scoped-styles
+     */
+    useScopedStyles: useScopedStylesConfigurationSchema.optional().nullable(),
     /**
      * Use static Response methods instead of new Response() constructor when possible.
      * See https://biomejs.dev/linter/rules/use-static-response-methods
@@ -8559,8 +11357,6 @@ export const severityOrA11YSchema = z.union([groupPlainConfigurationSchema, a11Y
 
 export const severityOrComplexitySchema = z.union([groupPlainConfigurationSchema, complexitySchema]);
 
-export const severityOrNurserySchema = z.union([groupPlainConfigurationSchema, nurserySchema]);
-
 export const severityOrPerformanceSchema = z.union([groupPlainConfigurationSchema, performanceSchema]);
 
 export const severityOrSecuritySchema = z.union([groupPlainConfigurationSchema, securitySchema]);
@@ -8572,6 +11368,12 @@ export const noRestrictedElementsConfigurationSchema = z.union([rulePlainConfigu
 export const noUnusedVariablesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoUnusedVariablesOptionsSchema]);
 
 export const useExhaustiveDependenciesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseExhaustiveDependenciesOptionsSchema]);
+
+export const noJsRestrictedPropertiesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoJsRestrictedPropertiesOptionsSchema]);
+
+export const noTailwindRestyledComponentsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoTailwindRestyledComponentsOptionsSchema]);
+
+export const useConsistentBlockLangConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseConsistentBlockLangOptionsSchema]);
 
 export const noRestrictedTypesConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedTypesOptionsSchema]);
 
@@ -8610,7 +11412,7 @@ export const useNamingConventionOptionsSchema = z.object({
 });
 
 /**
- * A list of rules that belong to this group
+ * Configures all rules in one lint group.
  */
 export const correctnessSchema = z.object({
     /**
@@ -8623,6 +11425,11 @@ export const correctnessSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-children-prop
      */
     noChildrenProp: noChildrenPropConfigurationSchema.optional().nullable(),
+    /**
+     * Disallows defining React components or custom hooks inside other functions.
+     * See https://biomejs.dev/linter/rules/no-component-hook-factories
+     */
+    noComponentHookFactories: noComponentHookFactoriesConfigurationSchema.optional().nullable(),
     /**
      * Prevents from having const variables being re-assigned.
      * See https://biomejs.dev/linter/rules/no-const-assign
@@ -8644,7 +11451,7 @@ export const correctnessSchema = z.object({
      */
     noConstructorReturn: noConstructorReturnConfigurationSchema.optional().nullable(),
     /**
-     * Require all argument names for fields & directives to be unique.
+     * Require unique argument names for fields and directives.
      * See https://biomejs.dev/linter/rules/no-duplicate-argument-names
      */
     noDuplicateArgumentNames: noDuplicateArgumentNamesConfigurationSchema.optional().nullable(),
@@ -8654,10 +11461,15 @@ export const correctnessSchema = z.object({
      */
     noDuplicateAttributes: noDuplicateAttributesConfigurationSchema.optional().nullable(),
     /**
-     * Require all enum value names to be unique.
+     * Disallow duplicate names in GraphQL enums.
      * See https://biomejs.dev/linter/rules/no-duplicate-enum-value-names
      */
     noDuplicateEnumValueNames: noDuplicateEnumValueNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Require all fields of a type to be unique.
+     * See https://biomejs.dev/linter/rules/no-duplicate-field-definition-names
+     */
+    noDuplicateFieldDefinitionNames: noDuplicateFieldDefinitionNamesConfigurationSchema.optional().nullable(),
     /**
      * Require fields within an input object to be unique.
      * See https://biomejs.dev/linter/rules/no-duplicate-input-field-names
@@ -8674,7 +11486,7 @@ export const correctnessSchema = z.object({
      */
     noEmptyCharacterClassInRegex: noEmptyCharacterClassInRegexConfigurationSchema.optional().nullable(),
     /**
-     * Disallows empty destructuring patterns.
+     * Disallow empty object and array destructuring patterns.
      * See https://biomejs.dev/linter/rules/no-empty-pattern
      */
     noEmptyPattern: noEmptyPatternConfigurationSchema.optional().nullable(),
@@ -8704,17 +11516,17 @@ export const correctnessSchema = z.object({
      */
     noInvalidConstructorSuper: noInvalidConstructorSuperConfigurationSchema.optional().nullable(),
     /**
-     * Disallow non-standard direction values for linear gradient functions.
+     * Disallow non-standard directions in linear gradients.
      * See https://biomejs.dev/linter/rules/no-invalid-direction-in-linear-gradient
      */
     noInvalidDirectionInLinearGradient: noInvalidDirectionInLinearGradientConfigurationSchema.optional().nullable(),
     /**
-     * Disallows invalid named grid areas in CSS Grid Layouts.
+     * Disallow invalid named areas in CSS grid templates.
      * See https://biomejs.dev/linter/rules/no-invalid-grid-areas
      */
     noInvalidGridAreas: noInvalidGridAreasConfigurationSchema.optional().nullable(),
     /**
-     * Disallow the use of @import at-rules in invalid positions.
+     * Disallow @import after other rules.
      * See https://biomejs.dev/linter/rules/no-invalid-position-at-import-rule
      */
     noInvalidPositionAtImportRule: noInvalidPositionAtImportRuleConfigurationSchema.optional().nullable(),
@@ -8724,7 +11536,12 @@ export const correctnessSchema = z.object({
      */
     noInvalidUseBeforeDeclaration: noInvalidUseBeforeDeclarationConfigurationSchema.optional().nullable(),
     /**
-     * Disallow missing var function for css variables.
+     * Disallow JSX namespace syntax.
+     * See https://biomejs.dev/linter/rules/no-jsx-namespace
+     */
+    noJsxNamespace: noJsxNamespaceConfigurationSchema.optional().nullable(),
+    /**
+     * Require var() when using a declared CSS custom property.
      * See https://biomejs.dev/linter/rules/no-missing-var-function
      */
     noMissingVarFunction: noMissingVarFunctionConfigurationSchema.optional().nullable(),
@@ -8749,6 +11566,11 @@ export const correctnessSchema = z.object({
      */
     noNonoctalDecimalEscape: noNonoctalDecimalEscapeConfigurationSchema.optional().nullable(),
     /**
+     * Enforce Playwright async APIs to be awaited or returned.
+     * See https://biomejs.dev/linter/rules/no-playwright-missing-await
+     */
+    noPlaywrightMissingAwait: noPlaywrightMissingAwaitConfigurationSchema.optional().nullable(),
+    /**
      * Disallow literal numbers that lose precision.
      * See https://biomejs.dev/linter/rules/no-precision-loss
      */
@@ -8768,6 +11590,11 @@ export const correctnessSchema = z.object({
      * See https://biomejs.dev/linter/rules/no-qwik-use-visible-task
      */
     noQwikUseVisibleTask: noQwikUseVisibleTaskConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow raw text outside \<Text> components in React Native.
+     * See https://biomejs.dev/linter/rules/no-react-native-raw-text
+     */
+    noReactNativeRawText: noReactNativeRawTextConfigurationSchema.optional().nullable(),
     /**
      * Disallow assigning to React component props.
      * See https://biomejs.dev/linter/rules/no-react-prop-assignments
@@ -8804,7 +11631,7 @@ export const correctnessSchema = z.object({
      */
     noStringCaseMismatch: noStringCaseMismatchConfigurationSchema.optional().nullable(),
     /**
-     * Disallow lexical declarations in switch clauses.
+     * Disallow declarations directly inside switch clauses.
      * See https://biomejs.dev/linter/rules/no-switch-declarations
      */
     noSwitchDeclarations: noSwitchDeclarationsConfigurationSchema.optional().nullable(),
@@ -8819,47 +11646,47 @@ export const correctnessSchema = z.object({
      */
     noUndeclaredVariables: noUndeclaredVariablesConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unknown CSS value functions.
+     * Disallow unrecognized CSS value functions.
      * See https://biomejs.dev/linter/rules/no-unknown-function
      */
     noUnknownFunction: noUnknownFunctionConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unknown media feature names.
+     * Disallow unrecognized feature names in media queries.
      * See https://biomejs.dev/linter/rules/no-unknown-media-feature-name
      */
     noUnknownMediaFeatureName: noUnknownMediaFeatureNameConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unknown properties.
+     * Disallow unrecognized CSS properties.
      * See https://biomejs.dev/linter/rules/no-unknown-property
      */
     noUnknownProperty: noUnknownPropertyConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unknown pseudo-class selectors.
+     * Disallow unrecognized pseudo-class selectors.
      * See https://biomejs.dev/linter/rules/no-unknown-pseudo-class
      */
     noUnknownPseudoClass: noUnknownPseudoClassConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unknown pseudo-element selectors.
+     * Disallow unrecognized pseudo-element selectors.
      * See https://biomejs.dev/linter/rules/no-unknown-pseudo-element
      */
     noUnknownPseudoElement: noUnknownPseudoElementConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unknown type selectors.
+     * Disallow unrecognized element names in type selectors.
      * See https://biomejs.dev/linter/rules/no-unknown-type-selector
      */
     noUnknownTypeSelector: noUnknownTypeSelectorConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unknown CSS units.
+     * Disallow unrecognized CSS units.
      * See https://biomejs.dev/linter/rules/no-unknown-unit
      */
     noUnknownUnit: noUnknownUnitConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unmatchable An+B selectors.
+     * Disallow An+B formulas that cannot select an element.
      * See https://biomejs.dev/linter/rules/no-unmatchable-anb-selector
      */
     noUnmatchableAnbSelector: noUnmatchableAnbSelectorConfigurationSchema.optional().nullable(),
     /**
-     * Disallow unreachable code.
+     * Disallow code that can never run.
      * See https://biomejs.dev/linter/rules/no-unreachable
      */
     noUnreachable: noUnreachableConfigurationSchema.optional().nullable(),
@@ -8879,7 +11706,7 @@ export const correctnessSchema = z.object({
      */
     noUnsafeFinally: noUnsafeFinallyConfigurationSchema.optional().nullable(),
     /**
-     * Disallow the use of optional chaining in contexts where the undefined value is not allowed.
+     * Disallow optional chaining where undefined is not a valid result.
      * See https://biomejs.dev/linter/rules/no-unsafe-optional-chaining
      */
     noUnsafeOptionalChaining: noUnsafeOptionalChainingConfigurationSchema.optional().nullable(),
@@ -8914,7 +11741,7 @@ export const correctnessSchema = z.object({
      */
     noUnusedVariables: noUnusedVariablesConfigurationSchema.optional().nullable(),
     /**
-     * This rules prevents void elements (AKA self-closing elements) from having children.
+     * Disallow children on HTML void elements.
      * See https://biomejs.dev/linter/rules/no-void-elements-with-children
      */
     noVoidElementsWithChildren: noVoidElementsWithChildrenConfigurationSchema.optional().nullable(),
@@ -8934,6 +11761,16 @@ export const correctnessSchema = z.object({
      */
     noVueDuplicateKeys: noVueDuplicateKeysConfigurationSchema.optional().nullable(),
     /**
+     * Disallow importing Vue compiler macros.
+     * See https://biomejs.dev/linter/rules/no-vue-import-compiler-macros
+     */
+    noVueImportCompilerMacros: noVueImportCompilerMacrosConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of value wrapped by ref()(Composition API) as operand.
+     * See https://biomejs.dev/linter/rules/no-vue-ref-as-operand
+     */
+    noVueRefAsOperand: noVueRefAsOperandConfigurationSchema.optional().nullable(),
+    /**
      * Disallow reserved keys in Vue component data and computed properties.
      * See https://biomejs.dev/linter/rules/no-vue-reserved-keys
      */
@@ -8949,16 +11786,25 @@ export const correctnessSchema = z.object({
      */
     noVueSetupPropsReactivityLoss: noVueSetupPropsReactivityLossConfigurationSchema.optional().nullable(),
     /**
-     * Disallow using v-if and v-for directives on the same element.
+     * Disallow using v-if, v-else-if, or v-else and v-for directives on the same element.
      * See https://biomejs.dev/linter/rules/no-vue-v-if-with-v-for
      */
     noVueVIfWithVFor: noVueVIfWithVForConfigurationSchema.optional().nullable(),
     /**
-     * Enables a particular rule preset
+     * Disallow deprecated number modifiers on Vue v-on directives.
+     * See https://biomejs.dev/linter/rules/no-vue-v-on-number-values
+     */
+    noVueVOnNumberValues: noVueVOnNumberValuesConfigurationSchema.optional().nullable(),
+    /**
+     * Selects the baseline set of lint rules for a non-nursery group. `recommended`
+     * enables the group's recommended rules, `all` enables all rules in the group, and
+     * `none` starts with no rules enabled in the group. Explicit rule settings override
+     * this group preset, which overrides `linter.rules.preset` for the group.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * Enables the recommended rules for this group
+     * Enables or disables the recommended rules in a non-nursery group. The group's
+     * `preset` setting takes precedence when both options are set.
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -8967,7 +11813,7 @@ export const correctnessSchema = z.object({
      */
     useExhaustiveDependencies: useExhaustiveDependenciesConfigurationSchema.optional().nullable(),
     /**
-     * Enforce specifying the name of GraphQL operations.
+     * Require a name for every explicit GraphQL operation definition.
      * See https://biomejs.dev/linter/rules/use-graphql-named-operations
      */
     useGraphqlNamedOperations: useGraphqlNamedOperationsConfigurationSchema.optional().nullable(),
@@ -9007,7 +11853,7 @@ export const correctnessSchema = z.object({
      */
     useJsxKeyInIterable: useJsxKeyInIterableConfigurationSchema.optional().nullable(),
     /**
-     * Disallow anonymous operations when more than one operation specified in document.
+     * Disallow an anonymous operation in a document with other operations.
      * See https://biomejs.dev/linter/rules/use-lone-anonymous-operation
      */
     useLoneAnonymousOperation: useLoneAnonymousOperationConfigurationSchema.optional().nullable(),
@@ -9017,10 +11863,20 @@ export const correctnessSchema = z.object({
      */
     useParseIntRadix: useParseIntRadixConfigurationSchema.optional().nullable(),
     /**
+     * Enforce valid describe() callback.
+     * See https://biomejs.dev/linter/rules/use-playwright-valid-describe-callback
+     */
+    usePlaywrightValidDescribeCallback: usePlaywrightValidDescribeCallbackConfigurationSchema.optional().nullable(),
+    /**
      * Prefer using the class prop as a classlist over the classnames helper.
      * See https://biomejs.dev/linter/rules/use-qwik-classlist
      */
     useQwikClasslist: useQwikClasslistConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that Qwik loader functions are declared in the correct location.
+     * See https://biomejs.dev/linter/rules/use-qwik-loader-location
+     */
+    useQwikLoaderLocation: useQwikLoaderLocationConfigurationSchema.optional().nullable(),
     /**
      * Disallow use* hooks outside of component$ or other use* hooks in Qwik applications.
      * See https://biomejs.dev/linter/rules/use-qwik-method-usage
@@ -9032,12 +11888,22 @@ export const correctnessSchema = z.object({
      */
     useQwikValidLexicalScope: useQwikValidLexicalScopeConfigurationSchema.optional().nullable(),
     /**
+     * Require functions with the "use server" directive to be async.
+     * See https://biomejs.dev/linter/rules/use-react-async-server-function
+     */
+    useReactAsyncServerFunction: useReactAsyncServerFunctionConfigurationSchema.optional().nullable(),
+    /**
+     * Ensure that platform-specific React Native components are only imported in files named for that platform.
+     * See https://biomejs.dev/linter/rules/use-react-native-platform-components
+     */
+    useReactNativePlatformComponents: useReactNativePlatformComponentsConfigurationSchema.optional().nullable(),
+    /**
      * Enforce JSDoc comment lines to start with a single asterisk, except for the first one.
      * See https://biomejs.dev/linter/rules/use-single-js-doc-asterisk
      */
     useSingleJsDocAsterisk: useSingleJsDocAsteriskConfigurationSchema.optional().nullable(),
     /**
-     * Prevent the usage of static string literal id attribute on elements.
+     * Disallow static id values on elements outside SVG contexts.
      * See https://biomejs.dev/linter/rules/use-unique-element-ids
      */
     useUniqueElementIds: useUniqueElementIdsConfigurationSchema.optional().nullable(),
@@ -9082,6 +11948,11 @@ export const correctnessSchema = z.object({
      */
     useVueValidVElseIf: useVueValidVElseIfConfigurationSchema.optional().nullable(),
     /**
+     * Enforces valid v-for directives in Vue templates.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-for
+     */
+    useVueValidVFor: useVueValidVForConfigurationSchema.optional().nullable(),
+    /**
      * Enforce valid v-html directives.
      * See https://biomejs.dev/linter/rules/use-vue-valid-v-html
      */
@@ -9118,12 +11989,941 @@ export const correctnessSchema = z.object({
     useYield: useYieldConfigurationSchema.optional().nullable()
 });
 
+/**
+ * Configures all rules in one lint group.
+ */
+export const nurserySchema = z.object({
+    /**
+     * Disallow bitwise operators where a logical operator was likely intended.
+     * See https://biomejs.dev/linter/rules/no-accidental-bitwise-operators
+     */
+    noAccidentalBitwiseOperators: noAccidentalBitwiseOperatorsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of arguments.caller and arguments.callee.
+     * See https://biomejs.dev/linter/rules/no-arguments-caller-or-callee
+     */
+    noArgumentsCallerOrCallee: noArgumentsCallerOrCalleeConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow sorting an array only to read its smallest or largest value.
+     * See https://biomejs.dev/linter/rules/no-array-sort-for-min-max
+     */
+    noArraySortForMinMax: noArraySortForMinMaxConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow conflicting content sources on Astro elements.
+     * See https://biomejs.dev/linter/rules/no-astro-conflicting-set-directives
+     */
+    noAstroConflictingSetDirectives: noAstroConflictingSetDirectivesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of Astro's set:html directive.
+     * See https://biomejs.dev/linter/rules/no-astro-set-html-directive
+     */
+    noAstroSetHtmlDirective: noAstroSetHtmlDirectiveConfigurationSchema.optional().nullable(),
+    /**
+     * Require stringification to avoid values that only use the default object representation.
+     * See https://biomejs.dev/linter/rules/no-base-to-string
+     */
+    noBaseToString: noBaseToStringConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow sort comparators that return a boolean.
+     * See https://biomejs.dev/linter/rules/no-boolean-sort-comparator
+     */
+    noBooleanSortComparator: noBooleanSortComparatorConfigurationSchema.optional().nullable(),
+    /**
+     * Forbid the use of Bun builtin modules.
+     * See https://biomejs.dev/linter/rules/no-bun-modules
+     */
+    noBunModules: noBunModulesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow leading and trailing spaces in console method arguments.
+     * See https://biomejs.dev/linter/rules/no-console-spaces
+     */
+    noConsoleSpaces: noConsoleSpacesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow names that start or end with an underscore.
+     * See https://biomejs.dev/linter/rules/no-dangling-underscore
+     */
+    noDanglingUnderscore: noDanglingUnderscoreConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow two comparisons of the same values that can be combined into one.
+     * See https://biomejs.dev/linter/rules/no-double-comparison
+     */
+    noDoubleComparison: noDoubleComparisonConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow two keys with the same name inside YAML maps.
+     * See https://biomejs.dev/linter/rules/no-duplicate-map-keys
+     */
+    noDuplicateMapKeys: noDuplicateMapKeysConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow .map() and .filter() calls in the header of for...of loops.
+     * See https://biomejs.dev/linter/rules/no-eager-array-methods-in-loops
+     */
+    noEagerArrayMethodsInLoops: noEagerArrayMethodsInLoopsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce a maximum number of statements allowed in a function.
+     * See https://biomejs.dev/linter/rules/no-excessive-statements-per-function
+     */
+    noExcessiveStatementsPerFunction: noExcessiveStatementsPerFunctionConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow extending the prototype of built-in objects.
+     * See https://biomejs.dev/linter/rules/no-extend-native
+     */
+    noExtendNative: noExtendNativeConfigurationSchema.optional().nullable(),
+    /**
+     * Require Promise-like statements to be handled appropriately.
+     * See https://biomejs.dev/linter/rules/no-floating-promises
+     */
+    noFloatingPromises: noFloatingPromisesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of eval()-like methods.
+     * See https://biomejs.dev/linter/rules/no-implied-eval
+     */
+    noImpliedEval: noImpliedEvalConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow invalid accept values on file inputs.
+     * See https://biomejs.dev/linter/rules/no-invalid-file-input-accept
+     */
+    noInvalidFileInputAccept: noInvalidFileInputAcceptConfigurationSchema.optional().nullable(),
+    /**
+     * Checks that the initial-value of an @property rule follows the value format declared by its syntax.
+     * See https://biomejs.dev/linter/rules/no-invalid-property-init-value
+     */
+    noInvalidPropertyInitValue: noInvalidPropertyInitValueConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow this in places where it is undefined.
+     * See https://biomejs.dev/linter/rules/no-invalid-this
+     */
+    noInvalidThis: noInvalidThisConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow specific object properties.
+     * See https://biomejs.dev/linter/rules/no-js-restricted-properties
+     */
+    noJsRestrictedProperties: noJsRestrictedPropertiesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unsafe JSON values that may cause interoperability issues.
+     * See https://biomejs.dev/linter/rules/no-json-unsafe-values
+     */
+    noJsonUnsafeValues: noJsonUnsafeValuesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unexplained numbers as the depth argument of Array.prototype.flat().
+     * See https://biomejs.dev/linter/rules/no-magic-array-flat-depth
+     */
+    noMagicArrayFlatDepth: noMagicArrayFlatDepthConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow void when it does not discard a call's return value or a thenable.
+     * See https://biomejs.dev/linter/rules/no-meaningless-void-operator
+     */
+    noMeaninglessVoidOperator: noMeaninglessVoidOperatorConfigurationSchema.optional().nullable(),
+    /**
+     * Detect return type annotations that are misleadingly wider than what the implementation actually returns.
+     * See https://biomejs.dev/linter/rules/no-misleading-return-type
+     */
+    noMisleadingReturnType: noMisleadingReturnTypeConfigurationSchema.optional().nullable(),
+    /**
+     * Require \<li> elements with an HTML element parent to be children of \<ul>, \<ol>, or \<menu>.
+     * See https://biomejs.dev/linter/rules/no-misplaced-list-elements
+     */
+    noMisplacedListElements: noMisplacedListElementsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow Promises to be used in places where they are almost certainly a mistake.
+     * See https://biomejs.dev/linter/rules/no-misused-promises
+     */
+    noMisusedPromises: noMisusedPromisesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow negated expressions on the left side of an equality check.
+     * See https://biomejs.dev/linter/rules/no-negation-in-equality-check
+     */
+    noNegationInEqualityCheck: noNegationInEqualityCheckConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow switch statements inside other switch statements.
+     * See https://biomejs.dev/linter/rules/no-nested-switch
+     */
+    noNestedSwitch: noNestedSwitchConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow template literals inside other template literals.
+     * See https://biomejs.dev/linter/rules/no-nested-template-literals
+     */
+    noNestedTemplateLiterals: noNestedTemplateLiteralsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow calling require with the new operator.
+     * See https://biomejs.dev/linter/rules/no-new-require
+     */
+    noNewRequire: noNewRequireConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow disabling zoom with user-scalable=no in the \<meta name="viewport"> element.
+     * See https://biomejs.dev/linter/rules/no-non-scalable-viewport
+     */
+    noNonScalableViewport: noNonScalableViewportConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of the null literal.
+     * See https://biomejs.dev/linter/rules/no-null
+     */
+    noNull: noNullConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow calling Object without arguments to create an empty object.
+     * See https://biomejs.dev/linter/rules/no-object-constructor
+     */
+    noObjectConstructor: noObjectConstructorConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow obsolete attributes on HTML elements.
+     * See https://biomejs.dev/linter/rules/no-obsolete-attributes
+     */
+    noObsoleteAttributes: noObsoleteAttributesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow obsolete HTML elements.
+     * See https://biomejs.dev/linter/rules/no-obsolete-tags
+     */
+    noObsoleteTags: noObsoleteTagsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow numbers written with an extra leading zero.
+     * See https://biomejs.dev/linter/rules/no-octal
+     */
+    noOctal: noOctalConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow building file paths and URLs by joining strings to __dirname, __filename, or import.meta values.
+     * See https://biomejs.dev/linter/rules/no-path-concat
+     */
+    noPathConcat: noPathConcatConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow selecting Playwright elements by position with first(), last(), and nth().
+     * See https://biomejs.dev/linter/rules/no-playwright-nth-methods
+     */
+    noPlaywrightNthMethods: noPlaywrightNthMethodsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of process.exit().
+     * See https://biomejs.dev/linter/rules/no-process-exit
+     */
+    noProcessExit: noProcessExitConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow returning values from the function passed to new Promise().
+     * See https://biomejs.dev/linter/rules/no-promise-executor-return
+     */
+    noPromiseExecutorReturn: noPromiseExecutorReturnConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow array, object, and function values as default props in React components.
+     * See https://biomejs.dev/linter/rules/no-react-object-type-as-default-prop
+     */
+    noReactObjectTypeAsDefaultProp: noReactObjectTypeAsDefaultPropConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow dependencies that are known to have better alternatives.
+     * See https://biomejs.dev/linter/rules/no-restricted-dependencies
+     */
+    noRestrictedDependencies: noRestrictedDependenciesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using the return value of Array.prototype.push() and Array.prototype.unshift().
+     * See https://biomejs.dev/linter/rules/no-return-array-push
+     */
+    noReturnArrayPush: noReturnArrayPushConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow return statements in Promise.prototype.finally() callbacks.
+     * See https://biomejs.dev/linter/rules/no-return-in-finally
+     */
+    noReturnInFinally: noReturnInFinallyConfigurationSchema.optional().nullable(),
+    /**
+     * Forbid a module from importing itself.
+     * See https://biomejs.dev/linter/rules/no-self-import
+     */
+    noSelfImport: noSelfImportConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow nesting a cascade layer inside a layer with the same name.
+     * See https://biomejs.dev/linter/rules/no-self-nested-layer
+     */
+    noSelfNestedLayer: noSelfNestedLayerConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow animation and transition times that are shorter than a configured minimum.
+     * See https://biomejs.dev/linter/rules/no-short-time-values
+     */
+    noShortTimeValues: noShortTimeValuesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow addEventListener in Svelte files.
+     * See https://biomejs.dev/linter/rules/no-svelte-add-event-listener
+     */
+    noSvelteAddEventListener: noSvelteAddEventListenerConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of Svelte's {@debug} tag.
+     * See https://biomejs.dev/linter/rules/no-svelte-at-debug-tags
+     */
+    noSvelteAtDebugTags: noSvelteAtDebugTagsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of Svelte's {@html} tag.
+     * See https://biomejs.dev/linter/rules/no-svelte-at-html-tags
+     */
+    noSvelteAtHtmlTags: noSvelteAtHtmlTagsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow Svelte's class: directive.
+     * See https://biomejs.dev/linter/rules/no-svelte-class-directive
+     */
+    noSvelteClassDirective: noSvelteClassDirectiveConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow declaring Svelte component props with export let.
+     * See https://biomejs.dev/linter/rules/no-svelte-export-let
+     */
+    noSvelteExportLet: noSvelteExportLetConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of the $inspect rune.
+     * See https://biomejs.dev/linter/rules/no-svelte-inspect
+     */
+    noSvelteInspect: noSvelteInspectConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow importing from svelte/internal.
+     * See https://biomejs.dev/linter/rules/no-svelte-internal
+     */
+    noSvelteInternal: noSvelteInternalConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow legacy Svelte {@const} tags.
+     * See https://biomejs.dev/linter/rules/no-svelte-legacy-const
+     */
+    noSvelteLegacyConst: noSvelteLegacyConstConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow objects, arrays, functions, and classes in Svelte text mustaches.
+     * See https://biomejs.dev/linter/rules/no-svelte-object-in-text-mustaches
+     */
+    noSvelteObjectInTextMustaches: noSvelteObjectInTextMustachesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary $state wrapping of reactive classes.
+     * See https://biomejs.dev/linter/rules/no-svelte-unnecessary-state-wrap
+     */
+    noSvelteUnnecessaryStateWrap: noSvelteUnnecessaryStateWrapConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow $derived.by() when $derived() is sufficient.
+     * See https://biomejs.dev/linter/rules/no-svelte-useless-derived-by
+     */
+    noSvelteUselessDerivedBy: noSvelteUselessDerivedByConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow arbitrary values in Tailwind CSS utility classes.
+     * See https://biomejs.dev/linter/rules/no-tailwind-arbitrary-value
+     */
+    noTailwindArbitraryValue: noTailwindArbitraryValueConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow Tailwind CSS utility classes that Tailwind CSS only keeps for backward compatibility.
+     * See https://biomejs.dev/linter/rules/no-tailwind-legacy-utilities
+     */
+    noTailwindLegacyUtilities: noTailwindLegacyUtilitiesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow Tailwind CSS utility classes that use raw palette colors.
+     * See https://biomejs.dev/linter/rules/no-tailwind-raw-colors
+     */
+    noTailwindRawColors: noTailwindRawColorsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow Tailwind utilities that override the appearance of components.
+     * See https://biomejs.dev/linter/rules/no-tailwind-restyled-components
+     */
+    noTailwindRestyledComponents: noTailwindRestyledComponentsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow rest destructuring and object spread on TanStack Query results.
+     * See https://biomejs.dev/linter/rules/no-tanstack-query-rest-destructuring
+     */
+    noTanstackQueryRestDestructuring: noTanstackQueryRestDestructuringConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow this outside of classes.
+     * See https://biomejs.dev/linter/rules/no-this-outside-of-class
+     */
+    noThisOutsideOfClass: noThisOutsideOfClassConfigurationSchema.optional().nullable(),
+    /**
+     * Reports CSS class names in HTML class attributes that are not defined in any \<style> block or linked stylesheet available to the file.
+     * See https://biomejs.dev/linter/rules/no-undeclared-classes
+     */
+    noUndeclaredClasses: noUndeclaredClassesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow undeclared CSS custom properties in inline styles.
+     * See https://biomejs.dev/linter/rules/no-undeclared-custom-properties
+     */
+    noUndeclaredCustomProperties: noUndeclaredCustomPropertiesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow loop conditions whose variables are never modified in the loop.
+     * See https://biomejs.dev/linter/rules/no-unmodified-loop-condition
+     */
+    noUnmodifiedLoopCondition: noUnmodifiedLoopConditionConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow complex expressions as the value that a for...of loop goes through.
+     * See https://biomejs.dev/linter/rules/no-unreadable-for-of-expression
+     */
+    noUnreadableForOfExpression: noUnreadableForOfExpressionConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow immediately called arrow functions whose body is wrapped in parentheses.
+     * See https://biomejs.dev/linter/rules/no-unreadable-iife
+     */
+    noUnreadableIife: noUnreadableIifeConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow allow-scripts together with allow-same-origin in an iframe sandbox.
+     * See https://biomejs.dev/linter/rules/no-unsafe-iframe-sandbox
+     */
+    noUnsafeIframeSandbox: noUnsafeIframeSandboxConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow + operations with operands that are known to be unsafe.
+     * See https://biomejs.dev/linter/rules/no-unsafe-plus-operands
+     */
+    noUnsafePlusOperands: noUnsafePlusOperandsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow returning a value typed as any from a function.
+     * See https://biomejs.dev/linter/rules/no-unsafe-return
+     */
+    noUnsafeReturn: noUnsafeReturnConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow TypeScript type assertions other than const assertions.
+     * See https://biomejs.dev/linter/rules/no-unsafe-type-assertion
+     */
+    noUnsafeTypeAssertion: noUnsafeTypeAssertionConfigurationSchema.optional().nullable(),
+    /**
+     * Require the operand of unary - to be a number or a bigint.
+     * See https://biomejs.dev/linter/rules/no-unsafe-unary-minus
+     */
+    noUnsafeUnaryMinus: noUnsafeUnaryMinusConfigurationSchema.optional().nullable(),
+    /**
+     * Reports CSS class selectors that are never referenced in any JSX or HTML file.
+     * See https://biomejs.dev/linter/rules/no-unused-classes
+     */
+    noUnusedClasses: noUnusedClassesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow assignments whose value is never read.
+     * See https://biomejs.dev/linter/rules/no-useless-assignment
+     */
+    noUselessAssignment: noUselessAssignmentConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow unnecessary .call() and .apply().
+     * See https://biomejs.dev/linter/rules/no-useless-call
+     */
+    noUselessCall: noUselessCallConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow calling .getTime() on a date before passing it to the Date constructor.
+     * See https://biomejs.dev/linter/rules/no-useless-date-get-time
+     */
+    noUselessDateGetTime: noUselessDateGetTimeConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow functions that return a call to themselves when a loop can do the same work.
+     * See https://biomejs.dev/linter/rules/no-useless-recursion
+     */
+    noUselessRecursion: noUselessRecursionConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow splice() calls that have a simpler alternative.
+     * See https://biomejs.dev/linter/rules/no-useless-splice
+     */
+    noUselessSplice: noUselessSpliceConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow type conversions that do not change the type of an expression.
+     * See https://biomejs.dev/linter/rules/no-useless-type-conversion
+     */
+    noUselessTypeConversion: noUselessTypeConversionConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow default values for Boolean props in Vue components.
+     * See https://biomejs.dev/linter/rules/no-vue-boolean-default
+     */
+    noVueBooleanDefault: noVueBooleanDefaultConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using computed properties inside the data function of a Vue component.
+     * See https://biomejs.dev/linter/rules/no-vue-computed-properties-in-data
+     */
+    noVueComputedPropertiesInData: noVueComputedPropertiesInDataConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the $set and $delete functions that Vue 3 removed.
+     * See https://biomejs.dev/linter/rules/no-vue-deprecated-delete-set
+     */
+    noVueDeprecatedDeleteSet: noVueDeprecatedDeleteSetConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the deprecated Vue $listeners API.
+     * See https://biomejs.dev/linter/rules/no-vue-deprecated-listeners
+     */
+    noVueDeprecatedListeners: noVueDeprecatedListenersConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the tag prop on RouterLink.
+     * See https://biomejs.dev/linter/rules/no-vue-deprecated-router-link-tag-prop
+     */
+    noVueDeprecatedRouterLinkTagProp: noVueDeprecatedRouterLinkTagPropConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the scope attribute on \<template> elements in Vue templates.
+     * See https://biomejs.dev/linter/rules/no-vue-deprecated-scope-attribute
+     */
+    noVueDeprecatedScopeAttribute: noVueDeprecatedScopeAttributeConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the deprecated Vue $scopedSlots API.
+     * See https://biomejs.dev/linter/rules/no-vue-deprecated-scoped-slots
+     */
+    noVueDeprecatedScopedSlots: noVueDeprecatedScopedSlotsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow registering Vue lifecycle hooks after an await in setup().
+     * See https://biomejs.dev/linter/rules/no-vue-lifecycle-after-await
+     */
+    noVueLifecycleAfterAwait: noVueLifecycleAfterAwaitConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow passing more than one argument to a Vue slot.
+     * See https://biomejs.dev/linter/rules/no-vue-multiple-slot-args
+     */
+    noVueMultipleSlotArgs: noVueMultipleSlotArgsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow changing the props of a Vue component.
+     * See https://biomejs.dev/linter/rules/no-vue-mutating-props
+     */
+    noVueMutatingProps: noVueMutatingPropsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow props that are both required and have a default value.
+     * See https://biomejs.dev/linter/rules/no-vue-required-prop-with-default
+     */
+    noVueRequiredPropWithDefault: noVueRequiredPropWithDefaultConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow v-if on the root element of a Vue component template.
+     * See https://biomejs.dev/linter/rules/no-vue-root-v-if
+     */
+    noVueRootVIf: noVueRootVIfConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow Vue component events named after built-in browser events.
+     * See https://biomejs.dev/linter/rules/no-vue-shadow-native-events
+     */
+    noVueShadowNativeEvents: noVueShadowNativeEventsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow changing state inside Vue computed properties.
+     * See https://biomejs.dev/linter/rules/no-vue-side-effects-in-computed
+     */
+    noVueSideEffectsInComputed: noVueSideEffectsInComputedConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow custom Vue directives that are not declared.
+     * See https://biomejs.dev/linter/rules/no-vue-undeclared-directives
+     */
+    noVueUndeclaredDirectives: noVueUndeclaredDirectivesConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow declaring events that a Vue component never emits.
+     * See https://biomejs.dev/linter/rules/no-vue-unused-emit-declarations
+     */
+    noVueUnusedEmitDeclarations: noVueUnusedEmitDeclarationsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow template refs that are never used.
+     * See https://biomejs.dev/linter/rules/no-vue-unused-refs
+     */
+    noVueUnusedRefs: noVueUnusedRefsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of Vue's v-html directive.
+     * See https://biomejs.dev/linter/rules/no-vue-v-html
+     */
+    noVueVHtml: noVueVHtmlConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the use of Vue's v-text directive.
+     * See https://biomejs.dev/linter/rules/no-vue-v-text
+     */
+    noVueVText: noVueVTextConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow v-text and v-html on components.
+     * See https://biomejs.dev/linter/rules/no-vue-v-text-v-html-on-component
+     */
+    noVueVTextVHtmlOnComponent: noVueVTextVHtmlOnComponentConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow creating Vue watchers after an await in setup().
+     * See https://biomejs.dev/linter/rules/no-vue-watch-after-await
+     */
+    noVueWatchAfterAwait: noVueWatchAfterAwaitConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow the bitwise XOR operator where exponentiation was likely intended.
+     * See https://biomejs.dev/linter/rules/no-xor-as-exponentiation
+     */
+    noXorAsExponentiation: noXorAsExponentiationConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow boolean values as keys in YAML.
+     * See https://biomejs.dev/linter/rules/no-yaml-boolean-keys
+     */
+    noYamlBooleanKeys: noYamlBooleanKeysConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow number literals with zero fractions or dangling dots.
+     * See https://biomejs.dev/linter/rules/no-zero-fractions
+     */
+    noZeroFractions: noZeroFractionsConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow units on zero lengths.
+     * See https://biomejs.dev/linter/rules/no-zero-length-unit
+     */
+    noZeroLengthUnit: noZeroLengthUnitConfigurationSchema.optional().nullable(),
+    /**
+     * Require a value for Astro's client:only directive.
+     * See https://biomejs.dev/linter/rules/use-astro-client-only-directive-value
+     */
+    useAstroClientOnlyDirectiveValue: useAstroClientOnlyDirectiveValueConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that await is only used on Promise values.
+     * See https://biomejs.dev/linter/rules/use-await-thenable
+     */
+    useAwaitThenable: useAwaitThenableConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer modern DOM traversal APIs over positional indexes and chained walks.
+     * See https://biomejs.dev/linter/rules/use-better-dom-traversing
+     */
+    useBetterDomTraversing: useBetterDomTraversingConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of bigint literals over the BigInt() constructor.
+     * See https://biomejs.dev/linter/rules/use-bigint-literals
+     */
+    useBigintLiterals: useBigintLiteralsConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer block statements over functions that are called immediately only to create a scope.
+     * See https://biomejs.dev/linter/rules/use-block-statement-over-iife
+     */
+    useBlockStatementOverIife: useBlockStatementOverIifeConfigurationSchema.optional().nullable(),
+    /**
+     * Require constructor names to begin with a capital letter.
+     * See https://biomejs.dev/linter/rules/use-capitalized-constructors
+     */
+    useCapitalizedConstructors: useCapitalizedConstructorsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce which languages the top-level blocks of Vue and Svelte components use.
+     * See https://biomejs.dev/linter/rules/use-consistent-block-lang
+     */
+    useConsistentBlockLang: useConsistentBlockLangConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce consistent use of function declarations or expressions assigned to variables.
+     * See https://biomejs.dev/linter/rules/use-consistent-function-style
+     */
+    useConsistentFunctionStyle: useConsistentFunctionStyleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that all heading levels are consistent and ordered.
+     * See https://biomejs.dev/linter/rules/use-consistent-heading-level
+     */
+    useConsistentHeadingLevel: useConsistentHeadingLevelConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce a consistent way of reading JSON files before passing them to JSON.parse().
+     * See https://biomejs.dev/linter/rules/use-consistent-json-file-read
+     */
+    useConsistentJsonFileRead: useConsistentJsonFileReadConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce a consistent notation for the lightness of colors.
+     * See https://biomejs.dev/linter/rules/use-consistent-lightness-notation
+     */
+    useConsistentLightnessNotation: useConsistentLightnessNotationConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce JSON keys with consistent Unicode representation.
+     * See https://biomejs.dev/linter/rules/use-consistent-object-keys
+     */
+    useConsistentObjectKeys: useConsistentObjectKeysConfigurationSchema.optional().nullable(),
+    /**
+     * Require or disallow a Unicode byte order mark at the beginning of a file.
+     * See https://biomejs.dev/linter/rules/use-consistent-unicode-bom
+     */
+    useConsistentUnicodeBom: useConsistentUnicodeBomConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that interactive control elements have an accessible label.
+     * See https://biomejs.dev/linter/rules/use-control-label
+     */
+    useControlLabel: useControlLabelConfigurationSchema.optional().nullable(),
+    /**
+     * Detects a disposable object assigned to a variable without using or await using syntax.
+     * See https://biomejs.dev/linter/rules/use-disposables
+     */
+    useDisposables: useDisposablesConfigurationSchema.optional().nullable(),
+    /**
+     * Require switch-case statements to be exhaustive.
+     * See https://biomejs.dev/linter/rules/use-exhaustive-switch-cases
+     */
+    useExhaustiveSwitchCases: useExhaustiveSwitchCasesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using toContain() to check whether an array or string contains a value.
+     * See https://biomejs.dev/linter/rules/use-expect-to-contain
+     */
+    useExpectToContain: useExpectToContainConfigurationSchema.optional().nullable(),
+    /**
+     * Require explicit return types on functions and class methods.
+     * See https://biomejs.dev/linter/rules/use-explicit-return-type
+     */
+    useExplicitReturnType: useExplicitReturnTypeConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce types in functions, methods, variables, and parameters.
+     * See https://biomejs.dev/linter/rules/use-explicit-type
+     */
+    useExplicitType: useExplicitTypeConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that fenced code blocks specify a code tag (language).
+     * See https://biomejs.dev/linter/rules/use-fenced-code-language
+     */
+    useFencedCodeLanguage: useFencedCodeLanguageConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer flat Math.min() and Math.max() calls over nested calls of the same method.
+     * See https://biomejs.dev/linter/rules/use-flat-math-min-max
+     */
+    useFlatMathMinMax: useFlatMathMinMaxConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer Array#includes() over Array#indexOf(), Array#lastIndexOf(), and Array#some() when checking for existence or non-existence.
+     * See https://biomejs.dev/linter/rules/use-includes
+     */
+    useIncludes: useIncludesConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer Iterator.zip() over reading several arrays with the same index.
+     * See https://biomejs.dev/linter/rules/use-iterator-zip
+     */
+    useIteratorZip: useIteratorZipConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce style rules to be defined within a cascade layer.
+     * See https://biomejs.dev/linter/rules/use-layered-styles
+     */
+    useLayeredStyles: useLayeredStylesConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer logical CSS properties over physical properties.
+     * See https://biomejs.dev/linter/rules/use-logical-properties
+     */
+    useLogicalProperties: useLogicalPropertiesConfigurationSchema.optional().nullable(),
+    /**
+     * Require test and test suite titles to start with a lowercase letter.
+     * See https://biomejs.dev/linter/rules/use-lowercase-test-title
+     */
+    useLowercaseTestTitle: useLowercaseTestTitleConfigurationSchema.optional().nullable(),
+    /**
+     * Require function names to match the name of the variable or property they are assigned to.
+     * See https://biomejs.dev/linter/rules/use-matching-function-name
+     */
+    useMatchingFunctionName: useMatchingFunctionNameConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer Math.abs() over manual absolute value calculations and range checks.
+     * See https://biomejs.dev/linter/rules/use-math-abs
+     */
+    useMathAbs: useMathAbsConfigurationSchema.optional().nullable(),
+    /**
+     * Require Math.trunc() instead of tricks that remove the decimal part of a number.
+     * See https://biomejs.dev/linter/rules/use-math-trunc
+     */
+    useMathTrunc: useMathTruncConfigurationSchema.optional().nullable(),
+    /**
+     * Use modern Math APIs for common mathematical operations.
+     * See https://biomejs.dev/linter/rules/use-modern-math-apis
+     */
+    useModernMathApis: useModernMathApisConfigurationSchema.optional().nullable(),
+    /**
+     * Require function expressions to have a name.
+     * See https://biomejs.dev/linter/rules/use-named-function
+     */
+    useNamedFunction: useNamedFunctionConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow anonymous cascade layers.
+     * See https://biomejs.dev/linter/rules/use-named-layer
+     */
+    useNamedLayer: useNamedLayerConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using the nullish coalescing operator (??) instead of logical or (||).
+     * See https://biomejs.dev/linter/rules/use-nullish-coalescing
+     */
+    useNullishCoalescing: useNullishCoalescingConfigurationSchema.optional().nullable(),
+    /**
+     * Require the cpu field in package.json to be a valid list of processor types.
+     * See https://biomejs.dev/linter/rules/use-package-json-valid-cpu
+     */
+    usePackageJsonValidCpu: usePackageJsonValidCpuConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that the engines field in package.json is valid.
+     * See https://biomejs.dev/linter/rules/use-package-json-valid-engines
+     */
+    usePackageJsonValidEngines: usePackageJsonValidEnginesConfigurationSchema.optional().nullable(),
+    /**
+     * Require Error objects as Promise rejection reasons.
+     * See https://biomejs.dev/linter/rules/use-promise-reject-errors
+     */
+    usePromiseRejectErrors: usePromiseRejectErrorsConfigurationSchema.optional().nullable(),
+    /**
+     * Validate files with React Compiler.
+     * See https://biomejs.dev/linter/rules/use-react-compiler
+     */
+    useReactCompiler: useReactCompilerConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce a specific function type for React function components.
+     * See https://biomejs.dev/linter/rules/use-react-function-component-definition
+     */
+    useReactFunctionComponentDefinition: useReactFunctionComponentDefinitionConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces naming conventions for React createContext, useId, and useRef.
+     * See https://biomejs.dev/linter/rules/use-react-naming-convention
+     */
+    useReactNamingConvention: useReactNamingConventionConfigurationSchema.optional().nullable(),
+    /**
+     * Require PlatformColor() and DynamicColorIOS() calls to use values written directly in the call.
+     * See https://biomejs.dev/linter/rules/use-react-native-valid-platform-colors
+     */
+    useReactNativeValidPlatformColors: useReactNativeValidPlatformColorsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce RegExp#exec over String#match if no global flag is provided.
+     * See https://biomejs.dev/linter/rules/use-regexp-exec
+     */
+    useRegexpExec: useRegexpExecConfigurationSchema.optional().nullable(),
+    /**
+     * Return conditions directly instead of using if statements that only return true or false.
+     * See https://biomejs.dev/linter/rules/use-simplified-boolean-return
+     */
+    useSimplifiedBooleanReturn: useSimplifiedBooleanReturnConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that a Markdown document has a single top-level heading.
+     * See https://biomejs.dev/linter/rules/use-single-top-level-heading
+     */
+    useSingleTopLevelHeading: useSingleTopLevelHeadingConfigurationSchema.optional().nullable(),
+    /**
+     * Require unambiguous boolean expressions in conditions.
+     * See https://biomejs.dev/linter/rules/use-strict-boolean-expressions
+     */
+    useStrictBooleanExpressions: useStrictBooleanExpressionsConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer String#startsWith() and String#endsWith() over verbose prefix and suffix checks.
+     * See https://biomejs.dev/linter/rules/use-string-starts-ends-with
+     */
+    useStringStartsEndsWith: useStringStartsEndsWithConfigurationSchema.optional().nullable(),
+    /**
+     * Require createEventDispatcher calls to declare the types of their events.
+     * See https://biomejs.dev/linter/rules/use-svelte-event-dispatcher-types
+     */
+    useSvelteEventDispatcherTypes: useSvelteEventDispatcherTypesConfigurationSchema.optional().nullable(),
+    /**
+     * Require internal navigation in SvelteKit apps to use paths built with resolve().
+     * See https://biomejs.dev/linter/rules/use-svelte-kit-resolve
+     */
+    useSvelteKitResolve: useSvelteKitResolveConfigurationSchema.optional().nullable(),
+    /**
+     * Require importing SvelteKit's app state from $app/state instead of $app/stores.
+     * See https://biomejs.dev/linter/rules/use-svelte-kit-rune-imports
+     */
+    useSvelteKitRuneImports: useSvelteKitRuneImportsConfigurationSchema.optional().nullable(),
+    /**
+     * Require the reactive classes from svelte/reactivity instead of built-in objects that are modified.
+     * See https://biomejs.dev/linter/rules/use-svelte-reactive-classes
+     */
+    useSvelteReactiveClasses: useSvelteReactiveClassesConfigurationSchema.optional().nullable(),
+    /**
+     * Require keyed {#each} blocks in Svelte templates.
+     * See https://biomejs.dev/linter/rules/use-svelte-require-each-key
+     */
+    useSvelteRequireEachKey: useSvelteRequireEachKeyConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the shorthand syntax for Svelte bind:, class:, and style: directives.
+     * See https://biomejs.dev/linter/rules/use-svelte-shorthand-directive
+     */
+    useSvelteShorthandDirective: useSvelteShorthandDirectiveConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using fewer Tailwind utilities instead of multiple utilities that are functionally the same.
+     * See https://biomejs.dev/linter/rules/use-tailwind-shorthand-classes
+     */
+    useTailwindShorthandClasses: useTailwindShorthandClassesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the sorting of Tailwind CSS classes.
+     * See https://biomejs.dev/linter/rules/use-tailwind-sorted-classes
+     */
+    useTailwindSortedClasses: useTailwindSortedClassesConfigurationSchema.optional().nullable(),
+    /**
+     * Require complete, statically written class names.
+     * See https://biomejs.dev/linter/rules/use-tailwind-static-class-strings
+     */
+    useTailwindStaticClassStrings: useTailwindStaticClassStringsConfigurationSchema.optional().nullable(),
+    /**
+     * Require Markdown documents to start with a top-level heading.
+     * See https://biomejs.dev/linter/rules/use-top-level-heading
+     */
+    useTopLevelHeading: useTopLevelHeadingConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the use of the unary minus operator over multiplying or dividing by -1.
+     * See https://biomejs.dev/linter/rules/use-unary-minus
+     */
+    useUnaryMinus: useUnaryMinusConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid titles for unit test cases and test suites.
+     * See https://biomejs.dev/linter/rules/use-valid-test-title
+     */
+    useValidTestTitle: useValidTestTitleConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce importing Vue's public entry point instead of internal Vue packages.
+     * See https://biomejs.dev/linter/rules/use-vue-base-import
+     */
+    useVueBaseImport: useVueBaseImportConfigurationSchema.optional().nullable(),
+    /**
+     * Require \<component> elements to bind the is attribute.
+     * See https://biomejs.dev/linter/rules/use-vue-component-is
+     */
+    useVueComponentIs: useVueComponentIsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce a consistent hyphenation style for event names in v-on directives on custom components.
+     * See https://biomejs.dev/linter/rules/use-vue-consistent-event-hyphenation
+     */
+    useVueConsistentEventHyphenation: useVueConsistentEventHyphenationConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce defineOptions() instead of a default export in components that use \<script setup>.
+     * See https://biomejs.dev/linter/rules/use-vue-define-options
+     */
+    useVueDefineOptions: useVueDefineOptionsConfigurationSchema.optional().nullable(),
+    /**
+     * Require destructuring the props returned by Vue's defineProps macro.
+     * See https://biomejs.dev/linter/rules/use-vue-define-props-destructuring
+     */
+    useVueDefinePropsDestructuring: useVueDefinePropsDestructuringConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that the name of a Vue component matches its file name.
+     * See https://biomejs.dev/linter/rules/use-vue-matching-component-file-name
+     */
+    useVueMatchingComponentFileName: useVueMatchingComponentFileNameConfigurationSchema.optional().nullable(),
+    /**
+     * Require useTemplateRef() instead of ref() or shallowRef() to access elements of the template.
+     * See https://biomejs.dev/linter/rules/use-vue-template-ref
+     */
+    useVueTemplateRef: useVueTemplateRefConfigurationSchema.optional().nullable(),
+    /**
+     * Require the element inside a Vue \<Transition> to be shown and hidden with v-if or v-show.
+     * See https://biomejs.dev/linter/rules/use-vue-toggle-inside-transition
+     */
+    useVueToggleInsideTransition: useVueToggleInsideTransitionConfigurationSchema.optional().nullable(),
+    /**
+     * Require a type for every prop of a Vue component.
+     * See https://biomejs.dev/linter/rules/use-vue-typed-props
+     */
+    useVueTypedProps: useVueTypedPropsConfigurationSchema.optional().nullable(),
+    /**
+     * Require a type for refs created with ref() or shallowRef() in TypeScript.
+     * See https://biomejs.dev/linter/rules/use-vue-typed-ref
+     */
+    useVueTypedRef: useVueTypedRefConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce v-model instead of a prop binding paired with an update: listener that writes the value back.
+     * See https://biomejs.dev/linter/rules/use-vue-v-model
+     */
+    useVueVModel: useVueVModelConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce the .exact modifier on v-on directives when another listener for the same event needs more modifier keys.
+     * See https://biomejs.dev/linter/rules/use-vue-v-on-exact
+     */
+    useVueVOnExact: useVueVOnExactConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid usage of Vue's defineEmits macro.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-define-emits
+     */
+    useVueValidDefineEmits: useVueValidDefineEmitsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid defineProps() calls in Vue components.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-define-props
+     */
+    useVueValidDefineProps: useVueValidDefinePropsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-is Vue directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-is
+     */
+    useVueValidVIs: useVueValidVIsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-memo Vue directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-memo
+     */
+    useVueValidVMemo: useVueValidVMemoConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-model directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-model
+     */
+    useVueValidVModel: useVueValidVModelConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-show directives.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-show
+     */
+    useVueValidVShow: useVueValidVShowConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce valid v-slot directives in Vue templates.
+     * See https://biomejs.dev/linter/rules/use-vue-valid-v-slot
+     */
+    useVueValidVSlot: useVueValidVSlotConfigurationSchema.optional().nullable(),
+    /**
+     * Require the condition that ends a loop to be written in the while statement.
+     * See https://biomejs.dev/linter/rules/use-while-loop-condition
+     */
+    useWhileLoopCondition: useWhileLoopConditionConfigurationSchema.optional().nullable()
+});
+
 export const ruleWithNoRestrictedImportsOptionsSchema = z.object({
     level: rulePlainConfigurationSchema,
     options: noRestrictedImportsOptionsSchema.optional()
 });
 
 export const ruleWithUseNamingConventionOptionsSchema = z.object({
+    /**
+     * Controls the applicability of the rule's fix. `none` suppresses the fix, while `safe` and `unsafe` reclassify its applicability. This setting does not change the fix itself.
+     */
     fix: fixKindSchema.optional().nullable(),
     level: rulePlainConfigurationSchema,
     options: useNamingConventionOptionsSchema.optional()
@@ -9148,17 +12948,19 @@ export const organizeImportsOptionsSchema = z.object({
 
 export const severityOrCorrectnessSchema = z.union([groupPlainConfigurationSchema, correctnessSchema]);
 
+export const severityOrNurserySchema = z.union([groupPlainConfigurationSchema, nurserySchema]);
+
 export const noRestrictedImportsConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithNoRestrictedImportsOptionsSchema]);
 
 export const useNamingConventionConfigurationSchema = z.union([rulePlainConfigurationSchema, ruleWithUseNamingConventionOptionsSchema]);
 
-export const ruleAssistWithOrganizeImportsOptionsSchema = z.record(z.string(), z.unknown()).and(z.object({
+export const ruleAssistWithOrganizeImportsOptionsSchema = z.object({
     level: ruleAssistPlainConfigurationSchema,
     options: organizeImportsOptionsSchema
-}));
+});
 
 /**
- * A list of rules that belong to this group
+ * Configures all rules in one lint group.
  */
 export const styleSchema = z.object({
     /**
@@ -9177,7 +12979,7 @@ export const styleSchema = z.object({
      */
     noDefaultExport: noDefaultExportConfigurationSchema.optional().nullable(),
     /**
-     * Disallow a lower specificity selector from coming after a higher specificity selector.
+     * Disallow lower-specificity selectors after higher-specificity selectors.
      * See https://biomejs.dev/linter/rules/no-descending-specificity
      */
     noDescendingSpecificity: noDescendingSpecificityConfigurationSchema.optional().nullable(),
@@ -9232,6 +13034,11 @@ export const styleSchema = z.object({
      */
     noInferrableTypes: noInferrableTypesConfigurationSchema.optional().nullable(),
     /**
+     * Disallow the use of inline styles.
+     * See https://biomejs.dev/linter/rules/no-inline-styles
+     */
+    noInlineStyles: noInlineStylesConfigurationSchema.optional().nullable(),
+    /**
      * Disallow string literals inside JSX elements.
      * See https://biomejs.dev/linter/rules/no-jsx-literals
      */
@@ -9282,10 +13089,30 @@ export const styleSchema = z.object({
      */
     noParameterProperties: noParameterPropertiesConfigurationSchema.optional().nullable(),
     /**
+     * Disallow usage of element handles (page.$() and page.$$()).
+     * See https://biomejs.dev/linter/rules/no-playwright-element-handle
+     */
+    noPlaywrightElementHandle: noPlaywrightElementHandleConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow usage of page.$eval() and page.$$eval().
+     * See https://biomejs.dev/linter/rules/no-playwright-eval
+     */
+    noPlaywrightEval: noPlaywrightEvalConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow using page.waitForSelector().
+     * See https://biomejs.dev/linter/rules/no-playwright-wait-for-selector
+     */
+    noPlaywrightWaitForSelector: noPlaywrightWaitForSelectorConfigurationSchema.optional().nullable(),
+    /**
      * Disallow the use of process.env.
      * See https://biomejs.dev/linter/rules/no-process-env
      */
     noProcessEnv: noProcessEnvConfigurationSchema.optional().nullable(),
+    /**
+     * Disallow color literals in React Native styles.
+     * See https://biomejs.dev/linter/rules/no-react-native-literal-colors
+     */
+    noReactNativeLiteralColors: noReactNativeLiteralColorsConfigurationSchema.optional().nullable(),
     /**
      * This rule allows you to specify global variable names that you don’t want to use in your application.
      * See https://biomejs.dev/linter/rules/no-restricted-globals
@@ -9302,12 +13129,12 @@ export const styleSchema = z.object({
      */
     noRestrictedTypes: noRestrictedTypesConfigurationSchema.optional().nullable(),
     /**
-     * Disallow the usage of specified root types.
+     * Disallow configured GraphQL root operation types.
      * See https://biomejs.dev/linter/rules/no-root-type
      */
     noRootType: noRootTypeConfigurationSchema.optional().nullable(),
     /**
-     * Disallow the use of constants which its value is the upper-case version of its name.
+     * Disallow constants whose string value is the same as their uppercase name.
      * See https://biomejs.dev/linter/rules/no-shouty-constants
      */
     noShoutyConstants: noShoutyConstantsConfigurationSchema.optional().nullable(),
@@ -9322,6 +13149,11 @@ export const styleSchema = z.object({
      */
     noTernary: noTernaryConfigurationSchema.optional().nullable(),
     /**
+     * Require the JSON top-level value to be an array or object.
+     * See https://biomejs.dev/linter/rules/no-top-level-literals
+     */
+    noTopLevelLiterals: noTopLevelLiteralsConfigurationSchema.optional().nullable(),
+    /**
      * Disallow template literals if interpolation and special-character handling are not needed.
      * See https://biomejs.dev/linter/rules/no-unused-template-literal
      */
@@ -9332,7 +13164,7 @@ export const styleSchema = z.object({
      */
     noUselessElse: noUselessElseConfigurationSchema.optional().nullable(),
     /**
-     * Disallow use of @value rule in CSS modules.
+     * Disallow the @value rule in CSS Modules.
      * See https://biomejs.dev/linter/rules/no-value-at-rule
      */
     noValueAtRule: noValueAtRuleConfigurationSchema.optional().nullable(),
@@ -9347,11 +13179,15 @@ export const styleSchema = z.object({
      */
     noYodaExpression: noYodaExpressionConfigurationSchema.optional().nullable(),
     /**
-     * Enables a particular rule preset
+     * Selects the baseline set of lint rules for a non-nursery group. `recommended`
+     * enables the group's recommended rules, `all` enables all rules in the group, and
+     * `none` starts with no rules enabled in the group. Explicit rule settings override
+     * this group preset, which overrides `linter.rules.preset` for the group.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * Enables the recommended rules for this group
+     * Enables or disables the recommended rules in a non-nursery group. The group's
+     * `preset` setting takes precedence when both options are set.
      */
     recommended: z.boolean().optional().nullable(),
     /**
@@ -9415,7 +13251,7 @@ export const styleSchema = z.object({
      */
     useConsistentEnumValueType: useConsistentEnumValueTypeConfigurationSchema.optional().nullable(),
     /**
-     * Require all descriptions to follow the same style (either block or inline) to  maintain consistency and improve readability across the schema.
+     * Require one description style throughout a GraphQL schema.
      * See https://biomejs.dev/linter/rules/use-consistent-graphql-descriptions
      */
     useConsistentGraphqlDescriptions: useConsistentGraphqlDescriptionsConfigurationSchema.optional().nullable(),
@@ -9425,7 +13261,7 @@ export const styleSchema = z.object({
      */
     useConsistentMemberAccessibility: useConsistentMemberAccessibilityConfigurationSchema.optional().nullable(),
     /**
-     * Enforce consistent use of either method signatures or function properties within interfaces and type aliases.
+     * Enforce one syntax for functions declared in interfaces and type aliases.
      * See https://biomejs.dev/linter/rules/use-consistent-method-signatures
      */
     useConsistentMethodSignatures: useConsistentMethodSignaturesConfigurationSchema.optional().nullable(),
@@ -9434,6 +13270,11 @@ export const styleSchema = z.object({
      * See https://biomejs.dev/linter/rules/use-consistent-object-definitions
      */
     useConsistentObjectDefinitions: useConsistentObjectDefinitionsConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce consistent use of it or test for test functions.
+     * See https://biomejs.dev/linter/rules/use-consistent-test-it
+     */
+    useConsistentTestIt: useConsistentTestItConfigurationSchema.optional().nullable(),
     /**
      * Enforce type definitions to consistently use either interface or type.
      * See https://biomejs.dev/linter/rules/use-consistent-type-definitions
@@ -9455,7 +13296,7 @@ export const styleSchema = z.object({
      */
     useDefaultSwitchClause: useDefaultSwitchClauseConfigurationSchema.optional().nullable(),
     /**
-     * Require specifying the reason argument when using @deprecated directive.
+     * Require a reason when using the @deprecated directive.
      * See https://biomejs.dev/linter/rules/use-deprecated-reason
      */
     useDeprecatedReason: useDeprecatedReasonConfigurationSchema.optional().nullable(),
@@ -9464,6 +13305,11 @@ export const styleSchema = z.object({
      * See https://biomejs.dev/linter/rules/use-destructuring
      */
     useDestructuring: useDestructuringConfigurationSchema.optional().nullable(),
+    /**
+     * Prefer querySelector() and querySelectorAll() over older DOM query APIs.
+     * See https://biomejs.dev/linter/rules/use-dom-query-selector
+     */
+    useDomQuerySelector: useDomQuerySelectorConfigurationSchema.optional().nullable(),
     /**
      * Require that each enum member value be explicitly initialized.
      * See https://biomejs.dev/linter/rules/use-enum-initializers
@@ -9515,7 +13361,7 @@ export const styleSchema = z.object({
      */
     useGlobalThis: useGlobalThisConfigurationSchema.optional().nullable(),
     /**
-     * Validates that all enum values are capitalized.
+     * Require uppercase names for GraphQL enum values.
      * See https://biomejs.dev/linter/rules/use-graphql-naming-convention
      */
     useGraphqlNamingConvention: useGraphqlNamingConventionConfigurationSchema.optional().nullable(),
@@ -9530,7 +13376,12 @@ export const styleSchema = z.object({
      */
     useImportType: useImportTypeConfigurationSchema.optional().nullable(),
     /**
-     * Require mutation argument to be always called "input".
+     * Enforce that all imports appear at the top of the module.
+     * See https://biomejs.dev/linter/rules/use-imports-first
+     */
+    useImportsFirst: useImportsFirstConfigurationSchema.optional().nullable(),
+    /**
+     * Require mutation arguments to be named input.
      * See https://biomejs.dev/linter/rules/use-input-name
      */
     useInputName: useInputNameConfigurationSchema.optional().nullable(),
@@ -9540,17 +13391,22 @@ export const styleSchema = z.object({
      */
     useLiteralEnumMembers: useLiteralEnumMembersConfigurationSchema.optional().nullable(),
     /**
-     * Require queries, mutations, subscriptions or fragments each to be located in separate files.
+     * Require one executable GraphQL definition per file.
      * See https://biomejs.dev/linter/rules/use-lone-executable-definition
      */
     useLoneExecutableDefinition: useLoneExecutableDefinitionConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using named capture groups in regular expression.
+     * See https://biomejs.dev/linter/rules/use-named-capture-group
+     */
+    useNamedCaptureGroup: useNamedCaptureGroupConfigurationSchema.optional().nullable(),
     /**
      * Enforce naming conventions for everything across a codebase.
      * See https://biomejs.dev/linter/rules/use-naming-convention
      */
     useNamingConvention: useNamingConventionConfigurationSchema.optional().nullable(),
     /**
-     * Promotes the usage of node:assert/strict over node:assert.
+     * Prefer node:assert/strict over node:assert.
      * See https://biomejs.dev/linter/rules/use-node-assert-strict
      */
     useNodeAssertStrict: useNodeAssertStrictConfigurationSchema.optional().nullable(),
@@ -9580,10 +13436,15 @@ export const styleSchema = z.object({
      */
     useReactFunctionComponents: useReactFunctionComponentsConfigurationSchema.optional().nullable(),
     /**
-     * Enforce marking members as readonly if they are never modified outside the constructor.
+     * Enforce marking instance properties as readonly if they are never modified outside the constructor, and static properties as readonly if they are never reassigned.
      * See https://biomejs.dev/linter/rules/use-readonly-class-properties
      */
     useReadonlyClassProperties: useReadonlyClassPropertiesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce using a type parameter on Array#reduce instead of casting the initial value.
+     * See https://biomejs.dev/linter/rules/use-reduce-type-parameter
+     */
+    useReduceTypeParameter: useReduceTypeParameterConfigurationSchema.optional().nullable(),
     /**
      * Prevent extra closing tags for components without children.
      * See https://biomejs.dev/linter/rules/use-self-closing-elements
@@ -9620,6 +13481,21 @@ export const styleSchema = z.object({
      */
     useTemplate: useTemplateConfigurationSchema.optional().nullable(),
     /**
+     * Enforce that test lifecycle hooks are declared in the order they execute.
+     * See https://biomejs.dev/linter/rules/use-test-hooks-in-order
+     */
+    useTestHooksInOrder: useTestHooksInOrderConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that lifecycle hooks appear before any test cases in the same block.
+     * See https://biomejs.dev/linter/rules/use-test-hooks-on-top
+     */
+    useTestHooksOnTop: useTestHooksOnTopConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce that class methods utilize this.
+     * See https://biomejs.dev/linter/rules/use-this-in-class-methods
+     */
+    useThisInClassMethods: useThisInClassMethodsConfigurationSchema.optional().nullable(),
+    /**
      * Require new when throwing an error.
      * See https://biomejs.dev/linter/rules/use-throw-new-error
      */
@@ -9635,10 +13511,25 @@ export const styleSchema = z.object({
      */
     useTrimStartEnd: useTrimStartEndConfigurationSchema.optional().nullable(),
     /**
+     * Enforce the use of the u or v flag for regular expressions.
+     * See https://biomejs.dev/linter/rules/use-unicode-regex
+     */
+    useUnicodeRegex: useUnicodeRegexConfigurationSchema.optional().nullable(),
+    /**
      * Disallow overload signatures that can be unified into a single signature.
      * See https://biomejs.dev/linter/rules/use-unified-type-signatures
      */
     useUnifiedTypeSignatures: useUnifiedTypeSignaturesConfigurationSchema.optional().nullable(),
+    /**
+     * Require var declarations to appear at the top of their containing scope.
+     * See https://biomejs.dev/linter/rules/use-vars-on-top
+     */
+    useVarsOnTop: useVarsOnTopConfigurationSchema.optional().nullable(),
+    /**
+     * Enforce a consistent declaration style for Vue's defineProps macro.
+     * See https://biomejs.dev/linter/rules/use-vue-consistent-define-props-declaration
+     */
+    useVueConsistentDefinePropsDeclaration: useVueConsistentDefinePropsDeclarationConfigurationSchema.optional().nullable(),
     /**
      * Enforce a consistent style for v-bind in Vue templates.
      * See https://biomejs.dev/linter/rules/use-vue-consistent-v-bind-style
@@ -9655,7 +13546,7 @@ export const styleSchema = z.object({
      */
     useVueDefineMacrosOrder: useVueDefineMacrosOrderConfigurationSchema.optional().nullable(),
     /**
-     * Enforce hyphenated (kebab-case) attribute names in Vue templates.
+     * Disallow uppercase letters in Vue template attribute names.
      * See https://biomejs.dev/linter/rules/use-vue-hyphenated-attributes
      */
     useVueHyphenatedAttributes: useVueHyphenatedAttributesConfigurationSchema.optional().nullable(),
@@ -9663,7 +13554,12 @@ export const styleSchema = z.object({
      * Enforce multi-word component names in Vue components.
      * See https://biomejs.dev/linter/rules/use-vue-multi-word-component-names
      */
-    useVueMultiWordComponentNames: useVueMultiWordComponentNamesConfigurationSchema.optional().nullable()
+    useVueMultiWordComponentNames: useVueMultiWordComponentNamesConfigurationSchema.optional().nullable(),
+    /**
+     * Enforces Promise syntax when using Vue nextTick.
+     * See https://biomejs.dev/linter/rules/use-vue-next-tick-promise
+     */
+    useVueNextTickPromise: useVueNextTickPromiseConfigurationSchema.optional().nullable()
 });
 
 export const organizeImportsConfigurationSchema = z.union([ruleAssistPlainConfigurationSchema, ruleAssistWithOrganizeImportsOptionsSchema]);
@@ -9677,11 +13573,17 @@ export const rulesSchema = z.object({
     nursery: severityOrNurserySchema.optional().nullable(),
     performance: severityOrPerformanceSchema.optional().nullable(),
     /**
-     * The rule presets to use.
+     * Selects the baseline set of lint rules. `recommended` enables Biome's recommended
+     * non-nursery rules, `all` enables all non-nursery rules, and `none` starts with no
+     * rules enabled. Group-level settings and explicit rule settings override this
+     * preset. Defaults to `recommended`.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * It enables the lint rules recommended by Biome. `true` by default.
+     * Enables or disables Biome's recommended non-nursery rules. Defaults to `true`.
+     *
+     * **Deprecated:** This option will be removed in the next major version. Use
+     * `linter.rules.preset` instead, or run `biome migrate` to update the configuration.
      */
     recommended: z.boolean().optional().nullable(),
     security: severityOrSecuritySchema.optional().nullable(),
@@ -9691,63 +13593,86 @@ export const rulesSchema = z.object({
 
 export const linterConfigurationSchema = z.object({
     /**
-     * An object where the keys are the names of the domains, and the values are `all`, `recommended`, or `none`.
+     * Configures rules associated with a framework, library, project-wide analysis, or type
+     * analysis. Keys are domain names and values are `all`, `recommended`, or `none`.
+     * Enabling rules from the `project` or `types` domains activates project and dependency
+     * scanning. The `types` domain also enables type-aware resolution.
      */
     domains: ruleDomainsSchema.optional().nullable(),
     /**
-     * if `false`, it disables the feature and the linter won't be executed. `true` by default
+     * Enables or disables the linter. Defaults to `true`.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * A list of glob patterns. The analyzer will handle only those files/folders that will
-     * match these patterns.
+     * A list of glob patterns selecting files to lint. If omitted, all files selected by
+     * `files.includes` remain eligible for linting. An empty list selects no files. This option can
+     * only narrow the files selected by `files.includes`.
      */
     includes: z.array(normalizedGlobSchema).optional().nullable(),
     /**
-     * List of rules
+     * The lint-rule configuration.
      */
     rules: rulesSchema.optional().nullable()
 });
 
 /**
- * A list of rules that belong to this group
+ * Configures one group of assist actions.
  */
 export const sourceSchema = z.object({
     /**
-     * Remove duplicate CSS classes.
+     * Remove repeated CSS class names from HTML class attributes.
      * See https://biomejs.dev/assist/actions/no-duplicate-classes
      */
     noDuplicateClasses: noDuplicateClassesConfigurationSchema.optional().nullable(),
     /**
-     * Sorts imports and exports in your JavaScript and TypeScript files.
+     * Organize imports and exports in JavaScript and TypeScript files.
      * See https://biomejs.dev/assist/actions/organize-imports
      */
     organizeImports: organizeImportsConfigurationSchema.optional().nullable(),
     /**
-     * Enables a particular rule preset
+     * Selects the baseline set of assist actions for this group. `recommended` enables
+     * the group's recommended actions, `all` enables all actions in the group, and
+     * `none` starts with no actions enabled in the group. Explicit action settings
+     * override this group preset, which overrides `assist.actions.preset` for the group.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * Enables the recommended rules for this group
+     * Enables or disables the recommended actions in this group. The group's `preset`
+     * setting takes precedence when both options are set.
      */
     recommended: z.boolean().optional().nullable(),
     /**
-     * Enforce attribute sorting in HTML elements.
+     * Sort the arguments of GraphQL fields and directives in natural order.
+     * See https://biomejs.dev/assist/actions/use-graphql-sorted-arguments
+     */
+    useGraphqlSortedArguments: useGraphqlSortedArgumentsConfigurationSchema.optional().nullable(),
+    /**
+     * Sort the named definitions in a GraphQL document.
+     * See https://biomejs.dev/assist/actions/use-graphql-sorted-definitions
+     */
+    useGraphqlSortedDefinitions: useGraphqlSortedDefinitionsConfigurationSchema.optional().nullable(),
+    /**
+     * Sort the variable definitions of GraphQL operations in natural order.
+     * See https://biomejs.dev/assist/actions/use-graphql-sorted-variables
+     */
+    useGraphqlSortedVariables: useGraphqlSortedVariablesConfigurationSchema.optional().nullable(),
+    /**
+     * Sort HTML attributes and framework directives into a consistent order.
      * See https://biomejs.dev/assist/actions/use-sorted-attributes
      */
     useSortedAttributes: useSortedAttributesConfigurationSchema.optional().nullable(),
     /**
-     * Sort the members of an enum in natural order.
+     * Sort GraphQL enum values in natural order.
      * See https://biomejs.dev/assist/actions/use-sorted-enum-members
      */
     useSortedEnumMembers: useSortedEnumMembersConfigurationSchema.optional().nullable(),
     /**
-     * Sort interface members by key.
+     * Sort named members of a TypeScript interface.
      * See https://biomejs.dev/assist/actions/use-sorted-interface-members
      */
     useSortedInterfaceMembers: useSortedInterfaceMembersConfigurationSchema.optional().nullable(),
     /**
-     * Sort the keys of a JSON object in natural order.
+     * Sort keys in a JSON object.
      * See https://biomejs.dev/assist/actions/use-sorted-keys
      */
     useSortedKeys: useSortedKeysConfigurationSchema.optional().nullable(),
@@ -9757,17 +13682,17 @@ export const sourceSchema = z.object({
      */
     useSortedPackageJson: useSortedPackageJsonConfigurationSchema.optional().nullable(),
     /**
-     * Enforce ordering of CSS properties and nested rules.
+     * Sort CSS properties and nested rules into a consistent order.
      * See https://biomejs.dev/assist/actions/use-sorted-properties
      */
     useSortedProperties: useSortedPropertiesConfigurationSchema.optional().nullable(),
     /**
-     * Sort GraphQL selection sets.
+     * Sort selections inside GraphQL operations and fragments.
      * See https://biomejs.dev/assist/actions/use-sorted-selection-set
      */
     useSortedSelectionSet: useSortedSelectionSetConfigurationSchema.optional().nullable(),
     /**
-     * Sort fields in GraphQL type definitions alphabetically.
+     * Sort fields in GraphQL type definitions by name.
      * See https://biomejs.dev/assist/actions/use-sorted-type-fields
      */
     useSortedTypeFields: useSortedTypeFieldsConfigurationSchema.optional().nullable()
@@ -9775,179 +13700,223 @@ export const sourceSchema = z.object({
 
 export const overrideLinterConfigurationSchema = z.object({
     /**
-     * List of rules
+     * The lint-domain configuration for matched files.
      */
     domains: ruleDomainsSchema.optional().nullable(),
     /**
-     * if `false`, it disables the feature and the linter won't be executed. `true` by default
+     * Enables or disables the linter for matched files.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * List of rules
+     * The lint-rule configuration for matched files.
      */
     rules: rulesSchema.optional().nullable()
 });
 
 export const actionsSchema = z.object({
     /**
-     * The actions preset to use.
+     * Selects the baseline set of assist actions. `recommended` enables Biome's
+     * recommended actions, `all` enables all actions, and `none` starts with no actions
+     * enabled. Group presets and explicit action settings override this preset.
+     * Defaults to `recommended`.
      */
     preset: presetConfigSchema.optional().nullable(),
     /**
-     * It enables the assist actions recommended by Biome. `true` by default.
+     * Enables or disables Biome's recommended assist actions across all action groups.
+     * Defaults to `true`.
      */
     recommended: z.boolean().optional().nullable(),
+    /**
+     * Configures source-level actions such as organizing imports and sorting declarations. These actions are exposed through editor source actions and through CLI checking and application.
+     */
     source: sourceSchema.optional().nullable()
 });
 
 export const assistConfigurationSchema = z.object({
     /**
-     * Whether Biome should fail in CLI if the assist were not applied to the code.
+     * The assist-action configuration.
      */
     actions: actionsSchema.optional().nullable(),
     /**
-     * Whether Biome should enable assist via LSP and CLI.
+     * Enables configured assist actions in the CLI and editor integrations. Defaults to `true`.
      */
     enabled: boolSchema.optional().nullable(),
     /**
-     * A list of glob patterns. Biome will include files/folders that will
-     * match these patterns.
+     * A list of glob patterns selecting files on which assist actions can run. If omitted, all files
+     * selected by `files.includes` remain eligible for assist actions. An empty list selects no
+     * files. This option can only narrow the files selected by `files.includes`.
      */
     includes: z.array(normalizedGlobSchema).optional().nullable()
 });
 
 export const overrideAssistConfigurationSchema = z.object({
     /**
-     * List of actions
+     * The assist-action configuration for matched files.
      */
     actions: actionsSchema.optional().nullable(),
     /**
-     * if `false`, it disables the feature and the assist won't be executed. `true` by default
+     * Enables or disables assist actions for matched files.
      */
     enabled: boolSchema.optional().nullable()
 });
 
 export const overridePatternSchema = z.object({
     /**
-     * Specific configuration for the Json language
+     * Assist settings for matched files.
      */
     assist: overrideAssistConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for the CSS language
+     * CSS-specific settings for matched files.
      */
     css: cssConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for the filesystem
+     * File-handling settings for matched files.
      */
     files: overrideFilesConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for the Json language
+     * Formatter settings for matched files.
      */
     formatter: overrideFormatterConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for the Graphql language
+     * GraphQL-specific settings for matched files.
      */
     graphql: graphqlConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for the GritQL language
+     * GritQL-specific settings for matched files.
      */
     grit: gritConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for the GritQL language
+     * HTML-specific settings for matched files.
      */
     html: htmlConfigurationSchema.optional().nullable(),
     /**
-     * A list of glob patterns. Biome will include files/folders that will
-     * match these patterns.
+     * A list of glob patterns selecting the files to which this override applies. If omitted, the
+     * override applies to every file. An empty list applies to no files.
      */
     includes: overrideGlobsSchema.optional().nullable(),
     /**
-     * Specific configuration for the JavaScript language
+     * JavaScript-specific settings for matched files.
      */
     javascript: jsConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for the Json language
+     * JSON-specific settings for matched files.
      */
     json: jsonConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for the Json language
+     * Linter settings for matched files.
      */
     linter: overrideLinterConfigurationSchema.optional().nullable(),
     /**
-     * Specific configuration for additional plugins
+     * Specific configuration for the Markdown language
      */
-    plugins: pluginsSchema.optional().nullable()
-});
-
-export const overridesSchema = z.array(overridePatternSchema);
-
-/**
- * The configuration that is contained inside the file `biome.json`
- */
-export const configurationSchema = z.object({
+    markdown: markdownConfigurationSchema.optional().nullable(),
     /**
-     * A field for the JSON schema specification: https://json-schema.org/
-     */
-    $schema: schemaSchema.optional().nullable(),
-    /**
-     * Specific configuration for assists
-     */
-    assist: assistConfigurationSchema.optional().nullable(),
-    /**
-     * Specific configuration for the Css language
-     */
-    css: cssConfigurationSchema.optional().nullable(),
-    /**
-     * A list of paths to other JSON files, used to extend the current configuration.
-     */
-    extends: extendsSchema.optional().nullable(),
-    /**
-     * The configuration of the filesystem
-     */
-    files: filesConfigurationSchema.optional().nullable(),
-    /**
-     * The configuration of the formatter
-     */
-    formatter: formatterConfigurationSchema.optional().nullable(),
-    /**
-     * Specific configuration for the GraphQL language
-     */
-    graphql: graphqlConfigurationSchema.optional().nullable(),
-    /**
-     * Specific configuration for the GraphQL language
-     */
-    grit: gritConfigurationSchema.optional().nullable(),
-    /**
-     * Specific configuration for the HTML language
-     */
-    html: htmlConfigurationSchema.optional().nullable(),
-    /**
-     * Specific configuration for the JavaScript language
-     */
-    javascript: jsConfigurationSchema.optional().nullable(),
-    /**
-     * Specific configuration for the Json language
-     */
-    json: jsonConfigurationSchema.optional().nullable(),
-    /**
-     * The configuration for the linter
-     */
-    linter: linterConfigurationSchema.optional().nullable(),
-    /**
-     * A list of granular patterns that should be applied only to a sub set of files
-     */
-    overrides: overridesSchema.optional().nullable(),
-    /**
-     * List of plugins to load.
+     * Additional plugins for matched files.
      */
     plugins: pluginsSchema.optional().nullable(),
     /**
-     * Indicates whether this configuration file is at the root of a Biome
-     * project. By default, this is `true`.
+     * Specific configuration for the YAML language
+     */
+    yaml: yamlConfigurationSchema.optional().nullable()
+});
+
+/**
+ * Configures settings for files selected by each override. When multiple overrides configure the
+ * same single-value setting, the last matching override takes precedence.
+ */
+export const overridesSchema = z.array(overridePatternSchema);
+
+/**
+ * The configuration contained in `biome.json` or `biome.jsonc`.
+ */
+export const configurationSchema = z.object({
+    /**
+     * The JSON Schema used to validate the configuration and provide editor completion. Biome
+     * emits a diagnostic when a `biomejs.dev` schema URL specifies a version that differs from the
+     * running CLI version.
+     */
+    $schema: schemaSchema.optional().nullable(),
+    /**
+     * The assist configuration.
+     */
+    assist: assistConfigurationSchema.optional().nullable(),
+    /**
+     * Configuration specific to CSS.
+     */
+    css: cssConfigurationSchema.optional().nullable(),
+    /**
+     * Extends the current configuration with settings from one or more other Biome configurations.
+     * Use `"//"` in a nested configuration to extend the root configuration at any nesting depth.
+     * Use an array to extend configurations by relative path or installed package specifier.
+     *
+     * Biome merges configurations from left to right. Later configurations take precedence for
+     * single-value options, list entries are combined, and the current file is applied last.
+     */
+    extends: extendsSchema.optional().nullable(),
+    /**
+     * Configures which files Biome can discover and process.
+     */
+    files: filesConfigurationSchema.optional().nullable(),
+    /**
+     * Configures formatting for selected files.
+     */
+    formatter: formatterConfigurationSchema.optional().nullable(),
+    /**
+     * Configuration specific to GraphQL.
+     */
+    graphql: graphqlConfigurationSchema.optional().nullable(),
+    /**
+     * Configuration specific to GritQL.
+     */
+    grit: gritConfigurationSchema.optional().nullable(),
+    /**
+     * Configuration specific to HTML.
+     */
+    html: htmlConfigurationSchema.optional().nullable(),
+    /**
+     * Configuration specific to JavaScript.
+     */
+    javascript: jsConfigurationSchema.optional().nullable(),
+    /**
+     * Configuration specific to JSON.
+     */
+    json: jsonConfigurationSchema.optional().nullable(),
+    /**
+     * The linter configuration.
+     */
+    linter: linterConfigurationSchema.optional().nullable(),
+    /**
+     * Configuration specific to Markdown.
+     */
+    markdown: markdownConfigurationSchema.optional().nullable(),
+    /**
+     * Configures settings for files selected by each override. When multiple overrides configure
+     * the same single-value setting, the last matching override takes precedence.
+     */
+    overrides: overridesSchema.optional().nullable(),
+    /**
+     * A list of GritQL plugins to load.
+     */
+    plugins: pluginsSchema.optional().nullable(),
+    /**
+     * Marks whether this file is the root configuration for a Biome project. The root configuration
+     * establishes the project's base settings, while `false` marks a configuration found inside the
+     * project as nested rather than a second project root.
+     *
+     * Defaults to `true`. Biome implicitly treats `root` as `false` when a nested configuration uses
+     * `"extends": "//"`. All other nested configurations must explicitly set `root` to `false`.
      */
     root: boolSchema.optional().nullable(),
     /**
-     * The configuration of the VCS integration
+     * Configures how Biome recognizes Tailwind class strings.
      */
-    vcs: vcsConfigurationSchema.optional().nullable()
+    tailwind: tailwindConfigurationSchema.optional().nullable(),
+    /**
+     * The version control integration configuration.
+     */
+    vcs: vcsConfigurationSchema.optional().nullable(),
+    /**
+     * Configuration specific to YAML.
+     */
+    yaml: yamlConfigurationSchema.optional().nullable()
 });
