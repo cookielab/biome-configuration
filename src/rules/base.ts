@@ -102,6 +102,12 @@ const complexity = {
 	 */
 	noImportantStyles: "off",
 	/**
+	 * Prevents from using `await` in Playwright methods that are not asynchronous.
+	 * Ideally, this should already be prevented by the TypeScript check.
+	 * Enabled in the base as Playwright may not be used purely for frontend testing.
+	 */
+	noPlaywrightUselessAwait: "error",
+	/**
 	 * Prevents re-exporting the same value as a named export and a default export as well.
 	 */
 	noRedundantDefaultExport: "error",
@@ -503,34 +509,6 @@ const nursery = {
 	 */
 	noMisleadingReturnType: "error",
 	noMisusedPromises: "error",
-	/**
-	 * Usage of locators is preferred as they include auto-wait.
-	 */
-	noPlaywrightElementHandle: "error",
-	/**
-	 * Locators are preferred over `evaluate`.
-	 */
-	noPlaywrightEval: "error",
-	/**
-	 * Force may lead to unreliable tests.
-	 */
-	noPlaywrightForceOption: "error",
-	/**
-	 * Forces the async code of Playwright to be handled.
-	 */
-	noPlaywrightMissingAwait: "error",
-	/**
-	 * Using `networkidle` may lead to unreliable or flaky tests.
-	 */
-	noPlaywrightNetworkidle: "error",
-	/**
-	 * `page.pause()` is a debugging utility and should not be committed.
-	 */
-	noPlaywrightPagePause: "error",
-	/**
-	 * Not all Playwright functions return a Promise. This rule helps avoid unnecessary `await` on such functions.
-	 */
-	noPlaywrightUselessAwait: "error",
 	/**
 	 * `waitForNavigation` is deprecated in favor of `waitForURL` or `waitForLoadState`.
 	 */
