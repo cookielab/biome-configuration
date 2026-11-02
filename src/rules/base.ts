@@ -541,10 +541,6 @@ const nursery = {
 	noBaseToString: "error",
 	noFloatingPromises: "error",
 	/**
-	 * Test titles should be unique in their respective groups.
-	 */
-	noIdenticalTestTitle: "error",
-	/**
 	 * Prevents eval()-like behavior of executing arbitrary strings as JavaScript code.
 	 */
 	noImpliedEval: "error",
@@ -1282,6 +1278,10 @@ const suspicious = {
 	 * NextJS-only rule.
 	 */
 	noHeadImportInDocument: "off",
+	/**
+	 * Test titles should be unique in their respective groups.
+	 */
+	noIdenticalTestTitle: "error",
 	noImplicitAnyLet: "error",
 	noImportAssign: "error",
 	/**
