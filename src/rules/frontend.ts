@@ -107,15 +107,6 @@ const nursery = {
 	 */
 	noUnusedClasses: "off",
 	/**
-	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
-	 */
-	useBaseline: {
-		level: "warn",
-		options: {
-			available: "widely",
-		},
-	},
-	/**
 	 * `innerText` and `textContent` do not always return the same value, which may lead to unexpected issues.
 	 */
 	useDomNodeTextContent: "error",
@@ -184,6 +175,15 @@ const suspicious = {
 	noImportantInKeyframe: "error",
 	noShorthandPropertyOverrides: "error",
 	noUnknownAtRules: "error",
+	/**
+	 * Reports when a CSS feature is not widely available. Intended to prevent usage of incompatible constructs.
+	 */
+	useBaseline: {
+		level: "warn",
+		options: {
+			available: "widely",
+		},
+	},
 	useGoogleFontDisplay: "error",
 } as const satisfies z.infer<ReturnType<typeof suspiciousSchema.required>>;
 

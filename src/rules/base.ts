@@ -576,10 +576,6 @@ const nursery = {
 	 */
 	useAwaitThenable: "error",
 	/**
-	 * Frontend-only rule.
-	 */
-	useBaseline: "off",
-	/**
 	 * Forces consistent usage of `test` over `it` in test definitions.
 	 */
 	useConsistentTestIt: { level: "error", options: { function: "test" } },
@@ -1391,6 +1387,10 @@ const suspicious = {
 	 */
 	useArraySortCompare: "error",
 	useAwait: "error",
+	/**
+	 * Frontend-only rule.
+	 */
+	useBaseline: "off",
 	useBiomeIgnoreFolder: "error",
 	useDefaultSwitchClauseLast: "error",
 	/**
