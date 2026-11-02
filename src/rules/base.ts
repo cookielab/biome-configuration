@@ -625,10 +625,6 @@ const nursery = {
 	 */
 	useSvelteRequireEachKey: "off",
 	/**
-	 * Ensures that class methods actually utilize `this`. If `this` is not used, the methods can be declared static or moved outside of the class.
-	 */
-	useThisInClassMethods: "error",
-	/**
 	 * Using either the `u` or the newer `v` flags ensures that all unicode characters are correctly handled and supported.
 	 */
 	useUnicodeRegex: "error",
@@ -1043,6 +1039,10 @@ const style = {
 	 * Forces the test hooks to be defined at the top of the scope.
 	 */
 	useTestHooksOnTop: "error",
+	/**
+	 * Ensures that class methods actually utilize `this`. If `this` is not used, the methods can be declared static or moved outside of the class.
+	 */
+	useThisInClassMethods: "error",
 	useThrowNewError: "error",
 	useThrowOnlyError: "error",
 	useTrimStartEnd: "error",
